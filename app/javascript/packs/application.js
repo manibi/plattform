@@ -6,3 +6,5 @@ import "bootstrap";
 import "../stylesheets/application";
 import "./bootstrap_custom.js";
 import "@fortawesome/fontawesome-free/js/all";
+
+console.log("Hello");
