@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # [Mozubi - Learning platform](https://www.mozubi.app/)
 
 ## License
@@ -49,3 +50,6 @@ Check gem vulnerabilities with bundle-audit
 ```shell
 $ bundle exec bundle-audit
 ```
+=======
+# mozubi
+>>>>>>> 5e14fe403d9d788b72b4fb06320051b4e6b157d6
