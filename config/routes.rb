@@ -4,5 +4,12 @@ Rails.application.routes.draw do
     get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
     put 'users' => 'devise/registrations#update', :as => 'user_registration'
   end
-  root to: 'pages#home'
+
+  get 'profile', to: 'users#show'
+  get 'profile/edit', to: 'users#edit'
+  resources :users, only: :update
+
+  get 'dashboard', to: 'pages#dashboard'
+
+  root to: 'pages#landing_page'
 end

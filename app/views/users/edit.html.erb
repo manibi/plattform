@@ -1,0 +1,25 @@
+<h1>Edit</h1>
+  <h2>Update profile</h2>
+  <p>form to update email, name, exam date</p>
+  <p>add permanent remainder to add exam date</p>
+
+  <%= form_with(model: @user, local: true) do |f| %>
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name %>
+
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name %>
+
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+
+    <%= f.label :exam_day %>
+    <%= f.date_field :exam_day, required: true %>
+
+    <%= f.label :birth_date, 'Date of birth' %>
+    <%= f.date_field :birth_date %>
+
+    <%= f.submit 'Update', class: "btn btn-primary" %>
+  <% end %>
+
+  <%= link_to "back", :back %>

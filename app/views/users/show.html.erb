@@ -1,0 +1,8 @@
+<h1>Profile page</h1>
+<h2>
+  Welcome <%= ", #{current_user.first_name}" if current_user.first_name? %>
+</h2>
+<section class="edit-profile">
+  <%= link_to 'Update profile', profile_edit_path, class: "btn btn-warning" %>
+  <%= link_to "Change your password", edit_user_registration_path %>
+</section>

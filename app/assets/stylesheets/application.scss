@@ -9,3 +9,10 @@
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+
+.debug_dump {
+  background-color: #eee;
+  padding: 20px;
+  width: 100%;
+  margin-top: 45px;
+}
