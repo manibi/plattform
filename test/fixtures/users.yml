@@ -1,0 +1,4 @@
+bob:
+  username: uniq_string
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  created_at: <%= Time.zone.now %>
