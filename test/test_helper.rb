@@ -12,4 +12,18 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  include ApplicationHelper
+
+  # Log in user
+  def login(user)
+    post user_session_path, params: { user: {
+      username: user.username,
+      password: 'password'
+    }}
+  end
+
+  # Log out user
+  def logout
+    delete destroy_user_session_path
+  end
 end
