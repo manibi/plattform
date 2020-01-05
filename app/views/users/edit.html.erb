@@ -17,8 +17,8 @@
           <%= f.email_field :email, class: 'form-control' %>
         </div>
         <div class='form-group'>
-          <%= f.label :exam_day, 'Exam date' %>
-          <%= f.date_field :exam_day, required: true, class: 'form-control' %>
+          <%= f.label :exam_date %>
+          <%= f.date_field :exam_date, required: true, class: 'form-control' %>
           <small id="emailHelp" class="form-text text-muted">*Required</small>
         </div>
         <div class='form-group'>
@@ -30,7 +30,7 @@
 
 
       <%= link_to "Change your password", edit_user_registration_path, class: 'btn btn-danger mt-3 w-100' %>
-      <% unless current_user.exam_day.nil? %>
+      <% unless current_user.exam_date.nil? %>
         <%= link_to "Dashboard", dashboard_path, class: 'btn btn-success mt-3 w-100' %>
       <% end %>
     </div>

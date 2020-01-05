@@ -12,7 +12,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   end
 
   test 'should redirect to update profile if the exam date is not present' do
-    @user.exam_day = nil
+    @user.exam_date = nil
     @user.save
     get root_path
     assert_response :success
@@ -24,7 +24,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   end
 
   test 'should redirect to dashboard if exam date is present' do
-    @user.exam_day = Date.today
+    @user.exam_date = Date.today
     @user.save
     get root_path
     login(@user)

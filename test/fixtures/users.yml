@@ -4,6 +4,6 @@ bob:
   created_at: <%= Time.zone.now %>
   first_name: nil
   last_name: nil
-  exam_day: nil
+  exam_date: nil
   birth_date: nil
   email: ""

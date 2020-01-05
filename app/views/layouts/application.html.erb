@@ -45,7 +45,7 @@
       </ul>
     </div>
   </div>
-      <% if user_signed_in? && current_user.exam_day.blank? %>
+      <% if user_signed_in? && current_user.exam_date.blank? %>
         <%= render 'shared/reminder', message: User::UPDATE_PROFILE_MESSAGE %>
       <% end %>
     <%= render 'shared/flashes' %>
