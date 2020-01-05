@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :users, only: :update
 
   get 'dashboard', to: 'pages#dashboard'
+  get 'welcome', to: 'pages#welcome'
 
   root to: 'pages#landing_page'
 end

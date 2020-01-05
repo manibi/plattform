@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   # Redirect after login
   def after_sign_in_path_for(resource)
-    resource.exam_day.nil? ? profile_edit_path : dashboard_path
+    resource.exam_day.nil? ? welcome_path : dashboard_path
   end
 
   # Register new user without email, use just a uniq string

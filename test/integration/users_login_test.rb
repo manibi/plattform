@@ -18,9 +18,9 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     login(@user)
-    assert_redirected_to profile_edit_path
+    assert_redirected_to welcome_path
     follow_redirect!
-    assert_template 'users/edit'
+    assert_template 'pages/welcome'
   end
 
   test 'should redirect to dashboard if exam date is present' do

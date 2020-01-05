@@ -7,8 +7,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :authentication_keys => [:username]
+
   VALID_EMAIL_REGEX = /\A[^@\s]+@[^@\s]+\z/
+  UPDATE_PROFILE_MESSAGE = "Please complete your profile, add an exam date!"
+
   validates :username, presence: true, uniqueness: true, length: { minimum: 6 }
+
 
   def email_required?
     false
