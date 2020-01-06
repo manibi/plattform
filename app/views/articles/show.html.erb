@@ -3,4 +3,7 @@
     <h1><%= @article.title %></h1>
     <p><%= @article.description %></p>
   </div>
+  <ul>
+    <%= render @article.chapters %>
+  </ul>
 </div>
