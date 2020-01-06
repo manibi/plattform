@@ -10,6 +10,11 @@ class UserTest < ActiveSupport::TestCase
     assert @user.valid?
   end
 
+  test 'profession id should be present' do
+    @user.profession = nil
+    assert_not @user.valid?
+  end
+
   test 'username should be unique' do
     duplicate_user = @user.dup
     @user.save

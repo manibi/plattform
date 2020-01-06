@@ -14,7 +14,7 @@ class User < ApplicationRecord
   UPDATE_PROFILE_MESSAGE = "Please complete your profile, add an exam date!"
 
   validates :username, presence: true, uniqueness: true, length: { minimum: 6 }
-
+  validates :profession_id, presence: true
 
   def email_required?
     false

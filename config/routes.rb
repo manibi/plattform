@@ -5,12 +5,16 @@ Rails.application.routes.draw do
     put 'users' => 'devise/registrations#update', :as => 'user_registration'
   end
 
+
   get 'profile', to: 'users#show'
   get 'profile/edit', to: 'users#edit'
   resources :users, only: :update
 
-  get 'dashboard', to: 'pages#dashboard'
+  resources :articles, only: [:index, :show]
+
   get 'welcome', to: 'pages#welcome'
+  get 'dashboard', to: 'pages#dashboard'
+
 
   root to: 'pages#landing_page'
 end

@@ -1,0 +1,4 @@
+first_article:
+  title: "Ruby on Rails"
+  description: 'Ruby on Rails, sometimes known as "RoR" or just "Rails," is an open source framework for Web development in Ruby, an object-oriented programming (OOP) language similar to Perl and Python'
+  topic: first_topic
