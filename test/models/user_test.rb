@@ -2,8 +2,8 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   def setup
-    @user = User.new(username: 'uniq_string_2', password: 'password')
-    # @another_user = User.new(username: 'uniq_string_3', password: 'password')
+    @profession = professions(:developer)
+    @user = @profession.users.build(username: 'uniq_string_2', password: 'password')
   end
 
   test 'valid user' do

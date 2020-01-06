@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  belongs_to :profession
+
   # TODO: implement recoverable
   # TODO: override the devise controller - do not allow users to update the username
   # TODO: the admin should be able to reset user passwords

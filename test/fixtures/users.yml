@@ -2,8 +2,4 @@ bob:
   username: uniq_string
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   created_at: <%= Time.zone.now %>
-  first_name: nil
-  last_name: nil
-  exam_date: nil
-  birth_date: nil
-  email: ""
+  profession: developer

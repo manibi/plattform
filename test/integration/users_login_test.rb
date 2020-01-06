@@ -24,8 +24,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   end
 
   test 'should redirect to dashboard if exam date is present' do
-    @user.exam_date = Date.today
-    @user.save
+    @user.update_attribute(:exam_date, Date.today)
     get root_path
     login(@user)
     assert_redirected_to dashboard_path
