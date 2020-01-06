@@ -10,7 +10,14 @@ Rails.application.routes.draw do
   get 'profile/edit', to: 'users#edit'
   resources :users, only: :update
 
-  resources :articles, only: [:index, :show]
+  resources :articles, only: [:index, :show] do
+    member do
+      post  "read"
+      patch "unread"
+      post  "bookmark"
+      patch "unbookmark"
+    end
+  end
 
   get 'welcome', to: 'pages#welcome'
   get 'dashboard', to: 'pages#dashboard'

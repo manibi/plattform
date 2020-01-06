@@ -1,7 +1,6 @@
 puts "Cleaning DB..."
-# UserArticle.delete_all
 Chapter.delete_all
-# UserArticle.delete_all
+UserArticle.delete_all
 # Answer.delete_all
 # UserFlashcard.delete_all
 # Flashcard.delete_all
@@ -29,6 +28,11 @@ puts 'Creating articles...'
 profession.topics.first.articles.create!({
   title: 'Ruby on Rails',
   description: 'Ruby on Rails, sometimes known as "RoR" or just "Rails," is an open source framework for Web development in Ruby, an object-oriented programming (OOP) language similar to Perl and Python'
+})
+
+profession.topics.first.articles.create!({
+  title: 'React',
+  description: 'React (also known as React.js or ReactJS) is a JavaScript library for building user interfaces. It is maintained by Facebook and a community of individual developers and companies. React can be used as a base in the development of single-page or mobile applications.'
 })
 
 puts 'Creating chapters'

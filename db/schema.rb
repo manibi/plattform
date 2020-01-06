@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_06_102752) do
+ActiveRecord::Schema.define(version: 2020_01_06_134440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,18 @@ ActiveRecord::Schema.define(version: 2020_01_06_102752) do
     t.index ["profession_id"], name: "index_topics_on_profession_id"
   end
 
+  create_table "user_articles", force: :cascade do |t|
+    t.boolean "read", default: false
+    t.boolean "bookmarked", default: false
+    t.bigint "user_id", null: false
+    t.bigint "article_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["article_id"], name: "index_user_articles_on_article_id"
+    t.index ["user_id", "article_id"], name: "index_user_articles_on_user_id_and_article_id", unique: true
+    t.index ["user_id"], name: "index_user_articles_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -70,5 +82,7 @@ ActiveRecord::Schema.define(version: 2020_01_06_102752) do
   add_foreign_key "articles", "topics"
   add_foreign_key "chapters", "articles"
   add_foreign_key "topics", "professions"
+  add_foreign_key "user_articles", "articles"
+  add_foreign_key "user_articles", "users"
   add_foreign_key "users", "professions"
 end

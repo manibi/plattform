@@ -1,5 +1,7 @@
 class User < ApplicationRecord
-  belongs_to :profession
+  belongs_to  :profession
+  has_many    :user_articles
+  has_many    :articles, through: :user_articles
 
   # TODO: implement recoverable
   # TODO: override the devise controller - do not allow users to update the username
