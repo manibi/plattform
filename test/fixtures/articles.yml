@@ -2,3 +2,20 @@ first_article:
   title: "Ruby on Rails"
   description: 'Ruby on Rails, sometimes known as "RoR" or just "Rails," is an open source framework for Web development in Ruby, an object-oriented programming (OOP) language similar to Perl and Python'
   topic: first_topic
+
+second_article:
+  title: "Javascript"
+  description: "What is JavaScript ? JavaScript is a dynamic computer programming language. It is lightweight and most commonly used as a part of web pages, whose implementations allow client-side script to interact with the user and make dynamic pages. It is an interpreted programming language with object-oriented capabilities."
+  topic: first_topic
+
+third_article:
+  title: "React"
+  description: "React (also known as React.js or ReactJS) is a JavaScript library for building user interfaces. It is maintained by Facebook and a community of individual developers and companies. React can be used as a base in the development of single-page or mobile applications."
+  topic: first_topic
+
+<% 5.times do |n| %>
+article-<%= n %>:
+  title: <%= Faker::ProgrammingLanguage.name %>
+  description: <%= Faker::Lorem.sentence(word_count: 3) %>
+  topic: second_topic
+<% end %>

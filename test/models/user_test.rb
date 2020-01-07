@@ -4,9 +4,10 @@ class UserTest < ActiveSupport::TestCase
   def setup
     @profession = professions(:developer)
     @user = @profession.users.build(username: 'uniq_string_2', password: 'password')
+    @topic = topics(:first_topic)
   end
 
-  test 'valid user' do
+  test 'should be valid user' do
     assert @user.valid?
   end
 
@@ -47,5 +48,53 @@ class UserTest < ActiveSupport::TestCase
   test 'password should be longer than 6 characters' do
     @user.password = 'a' * 5
     assert_not @user.valid?
+  end
+
+  # Return a collection of articles read by a user
+  test "should return users read articles" do
+    @user.save
+    # No read articles
+    assert_equal @user.read_articles.count, 0
+
+    # Read 2 articles
+    article1 = @topic.articles.first
+    article2 = @topic.articles.last
+    article1.read_for!(@user)
+    article2.read_for!(@user)
+
+    assert_equal @user.read_articles.count, 2
+  end
+
+  # Return a collection of articles bookmarked by a user
+  test "should return users bookmarked articles" do
+    @user.save
+    # No bookmarked articles
+    assert_equal @user.bookmarked_articles.count, 0
+
+    # Bookmark 2 articles
+    article1 = @topic.articles.first
+    article2 = @topic.articles.last
+    article1.bookmark_for!(@user)
+    article2.bookmark_for!(@user)
+
+    assert_equal @user.bookmarked_articles.count, 2
+  end
+
+  # Return a collection of upcoming articles(not bookmarked or not read) for a user
+  test "should return users upcoming articles" do
+    @user.save
+    profession_topics = @profession.topics
+    # Remove the topic names and count the articles
+    all_articles = profession_topics.pluck.flatten.size - profession_topics.size
+    # No read or bookmarked articles
+    assert_equal @user.upcoming_articles.count, all_articles
+
+    # Read and bookmark 2 articles
+    article1 = @topic.articles.first
+    article2 = @topic.articles.last
+    article1.read_for!(@user)
+    article2.bookmark_for!(@user)
+
+    assert_equal @user.upcoming_articles.count, (all_articles - 2)
   end
 end

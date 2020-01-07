@@ -2,7 +2,9 @@ class ArticlesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @articles = Article.all
+    @bookmarked_articles = current_user.bookmarked_articles
+    @read_articles = current_user.read_articles
+    @upcoming_articles = current_user.upcoming_articles
   end
 
   def show

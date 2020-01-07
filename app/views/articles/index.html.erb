@@ -1,8 +1,23 @@
 <div class="container">
-  <div class="row">
-    <h1>All Articles</h1>
+  <%# <div class="row"> %>
+    <h1>Articles</h1>
+    <h3>Bookmarked Articles <%= @bookmarked_articles.size %></h3>
+    <% if @bookmarked_articles.blank? %>
+        <p>No bookmarked articles</p>
+    <% else %>
+       <ul>
+        <%= render @bookmarked_articles %>
+      </ul>
+    <% end %>
+
+    <h3>Upcoming Articles <%= @upcoming_articles.size %></h3>
     <ul>
-      <%= render @articles %>
+      <%= render @upcoming_articles %>
     </ul>
-  </div>
+
+    <h3>Read Articles <%= @read_articles.size %></h3>
+    <ul>
+      <%= render @read_articles %>
+    </ul>
+  <%# </div> %>
 </div>

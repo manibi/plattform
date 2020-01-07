@@ -18,6 +18,7 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true, length: { minimum: 6 }
   validates :profession_id, presence: true
 
+  # Remove devise email validations
   def email_required?
     false
   end
@@ -28,5 +29,25 @@ class User < ApplicationRecord
 
   def will_save_change_to_email?
     false
+  end
+
+  def bookmarked_articles
+    Article.joins(:user_articles).where(user_articles: {
+      user: self,
+      bookmarked: true
+    })
+  end
+
+  def read_articles
+    Article.joins(:user_articles).where(user_articles: {
+      user: self,
+      read: true
+      })
+  end
+
+  def upcoming_articles
+    Article.left_outer_joins(:user_articles).where(user_articles: {
+      article_id: nil
+    })
   end
 end

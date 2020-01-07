@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :articles, only: [:index, :show] do
     member do
       post  "read"
+      # TODO! remove unread - just for testing
       patch "unread"
       post  "bookmark"
       patch "unbookmark"

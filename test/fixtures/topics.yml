@@ -1,3 +1,7 @@
 first_topic:
   name: "Back End Development"
   profession: developer
+
+second_topic:
+  name: "Front End Development"
+  profession: developer
