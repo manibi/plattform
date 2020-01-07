@@ -63,4 +63,25 @@ profession.topics.first.articles.first.chapters.create!({
   content: "Action View templates are written using embedded Ruby in tags mingled with HTML. To avoid cluttering the templates with boilerplate code, a number of helper classes provide common behavior for forms, dates, and strings. It's also easy to add new helpers to your application as it evolves."
 })
 
+
+puts "Creating flashcards..."
+profession.topics.first.articles.first.flashcards.create!({
+  content: "Some stupid question"
+})
+
+profession.topics.first.articles.first.flashcards.create!({
+  content: "Second stupid question"
+})
+
+puts "Creating flashcards answers..."
+profession.topics.first.articles.first.flashcards.first.answers.create!({
+  content: Faker::Quote.most_interesting_man_in_the_world,
+  right_answer: true
+})
+3.times do |n|
+  profession.topics.first.articles.first.flashcards.first.answers.create!({
+    content: Faker::Quote.most_interesting_man_in_the_world
+  })
+end
+
 puts "Done."

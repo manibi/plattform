@@ -1,0 +1,22 @@
+<% 3.times do |n| %>
+answer:
+  content: <%= Faker::Quote.most_interesting_man_in_the_world %>
+  flashcard: one
+  right_answer: true
+
+answer<%= n %>:
+  content: <%= Faker::Quote.most_interesting_man_in_the_world %>
+  flashcard: one
+<% end %>
+
+<% 3.times do |n| %>
+answer<%= n + 3 %>:
+  content: <%= Faker::Quote.most_interesting_man_in_the_world %>
+  flashcard: two
+<% end %>
+
+answerr:
+  content: <%= Faker::Quote.most_interesting_man_in_the_world %>
+  flashcard: two
+  right_answer: true
+

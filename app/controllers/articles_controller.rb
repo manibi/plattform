@@ -9,6 +9,7 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find(params[:id])
+    @flashcard = @article.flashcards.first
   end
 
   def read

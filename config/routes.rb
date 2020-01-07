@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :flashcards, only: :show
+
   get 'welcome', to: 'pages#welcome'
   get 'dashboard', to: 'pages#dashboard'
 

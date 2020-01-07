@@ -1,0 +1,7 @@
+one:
+  content: "Some stupid question"
+  article: first_article
+
+two:
+  content: "Second stupid question"
+  article: first_article

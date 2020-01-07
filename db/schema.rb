@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_06_134440) do
+ActiveRecord::Schema.define(version: 2020_01_07_152221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answers", force: :cascade do |t|
+    t.text "content"
+    t.boolean "right_answer", default: false
+    t.bigint "flashcard_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["flashcard_id"], name: "index_answers_on_flashcard_id"
+  end
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -31,6 +40,14 @@ ActiveRecord::Schema.define(version: 2020_01_06_134440) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["article_id"], name: "index_chapters_on_article_id"
+  end
+
+  create_table "flashcards", force: :cascade do |t|
+    t.text "content"
+    t.bigint "article_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["article_id"], name: "index_flashcards_on_article_id"
   end
 
   create_table "professions", force: :cascade do |t|
@@ -79,8 +96,10 @@ ActiveRecord::Schema.define(version: 2020_01_06_134440) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "answers", "flashcards"
   add_foreign_key "articles", "topics"
   add_foreign_key "chapters", "articles"
+  add_foreign_key "flashcards", "articles"
   add_foreign_key "topics", "professions"
   add_foreign_key "user_articles", "articles"
   add_foreign_key "user_articles", "users"
