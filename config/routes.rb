@@ -24,9 +24,9 @@ Rails.application.routes.draw do
         post "answer", to: "flashcards#answer"
       end
     end
+    get "quiz_results", to: "flashcards#results"
   end
 
-  get "flashcards_results", to: "flashcards#results"
   get "welcome", to: "pages#welcome"
   get "dashboard", to: "pages#dashboard"
 

@@ -52,14 +52,22 @@ class User < ApplicationRecord
     })
   end
 
-  # Return all answered flashcards for one user
+  # Return all answered flashcards
   def answered_flashcards
     Flashcard.joins(:user_flashcards).where(user_flashcards: {
       user: self
     })
   end
 
-  # Return all right answered flashcards for one user
+  # Return answered flashcards for one article
+  def answered_flashcards_for(article)
+    Flashcard.joins(:user_flashcards).where(user_flashcards: {
+      user: self,
+      flashcard: article.flashcards
+    })
+  end
+
+  # Return all right answered flashcards
   def right_answered_flashcards
     Flashcard.joins(:user_flashcards).where(user_flashcards: {
       user: self,
@@ -67,11 +75,29 @@ class User < ApplicationRecord
     })
   end
 
-  # Return all wrong answered flashcards for one user
+  # Return all right answered flashcards for one article
+  def right_answered_flashcards_for(article)
+    Flashcard.joins(:user_flashcards).where(user_flashcards: {
+      user: self,
+      flashcard: article.flashcards,
+      correct: true
+    })
+  end
+
+  # Return all wrong answered flashcards
   def wrong_answered_flashcards
     Flashcard.joins(:user_flashcards).where(user_flashcards: {
       user: self,
       correct: false
     })
   end
+
+    # Return wrong answered flashcards for one article
+    def wrong_answered_flashcards_for(article)
+      Flashcard.joins(:user_flashcards).where(user_flashcards: {
+        user: self,
+        flashcard: article.flashcards,
+        correct: false
+      })
+    end
 end

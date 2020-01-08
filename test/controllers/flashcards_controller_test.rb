@@ -68,7 +68,7 @@ class FlashcardsControllerTest < ActionDispatch::IntegrationTest
     get root_path
     logout
 
-    get flashcards_results_path
+    get article_quiz_results_path(@article)
     assert_redirected_to new_user_session_path
   end
 
@@ -78,7 +78,7 @@ class FlashcardsControllerTest < ActionDispatch::IntegrationTest
     login(@user)
     assert_redirected_to welcome_path
 
-    get flashcards_results_path
+    get article_quiz_results_path(@article)
     assert_response :success
   end
 end
