@@ -3,8 +3,10 @@ require 'test_helper'
 class UserTest < ActiveSupport::TestCase
   def setup
     @profession = professions(:developer)
-    @user = @profession.users.build(username: 'uniq_string_2', password: 'password')
+    @user = users(:bob)
     @topic = topics(:first_topic)
+    @flashcard = flashcards(:one)
+    @flashcard2 = flashcards(:two)
   end
 
   test 'should be valid user' do
@@ -52,7 +54,6 @@ class UserTest < ActiveSupport::TestCase
 
   # Return a collection of articles read by a user
   test "should return users read articles" do
-    @user.save
     # No read articles
     assert_equal @user.read_articles.count, 0
 
@@ -67,7 +68,6 @@ class UserTest < ActiveSupport::TestCase
 
   # Return a collection of articles bookmarked by a user
   test "should return users bookmarked articles" do
-    @user.save
     # No bookmarked articles
     assert_equal @user.bookmarked_articles.count, 0
 
@@ -82,7 +82,6 @@ class UserTest < ActiveSupport::TestCase
 
   # Return a collection of upcoming articles(not bookmarked or not read) for a user
   test "should return users upcoming articles" do
-    @user.save
     profession_topics = @profession.topics
     # Remove the topic names and count the articles
     all_articles = profession_topics.pluck.flatten.size - profession_topics.size
@@ -96,5 +95,34 @@ class UserTest < ActiveSupport::TestCase
     article2.bookmark_for!(@user)
 
     assert_equal @user.upcoming_articles.count, (all_articles - 2)
+  end
+
+  test "should return answered flashcards for a user" do
+    answer = false
+    answer2 = false
+
+    # Answer 2 flashcards
+    @flashcard.save_answer_for!(@user, answer)
+    @flashcard2.save_answer_for!(@user, answer2)
+    answered_flashcards = @user.answered_flashcards.count
+    assert_equal answered_flashcards, 2
+  end
+
+  test "should return right answered flashcards for a user" do
+    answer = true
+
+    # Answer a flashcard
+    @flashcard.save_answer_for!(@user, answer)
+    right_answered_flashcards = @user.right_answered_flashcards.count
+    assert_equal right_answered_flashcards, 1
+  end
+
+  test "should return wrong answered flashcards for a user" do
+    answer = false
+
+    # Answer a flashcard
+    @flashcard.save_answer_for!(@user, answer)
+    answered_flashcards = @user.wrong_answered_flashcards.count
+    assert_equal answered_flashcards, 1
   end
 end

@@ -5,3 +5,11 @@ one:
 two:
   content: "Second stupid question"
   article: first_article
+
+one_second_article:
+  content: "Some stupid question"
+  article: second_article
+
+two_second_article:
+  content: "Second stupid question"
+  article: second_article

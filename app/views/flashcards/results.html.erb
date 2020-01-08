@@ -1,0 +1,22 @@
+<div class="container">
+  <h1>Flashcards results</h1>
+  <div class="row">
+    <div id="congrats">
+      <h1 id="title"><%#= @flashcards_percentage >= 50 ? "Great Job!" : "Try again!" %></h1>
+    </div>
+    <div class="flashcard-results">
+      <h2>
+        <span class="percentage-widget"><%#= @flashcards_percentage %>% <i>completion <br>rate</i></span>
+      </h2>
+
+
+    </div>
+  </div>
+</div>
+
+  <%# <div class="flashcard-results-buttons mt-5">%>
+    <%#= link_to "Back to article", @article, class: "width-btn btn btn-outline-primary btn-lg" %>
+    <%#= link_to "Repeat quiz", @flashcard, class: "width-btn btn btn-outline-success btn-lg ml-5" %>
+    <%#= link_to "Next article", @next_article, class: "width-btn btn btn-outline-primary btn-lg ml-5" %>
+  <%# </div>
+</div> %>

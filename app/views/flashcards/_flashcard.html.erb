@@ -1,6 +1,24 @@
 <div class="card-body">
   <h4><%= flashcard.content %></h4>
-  <p class="card-text">
-    <%= render flashcard.answers %>
-  </p>
+
+
+  <%= form_for answer_article_flashcard_path(@article, @flashcard), url: {action: "answer"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
+  <% @flashcard.answers.each do |answer| %>
+
+      <div class="flashcard-answer">
+        <%= radio_button_tag(:answer, answer.right_answer, false, id: answer.id) %>
+        <%= label_tag(answer.id, class: "card-text") do %>
+        <span class="flashcard-answer-round"></span>
+        <%= answer.content %>
+        <% end %>
+      </div>
+
+  <% end %>
+
+    <%= f.submit "Next", class: "d-none flashcard-btn btn btn-primary" %>
+    <button id="showResultBtn" class="flashcard-btn btn btn-primary">Check</button>
+
+<% end %>
+
+
 </div>

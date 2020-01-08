@@ -2,6 +2,7 @@ class User < ApplicationRecord
   belongs_to  :profession
   has_many    :user_articles
   has_many    :articles, through: :user_articles
+  has_many    :user_flashcards
 
   # TODO: implement recoverable
   # TODO: override the devise controller - do not allow users to update the username
@@ -48,6 +49,29 @@ class User < ApplicationRecord
   def upcoming_articles
     Article.left_outer_joins(:user_articles).where(user_articles: {
       article_id: nil
+    })
+  end
+
+  # Return all answered flashcards for one user
+  def answered_flashcards
+    Flashcard.joins(:user_flashcards).where(user_flashcards: {
+      user: self
+    })
+  end
+
+  # Return all right answered flashcards for one user
+  def right_answered_flashcards
+    Flashcard.joins(:user_flashcards).where(user_flashcards: {
+      user: self,
+      correct: true
+    })
+  end
+
+  # Return all wrong answered flashcards for one user
+  def wrong_answered_flashcards
+    Flashcard.joins(:user_flashcards).where(user_flashcards: {
+      user: self,
+      correct: false
     })
   end
 end

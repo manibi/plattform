@@ -35,5 +35,5 @@
   <ul>
     <%= render @article.chapters %>
   </ul>
-  <%= link_to "Quiz", @flashcard %>
+  <%= link_to "Quiz", article_flashcard_path(@article, @flashcard) %>
 </div>

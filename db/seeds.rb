@@ -1,9 +1,9 @@
 puts "Cleaning DB..."
 Chapter.delete_all
 UserArticle.delete_all
-# Answer.delete_all
-# UserFlashcard.delete_all
-# Flashcard.delete_all
+Answer.delete_all
+UserFlashcard.delete_all
+Flashcard.delete_all
 Article.delete_all
 Topic.delete_all
 User.delete_all
@@ -80,6 +80,46 @@ profession.topics.first.articles.first.flashcards.first.answers.create!({
 })
 3.times do |n|
   profession.topics.first.articles.first.flashcards.first.answers.create!({
+    content: Faker::Quote.most_interesting_man_in_the_world
+  })
+end
+
+profession.topics.first.articles.first.flashcards.last.answers.create!({
+  content: Faker::Quote.most_interesting_man_in_the_world,
+  right_answer: true
+})
+3.times do |n|
+  profession.topics.first.articles.second.flashcards.last.answers.create!({
+    content: Faker::Quote.most_interesting_man_in_the_world
+  })
+end
+
+# flashcards for second article
+profession.topics.first.articles.second.flashcards.create!({
+  content: "Some stupid question for 2nd article"
+})
+
+profession.topics.first.articles.second.flashcards.create!({
+  content: "Second stupid question for 2nd article"
+})
+
+puts "Creating flashcards answers..."
+profession.topics.first.articles.second.flashcards.first.answers.create!({
+  content: Faker::Quote.most_interesting_man_in_the_world,
+  right_answer: true
+})
+3.times do |n|
+  profession.topics.first.articles.first.flashcards.first.answers.create!({
+    content: Faker::Quote.most_interesting_man_in_the_world
+  })
+end
+
+profession.topics.first.articles.second.flashcards.last.answers.create!({
+  content: Faker::Quote.most_interesting_man_in_the_world,
+  right_answer: true
+})
+3.times do |n|
+  profession.topics.first.articles.second.flashcards.last.answers.create!({
     content: Faker::Quote.most_interesting_man_in_the_world
   })
 end

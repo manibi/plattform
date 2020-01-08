@@ -18,13 +18,18 @@ Rails.application.routes.draw do
       post  "bookmark"
       patch "unbookmark"
     end
+
+    resources :flashcards, only: :show do
+      member do
+        post "answer", to: "flashcards#answer"
+      end
+    end
   end
 
-  resources :flashcards, only: :show
+  get "flashcards_results", to: "flashcards#results"
+  get "welcome", to: "pages#welcome"
+  get "dashboard", to: "pages#dashboard"
 
-  get 'welcome', to: 'pages#welcome'
-  get 'dashboard', to: 'pages#dashboard'
 
-
-  root to: 'pages#landing_page'
+  root to: "pages#landing_page"
 end
