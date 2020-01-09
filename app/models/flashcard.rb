@@ -6,9 +6,14 @@ class Flashcard < ApplicationRecord
   validates :content, presence: true, allow_blank: false
   validates :article_id, presence: true
 
-  # Store flshcard answer
+  # Store flashcard answer
   def save_answer_for!(user, answer=false)
     UserFlashcard.find_or_create_by(user: user, flashcard: self).update(correct: answer)
+  end
+
+  # Create a false flashcard answer
+  def create_false_answer_for!(user)
+    UserFlashcard.find_or_create_by(user: user, flashcard: self).update(correct: false)
   end
 
   # Reset played flashcards for one article

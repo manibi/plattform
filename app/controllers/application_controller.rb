@@ -1,6 +1,14 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  def create_user_flashcards_for!(user, article)
+    UserFlashcard.create_all_user_flashcards_for(user, article) #if user.answered_flashcards_for(article).count != article.flashcards.count
+  end
+
+  # def get_flashcards_for(user, article)
+  #   UserFlashcard.create_all_user_flashcards_for(user, article) if user.answered_flashcards_for(article).count != article.flashcards.count
+  # end
+
   protected
 
   # Redirect after login

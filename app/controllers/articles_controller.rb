@@ -7,9 +7,11 @@ class ArticlesController < ApplicationController
     @upcoming_articles = current_user.upcoming_articles
   end
 
+  # Set all flashcard answers to false for one article when showing it
   def show
     @article = Article.find(params[:id])
     @flashcard = @article.flashcards.first
+    # create_user_flashcards_for!(current_user, @article)
   end
 
   def read

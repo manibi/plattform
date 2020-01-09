@@ -24,9 +24,9 @@ profession.topics.create!({
   name: "Back End Development"
 })
 
-profession.topics.create!({
-  name: "Front End Development"
-})
+# profession.topics.create!({
+#   name: "Front End Development"
+# })
 
 puts "Creating articles..."
 profession.topics.first.articles.create!({
@@ -39,18 +39,18 @@ profession.topics.first.articles.create!({
   description: "What is JavaScript ? JavaScript is a dynamic computer programming language. It is lightweight and most commonly used as a part of web pages, whose implementations allow client-side script to interact with the user and make dynamic pages. It is an interpreted programming language with object-oriented capabilities."
 })
 
-profession.topics.first.articles.create!({
-  title: "React",
-  description: "React (also known as React.js or ReactJS) is a JavaScript library for building user interfaces. It is maintained by Facebook and a community of individual developers and companies. React can be used as a base in the development of single-page or mobile applications."
-})
+# profession.topics.first.articles.create!({
+#   title: "React",
+#   description: "React (also known as React.js or ReactJS) is a JavaScript library for building user interfaces. It is maintained by Facebook and a community of individual developers and companies. React can be used as a base in the development of single-page or mobile applications."
+# })
 
 # Articles for 2nd topic
-5.times do |n|
-  profession.topics.second.articles.create!({
-    title: Faker::ProgrammingLanguage.name,
-    description: Faker::Lorem.sentence(word_count: 3)
-  })
-end
+# 5.times do |n|
+#   profession.topics.second.articles.create!({
+#     title: Faker::ProgrammingLanguage.name,
+#     description: Faker::Lorem.sentence(word_count: 3)
+#   })
+# end
 
 puts "Creating chapters"
 profession.topics.first.articles.first.chapters.create!({
@@ -65,6 +65,7 @@ profession.topics.first.articles.first.chapters.create!({
 
 
 puts "Creating flashcards..."
+# first article flashcards and answers
 profession.topics.first.articles.first.flashcards.create!({
   content: "Some stupid question"
 })
@@ -89,7 +90,7 @@ profession.topics.first.articles.first.flashcards.last.answers.create!({
   right_answer: true
 })
 3.times do |n|
-  profession.topics.first.articles.second.flashcards.last.answers.create!({
+  profession.topics.first.articles.first.flashcards.last.answers.create!({
     content: Faker::Quote.most_interesting_man_in_the_world
   })
 end
@@ -109,7 +110,7 @@ profession.topics.first.articles.second.flashcards.first.answers.create!({
   right_answer: true
 })
 3.times do |n|
-  profession.topics.first.articles.first.flashcards.first.answers.create!({
+  profession.topics.first.articles.second.flashcards.first.answers.create!({
     content: Faker::Quote.most_interesting_man_in_the_world
   })
 end
