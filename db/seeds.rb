@@ -64,65 +64,65 @@ profession.topics.first.articles.first.chapters.create!({
 })
 
 
-puts "Creating flashcards..."
+# puts "Creating flashcards..."
 # first article flashcards and answers
-profession.topics.first.articles.first.flashcards.create!({
-  content: "Some stupid question"
-})
+# profession.topics.first.articles.first.flashcards.create!({
+#   content: "Some stupid question"
+# })
 
-profession.topics.first.articles.first.flashcards.create!({
-  content: "Second stupid question"
-})
+# profession.topics.first.articles.first.flashcards.create!({
+#   content: "Second stupid question"
+# })
 
-puts "Creating flashcards answers..."
-profession.topics.first.articles.first.flashcards.first.answers.create!({
-  content: Faker::Quote.most_interesting_man_in_the_world,
-  right_answer: true
-})
-3.times do |n|
-  profession.topics.first.articles.first.flashcards.first.answers.create!({
-    content: Faker::Quote.most_interesting_man_in_the_world
-  })
-end
+# puts "Creating flashcards answers..."
+# profession.topics.first.articles.first.flashcards.first.answers.create!({
+#   content: Faker::Quote.most_interesting_man_in_the_world,
+#   # right_answer: true
+# })
+# 3.times do |n|
+#   profession.topics.first.articles.first.flashcards.first.answers.create!({
+#     content: Faker::Quote.most_interesting_man_in_the_world
+#   })
+# end
 
-profession.topics.first.articles.first.flashcards.last.answers.create!({
-  content: Faker::Quote.most_interesting_man_in_the_world,
-  right_answer: true
-})
-3.times do |n|
-  profession.topics.first.articles.first.flashcards.last.answers.create!({
-    content: Faker::Quote.most_interesting_man_in_the_world
-  })
-end
+# profession.topics.first.articles.first.flashcards.last.answers.create!({
+#   content: Faker::Quote.most_interesting_man_in_the_world,
+#   # right_answer: true
+# })
+# 3.times do |n|
+#   profession.topics.first.articles.first.flashcards.last.answers.create!({
+#     content: Faker::Quote.most_interesting_man_in_the_world
+#   })
+# end
 
-# flashcards for second article
-profession.topics.first.articles.second.flashcards.create!({
-  content: "Some stupid question for 2nd article"
-})
+# # flashcards for second article
+# # profession.topics.first.articles.second.flashcards.create!({
+# #   content: "Some stupid question for 2nd article"
+# # })
 
-profession.topics.first.articles.second.flashcards.create!({
-  content: "Second stupid question for 2nd article"
-})
+# # profession.topics.first.articles.second.flashcards.create!({
+# #   content: "Second stupid question for 2nd article"
+# # })
 
-puts "Creating flashcards answers..."
-profession.topics.first.articles.second.flashcards.first.answers.create!({
-  content: Faker::Quote.most_interesting_man_in_the_world,
-  right_answer: true
-})
-3.times do |n|
-  profession.topics.first.articles.second.flashcards.first.answers.create!({
-    content: Faker::Quote.most_interesting_man_in_the_world
-  })
-end
+# puts "Creating flashcards answers..."
+# profession.topics.first.articles.second.flashcards.first.answers.create!({
+#   content: Faker::Quote.most_interesting_man_in_the_world,
+#   # right_answer: true
+# })
+# 3.times do |n|
+#   profession.topics.first.articles.second.flashcards.first.answers.create!({
+#     content: Faker::Quote.most_interesting_man_in_the_world
+#   })
+# end
 
-profession.topics.first.articles.second.flashcards.last.answers.create!({
-  content: Faker::Quote.most_interesting_man_in_the_world,
-  right_answer: true
-})
-3.times do |n|
-  profession.topics.first.articles.second.flashcards.last.answers.create!({
-    content: Faker::Quote.most_interesting_man_in_the_world
-  })
-end
+# profession.topics.first.articles.second.flashcards.last.answers.create!({
+#   content: Faker::Quote.most_interesting_man_in_the_world,
+#   # right_answer: true
+# })
+# 3.times do |n|
+#   profession.topics.first.articles.second.flashcards.last.answers.create!({
+#     content: Faker::Quote.most_interesting_man_in_the_world
+#   })
+# end
 
 puts "Done."

@@ -1,6 +1,6 @@
 class Answer < ApplicationRecord
-  belongs_to :flashcard
+  has_many :flashcard_answers
+  has_many :flashcards, through: :flashcard_answers
 
-  validates :flashcard_id, presence: true
   validates :content, presence: true, allow_blank: false
 end

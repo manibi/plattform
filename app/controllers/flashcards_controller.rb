@@ -2,7 +2,7 @@ class FlashcardsController < ApplicationController
   before_action :authenticate_user!
 
   # Set all answers to false if starting a new quiz
-  # - if it is the first flaschard and no correct answers were given
+  # - if it's the first flaschard and no correct answers were given before
   def show
     @flashcard = Flashcard.find(params[:id])
     @article = Article.find(params[:article_id])
@@ -24,8 +24,10 @@ class FlashcardsController < ApplicationController
 
     if user_answer
       @flashcard.save_answer_for!(current_user, user_answer)
+      # Reassign to avoid a second render - query the db again for wrong answers
       @user_flashcards_queue = current_user.wrong_answered_flashcards_for(@article).to_a
     elsif @user_flashcards_queue.any?
+      # TODO: add tries - increment here
       wrong_answered_flashcard = @user_flashcards_queue.shift
       @user_flashcards_queue.push(wrong_answered_flashcard)
     end

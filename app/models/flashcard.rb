@@ -1,10 +1,17 @@
 class Flashcard < ApplicationRecord
   belongs_to :article
-  has_many   :answers
   has_many   :user_flashcards
+  has_many   :flashcard_answers
+  has_many   :answers, through: :flashcard_answers
+
+
+  serialize :correct_answers, Array
 
   validates :content, presence: true, allow_blank: false
   validates :article_id, presence: true
+  validates :correct_answers, presence: true, length: { minimum: 1}
+  validates :answers, presence: true, length: { minimum: 1 }
+
 
   # Store flashcard answer
   def save_answer_for!(user, answer=false)
