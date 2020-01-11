@@ -9,11 +9,6 @@ class AnswerTest < ActiveSupport::TestCase
     assert @answer.valid?
   end
 
-  test "should have in flashcard_id" do
-    @answer.flashcard = nil
-    assert_not @answer.valid?
-  end
-
   test "should have a content text" do
     @answer.content = '  '
     assert_not @answer.valid?

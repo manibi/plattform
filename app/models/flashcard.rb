@@ -4,14 +4,11 @@ class Flashcard < ApplicationRecord
   has_many   :flashcard_answers
   has_many   :answers, through: :flashcard_answers
 
-
   serialize :correct_answers, Array
 
   validates :content, presence: true, allow_blank: false
   validates :article_id, presence: true
-  validates :correct_answers, presence: true, length: { minimum: 1}
-  validates :answers, presence: true, length: { minimum: 1 }
-
+  validates :flashcard_type, presence: true, inclusion: { in: ["multiple choice", "drag and drop"] }
 
   # Store flashcard answer
   def save_answer_for!(user, answer=false)

@@ -51,9 +51,7 @@ ActiveRecord::Schema.define(version: 2020_01_11_120931) do
   create_table "flashcards", force: :cascade do |t|
     t.text "content"
     t.string "flashcard_type"
-    t.string "string"
     t.text "correct_answers"
-    t.text "text"
     t.bigint "article_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
