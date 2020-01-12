@@ -124,8 +124,10 @@ flashcard2.answers << Answer.all.sample(3)
 flashcard3.answers << Answer.all.sample(3)
 
 # Add correct answer
-flashcard1.update(correct_answers: [flashcard1.answers.first])
-flashcard2.update(correct_answers: [flashcard1.answers.first, flashcard1.answers.second])
-flashcard3.update(correct_answers: [flashcard1.answers.last])
+flashcard1.update(correct_answers: [flashcard1.answers.first.id])
+flashcard2.update(correct_answers: [
+                                    flashcard2.answers.second.id,flashcard2.answers.first.id
+                                    ])
+flashcard3.update(correct_answers: [flashcard3.answers.last.id])
 
 puts "Done."

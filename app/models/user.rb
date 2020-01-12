@@ -92,12 +92,12 @@ class User < ApplicationRecord
     })
   end
 
-    # Return wrong answered flashcards for one article
-    def wrong_answered_flashcards_for(article)
-      Flashcard.joins(:user_flashcards).where(user_flashcards: {
-        user: self,
-        flashcard: article.flashcards,
-        correct: false
-      })
-    end
+  # Return wrong answered flashcards for one article
+  def wrong_answered_flashcards_for(article)
+    Flashcard.joins(:user_flashcards).where(user_flashcards: {
+      user: self,
+      flashcard: article.flashcards,
+      correct: false
+    })
+  end
 end

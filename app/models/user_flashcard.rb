@@ -12,8 +12,4 @@ class UserFlashcard < ApplicationRecord
       flashcard.create_false_answer_for!(user)
     end
   end
-
-  #  # Return all user flashcards for an article, user
-  #  def all_user_flashcards_for(user, article)
-  #  end
 end

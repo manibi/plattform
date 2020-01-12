@@ -6,33 +6,38 @@ class FlashcardsController < ApplicationController
   def show
     @flashcard = Flashcard.find(params[:id])
     @article = Article.find(params[:article_id])
+    # raise
 
     if @article.flashcards.first == @flashcard && current_user.wrong_answered_flashcards_for(@article).to_a.empty?
-      create_user_flashcards_for!(current_user, @article)
+      UserFlashcard.create_all_user_flashcards_for(current_user, @article)
     end
   end
 
   # Create a queue and add all the wrong answers
   # if the answer if false add the flashcard again at the top
   # else save it
+
+  # user selects answer
+  # send form
+  # check answser
+  # render form again with disabled fields and no submit button
+  # show right answers - feedback on how he did
+  # render btn to next_flashcard
   def answer
+    # raise
     @flashcard = Flashcard.find(params[:id])
     @article = @flashcard.article
-    @article_flashcards = @article.flashcards
-    @user_flashcards_queue = current_user.wrong_answered_flashcards_for(@article).to_a
-    user_answer = set_answer["answer"] == "true"
 
-    if user_answer
-      @flashcard.save_answer_for!(current_user, user_answer)
-      # Reassign to avoid a second render - query the db again for wrong answers
-      @user_flashcards_queue = current_user.wrong_answered_flashcards_for(@article).to_a
-    elsif @user_flashcards_queue.any?
-      # TODO: add tries - increment here
-      wrong_answered_flashcard = @user_flashcards_queue.shift
-      @user_flashcards_queue.push(wrong_answered_flashcard)
+    if set_answer
+      @answers = set_answer[:answer].map(&:to_i)
+      @user_answer = @answers.sort == @flashcard.correct_answers.sort
     end
 
-    redirect_to next_flashcard(@user_flashcards_queue)
+    if @user_answer
+      @flashcard.save_answer_for!(current_user, @user_answer)
+    end
+
+    render "flashcards/show"
   end
 
   def results
@@ -50,26 +55,27 @@ class FlashcardsController < ApplicationController
     render "flashcards/results"
   end
 
+  # Return next flashcard or flashcard results
+  def next_flashcard
+    @article = Article.find(params[:article_id])
+    @flashcard = Flashcard.find(params[:id])
+
+    @next_flashcard = @article.flashcards[@article.flashcards.index(@flashcard) + 1]
+
+    if current_user.wrong_answered_flashcards_for(@article).empty?
+      redirect_to article_quiz_results_path(@article)
+    elsif @next_flashcard &&
+      current_user.wrong_answered_flashcards_for(@article).any?
+      redirect_to article_flashcard_path(@article, @next_flashcard)
+    else
+      @next_article = current_user.wrong_answered_flashcards_for(@article).first
+      redirect_to article_flashcard_path(@article, @next_article)
+    end
+  end
+
   private
 
   def set_answer
-    params.permit(:answer)
-  end
-
-  # Return next flashcard in queue or flashcard results
-  def next_flashcard(queue)
-    if queue.any?
-      article_flashcard_path(@article, queue.first)
-    else
-      article_quiz_results_path(@article)
-    end
-
-    # old
-    # if @article_flashcards.last.id != params[:id].to_i &&
-    #   article_flashcard_path(@article, @article_flashcards[@article_flashcards.index(@flashcard) + 1])
-    #   else
-    #       article_quiz_results_path(@article)
-    #   # article_flashcard_path(@article, @article.flashcards.first)
-    # end
+    params.require(:flashcard).permit(answer: []) if params[:flashcard]
   end
 end
