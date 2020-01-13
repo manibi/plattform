@@ -24,7 +24,6 @@ class FlashcardsController < ApplicationController
   # show right answers - feedback on how he did
   # render btn to next_flashcard
   def answer
-    # raise
     @flashcard = Flashcard.find(params[:id])
     @article = @flashcard.article
 

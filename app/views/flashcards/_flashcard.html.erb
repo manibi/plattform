@@ -8,15 +8,22 @@
 
         <!-- check the url if contains answer -->
 
-        <label class=<%= "correct-answer" if current_page?(action: "show") && @flashcard.correct_answers.include?(answer.id)  %>>
-          <%= check_box_tag "flashcard[answer][]", answer.id, false, id: answer.id %>
+        <label
+          class=
+          <%= "correct-answer" if action_name == "answer" && @flashcard.correct_answers.include?(answer.id)  %>
+          <%= "false-answer" if action_name == "answer" &&
+          @answers.include?(answer.id) %>
+        >
+          <%= check_box_tag "flashcard[answer][]",
+                            answer.id, false,
+                            id: answer.id,
+                            disabled: action_name == "answer" %>
             <%= answer.content %>
         </label>
       </div>
   <% end %>
-  <%= f.submit "Next", class: "flashcard-btn btn btn-primary" %>
-  <!--<button id="showResultBtn" class="flashcard-btn btn btn-primary">Check</button>-->
-  <%= link_to "next flashcard", next_flashcard_article_flashcard_path(@article, @flashcard) %>
+  <%= f.submit "Check", class: "flashcard-btn btn btn-primary" if action_name == "show" %>
+  <%= link_to "Next", next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard", class: "flashcard-btn btn btn-primary" if action_name == "answer" %>
 <% end %>
 
   <hr>
