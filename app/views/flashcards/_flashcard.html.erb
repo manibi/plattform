@@ -5,16 +5,13 @@
   <%= form_for answer_article_flashcard_path(@article, @flashcard), url: {action: "answer"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
     <% @flashcard.answers.each do |answer| %>
       <div class="flashcard-answer">
-
-        <!-- check the url if contains answer -->
-
         <label
           class=
           <%= "correct-answer" if action_name == "answer" && @flashcard.correct_answers.include?(answer.id)  %>
           <%= "false-answer" if action_name == "answer" &&
-          @answers.include?(answer.id) %>
+          @answers &.include?(answer.id) %>
         >
-          <%= check_box_tag "flashcard[answer][]",
+          <%= check_box_tag "flashcard[answer_ids][]",
                             answer.id, false,
                             id: answer.id,
                             disabled: action_name == "answer" %>
@@ -22,13 +19,16 @@
         </label>
       </div>
   <% end %>
-  <%= f.submit "Check", class: "flashcard-btn btn btn-primary" if action_name == "show" %>
-  <%= link_to "Next", next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard", class: "flashcard-btn btn btn-primary" if action_name == "answer" %>
+  <%= f.submit "Check",
+                class: "flashcard-btn btn btn-primary" if action_name == "show" %>
+  <%= link_to "Next",
+              next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
+              class: "flashcard-btn btn btn-primary" if action_name == "answer" %>
 <% end %>
 
   <hr>
     <p>correct answers</p>
     <% @flashcard.correct_answers.each do |correct_answer| %>
-      <%= correct_answer %>
+      <p>- <%= Answer.find(correct_answer).content %></p>
     <% end %>
 </div>

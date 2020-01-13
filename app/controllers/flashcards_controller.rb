@@ -1,15 +1,13 @@
 class FlashcardsController < ApplicationController
   before_action :authenticate_user!
 
-  # Set all answers to false if starting a new quiz
-  # - if it's the first flaschard and no correct answers were given before
+  # Reset flashcards for this article if re-taking the quiz
   def show
     @flashcard = Flashcard.find(params[:id])
     @article = Article.find(params[:article_id])
-    # raise
 
-    if @article.flashcards.first == @flashcard && current_user.wrong_answered_flashcards_for(@article).to_a.empty?
-      UserFlashcard.create_all_user_flashcards_for(current_user, @article)
+    if @article.flashcards.first == @flashcard && current_user.right_answered_flashcards_for(@article).count == @article.flashcards.count
+      Flashcard.reset_for!(current_user, @article)
     end
   end
 
@@ -28,13 +26,11 @@ class FlashcardsController < ApplicationController
     @article = @flashcard.article
 
     if set_answer
-      @answers = set_answer[:answer].map(&:to_i)
+      @answers = set_answer[:answer_ids].map(&:to_i)
       @user_answer = @answers.sort == @flashcard.correct_answers.sort
     end
 
-    if @user_answer
-      @flashcard.save_answer_for!(current_user, @user_answer)
-    end
+    @flashcard.save_answer_for!(current_user, @user_answer)
 
     render "flashcards/show"
   end
@@ -56,25 +52,27 @@ class FlashcardsController < ApplicationController
 
   # Return next flashcard or flashcard results
   def next_flashcard
-    @article = Article.find(params[:article_id])
     @flashcard = Flashcard.find(params[:id])
+    @article = @flashcard.article
+    @wrong_answered_flashcards = current_user.wrong_answered_flashcards_for(@article)
+    @right_answered_flashcards = current_user.right_answered_flashcards_for(@article)
 
-    @next_flashcard = @article.flashcards[@article.flashcards.index(@flashcard) + 1]
-
-    if current_user.wrong_answered_flashcards_for(@article).empty?
-      redirect_to article_quiz_results_path(@article)
-    elsif @next_flashcard &&
-      current_user.wrong_answered_flashcards_for(@article).any?
-      redirect_to article_flashcard_path(@article, @next_flashcard)
+    if @article.flashcards.last != @flashcard && (!(@article.flashcards.last.in? @wrong_answered_flashcards) && !(@article.flashcards.last.in? @right_answered_flashcards))
+      @next_flashcard = @article.flashcards[@article.flashcards.sort.index(@flashcard) + 1]
     else
-      @next_article = current_user.wrong_answered_flashcards_for(@article).first
-      redirect_to article_flashcard_path(@article, @next_article)
+      @next_flashcard = @wrong_answered_flashcards.sample
+    end
+
+    if @right_answered_flashcards.count == @article.flashcards.count
+      redirect_to article_quiz_results_path(@article)
+    else
+      redirect_to article_flashcard_path(@article, @next_flashcard)
     end
   end
 
   private
 
   def set_answer
-    params.require(:flashcard).permit(answer: []) if params[:flashcard]
+    params.require(:flashcard).permit(answer_ids: []) if params[:flashcard]
   end
 end

@@ -55,10 +55,6 @@ back_end_dev_topic.articles.create!([
   {
   title: "Ruby on Rails",
   description: "Ruby on Rails, sometimes known as 'RoR or just 'Rails, is an open source framework for Web development in Ruby, an object-oriented programming (OOP) language similar to Perl and Python"
-  },
-  {
-  title: "Databases",
-  description: "Store information"
   }
 ])
 
@@ -66,10 +62,6 @@ bjj_topic.articles.create!([
   {
   title: "Closed guard",
   description: "Basics"
-  },
-  {
-  title: "Armbar",
-  description: "Attack"
   }
 ])
 
@@ -81,6 +73,7 @@ bjj_topic.articles.create!([
 # end
 
 rails_article = back_end_dev_topic.articles.first
+bjj_article = bjj_topic.articles.first
 
 puts "Creating chapters"
 rails_article.chapters.create!([
@@ -102,7 +95,7 @@ puts "Creating answers..."
 end
 
 puts "Creating flashcards..."
-# New multiple choice flahscard
+# New multiple choice flahscard for first article
 flashcard1 = rails_article.flashcards.create!({
   content: "Question 1?",
   flashcard_type: "multiple choice",
@@ -118,16 +111,59 @@ flashcard3 = rails_article.flashcards.create!({
   flashcard_type: "multiple choice",
 })
 
+flashcard4 = rails_article.flashcards.create!({
+  content: "Question 4?",
+  flashcard_type: "multiple choice",
+})
+
+flashcard5 = rails_article.flashcards.create!({
+  content: "Question 5?",
+  flashcard_type: "multiple choice",
+})
+
+
 # Add answers
 flashcard1.answers << Answer.all.sample(3)
 flashcard2.answers << Answer.all.sample(3)
 flashcard3.answers << Answer.all.sample(3)
+flashcard4.answers << Answer.all.sample(3)
+flashcard5.answers << Answer.all.sample(3)
 
 # Add correct answer
 flashcard1.update(correct_answers: [flashcard1.answers.first.id])
 flashcard2.update(correct_answers: [
-                                    flashcard2.answers.second.id,flashcard2.answers.first.id
-                                    ])
+  flashcard2.answers.second.id,flashcard2.answers.first.id
+  ])
 flashcard3.update(correct_answers: [flashcard3.answers.last.id])
+flashcard4.update(correct_answers: [flashcard4.answers.first.id])
+flashcard5.update(correct_answers: [flashcard5.answers.first.id])
+
+# New multiple choice flahscard for second article
+flashcard2_1 = bjj_article.flashcards.create!({
+  content: "Question 1 second article?",
+  flashcard_type: "multiple choice",
+})
+
+flashcard2_2 = bjj_article.flashcards.create!({
+  content: "Question 2 second article?",
+  flashcard_type: "multiple choice",
+})
+
+flashcard2_3 = bjj_article.flashcards.create!({
+  content: "Question 3 second article?",
+  flashcard_type: "multiple choice",
+})
+
+# Add answers
+flashcard2_1.answers << Answer.all.sample(3)
+flashcard2_2.answers << Answer.all.sample(3)
+flashcard2_3.answers << Answer.all.sample(3)
+
+# Add correct answer
+flashcard2_1.update(correct_answers: [flashcard2_1.answers.first.id])
+flashcard2_2.update(correct_answers: [
+                                    flashcard2_2.answers.second.id,flashcard2_2.answers.first.id
+                                    ])
+flashcard2_3.update(correct_answers: [flashcard2_3.answers.last.id])
 
 puts "Done."
