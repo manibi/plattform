@@ -1,8 +1,9 @@
 class Flashcard < ApplicationRecord
-  belongs_to :article
-  has_many   :user_flashcards
-  has_many   :flashcard_answers
-  has_many   :answers, through: :flashcard_answers
+  belongs_to        :article
+  has_many          :user_flashcards
+  has_many          :flashcard_answers
+  has_many          :answers, through: :flashcard_answers
+  has_one_attached  :image
 
   serialize :correct_answers, Array
 
@@ -11,6 +12,14 @@ class Flashcard < ApplicationRecord
   validates :flashcard_type, presence: true, inclusion: {
     in: ["multiple_choice", "correct_order"]
   }
+  validates :image, content_type: {
+                      in: %w[image/jpeg image/gif image/png],
+                      message: "must be a valid image format"
+                    },
+                    size: {
+                      less_than: 5.megabytes,
+                      message:   "should be less than 5MB"
+                    }
 
   # Store flashcard answer
   def save_answer_for!(user, answer=false)

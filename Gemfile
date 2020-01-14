@@ -14,11 +14,13 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'autoprefixer-rails'
 gem 'redis', '~> 4.0'
+gem 'active_storage_validations'
 # gem 'font-awesome-sass', '~> 5.12.0'
 gem 'font_awesome5_rails'
 gem 'bootstrap',  '~>4.3.1'
 # gem 'bcrypt', '~> 3.1.7'
-# gem 'image_processing', '~> 1.2'
+gem 'image_processing', '~> 1.2'
+gem 'mini_magick', '>= 4.9.5'
 gem 'faker'
 
 group :development, :test do

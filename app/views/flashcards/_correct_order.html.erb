@@ -1,6 +1,7 @@
 <h2>Order</h2><div class="card-body">
   <h4><%= flashcard.content %></h4>
 
+  <%= image_tag flashcard.image if flashcard.image.attached? %>
 
   <%= form_for answer_correct_order_article_flashcard_path(@article, @flashcard), url: {action: "answer_correct_order"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
     <% @flashcard.answers.sort.each do |answer| %>
@@ -16,7 +17,9 @@
                            nil,
                            placeholder: "1",
                            disabled: action_name == "answer_correct_order",
-                           style: 'position: absolute; right: 0; width: 50px' %>
+                           style: 'position: absolute; right: 0; width: 50px'
+          %>
+          <%# <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png" %>
         </p>
       </div>
   <% end %>
