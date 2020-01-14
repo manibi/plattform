@@ -1,19 +1,20 @@
 class FlashcardsController < ApplicationController
   before_action :authenticate_user!
 
-  # Reset flashcards for this article if re-taking the quiz
   def show
     @flashcard = Flashcard.find(params[:id])
     @article = Article.find(params[:article_id])
 
-    if @article.flashcards.first == @flashcard && current_user.right_answered_flashcards_for(@article).count == @article.flashcards.count
+    # Mark article as read
+    if @article.flashcards.first == @flashcard && !@article.read_for?(current_user)
+      @article.read_for!(current_user)
+    end
+
+    # Reset flashcards for this article if re-taking the quiz
+    if @article.flashcards.first == @flashcard && current_user.correct_answered_flashcards_for(@article).count == @article.flashcards.count
       Flashcard.reset_for!(current_user, @article)
     end
   end
-
-  # Create a queue and add all the wrong answers
-  # if the answer if false add the flashcard again at the top
-  # else save it
 
   # user selects answer
   # send form
@@ -31,7 +32,6 @@ class FlashcardsController < ApplicationController
     end
 
     @flashcard.save_answer_for!(current_user, @user_answer)
-
     render "flashcards/show"
   end
 
@@ -55,7 +55,7 @@ class FlashcardsController < ApplicationController
     @flashcard = Flashcard.find(params[:id])
     @article = @flashcard.article
     @wrong_answered_flashcards = current_user.wrong_answered_flashcards_for(@article)
-    @right_answered_flashcards = current_user.right_answered_flashcards_for(@article)
+    @right_answered_flashcards = current_user.correct_answered_flashcards_for(@article)
 
     if @article.flashcards.last != @flashcard && (!(@article.flashcards.last.in? @wrong_answered_flashcards) && !(@article.flashcards.last.in? @right_answered_flashcards))
       @next_flashcard = @article.flashcards[@article.flashcards.sort.index(@flashcard) + 1]

@@ -43,7 +43,7 @@ class User < ApplicationRecord
     Article.joins(:user_articles).where(user_articles: {
       user: self,
       read: true
-      })
+    })
   end
 
   def upcoming_articles
@@ -76,7 +76,7 @@ class User < ApplicationRecord
   end
 
   # Return all right answered flashcards for one article
-  def right_answered_flashcards_for(article)
+  def correct_answered_flashcards_for(article)
     Flashcard.joins(:user_flashcards).where(user_flashcards: {
       user: self,
       flashcard: article.flashcards,

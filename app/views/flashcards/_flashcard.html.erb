@@ -13,7 +13,8 @@
         >
           <%= check_box_tag "flashcard[answer_ids][]",
                             answer.id, false,
-                            id: answer.id,
+                            # id: answer.id,
+                            id: dom_id(answer),
                             disabled: action_name == "answer" %>
             <%= answer.content %>
         </label>
