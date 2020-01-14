@@ -2,20 +2,20 @@
   <h4><%= flashcard.content %></h4>
 
 
-  <%= form_for answer_article_flashcard_path(@article, @flashcard), url: {action: "answer"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
+  <%= form_for answer_multiple_choice_article_flashcard_path(@article, @flashcard), url: {action: "answer_multiple_choice"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
     <% @flashcard.answers.each do |answer| %>
       <div class="flashcard-answer">
         <label
           class=
-          <%= "correct-answer" if action_name == "answer" && @flashcard.correct_answers.include?(answer.id)  %>
-          <%= "false-answer" if action_name == "answer" &&
+          <%= "correct-answer" if action_name == "answer_multiple_choice" && @flashcard.correct_answers.include?(answer.id)  %>
+          <%= "false-answer" if action_name == "answer_multiple_choice" &&
           @answers &.include?(answer.id) %>
         >
           <%= check_box_tag "flashcard[answer_ids][]",
                             answer.id, false,
                             # id: answer.id,
                             id: dom_id(answer),
-                            disabled: action_name == "answer" %>
+                            disabled: action_name == "answer_multiple_choice" %>
             <%= answer.content %>
         </label>
       </div>
@@ -24,7 +24,7 @@
                 class: "flashcard-btn btn btn-primary" if action_name == "show" %>
   <%= link_to "Next",
               next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
-              class: "flashcard-btn btn btn-primary" if action_name == "answer" %>
+              class: "flashcard-btn btn btn-primary" if action_name == "answer_multiple_choice" %>
 <% end %>
 
   <hr>

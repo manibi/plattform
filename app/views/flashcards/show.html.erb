@@ -1,8 +1,12 @@
 <h1>Quiz</h1>
 <div class="container">
   <div class="row">
-    <div class="col-md-6">
-      <%= render @flashcard %>
+    <div class="col-md-10">
+    <% if @flashcard.flashcard_type == "multiple_choice" %>
+      <%= render "flashcards/multiple_choice", flashcard: @flashcard %>
+    <% elsif @flashcard.flashcard_type == "correct_order" %>
+      <%= render "flashcards/correct_order", flashcard: @flashcard %>
+    <% end %>
     </div>
   </div>
 </div>

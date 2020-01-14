@@ -22,17 +22,32 @@ class FlashcardsController < ApplicationController
   # render form again with disabled fields and no submit button
   # show right answers - feedback on how he did
   # render btn to next_flashcard
-  def answer
+  def answer_multiple_choice
     @flashcard = Flashcard.find(params[:id])
     @article = @flashcard.article
 
-    if set_answer
-      @answers = set_answer[:answer_ids].map(&:to_i)
+    if set_multiple_choice_answer
+      @answers = set_multiple_choice_answer[:answer_ids].map(&:to_i)
       @user_answer = @answers.sort == @flashcard.correct_answers.sort
     end
 
     @flashcard.save_answer_for!(current_user, @user_answer)
     render "flashcards/show"
+  end
+
+  def answer_correct_order
+    @flashcard = Flashcard.find(params[:id])
+    @article = @flashcard.article
+    # Check answers
+    @answers = set_correct_order_answer.to_h.sort_by {|_,v| v}.to_h.keys.map(&:to_i)
+    @user_answer = @flashcard.correct_answers == @answers
+
+    # Save flashcard
+    @flashcard.save_answer_for!(current_user, @user_answer)
+
+    # Show results
+    render "flashcards/show"
+    # raise
   end
 
   def results
@@ -72,7 +87,12 @@ class FlashcardsController < ApplicationController
 
   private
 
-  def set_answer
+  def set_multiple_choice_answer
     params.require(:flashcard).permit(answer_ids: []) if params[:flashcard]
+  end
+
+  def set_correct_order_answer
+    @flashcard = Flashcard.find(params[:id])
+    params.require(:flashcard).require(:answer).permit! if params[:flashcard]
   end
 end

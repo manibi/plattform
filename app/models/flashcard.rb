@@ -8,7 +8,9 @@ class Flashcard < ApplicationRecord
 
   validates :content, presence: true, allow_blank: false
   validates :article_id, presence: true
-  validates :flashcard_type, presence: true, inclusion: { in: ["multiple choice", "drag and drop"] }
+  validates :flashcard_type, presence: true, inclusion: {
+    in: ["multiple_choice", "correct_order"]
+  }
 
   # Store flashcard answer
   def save_answer_for!(user, answer=false)

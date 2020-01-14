@@ -21,7 +21,8 @@ Rails.application.routes.draw do
 
     resources :flashcards, only: :show do
       member do
-        post "answer", to: "flashcards#answer"
+        post "answer_multiple_choice", to: "flashcards#answer_multiple_choice"
+        post "answer_correct_order", to: "flashcards#answer_correct_order"
         get "next_flashcard", to: "flashcards#next_flashcard"
       end
     end

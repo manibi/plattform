@@ -1,0 +1,33 @@
+<h2>Order</h2><div class="card-body">
+  <h4><%= flashcard.content %></h4>
+
+
+  <%= form_for answer_correct_order_article_flashcard_path(@article, @flashcard), url: {action: "answer_correct_order"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
+    <% @flashcard.answers.sort.each do |answer| %>
+      <div class="flashcard-answer">
+        <p class=
+           <% if action_name == "answer_correct_order"%>
+            <%= @user_answer ? "correct-answer" : "false-answer"  %>
+           <% end %>
+           style="position: relative; height: 30px;"
+        >
+          <%= answer.id %> - <%= answer.content %>
+          <%= text_field_tag "flashcard[answer][#{answer.id}]",
+                           nil,
+                           placeholder: "1",
+                           disabled: action_name == "answer_correct_order",
+                           style: 'position: absolute; right: 0; width: 50px' %>
+        </p>
+      </div>
+  <% end %>
+  <%= f.submit "Check",
+                class: "flashcard-btn btn btn-primary" if action_name == "show" %>
+  <%= link_to "Next",
+              next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
+              class: "flashcard-btn btn btn-primary" if action_name == "answer_correct_order" %>
+<% end %>
+
+  <hr>
+    <p>correct answers</p>
+    <p><%= flashcard.correct_answers %></p>
+</div>

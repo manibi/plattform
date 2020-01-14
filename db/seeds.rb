@@ -96,62 +96,62 @@ end
 
 puts "Creating flashcards..."
 # New multiple choice flahscard for first article
-flashcard1 = rails_article.flashcards.create!({
-  content: "Question 1?",
-  flashcard_type: "multiple choice",
-})
+# flashcard1 = rails_article.flashcards.create!({
+#   content: "Question 1?",
+#   flashcard_type: "multiple choice",
+# })
 
-flashcard2 = rails_article.flashcards.create!({
-  content: "Question 2?",
-  flashcard_type: "multiple choice",
-})
+# flashcard2 = rails_article.flashcards.create!({
+#   content: "Question 2?",
+#   flashcard_type: "multiple choice",
+# })
 
-flashcard3 = rails_article.flashcards.create!({
-  content: "Question 3?",
-  flashcard_type: "multiple choice",
-})
+# flashcard3 = rails_article.flashcards.create!({
+#   content: "Question 3?",
+#   flashcard_type: "multiple choice",
+# })
 
-flashcard4 = rails_article.flashcards.create!({
-  content: "Question 4?",
-  flashcard_type: "multiple choice",
-})
+# flashcard4 = rails_article.flashcards.create!({
+#   content: "Question 4?",
+#   flashcard_type: "multiple choice",
+# })
 
-flashcard5 = rails_article.flashcards.create!({
-  content: "Question 5?",
-  flashcard_type: "multiple choice",
-})
+# flashcard5 = rails_article.flashcards.create!({
+#   content: "Question 5?",
+#   flashcard_type: "multiple choice",
+# })
 
 
-# Add answers
-flashcard1.answers << Answer.all.sample(3)
-flashcard2.answers << Answer.all.sample(3)
-flashcard3.answers << Answer.all.sample(3)
-flashcard4.answers << Answer.all.sample(3)
-flashcard5.answers << Answer.all.sample(3)
+# # Add answers
+# flashcard1.answers << Answer.all.sample(3)
+# flashcard2.answers << Answer.all.sample(3)
+# flashcard3.answers << Answer.all.sample(3)
+# flashcard4.answers << Answer.all.sample(3)
+# flashcard5.answers << Answer.all.sample(3)
 
-# Add correct answer
-flashcard1.update(correct_answers: [flashcard1.answers.first.id])
-flashcard2.update(correct_answers: [
-  flashcard2.answers.second.id,flashcard2.answers.first.id
-  ])
-flashcard3.update(correct_answers: [flashcard3.answers.last.id])
-flashcard4.update(correct_answers: [flashcard4.answers.first.id])
-flashcard5.update(correct_answers: [flashcard5.answers.first.id])
+# # Add correct answer
+# flashcard1.update(correct_answers: [flashcard1.answers.first.id])
+# flashcard2.update(correct_answers: [
+#   flashcard2.answers.second.id,flashcard2.answers.first.id
+#   ])
+# flashcard3.update(correct_answers: [flashcard3.answers.last.id])
+# flashcard4.update(correct_answers: [flashcard4.answers.first.id])
+# flashcard5.update(correct_answers: [flashcard5.answers.first.id])
 
 # New multiple choice flahscard for second article
 flashcard2_1 = bjj_article.flashcards.create!({
   content: "Question 1 second article?",
-  flashcard_type: "multiple choice",
+  flashcard_type: "multiple_choice",
 })
 
 flashcard2_2 = bjj_article.flashcards.create!({
   content: "Question 2 second article?",
-  flashcard_type: "multiple choice",
+  flashcard_type: "multiple_choice",
 })
 
 flashcard2_3 = bjj_article.flashcards.create!({
   content: "Question 3 second article?",
-  flashcard_type: "multiple choice",
+  flashcard_type: "multiple_choice",
 })
 
 # Add answers
@@ -165,5 +165,20 @@ flashcard2_2.update(correct_answers: [
                                     flashcard2_2.answers.second.id,flashcard2_2.answers.first.id
                                     ])
 flashcard2_3.update(correct_answers: [flashcard2_3.answers.last.id])
+
+# New correct order flahscard for first article
+flashcard_order_1 = rails_article.flashcards.create!({
+  content: "Question 1?",
+  flashcard_type: "correct_order"
+})
+
+flashcard_order_1.answers << Answer.all.sample(3)
+flashcard_order_1.update(correct_answers: [
+  flashcard_order_1.answers.last.id,
+  flashcard_order_1.answers.first.id,
+  flashcard_order_1.answers.second.id
+])
+
+
 
 puts "Done."
