@@ -1,7 +1,7 @@
 <h2>Order</h2><div class="card-body">
   <h4><%= flashcard.content %></h4>
   <%= image_tag flashcard.image if flashcard.image.attached? %>
-  <% middle = @flashcard.correct_answers.count / 2 %>
+  <% middle = @flashcard.answers.count / 2 %>
 
   <div class="row">
     <!-- The fixed answers -->

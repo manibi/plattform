@@ -35,9 +35,14 @@ fighter_profession.users.create!({
 })
 
 puts "Creating topics..."
-developer_profession.topics.create!({
+developer_profession.topics.create!([
+  {
   name: "Back End Development"
-})
+  },
+  {
+    name: "Front End Development"
+  }
+])
 
 fighter_profession.topics.create!({
   name: "BJJ"
@@ -48,6 +53,7 @@ fighter_profession.topics.create!({
 # })
 
 back_end_dev_topic = developer_profession.topics.first
+front_end_dev_topic = developer_profession.topics.second
 bjj_topic          = fighter_profession.topics.first
 
 puts "Creating articles..."
@@ -55,6 +61,15 @@ back_end_dev_topic.articles.create!([
   {
   title: "Ruby on Rails",
   description: "Ruby on Rails, sometimes known as 'RoR or just 'Rails, is an open source framework for Web development in Ruby, an object-oriented programming (OOP) language similar to Perl and Python"
+  }
+])
+
+front_end_dev_topic.articles.create!([
+  {
+  title: "Javascript",
+  description: "Suchergebnisse
+  Hervorgehobenes Snippet aus dem Web
+  What is JavaScript ? JavaScript is a dynamic computer programming language. It is lightweight and most commonly used as a part of web pages, whose implementations allow client-side script to interact with the user and make dynamic pages. It is an interpreted programming language with object-oriented capabilities."
   }
 ])
 
@@ -73,7 +88,8 @@ bjj_topic.articles.create!([
 # end
 
 rails_article = back_end_dev_topic.articles.first
-bjj_article = bjj_topic.articles.first
+js_article    = front_end_dev_topic.articles.first
+bjj_article   = bjj_topic.articles.first
 
 puts "Creating chapters"
 rails_article.chapters.create!([
@@ -96,61 +112,116 @@ end
 
 puts "Creating flashcards..."
 # New multiple choice flahscard for first article
-# flashcard1 = rails_article.flashcards.create!({
-#   content: "Question 1?",
-#   flashcard_type: "multiple choice",
-# })
-
-# flashcard2 = rails_article.flashcards.create!({
-#   content: "Question 2?",
-#   flashcard_type: "multiple choice",
-# })
-
-# flashcard3 = rails_article.flashcards.create!({
-#   content: "Question 3?",
-#   flashcard_type: "multiple choice",
-# })
-
-# flashcard4 = rails_article.flashcards.create!({
-#   content: "Question 4?",
-#   flashcard_type: "multiple choice",
-# })
-
-# flashcard5 = rails_article.flashcards.create!({
-#   content: "Question 5?",
-#   flashcard_type: "multiple choice",
-# })
-
-
-# # Add answers
-# flashcard1.answers << Answer.all.sample(3)
-# flashcard2.answers << Answer.all.sample(3)
-# flashcard3.answers << Answer.all.sample(3)
-# flashcard4.answers << Answer.all.sample(3)
-# flashcard5.answers << Answer.all.sample(3)
-
-# # Add correct answer
-# flashcard1.update(correct_answers: [flashcard1.answers.first.id])
-# flashcard2.update(correct_answers: [
-#   flashcard2.answers.second.id,flashcard2.answers.first.id
-#   ])
-# flashcard3.update(correct_answers: [flashcard3.answers.last.id])
-# flashcard4.update(correct_answers: [flashcard4.answers.first.id])
-# flashcard5.update(correct_answers: [flashcard5.answers.first.id])
-
-# New multiple choice flahscard for second article
-flashcard2_1 = bjj_article.flashcards.create!({
-  content: "Question 1 multiple choice second article?",
+flashcard1_1 = rails_article.flashcards.create!({
+  content: "Question 1?",
   flashcard_type: "multiple_choice",
 })
 
-flashcard2_2 = bjj_article.flashcards.create!({
-  content: "Question 2 multiple choice second article?",
+flashcard1_2 = rails_article.flashcards.create!({
+  content: "Question 2?",
   flashcard_type: "multiple_choice",
 })
 
-flashcard2_3 = bjj_article.flashcards.create!({
-  content: "Question 3 multiple choice second article?",
+flashcard1_3 = rails_article.flashcards.create!({
+  content: "Question 3?",
+  flashcard_type: "multiple_choice",
+})
+
+flashcard1_4 = rails_article.flashcards.create!({
+  content: "Question 4?",
+  flashcard_type: "multiple_choice",
+})
+
+flashcard1_5 = rails_article.flashcards.create!({
+  content: "Question 5?",
+  flashcard_type: "multiple_choice",
+})
+
+
+# Add answers
+flashcard1_1.answers << Answer.all.sample(3)
+flashcard1_2.answers << Answer.all.sample(3)
+flashcard1_3.answers << Answer.all.sample(3)
+flashcard1_4.answers << Answer.all.sample(3)
+flashcard1_5.answers << Answer.all.sample(3)
+
+# Add correct answer
+flashcard1_1.update(correct_answers: [flashcard1_1.answers.first.id])
+flashcard1_2.update(correct_answers: [
+  flashcard1_2.answers.second.id,flashcard1_2.answers.first.id
+  ])
+flashcard1_3.update(correct_answers: [flashcard1_3.answers.last.id])
+flashcard1_4.update(correct_answers: [flashcard1_4.answers.first.id])
+flashcard1_5.update(correct_answers: [flashcard1_5.answers.first.id])
+
+# Add answers
+# flashcard2_1.answers << Answer.all.sample(3)
+# flashcard2_2.answers << Answer.all.sample(3)
+# flashcard2_3.answers << Answer.all.sample(3)
+
+# Add correct answer
+# flashcard2_1.update(correct_answers: [flashcard2_1.answers.first.id])
+# flashcard2_2.update(correct_answers: [
+#                                     flashcard2_2.answers.second.id,flashcard2_2.answers.first.id
+#                                     ])
+# flashcard2_3.update(correct_answers: [flashcard2_3.answers.last.id])
+
+# New correct order flahscard for first article
+flashcard_order1_1 = rails_article.flashcards.create!({
+  content: "Question 1? Order",
+  flashcard_type: "correct_order"
+})
+
+flashcard_order1_1.answers << Answer.all.sample(3)
+flashcard_order1_1.update(correct_answers: [
+  flashcard_order1_1.answers.last.id,
+  flashcard_order1_1.answers.first.id,
+  flashcard_order1_1.answers.second.id
+])
+
+# Flashcard - match answers - first article
+flashcard_match_1_1 = rails_article.flashcards.create!({
+  content: "Drag answers from the right column to match the left column",
+  flashcard_type: "match_answers"
+})
+flashcard_match_1_1.answers << Answer.all.sample(6)
+flashcard_match_1_1.update(correct_answers: [
+  flashcard_match_1_1.answers.fifth.id,
+  flashcard_match_1_1.answers.last.id,
+  flashcard_match_1_1.answers.fourth.id
+])
+
+# Flashcard - input numbers - first article
+flashcard_numbers_1 = rails_article.flashcards.create!({
+  content: "Soll ist",
+  flashcard_type: "input_numbers"
+})
+flashcard_numbers_1.update(correct_answers: [ 10, 100, 1000, 10_000 ])
+
+
+# First topic second article
+flashcard2_1 = js_article.flashcards.create!({
+  content: "Question 1?",
+  flashcard_type: "multiple_choice",
+})
+
+flashcard2_2 = js_article.flashcards.create!({
+  content: "Question 2?",
+  flashcard_type: "multiple_choice",
+})
+
+flashcard2_3 = js_article.flashcards.create!({
+  content: "Question 3?",
+  flashcard_type: "multiple_choice",
+})
+
+flashcard2_4 = js_article.flashcards.create!({
+  content: "Question 4?",
+  flashcard_type: "multiple_choice",
+})
+
+flashcard2_5 = js_article.flashcards.create!({
+  content: "Question 5?",
   flashcard_type: "multiple_choice",
 })
 
@@ -158,43 +229,54 @@ flashcard2_3 = bjj_article.flashcards.create!({
 flashcard2_1.answers << Answer.all.sample(3)
 flashcard2_2.answers << Answer.all.sample(3)
 flashcard2_3.answers << Answer.all.sample(3)
+flashcard2_4.answers << Answer.all.sample(3)
+flashcard2_5.answers << Answer.all.sample(3)
 
 # Add correct answer
 flashcard2_1.update(correct_answers: [flashcard2_1.answers.first.id])
 flashcard2_2.update(correct_answers: [
-                                    flashcard2_2.answers.second.id,flashcard2_2.answers.first.id
-                                    ])
+  flashcard2_2.answers.second.id,flashcard2_2.answers.first.id
+  ])
 flashcard2_3.update(correct_answers: [flashcard2_3.answers.last.id])
+flashcard2_4.update(correct_answers: [flashcard2_4.answers.first.id])
+flashcard2_5.update(correct_answers: [flashcard2_5.answers.first.id])
+
+# Add answers
+# flashcard2_1.answers << Answer.all.sample(3)
+# flashcard2_2.answers << Answer.all.sample(3)
+# flashcard2_3.answers << Answer.all.sample(3)
+
+# Add correct answer
+# flashcard2_1.update(correct_answers: [flashcard2_1.answers.first.id])
+# flashcard2_2.update(correct_answers: [
+#                                     flashcard2_2.answers.second.id,flashcard2_2.answers.first.id
+#                                     ])
+# flashcard2_3.update(correct_answers: [flashcard2_3.answers.last.id])
 
 # New correct order flahscard for first article
-# flashcard_order_1 = rails_article.flashcards.create!({
-#   content: "Question 1?",
-#   flashcard_type: "correct_order"
-# })
+flashcard_order2_1 = js_article.flashcards.create!({
+  content: "Question 1? Order",
+  flashcard_type: "correct_order"
+})
 
-# flashcard_order_1.answers << Answer.all.sample(3)
-# flashcard_order_1.update(correct_answers: [
-#   flashcard_order_1.answers.last.id,
-#   flashcard_order_1.answers.first.id,
-#   flashcard_order_1.answers.second.id
-# ])
-
-# flashcard_order_1 = rails_article.flashcards.create!({
-#   content: "Question 1?",
-#   flashcard_type: "correct_order"
-# })
+flashcard_order2_1.answers << Answer.all.sample(3)
+flashcard_order2_1.update(correct_answers: [
+  flashcard_order2_1.answers.last.id,
+  flashcard_order2_1.answers.first.id,
+  flashcard_order2_1.answers.second.id
+])
 
 # Flashcard - match answers - first article
-# flashcard_match_1 = rails_article.flashcards.create!({
-#   content: "Drag answers from the right column to match the left column",
-#   flashcard_type: "match_answers"
-# })
-# flashcard_match_1.answers << Answer.all.sample(6)
-# flashcard_match_1.update(correct_answers: [
-#   flashcard_match_1.answers.fifth.id,
-#   flashcard_match_1.answers.last.id,
-#   flashcard_match_1.answers.fourth.id
-# ])
+flashcard_match2_1 = js_article.flashcards.create!({
+  content: "Drag answers from the right column to match the left column",
+  flashcard_type: "match_answers"
+})
+flashcard_match2_1.answers << Answer.all.sample(6)
+flashcard_match2_1.update(correct_answers: [
+  flashcard_match2_1.answers.fifth.id,
+  flashcard_match2_1.answers.last.id,
+  flashcard_match2_1.answers.fourth.id
+])
 
 # Flashcard - input numbers - first article
 flashcard_numbers_1 = rails_article.flashcards.create!({

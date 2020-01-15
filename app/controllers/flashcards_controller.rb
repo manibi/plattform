@@ -80,6 +80,11 @@ class FlashcardsController < ApplicationController
     render "flashcards/show"
   end
 
+  # def result
+  #   @flashcard = Flashcard.find(params[:id])
+  #   @article = @flashcard.article
+  # end
+
   def results
     @article = Article.find(params[:article_id])
     @upcoming_articles = current_user.upcoming_articles
