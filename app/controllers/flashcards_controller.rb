@@ -38,8 +38,9 @@ class FlashcardsController < ApplicationController
   def answer_correct_order
     @flashcard = Flashcard.find(params[:id])
     @article = @flashcard.article
+
     # Check answers
-    @answers = set_correct_order_answer.to_h.sort_by {|_,v| v}.to_h.keys.map(&:to_i)
+    @answers = set_correct_order_answer.to_h.keys.map(&:to_i)
     @user_answer = @flashcard.correct_answers == @answers
 
     # Save flashcard
@@ -47,7 +48,6 @@ class FlashcardsController < ApplicationController
 
     # Show results
     render "flashcards/show"
-    # raise
   end
 
   def results

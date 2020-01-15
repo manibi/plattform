@@ -4,25 +4,21 @@
   <%= image_tag flashcard.image if flashcard.image.attached? %>
 
   <%= form_for answer_correct_order_article_flashcard_path(@article, @flashcard), url: {action: "answer_correct_order"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
-    <% @flashcard.answers.sort.each do |answer| %>
-      <div class="flashcard-answer">
-        <p class=
-           <% if action_name == "answer_correct_order"%>
-            <%= @user_answer ? "correct-answer" : "false-answer"  %>
-           <% end %>
-           style="position: relative; height: 30px;"
-        >
-          <%= answer.id %> - <%= answer.content %>
-          <%= text_field_tag "flashcard[answer][#{answer.id}]",
-                           nil,
-                           placeholder: "1",
-                           disabled: action_name == "answer_correct_order",
-                           style: 'position: absolute; right: 0; width: 50px'
-          %>
-          <%# <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png" %>
-        </p>
-      </div>
-  <% end %>
+    <ul class="answers" id="answers">
+      <% @flashcard.answers.sort.each do |answer| %>
+          <li class=
+            <% if action_name == "answer_correct_order"%>
+              <%= @user_answer ? "correct-answer" : "false-answer"  %>
+            <% end %>
+          >
+            <%= answer.id %> - <%= answer.content %>
+            <%= hidden_field_tag "flashcard[answer][#{answer.id}]",
+                                  answer.id
+            %>
+            <%# <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png" %>
+          </li>
+      <% end %>
+    </ul>
   <%= f.submit "Check",
                 class: "flashcard-btn btn btn-primary" if action_name == "show" %>
   <%= link_to "Next",

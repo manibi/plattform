@@ -1,0 +1,16 @@
+ul.answers {
+  list-style: none;
+
+  li {
+    border: 1px solid black;
+    padding: 1rem;
+
+    &:hover {
+      cursor: grab;
+    }
+  }
+}
+
+.blue-background {
+  background-color: skyblue;
+}
