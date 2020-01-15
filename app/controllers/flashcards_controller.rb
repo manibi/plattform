@@ -50,6 +50,36 @@ class FlashcardsController < ApplicationController
     render "flashcards/show"
   end
 
+  def answer_match
+    @flashcard = Flashcard.find(params[:id])
+    @article = @flashcard.article
+
+    # Check answers
+    @answers = set_correct_order_answer.to_h.keys.map(&:to_i)
+    @user_answer = @flashcard.correct_answers == @answers
+
+    # Save flashcard
+    @flashcard.save_answer_for!(current_user, @user_answer)
+
+    # Show results
+    render "flashcards/show"
+  end
+
+  def input_numbers
+    @flashcard = Flashcard.find(params[:id])
+    @article = @flashcard.article
+
+    # Check answers
+    @answers = set_correct_order_answer.to_h.values.map(&:to_i)
+    @user_answer = @flashcard.correct_answers == @answers
+
+    # Save flashcard
+    @flashcard.save_answer_for!(current_user, @user_answer)
+
+    # Show results
+    render "flashcards/show"
+  end
+
   def results
     @article = Article.find(params[:article_id])
     @upcoming_articles = current_user.upcoming_articles

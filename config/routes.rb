@@ -22,16 +22,17 @@ Rails.application.routes.draw do
     resources :flashcards, only: :show do
       member do
         post "answer_multiple_choice", to: "flashcards#answer_multiple_choice"
-        post "answer_correct_order", to: "flashcards#answer_correct_order"
-        get "next_flashcard", to: "flashcards#next_flashcard"
+        post "answer_correct_order",   to: "flashcards#answer_correct_order"
+        post "answer_match",           to: "flashcards#answer_match"
+        post "input_numbers",          to: "flashcards#input_numbers"
+        get "next_flashcard",          to: "flashcards#next_flashcard"
       end
     end
     get "quiz_results", to: "flashcards#results"
   end
 
-  get "welcome", to: "pages#welcome"
+  get "welcome",   to: "pages#welcome"
   get "dashboard", to: "pages#dashboard"
-
 
   root to: "pages#landing_page"
 end

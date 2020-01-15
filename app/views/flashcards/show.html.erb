@@ -1,12 +1,25 @@
 <h1>Quiz</h1>
 <div class="container">
   <div class="row">
-    <div class="col-md-10">
-    <% if @flashcard.flashcard_type == "multiple_choice" %>
-      <%= render "flashcards/multiple_choice", flashcard: @flashcard %>
-    <% elsif @flashcard.flashcard_type == "correct_order" %>
-      <%= render "flashcards/correct_order", flashcard: @flashcard %>
-    <% end %>
+    <div class="col-md-12">
+      <% case @flashcard.flashcard_type %>
+      <% when "multiple_choice" %>
+        <%= render "flashcards/multiple_choice", flashcard: @flashcard %>
+      <% when "correct_order" %>
+        <%= render "flashcards/correct_order", flashcard: @flashcard %>
+      <% when "match_answers" %>
+        <%= render "flashcards/match_answers", flashcard: @flashcard %>
+      <% when "input_numbers" %>
+        <%= render "flashcards/input_numbers", flashcard: @flashcard %>
+      <% end %>
+
+    <% #if @flashcard.flashcard_type == "multiple_choice" %>
+      <%#= render "flashcards/multiple_choice", flashcard: @flashcard %>
+    <%# elsif @flashcard.flashcard_type == "correct_order" %>
+      <%#= render "flashcards/correct_order", flashcard: @flashcard %>
+    <%# elsif @flashcard.flashcard_type == "match_answers" %>
+      <%#= render "flashcards/match_answers", flashcard: @flashcard %>
+    <%# end %>
     </div>
   </div>
 </div>

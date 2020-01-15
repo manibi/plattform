@@ -10,7 +10,7 @@ class Flashcard < ApplicationRecord
   validates :content, presence: true, allow_blank: false
   validates :article_id, presence: true
   validates :flashcard_type, presence: true, inclusion: {
-    in: ["multiple_choice", "correct_order"]
+    in: ["multiple_choice", "correct_order", "match_answers", "input_numbers"]
   }
   validates :image, content_type: {
                       in: %w[image/jpeg image/gif image/png],

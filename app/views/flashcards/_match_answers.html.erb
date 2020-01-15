@@ -1,0 +1,50 @@
+<h2>Order</h2><div class="card-body">
+  <h4><%= flashcard.content %></h4>
+  <%= image_tag flashcard.image if flashcard.image.attached? %>
+  <% middle = @flashcard.correct_answers.count / 2 %>
+
+  <div class="row">
+    <!-- The fixed answers -->
+    <div class="col">
+      <ul class="fixed-answers" id="fixed-answers">
+        <% @flashcard.answers.first(middle).each do |answer| %>
+            <li class=
+              <% if action_name == "answer_correct_order"%>
+                <%= @user_answer ? "correct-answer" : "false-answer"  %>
+              <% end %>
+            >
+              <%= answer.id %> - <%= answer.content %>
+            </li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="col">
+      <%= form_for answer_correct_order_article_flashcard_path(@article, @flashcard), url: {action: "answer_correct_order"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
+
+        <!-- The answers to drag, and actually check if correct -->
+        <ul class="answers" id="answers-drag">
+          <% @flashcard.answers.last(middle).each do |answer| %>
+              <li class=
+                <% if action_name == "answer_correct_order"%>
+                  <%= @user_answer ? "correct-answer" : "false-answer"  %>
+                <% end %>
+              >
+                <%= answer.id %> - <%= answer.content %>
+                <%= hidden_field_tag "flashcard[answer][#{answer.id}]",
+                                      answer.id
+                %>
+              </li>
+          <% end %>
+        </ul>
+    </div>
+  </div>
+        <%= f.submit "Check",
+                      class: "flashcard-btn btn btn-primary" if action_name == "show" %>
+        <%= link_to "Next",
+                  next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
+                  class: "flashcard-btn btn btn-primary" if action_name == "answer_correct_order" %>
+      <% end %>
+  <hr>
+    <p>correct answers</p>
+    <p><%= flashcard.correct_answers %></p>
+</div>

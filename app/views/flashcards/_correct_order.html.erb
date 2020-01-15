@@ -4,7 +4,7 @@
   <%= image_tag flashcard.image if flashcard.image.attached? %>
 
   <%= form_for answer_correct_order_article_flashcard_path(@article, @flashcard), url: {action: "answer_correct_order"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
-    <ul class="answers" id="answers">
+    <ul class="answers" id="answers-drag">
       <% @flashcard.answers.sort.each do |answer| %>
           <li class=
             <% if action_name == "answer_correct_order"%>

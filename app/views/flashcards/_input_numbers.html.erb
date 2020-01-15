@@ -1,0 +1,38 @@
+<h2>Order</h2><div class="card-body">
+  <h4><%= flashcard.content %></h4>
+  <%= image_tag flashcard.image if flashcard.image.attached? %>
+  <% soll_column = @flashcard.correct_answers.select{ |i| @flashcard.correct_answers.index(i).even?} %>
+  <% ist_column = @flashcard.correct_answers.select{ |i| @flashcard.correct_answers.index(i).odd?} %>
+  <%# middle = @flashcard.correct_answers.count / 2 %>
+
+  <div class="row" >
+    <h4>Soll</h4>
+    <h4 style="margin-left: 200px;">Ist</h4>
+  </div>
+
+  <%= form_for input_numbers_article_flashcard_path(@article, @flashcard), url: {action: "input_numbers"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
+
+
+        <ul class="answers-numbers row" id="answers" style="width: 400px">
+          <% @flashcard.correct_answers.each.with_index do |correct_answer, i| %>
+              <li class=
+                <% if action_name == "input_numbers"%>
+                  <%= @user_answer ? "correct-answer" : "false-answer"  %>
+                <% end %>
+                <%= i.even? ? "left-column" : "right-column" %>
+              >
+                <%= number_field_tag "flashcard[answer][#{i}]"
+                %>
+              </li>
+          <% end %>
+        </ul>
+    <%= f.submit "Check",
+                  class: "flashcard-btn btn btn-primary" if action_name == "show" %>
+    <%= link_to "Next",
+              next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
+              class: "flashcard-btn btn btn-primary" if action_name == "input_numbers" %>
+  <% end %>
+  <hr>
+    <p>correct answers</p>
+    <p><%= flashcard.correct_answers %></p>
+</div>

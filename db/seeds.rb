@@ -140,17 +140,17 @@ puts "Creating flashcards..."
 
 # New multiple choice flahscard for second article
 flashcard2_1 = bjj_article.flashcards.create!({
-  content: "Question 1 second article?",
+  content: "Question 1 multiple choice second article?",
   flashcard_type: "multiple_choice",
 })
 
 flashcard2_2 = bjj_article.flashcards.create!({
-  content: "Question 2 second article?",
+  content: "Question 2 multiple choice second article?",
   flashcard_type: "multiple_choice",
 })
 
 flashcard2_3 = bjj_article.flashcards.create!({
-  content: "Question 3 second article?",
+  content: "Question 3 multiple choice second article?",
   flashcard_type: "multiple_choice",
 })
 
@@ -167,18 +167,40 @@ flashcard2_2.update(correct_answers: [
 flashcard2_3.update(correct_answers: [flashcard2_3.answers.last.id])
 
 # New correct order flahscard for first article
-flashcard_order_1 = rails_article.flashcards.create!({
-  content: "Question 1?",
-  flashcard_type: "correct_order"
+# flashcard_order_1 = rails_article.flashcards.create!({
+#   content: "Question 1?",
+#   flashcard_type: "correct_order"
+# })
+
+# flashcard_order_1.answers << Answer.all.sample(3)
+# flashcard_order_1.update(correct_answers: [
+#   flashcard_order_1.answers.last.id,
+#   flashcard_order_1.answers.first.id,
+#   flashcard_order_1.answers.second.id
+# ])
+
+# flashcard_order_1 = rails_article.flashcards.create!({
+#   content: "Question 1?",
+#   flashcard_type: "correct_order"
+# })
+
+# Flashcard - match answers - first article
+# flashcard_match_1 = rails_article.flashcards.create!({
+#   content: "Drag answers from the right column to match the left column",
+#   flashcard_type: "match_answers"
+# })
+# flashcard_match_1.answers << Answer.all.sample(6)
+# flashcard_match_1.update(correct_answers: [
+#   flashcard_match_1.answers.fifth.id,
+#   flashcard_match_1.answers.last.id,
+#   flashcard_match_1.answers.fourth.id
+# ])
+
+# Flashcard - input numbers - first article
+flashcard_numbers_1 = rails_article.flashcards.create!({
+  content: "Soll ist",
+  flashcard_type: "input_numbers"
 })
-
-flashcard_order_1.answers << Answer.all.sample(3)
-flashcard_order_1.update(correct_answers: [
-  flashcard_order_1.answers.last.id,
-  flashcard_order_1.answers.first.id,
-  flashcard_order_1.answers.second.id
-])
-
-
+flashcard_numbers_1.update(correct_answers: [ 10, 100, 1000, 10_000 ])
 
 puts "Done."

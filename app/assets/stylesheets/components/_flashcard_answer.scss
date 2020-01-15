@@ -1,0 +1,36 @@
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul.answers,
+ul.fixed-answers {
+  li {
+    border: 1px solid black;
+    padding: 1rem;
+
+    &:hover {
+      cursor: grab;
+    }
+  }
+}
+
+ul.fixed-answers {
+  li {
+    &:hover {
+      cursor: default;
+    }
+  }
+}
+
+.blue-background {
+  background-color: skyblue;
+}
+
+.left-column {
+  justify-self: flex-start;
+}
+
+.right-column {
+  justify-self: flex-end;
+}

@@ -10,7 +10,7 @@ import "../stylesheets/application";
 import "./bootstrap_custom.js";
 import "@fortawesome/fontawesome-free/js/all";
 
-var el = document.getElementById("answers");
+var el = document.getElementById("answers-drag");
 if (el) {
   var sortable = new Sortable(el, {
     animation: 150,
