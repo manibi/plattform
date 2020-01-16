@@ -106,14 +106,15 @@ class FlashcardsController < ApplicationController
     @article = @flashcard.article
     @wrong_answered_flashcards = current_user.wrong_answered_flashcards_for(@article)
     @right_answered_flashcards = current_user.correct_answered_flashcards_for(@article)
+    flashcards_to_do = @article.flashcards.sort
 
-    if @article.flashcards.last != @flashcard && (!(@article.flashcards.last.in? @wrong_answered_flashcards) && !(@article.flashcards.last.in? @right_answered_flashcards))
-      @next_flashcard = @article.flashcards[@article.flashcards.sort.index(@flashcard) + 1]
+    if flashcards_to_do.last != @flashcard && (!(flashcards_to_do.last.in? @wrong_answered_flashcards) && !(flashcards_to_do.last.in? @right_answered_flashcards))
+      @next_flashcard = flashcards_to_do[flashcards_to_do.index(@flashcard) + 1]
+      # raise
     else
       @next_flashcard = @wrong_answered_flashcards.sample
     end
-
-    if @right_answered_flashcards.count == @article.flashcards.count
+    if @right_answered_flashcards.count == flashcards_to_do.count
       redirect_to article_quiz_results_path(@article)
     else
       redirect_to article_flashcard_path(@article, @next_flashcard)
