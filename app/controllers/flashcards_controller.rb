@@ -6,12 +6,13 @@ class FlashcardsController < ApplicationController
     @article = Article.find(params[:article_id])
 
     # Mark article as read
-    if @article.flashcards.first == @flashcard && !@article.read_for?(current_user)
-      @article.read_for!(current_user)
-    end
+    # if @article.flashcards.first == @flashcard && !@article.read_for?(current_user)
+    #   @article.read_for!(current_user)
+    # end
+    @article.read_for!(current_user) unless @article.read_for?(current_user)
 
     # Reset flashcards for this article if re-taking the quiz
-    if @article.flashcards.first == @flashcard && current_user.correct_answered_flashcards_for(@article).count == @article.flashcards.count
+    if @article.flashcards.sort.first == @flashcard && current_user.correct_answered_flashcards_for(@article).count == @article.flashcards.count
       Flashcard.reset_for!(current_user, @article)
     end
   end
@@ -108,9 +109,8 @@ class FlashcardsController < ApplicationController
     @right_answered_flashcards = current_user.correct_answered_flashcards_for(@article)
     flashcards_to_do = @article.flashcards.sort
 
-    if flashcards_to_do.last != @flashcard && (!(flashcards_to_do.last.in? @wrong_answered_flashcards) && !(flashcards_to_do.last.in? @right_answered_flashcards))
+    if flashcards_to_do.last != @flashcard && !current_user.answered?(flashcards_to_do.last)
       @next_flashcard = flashcards_to_do[flashcards_to_do.index(@flashcard) + 1]
-      # raise
     else
       @next_flashcard = @wrong_answered_flashcards.sample
     end
