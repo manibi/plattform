@@ -105,7 +105,7 @@ class FlashcardsController < ApplicationController
     @flashcard = Flashcard.find(params[:id])
     @article = @flashcard.article
     @wrong_answered_flashcards = current_user.wrong_answered_flashcards_for(@article)
-    @right_answered_flashcards = current_user.correct_answered_flashcards_for(@article)
+    @correct_answered_flashcards = current_user.correct_answered_flashcards_for(@article)
     flashcards_to_do = @article.flashcards.sort
 
     if flashcards_to_do.last != @flashcard && !current_user.answered?(flashcards_to_do.last)
@@ -113,7 +113,7 @@ class FlashcardsController < ApplicationController
     else
       @next_flashcard = @wrong_answered_flashcards.sample
     end
-    if @right_answered_flashcards.count == flashcards_to_do.count
+    if @correct_answered_flashcards.count == flashcards_to_do.count
       redirect_to article_quiz_results_path(@article)
     else
       redirect_to article_flashcard_path(@article, @next_flashcard)
@@ -124,6 +124,8 @@ class FlashcardsController < ApplicationController
 
   def set_multiple_choice_answer
     params.require(:flashcard).permit(answer_ids: []) if params[:flashcard]
+    raise
+
   end
 
   def set_correct_order_answer
