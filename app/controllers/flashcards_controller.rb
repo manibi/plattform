@@ -5,10 +5,6 @@ class FlashcardsController < ApplicationController
     @flashcard = Flashcard.find(params[:id])
     @article = Article.find(params[:article_id])
 
-    # Mark article as read
-    # if @article.flashcards.first == @flashcard && !@article.read_for?(current_user)
-    #   @article.read_for!(current_user)
-    # end
     @article.read_for!(current_user) unless @article.read_for?(current_user)
 
     # Reset flashcards for this article if re-taking the quiz
@@ -30,9 +26,12 @@ class FlashcardsController < ApplicationController
     if set_multiple_choice_answer
       @answers = set_multiple_choice_answer[:answer_ids].map(&:to_i)
       @user_answer = @answers.sort == @flashcard.correct_answers.sort
+    else
+      @user_answer = false
     end
 
     @flashcard.save_answer_for!(current_user, @user_answer)
+    # raise
     render "flashcards/show"
   end
 
