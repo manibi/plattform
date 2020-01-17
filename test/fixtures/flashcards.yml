@@ -1,19 +1,19 @@
-one:
-  content: "Some stupid question"
-  flashcard_type: "multiple choice"
+one_multiple_choice:
+  content: "Multiple choice question"
+  flashcard_type: "multiple_choice"
   article: first_article
 
 two:
   content: "Second stupid question"
-  flashcard_type: "multiple choice"
+  flashcard_type: "multiple_choice"
   article: first_article
 
 one_second_article:
   content: "Some stupid question"
-  flashcard_type: "multiple choice"
+  flashcard_type: "multiple_choice"
   article: second_article
 
 two_second_article:
   content: "Second stupid question"
-  flashcard_type: "multiple choice"
+  flashcard_type: "multiple_choice"
   article: second_article

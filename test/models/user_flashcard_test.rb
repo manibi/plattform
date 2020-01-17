@@ -3,7 +3,7 @@ require 'test_helper'
 class UserFlashcardTest < ActiveSupport::TestCase
   def setup
     @user = users(:bob)
-    @flashcard = flashcards(:one)
+    @flashcard = flashcards(:one_multiple_choice)
     @user_flashcard = @flashcard.user_flashcards.create!(user: @user)
   end
 

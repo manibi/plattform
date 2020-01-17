@@ -17,8 +17,8 @@ class ArticleInterfaceTest < ActionDispatch::IntegrationTest
 
     # display chapters
     @article.chapters.each do |chapter|
-      assert chapter.title, response.body
-      assert chapter.content, response.body
+        assert chapter.title, response.body
+        assert chapter.content, response.body
     end
 
     # display bookmark, unbookmark links
