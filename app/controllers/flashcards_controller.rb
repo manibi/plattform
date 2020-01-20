@@ -124,7 +124,7 @@ class FlashcardsController < ApplicationController
 
   def set_multiple_choice_answer
     params.require(:flashcard).permit(answer_ids: []) if params[:flashcard]
-    raise
+    # raise
 
   end
 

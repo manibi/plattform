@@ -26,7 +26,7 @@ class FlashcardsControllerTest < ActionDispatch::IntegrationTest
     assert_template "flashcards/show"
   end
 
-  test "should from flahscard page redirect if not logged in" do
+  test "should redirect from flahscard page if not logged in" do
     # logged out
     get root_path
     logout
@@ -74,7 +74,7 @@ class FlashcardsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_user_session_path
   end
 
-  test "should show the  results page if logged in" do
+  test "should show the results page if logged in" do
     # successful login
     get root_path
     login(@user)

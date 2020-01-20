@@ -30,7 +30,6 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
     @article.bookmark_for!(current_user)
     redirect_to @article
-    raise
   end
 
   def unbookmark
