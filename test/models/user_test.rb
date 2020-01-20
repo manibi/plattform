@@ -5,7 +5,7 @@ class UserTest < ActiveSupport::TestCase
     @profession = professions(:developer)
     @user = users(:bob)
     @topic = topics(:first_topic)
-    @flashcard = flashcards(:one)
+    @flashcard = flashcards(:one_multiple_choice)
     @flashcard2 = flashcards(:two)
   end
 

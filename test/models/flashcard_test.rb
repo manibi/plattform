@@ -3,11 +3,14 @@ require 'test_helper'
 class FlashcardTest < ActiveSupport::TestCase
   def setup
     @user = users(:bob)
-    @flashcard = flashcards(:one)
     @second_article = articles(:second_article)
+    @flashcard = flashcards(:one_multiple_choice)
+    @answer1 = answers(:answer1)
+    @answer2 = answers(:answer2)
+    @answer3 = answers(:answer3)
   end
 
-  test "the truth" do
+  test "valid flashcard" do
     assert @flashcard.valid?
   end
 
@@ -19,6 +22,14 @@ class FlashcardTest < ActiveSupport::TestCase
   test "should have a content text" do
     @flashcard.content = '  '
     assert_not @flashcard.valid?
+  end
+
+  test "multiple choice - should have at least one answer to choose from" do
+    assert_not @flashcard.answers.any?
+    assert_difference "@flashcard.answers.count", 1 do
+      @flashcard.answers << @answer1
+      @flashcard.save
+    end
   end
 
   test "should save one answered flashcard for a user" do
