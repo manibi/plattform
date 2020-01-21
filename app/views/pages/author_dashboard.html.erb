@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <p>
+        <em>* When author authorisation will be implemented: The reminder will be removed and the author dashbord will be updated</em>
+      </p>
+
+      <h2 class="mb-5">
+        Welcome<%= ", #{current_user.first_name}" if current_user.first_name.present? %>
+      </h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8">
+      <h4>Create a new...</h4>
+      <div class="row">
+        <%= link_to "Topic", "#", class: "btn btn-success ml-3" %>
+        <%= link_to "Article", "#", class: "btn btn-warning ml-3" %>
+        <%= link_to "Quiz", new_flashcard_path, class: "btn btn-info ml-3" %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,89 @@
+<% if @flashcard.errors.any? %>
+<ul>
+  <% @flashcard.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+</ul>
+<% end %>
+
+<%= form_with model: @flashcard  do |flashcard_form| %>
+  <div class="form-group">
+    <%= flashcard_form.label :content %>
+    <%= flashcard_form.text_area :content, class: "form-control" %>
+  </div>
+
+  <!--<div class="form-group">
+    <%= flashcard_form.label "Article id" %>
+    <%= flashcard_form.text_field "article", class: "form-control" %>
+  </div>-->
+
+  <div class="form-group">
+    <%# flashcard_types = Flashcard::FLASHCARD_TYPES.map { |type| [type, type] } %>
+    <%= flashcard_form.label "Article" %>
+    <%= flashcard_form.select "article",
+          options_for_select(
+            Article.all.map { |article| [article.title, article.id]},
+            @flashcard.article ? @flashcard.article.id : false
+          ) %>
+  </div>
+
+  <div class="form-group">
+    <% flashcard_types = Flashcard::FLASHCARD_TYPES.map { |type| [type, type] } %>
+    <%= flashcard_form.label  :flashcard_type %>
+    <%= flashcard_form.select :flashcard_type,
+      options_for_select(
+        flashcard_types,
+        @flashcard.flashcard_type ? @flashcard.flashcard_type: false
+      ) %>
+  </div>
+
+  <h2>Answers</h2>
+  <div class="answers" id="uniqAnswers">
+    <%= link_to_add_association 'New answer',
+                                flashcard_form, :answers,
+                                class: 'btn btn-success my-2',
+                                data: {
+                                  association_insert_node: '#uniqAnswers', association_insertion_method: :append
+                                } %>
+
+    <%= flashcard_form.fields_for :answers do |builder| %>
+      <%= render 'answer_fields', f: builder %>
+    <% end %>
+  </div>
+
+
+  <!--<div class="form-group mt-5">
+    <%#= flashcard_form.label :correct_answers %>
+    <%#= flashcard_form.text_field :correct_answers, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%# flashcard_types = Flashcard::FLASHCARD_TYPES.map { |type| [type, type] } %>
+    <%= flashcard_form.label :correct_answers %>
+    <%= flashcard_form.select :correct_answers,
+          options_for_select(
+            @flashcard.answers.map { |answer| [answer.content, answer.id]}
+          ),
+          {multiple: true} %>
+  </div>
+-->
+
+    <% if @flashcard.id %>
+      <%#= flashcard_form.collection_check_boxes :answer_ids, @flashcard.answers, :id, :content, checked: @flashcard.correct_answers.include?("28") %>
+
+    <% @flashcard.answers.each do |answer| %>
+      <label>
+        <%= check_box_tag "flashcard[correct_answers][]",
+                          answer.id,
+                          @flashcard.correct_answers.include?(answer.id.to_s),
+                          id: answer.id  %>
+        <%= answer.content %>
+      </label>
+      <% end %>
+      <%# raise %>
+    <% end %>
+
+  <div class="form-actions mt-5">
+    <%= flashcard_form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>

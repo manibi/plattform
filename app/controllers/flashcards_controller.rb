@@ -1,6 +1,11 @@
 class FlashcardsController < ApplicationController
   before_action :authenticate_user!
 
+  def new
+    @flashcard = Flashcard.new
+    @flashcard.answers.build
+  end
+
   def show
     @flashcard = Flashcard.find(params[:id])
     @article = Article.find(params[:article_id])
@@ -13,6 +18,41 @@ class FlashcardsController < ApplicationController
     end
   end
 
+  def create
+    @article_id = new_flashcard_params.delete("article").to_i
+    @article = Article.find(@article_id)
+    flashcard_params = new_flashcard_params.except(:article)
+    # flashcard_params[:correct_answers] = flashcard_params[:correct_answers].split
+    @flashcard = @article.flashcards.build(flashcard_params)
+
+    if @flashcard.save
+      flash[:notice] = "Flashcard created"
+      redirect_to edit_flashcard_path(@flashcard)
+    else
+      render :new
+    end
+  end
+
+  def edit
+    @flashcard = Flashcard.find(params[:id])
+  end
+
+  def update
+    @flashcard = Flashcard.find(params[:id])
+    flashcard_params = new_flashcard_params
+    # raise
+    flashcard_params[:article] = Article.find(flashcard_params[:article])
+    # debugger
+    # flashcard_params[:correct_answers] = flashcard_params[:correct_answers].split
+
+    if @flashcard.update(flashcard_params)
+      flash[:notice] = "Flashcard updated"
+      redirect_to edit_flashcard_path(@flashcard)
+    else
+      render :edit
+    end
+  end
+
   # user selects answer
   # send form
   # check answser
@@ -22,10 +62,11 @@ class FlashcardsController < ApplicationController
   def answer_multiple_choice
     @flashcard = Flashcard.find(params[:id])
     @article = @flashcard.article
+    @correct_answers = @flashcard.correct_answers.sort.map(&:to_i)
 
     if set_multiple_choice_answer
       @answers = set_multiple_choice_answer[:answer_ids].map(&:to_i)
-      @user_answer = @answers.sort == @flashcard.correct_answers.sort
+      @user_answer = @answers.sort ==  @correct_answers
     else
       @user_answer = false
     end
@@ -124,12 +165,14 @@ class FlashcardsController < ApplicationController
 
   def set_multiple_choice_answer
     params.require(:flashcard).permit(answer_ids: []) if params[:flashcard]
-    # raise
-
   end
 
   def set_correct_order_answer
     @flashcard = Flashcard.find(params[:id])
     params.require(:flashcard).require(:answer).permit! if params[:flashcard]
+  end
+
+  def new_flashcard_params
+    params.require(:flashcard).permit(:article, :flashcard_type, :content, correct_answers: [], answers_attributes: Answer.attribute_names.map(&:to_sym).push(:_destroy))
   end
 end

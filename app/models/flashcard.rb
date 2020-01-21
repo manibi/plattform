@@ -5,12 +5,18 @@ class Flashcard < ApplicationRecord
   has_many          :answers, through: :flashcard_answers
   has_one_attached  :image
 
+  accepts_nested_attributes_for :answers,
+                                allow_destroy: true,
+                                reject_if: proc { |att| att['content'].blank? }
+
   serialize :correct_answers, Array
+
+  FLASHCARD_TYPES = ["multiple_choice", "correct_order", "match_answers", "input_numbers"]
 
   validates :content, presence: true, allow_blank: false
   validates :article_id, presence: true
   validates :flashcard_type, presence: true, inclusion: {
-    in: ["multiple_choice", "correct_order", "match_answers", "input_numbers"]
+    in: FLASHCARD_TYPES
   }
   validates :image, content_type: {
                       in: %w[image/jpeg image/gif image/png],

@@ -1,7 +1,8 @@
 require("@rails/ujs").start();
-// require("turbolinks").start();
+require("turbolinks").start();
 require("@rails/activestorage").start();
 require("channels");
+require("jquery");
 
 // libraries
 import Sortable from "sortablejs";
@@ -9,6 +10,7 @@ import "bootstrap";
 import "../stylesheets/application";
 import "./bootstrap_custom.js";
 import "@fortawesome/fontawesome-free/js/all";
+import "cocoon";
 
 var el = document.getElementById("answers-drag");
 if (el) {

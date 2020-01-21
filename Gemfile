@@ -22,6 +22,7 @@ gem 'bootstrap',  '~>4.3.1'
 gem 'image_processing', '~> 1.2'
 gem 'mini_magick', '>= 4.9.5'
 gem 'faker'
+gem 'cocoon'
 
 group :development, :test do
   gem 'brakeman',     '4.7.2'

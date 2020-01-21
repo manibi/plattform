@@ -7,7 +7,7 @@
       <div class="flashcard-answer">
         <label
           class=
-          <%= "correct-answer" if action_name == "answer_multiple_choice" && @flashcard.correct_answers.include?(answer.id)  %>
+          <%= "correct-answer" if action_name == "answer_multiple_choice" &&  @correct_answers.include?(answer.id)  %>
           <%= "false-answer" if action_name == "answer_multiple_choice" &&
           @answers &.include?(answer.id) %>
         >
