@@ -1,24 +1,18 @@
 <% if @flashcard.errors.any? %>
-<ul>
-  <% @flashcard.errors.full_messages.each do |msg| %>
-    <li><%= msg %></li>
-  <% end %>
-</ul>
+  <ul>
+    <% @flashcard.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
 <% end %>
 
-<%= form_with model: @flashcard  do |flashcard_form| %>
+<%= form_with model: @flashcard, local: true  do |flashcard_form| %>
   <div class="form-group">
     <%= flashcard_form.label :content %>
     <%= flashcard_form.text_area :content, class: "form-control" %>
   </div>
 
-  <!--<div class="form-group">
-    <%= flashcard_form.label "Article id" %>
-    <%= flashcard_form.text_field "article", class: "form-control" %>
-  </div>-->
-
   <div class="form-group">
-    <%# flashcard_types = Flashcard::FLASHCARD_TYPES.map { |type| [type, type] } %>
     <%= flashcard_form.label "Article" %>
     <%= flashcard_form.select "article",
           options_for_select(
@@ -55,37 +49,19 @@
     <%= flashcard_form.file_field :image %>
   </div>
 
-
-  <!--<div class="form-group mt-5">
-    <%#= flashcard_form.label :correct_answers %>
-    <%#= flashcard_form.text_field :correct_answers, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%# flashcard_types = Flashcard::FLASHCARD_TYPES.map { |type| [type, type] } %>
-    <%= flashcard_form.label :correct_answers %>
-    <%= flashcard_form.select :correct_answers,
-          options_for_select(
-            @flashcard.answers.map { |answer| [answer.content, answer.id]}
-          ),
-          {multiple: true} %>
-  </div>
--->
-
-    <% if @flashcard.id %>
-      <%#= flashcard_form.collection_check_boxes :answer_ids, @flashcard.answers, :id, :content, checked: @flashcard.correct_answers.include?("28") %>
-    <h3>Choose correct answer</h3>
+  <% if @flashcard.persisted? %>
+    <h3>Correct answers</h3>
     <% @flashcard.answers.each do |answer| %>
-      <label>
-        <%= check_box_tag "flashcard[correct_answers][]",
-                          answer.id,
-                          @flashcard.correct_answers.include?(answer.id.to_s),
-                          id: answer.id  %>
-        <%= answer.content %>
-      </label>
+
+      <% case @flashcard.flashcard_type %>
+        <% when 'multiple_choice' %>
+          <%= render 'correct_answers_multiple_choice', answer: answer %>
+        <% when 'correct_order' %>
+          <%= render 'correct_answers_order', answer: answer, flashcard: flashcard %>
       <% end %>
-      <%# raise %>
+
     <% end %>
+  <% end %>
 
   <div class="form-actions mt-5">
     <%= flashcard_form.submit class: "btn btn-primary" %>

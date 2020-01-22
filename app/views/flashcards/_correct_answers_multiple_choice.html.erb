@@ -1,0 +1,7 @@
+<label>
+  <%= check_box_tag "flashcard[correct_answers][]",
+                    answer.id,
+                    @flashcard.correct_answers.include?(answer.id.to_s),
+                    id: answer.id  %>
+  <%= answer.content %>
+</label>

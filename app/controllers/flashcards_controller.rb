@@ -40,10 +40,11 @@ class FlashcardsController < ApplicationController
   def update
     @flashcard = Flashcard.find(params[:id])
     flashcard_params = new_flashcard_params
-    # raise
     flashcard_params[:article] = Article.find(flashcard_params[:article])
-    # debugger
-    # flashcard_params[:correct_answers] = flashcard_params[:correct_answers].split
+
+    if @flashcard.flashcard_type == "correct_order"
+      flashcard_params[:correct_answers] = flashcard_params[:correct_answers].map { |order| @flashcard.answers[order.to_i - 1].id }
+    end
 
     if @flashcard.update(flashcard_params)
       flash[:notice] = "Flashcard updated"
