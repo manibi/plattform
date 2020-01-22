@@ -12,9 +12,10 @@ import "./bootstrap_custom.js";
 import "@fortawesome/fontawesome-free/js/all";
 import "cocoon";
 
-var el = document.getElementById("answers-drag");
-if (el) {
-  var sortable = new Sortable(el, {
+const flashcardDragListEl = document.getElementById("answers-drag");
+
+if (flashcardDragListEl) {
+  const sortable = new Sortable(el, {
     animation: 150,
     ghostClass: "blue-background"
   });

@@ -1,4 +1,10 @@
 <div class="nested-fields">
-    <%= f.text_area :content, placeholder: "Answer content...", class: "form-control"%>
-    <%= link_to_remove_association "remove answer", f, class: 'btn btn-primary btn-xs' %>
+  <div class="row mt-3">
+      <div class="col-10">
+        <%= f.text_area :content, placeholder: "Answer content...", class: "form-control"%>
+      </div>
+      <div class="col-2">
+        <%= link_to_remove_association "remove answer", f, class: 'btn btn-primary btn-xs' %>
+      </div>
+  </div>
 </div>

@@ -1,7 +1,7 @@
 <h1>Quiz</h1>
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-8">
       <% case @flashcard.flashcard_type %>
       <% when "multiple_choice" %>
         <%= render "flashcards/multiple_choice", flashcard: @flashcard %>
@@ -21,5 +21,25 @@
       <%#= render "flashcards/match_answers", flashcard: @flashcard %>
     <%# end %>
     </div>
+    <% if @flashcard.image.attached? %>
+      <div class="col-md-4">
+        <!-- Button trigger modal -->
+        <button type="button" class="flashcard-image__thumb" data-toggle="modal" data-target="#flashcardImage">
+          <%= cl_image_tag @flashcard.image.key,
+                            width: 200, height: 100, crop: :fill %>
+        </button>
+      </div>
+    <% end %>
   </div>
 </div>
+
+<% if @flashcard.image.attached? %>
+  <!-- Modal -->
+  <div class="modal fade" id="flashcardImage" tabindex="-1" role="dialog" aria-labelledby="flashcardImage" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="img">
+      <div class="modal-content">
+        <%= cl_image_tag @flashcard.image.key %>
+      </div>
+    </div>
+  </div>
+<% end %>

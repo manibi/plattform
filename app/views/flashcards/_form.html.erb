@@ -51,6 +51,10 @@
     <% end %>
   </div>
 
+  <div class="form-group mt-5">
+    <%= flashcard_form.file_field :image %>
+  </div>
+
 
   <!--<div class="form-group mt-5">
     <%#= flashcard_form.label :correct_answers %>
@@ -70,7 +74,7 @@
 
     <% if @flashcard.id %>
       <%#= flashcard_form.collection_check_boxes :answer_ids, @flashcard.answers, :id, :content, checked: @flashcard.correct_answers.include?("28") %>
-
+    <h3>Choose correct answer</h3>
     <% @flashcard.answers.each do |answer| %>
       <label>
         <%= check_box_tag "flashcard[correct_answers][]",

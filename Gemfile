@@ -23,6 +23,7 @@ gem 'image_processing', '~> 1.2'
 gem 'mini_magick', '>= 4.9.5'
 gem 'faker'
 gem 'cocoon'
+gem 'cloudinary', '~> 1.13.0'
 
 group :development, :test do
   gem 'brakeman',     '4.7.2'

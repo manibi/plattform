@@ -173,6 +173,6 @@ class FlashcardsController < ApplicationController
   end
 
   def new_flashcard_params
-    params.require(:flashcard).permit(:article, :flashcard_type, :content, correct_answers: [], answers_attributes: Answer.attribute_names.map(&:to_sym).push(:_destroy))
+    params.require(:flashcard).permit(:article, :image, :flashcard_type, :content, correct_answers: [], answers_attributes: Answer.attribute_names.map(&:to_sym).push(:_destroy))
   end
 end
