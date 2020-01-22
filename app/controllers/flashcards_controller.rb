@@ -8,8 +8,8 @@ class FlashcardsController < ApplicationController
 
   def show
     @flashcard = Flashcard.find(params[:id])
-    @article = Article.find(params[:article_id])
-
+    # @article = Article.find(params[:article_id])
+    @article = @flashcard.article
     @article.read_for!(current_user) unless @article.read_for?(current_user)
 
     # Reset flashcards for this article if re-taking the quiz
