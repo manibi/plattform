@@ -1,13 +1,12 @@
 <h2>Order</h2><div class="card-body">
   <h4><%= flashcard.content %></h4>
-  <%= image_tag flashcard.image if flashcard.image.attached? %>
-  <% middle = @flashcard.answers.count / 2 %>
+  <%# middle = @flashcard.answers.count / 2 %>
 
   <div class="row">
     <!-- The fixed answers -->
     <div class="col">
       <ul class="fixed-answers" id="fixed-answers">
-        <% @flashcard.answers.first(middle).each do |answer| %>
+        <% @static_answers.each do |answer| %>
             <li class=
               <% if action_name == "answer_correct_order"%>
                 <%= @user_answer ? "correct-answer" : "false-answer"  %>
@@ -23,7 +22,7 @@
 
         <!-- The answers to drag, and actually check if correct -->
         <ul class="answers" id="answers-drag">
-          <% @flashcard.answers.last(middle).each do |answer| %>
+          <% @dragabble_answers.shuffle.each do |answer| %>
               <li class=
                 <% if action_name == "answer_correct_order"%>
                   <%= @user_answer ? "correct-answer" : "false-answer"  %>

@@ -1,6 +1,6 @@
 class Flashcard < ApplicationRecord
   belongs_to        :article
-  has_many          :user_flashcards
+  has_many          :user_flashcards, dependent: :destroy
   has_many          :flashcard_answers, dependent: :destroy
   has_many          :answers, through: :flashcard_answers
   has_one_attached  :image

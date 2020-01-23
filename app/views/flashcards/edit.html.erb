@@ -4,9 +4,18 @@
     <h2>Edit Flashcard page</h2>
   </div>
 
+  <div class="alert-info">
+    <p class="p-3">For match answers flashcard - add the correct answers in the same order. 1 matches the first one added now, usw...</p>
+  </div>
+
   <div class="row">
     <div class="col-md-8">
       <%= render "form", flashcard: @flashcard %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <%= link_to "New Flashcard", new_flashcard_path, class: "btn btn-success mt-3" %>
     </div>
   </div>
 </div>

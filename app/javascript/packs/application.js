@@ -16,7 +16,6 @@ import "cocoon";
 const flashcardDragListEl = document.getElementById("answers-drag");
 
 if (flashcardDragListEl) {
-  console.log("page has loaded!");
   const sortable = new Sortable(flashcardDragListEl, {
     animation: 150,
     ghostClass: "blue-background"

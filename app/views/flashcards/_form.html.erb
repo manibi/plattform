@@ -49,17 +49,20 @@
     <%= flashcard_form.file_field :image %>
   </div>
 
+<!-- Display posibility to choose the correct answers if needed -->
   <% if @flashcard.persisted? %>
-    <h3>Correct answers</h3>
-    <% @flashcard.answers.each do |answer| %>
 
+    <% if @flashcard.flashcard_type != "match_answers" %>
+      <h3>Correct answers</h3>
+    <% end %>
+
+    <% @flashcard.answers.each do |answer| %>
       <% case @flashcard.flashcard_type %>
         <% when 'multiple_choice' %>
           <%= render 'correct_answers_multiple_choice', answer: answer %>
         <% when 'correct_order' %>
           <%= render 'correct_answers_order', answer: answer, flashcard: flashcard %>
       <% end %>
-
     <% end %>
   <% end %>
 

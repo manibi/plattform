@@ -2,3 +2,10 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+.fixed-answers,
+.answers {
+  li {
+    margin-top: 1rem;
+  }
+}
