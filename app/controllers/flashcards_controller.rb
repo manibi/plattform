@@ -3,11 +3,14 @@ class FlashcardsController < ApplicationController
 
   def new
     @flashcard = Flashcard.new
+    authorize @flashcard
     @flashcard.answers.build
   end
 
   def show
     @flashcard = Flashcard.find(params[:id])
+    authorize @flashcard
+
     @article = @flashcard.article
     @article.read_for!(current_user) unless @article.read_for?(current_user)
 
@@ -23,6 +26,9 @@ class FlashcardsController < ApplicationController
   end
 
   def create
+    @new_flashcard = Flashcard.new
+    authorize @new_flashcard
+
     @article_id = new_flashcard_params.delete("article").to_i
     @article = Article.find(@article_id)
     flashcard_params = new_flashcard_params.except(:article)
@@ -39,10 +45,13 @@ class FlashcardsController < ApplicationController
 
   def edit
     @flashcard = Flashcard.find(params[:id])
+    authorize @flashcard
   end
 
   def update
     @flashcard = Flashcard.find(params[:id])
+    authorize @flashcard
+
     flashcard_params = new_flashcard_params
     flashcard_params[:article] = Article.find(flashcard_params[:article])
 
@@ -67,6 +76,8 @@ class FlashcardsController < ApplicationController
   # render btn to next_flashcard
   def answer_multiple_choice
     @flashcard = Flashcard.find(params[:id])
+    authorize @flashcard, :show?
+
     @article = @flashcard.article
     @correct_answers = @flashcard.correct_answers.sort.map(&:to_i)
 
@@ -84,6 +95,8 @@ class FlashcardsController < ApplicationController
 
   def answer_correct_order
     @flashcard = Flashcard.find(params[:id])
+    authorize @flashcard, :show?
+
     @article = @flashcard.article
 
     if @flashcard.flashcard_type == 'match_answers'
@@ -104,6 +117,8 @@ class FlashcardsController < ApplicationController
 
   def input_numbers
     @flashcard = Flashcard.find(params[:id])
+    authorize @flashcard, :show?
+
     @article = @flashcard.article
 
     # Check answers
@@ -124,6 +139,8 @@ class FlashcardsController < ApplicationController
 
   def results
     @article = Article.find(params[:article_id])
+    authorize @article, :show?
+
     @upcoming_articles = current_user.upcoming_articles
     @all_answered_flashcards = current_user.answered_flashcards_for(@article)
 
@@ -140,6 +157,8 @@ class FlashcardsController < ApplicationController
   # Return next flashcard or flashcard results
   def next_flashcard
     @flashcard = Flashcard.find(params[:id])
+    authorize @flashcard, :show?
+
     @article = @flashcard.article
     @wrong_answered_flashcards = current_user.wrong_answered_flashcards_for(@article)
     @correct_answered_flashcards = current_user.correct_answered_flashcards_for(@article)

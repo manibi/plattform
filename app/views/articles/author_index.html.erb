@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>Author articles</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <ul class="list-group">
+        <% Profession.all.each do |profession| %>
+          <li class="list-group-item list-group-item-primary">
+            Profession: <%= profession.name %>
+
+              <% profession.topics.each do |topic| %>
+                <li class="list-group-item">
+                  Topic: <%= topic.name %>
+
+                  <% topic.articles. each do |article| %>
+                      <li class="list-group-item">
+                        <%= link_to article.title, article %>
+                      </li>
+                  <%end %>
+
+                </li>
+              <% end %>
+
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

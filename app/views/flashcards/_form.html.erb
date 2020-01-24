@@ -8,7 +8,7 @@
 
 <%= form_with model: @flashcard, local: true  do |flashcard_form| %>
   <div class="form-group">
-    <%= flashcard_form.label :content %>
+    <%= flashcard_form.label :content, "Question" %>
     <%= flashcard_form.text_area :content, class: "form-control" %>
   </div>
 

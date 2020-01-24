@@ -4,6 +4,9 @@ class User < ApplicationRecord
   has_many    :articles, through: :user_articles
   has_many    :user_flashcards
 
+  enum role: [:student, :author, :company, :admin]
+  after_initialize :set_default_role, if: :new_record?
+
   # TODO: implement recoverable
   # TODO: override the devise controller - do not allow users to update the username
   # TODO: the admin should be able to reset user passwords
@@ -18,6 +21,11 @@ class User < ApplicationRecord
 
   validates :username, presence: true, uniqueness: true, length: { minimum: 6 }
   validates :profession_id, presence: true
+
+  # Set default role to student
+  def set_default_role
+    self.role ||= :student
+  end
 
   # Remove devise email validations
   def email_required?

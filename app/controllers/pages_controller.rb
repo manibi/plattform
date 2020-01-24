@@ -5,8 +5,10 @@ class PagesController < ApplicationController
   end
 
   def dashboard
+    authorize current_user, :show?
   end
 
   def author_dashboard
+    authorize current_user
   end
 end

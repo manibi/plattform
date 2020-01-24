@@ -25,6 +25,12 @@ fighter_profession   = Profession.second
 
 puts "Creating users..."
 developer_profession.users.create!({
+  username: "author-login",
+  password: "password",
+  role: "author"
+})
+
+developer_profession.users.create!({
     username: "login-string",
     password: "password"
 })

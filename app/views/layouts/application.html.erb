@@ -32,12 +32,19 @@
           <li class="nav-item">
             <%= link_to "Profile", profile_path, class: "nav-link" %>
           </li>
-          <li class="nav-item">
-            <%= link_to "Student Dashboard", dashboard_path, class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Author Dashboard", author_dashboard_path, class: "nav-link btn-warning" %>
-          </li>
+
+          <% if current_user.student? %>
+            <li class="nav-item">
+              <%= link_to "Dashboard", dashboard_path, class: "nav-link" %>
+            </li>
+          <% end %>
+
+          <% if current_user.author? %>
+            <li class="nav-item">
+              <%= link_to "Author Dashboard", author_dashboard_path, class: "nav-link btn-warning" %>
+            </li>
+          <% end %>
+
           <li class="nav-item">
             <%= link_to "Articles", articles_path, class: "nav-link" %>
           </li>
