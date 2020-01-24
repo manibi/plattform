@@ -16,7 +16,7 @@
     <%= flashcard_form.label "Article" %>
     <%= flashcard_form.select "article",
           options_for_select(
-            Article.all.map { |article| [article.title, article.id]},
+            @articles.map { |article| [article.title, article.id]},
             @flashcard.article ? @flashcard.article.id : false
           ) %>
   </div>

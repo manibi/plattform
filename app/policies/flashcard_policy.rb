@@ -12,7 +12,7 @@ class FlashcardPolicy < ApplicationPolicy
   end
 
   def update?
-    user.author?
+    user.author? && record.article.topic.profession == user.profession
   end
 
   def edit?

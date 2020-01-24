@@ -32,8 +32,4 @@ class Article < ApplicationRecord
   def unbookmark_for!(user)
     UserArticle.where(user: user, article: self).update(bookmarked: false)
   end
-
-  # Return next flashcard that
-  # def next_flashcard
-  # end
 end

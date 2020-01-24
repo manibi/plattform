@@ -4,6 +4,7 @@ class FlashcardsController < ApplicationController
   def new
     @flashcard = Flashcard.new
     authorize @flashcard
+    @articles = current_user.all_articles
     @flashcard.answers.build
   end
 

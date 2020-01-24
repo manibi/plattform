@@ -1,14 +1,14 @@
 class UserPolicy < ApplicationPolicy
   def show?
-    is_user? || user.admin?
+    current_user? || user.admin?
   end
 
   def author_dashboard?
-    is_user? && user.author?
+    current_user? && user.author?
   end
 
   def dashboard?
-    is_user? && user.student?
+    current_user? && user.student?
   end
 
   class Scope < Scope
@@ -21,7 +21,7 @@ class UserPolicy < ApplicationPolicy
 
   private
 
-  def is_user?
+  def current_user?
     record == user
   end
 end

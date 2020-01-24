@@ -5,14 +5,12 @@ class ArticlesController < ApplicationController
     @upcoming_articles = policy_scope(Article)
     @bookmarked_articles = current_user.bookmarked_articles
     @read_articles = current_user.read_articles
-    # @upcoming_articles = current_user.upcoming_articles
 
-    if current_user.student?
-      render 'articles/index'
-    else
-      render 'articles/author_index'
-    end
-    # render current_user.student? ? 'articles/index' : 'articles/author_index'
+    # Author view
+    @topics = current_user.profession.topics
+
+    # Render views for student or author
+    render current_user.student? ? 'articles/index' : 'articles/author_index'
   end
 
   # Set all flashcard answers to false for one article when showing it
@@ -41,6 +39,8 @@ class ArticlesController < ApplicationController
     authorize @article, :show?
 
     @article.bookmark_for!(current_user)
+    @article.read_for!(current_user) unless @article.read_for?(current_user)
+
     redirect_to @article
   end
 

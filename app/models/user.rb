@@ -40,6 +40,10 @@ class User < ApplicationRecord
     false
   end
 
+  def all_articles
+    Article.joins(:topic).where(topic_id: self.profession.topics)
+  end
+
   def bookmarked_articles
     Article.joins(:user_articles).where(user_articles: {
       user: self,
