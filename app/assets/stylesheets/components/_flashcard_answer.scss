@@ -3,6 +3,18 @@ ul {
   padding: 0;
 }
 
+.soll-haben-view {
+  .add_fields {
+    display: block;
+    max-width: 200px;
+  }
+
+  .nested-fields {
+    display: inline-block;
+    width: 45%;
+  }
+}
+
 .table-view {
   .add_fields {
     display: block;
@@ -11,7 +23,7 @@ ul {
 
   .nested-fields {
     display: inline-block;
-    max-width: 50%;
+    width: 22%;
   }
 }
 

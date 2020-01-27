@@ -1,0 +1,87 @@
+<div class="card-body">
+  <h4><%= flashcard.content %></h4>
+
+  <%= form_for soll_ist_article_flashcard_path(@article, @flashcard), url: {action: "soll_ist"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
+
+    <table class="table table-bordered">
+      <thead>
+          <tr>
+            <th>#</th>
+            <% @table_headings.each do |table_heading| %>
+            <th scope="col">
+              <%= table_heading %>
+            </th>
+          <% end %>
+          </tr>
+      </thead>
+      <tbody>
+
+              <% j = -1 %>
+
+          <% @table_answer_rows.each.with_index do |answer_row, i| %>
+            <% if (i % 4).even? %>
+              <tr>
+            <% end %>
+              <td><%= i + 1 %></td>
+
+              <% answer_row.each do |correct_answer| %>
+                <td class=
+                  <% if action_name == "soll_ist"%>
+                    <%= @user_answer ? "correct-answer" : "false-answer"  %>
+                  <% end %>
+                >
+                    <%= number_field_tag "flashcard[answer][#{j += 1 }]",
+                      (correct_answer if action_name == "soll_ist")
+                    %>
+
+                  <%#= correct_answer %>
+                </td>
+              <% end %>
+
+              <% if (i % 4).even? %>
+                </tr>
+             <% end %>
+          <% end %>
+
+
+
+
+          <!--<th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+          <td>@mdo</td>-->
+
+    </table>
+
+<!--
+
+        <ul class="answers-numbers row" id="answers" style="width: 400px">
+
+          <%# @flashcard.correct_answers.each.with_index do |correct_answer, i| %>
+              <li
+                style="padding: 10px;"
+                class=
+                <%# if action_name == "soll_ist"%>
+                  <%#= @user_answer ? "correct-answer" : "false-answer"  %>
+                <%# end %>
+                <%#= i.even? ? "left-column" : "right-column" %>
+              >
+                <%#= number_field_tag "flashcard[answer][#{i}]",
+                     (correct_answer if action_name == "soll_ist")
+                %>
+              </li>
+              <%# raise %>
+          <%# end %>
+        </ul>
+        -->
+    <%= f.submit "Check",
+                  class: "flashcard-btn btn btn-primary" if action_name == "show" %>
+    <%= link_to "Next",
+              next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
+              class: "flashcard-btn btn btn-primary" if action_name == "soll_ist" %>
+  <% end %>
+  <hr>
+    <p>correct answers</p>
+    <p><%= flashcard.correct_answers %></p>
+</div>

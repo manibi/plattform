@@ -1,7 +1,18 @@
 <h1>Quiz</h1>
 <div class="container">
+    <div class="row">
+          <% if @flashcard.image.attached? %>
+      <div class="col-md-4" style="margin-left: auto;">
+        <!-- Button trigger modal -->
+        <button type="button" class="flashcard-image__thumb" data-toggle="modal" data-target="#flashcardImage">
+          <%= cl_image_tag @flashcard.image.key,
+                            width: 200, height: 100, crop: :fill %>
+        </button>
+      </div>
+    <% end %>
+    </div>
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
       <% case @flashcard.flashcard_type %>
       <% when "multiple_choice" %>
         <%= render "flashcards/multiple_choice", flashcard: @flashcard %>
@@ -11,25 +22,10 @@
         <%= render "flashcards/match_answers", flashcard: @flashcard %>
       <% when "soll_ist" %>
         <%= render "flashcards/soll_ist", flashcard: @flashcard %>
+      <% when "table_quiz" %>
+        <%= render "flashcards/table_quiz", flashcard: @flashcard %>
       <% end %>
-
-    <% #if @flashcard.flashcard_type == "multiple_choice" %>
-      <%#= render "flashcards/multiple_choice", flashcard: @flashcard %>
-    <%# elsif @flashcard.flashcard_type == "correct_order" %>
-      <%#= render "flashcards/correct_order", flashcard: @flashcard %>
-    <%# elsif @flashcard.flashcard_type == "match_answers" %>
-      <%#= render "flashcards/match_answers", flashcard: @flashcard %>
-    <%# end %>
     </div>
-    <% if @flashcard.image.attached? %>
-      <div class="col-md-4">
-        <!-- Button trigger modal -->
-        <button type="button" class="flashcard-image__thumb" data-toggle="modal" data-target="#flashcardImage">
-          <%= cl_image_tag @flashcard.image.key,
-                            width: 200, height: 100, crop: :fill %>
-        </button>
-      </div>
-    <% end %>
   </div>
 </div>
 

@@ -1,6 +1,8 @@
 class FlashcardsController < ApplicationController
   before_action :authenticate_user!
 
+  # TODO: check for floats input not only integers - table quiz soll_ist
+
   def new
     @flashcard = Flashcard.new
     authorize @flashcard
@@ -15,9 +17,14 @@ class FlashcardsController < ApplicationController
     @article = @flashcard.article
     @article.read_for!(current_user) unless @article.read_for?(current_user)
 
-    if @flashcard.flashcard_type == 'match_answers'
+    if @flashcard.flashcard_type == "match_answers"
       @dragabble_answers  = Answer.find(@flashcard.correct_answers)
       @static_answers     = Answer.find(@flashcard.answers.pluck(:id) - @flashcard.correct_answers)
+    end
+
+    if @flashcard.flashcard_type == "table_quiz"
+     @table_headings = @flashcard.answers.pluck(:content).select { |v| v =~ /\D/ }
+     @table_answer_rows =  @flashcard.correct_answers.each_slice(4).to_a
     end
 
     # Reset flashcards for this article if re-taking the quiz
@@ -36,7 +43,8 @@ class FlashcardsController < ApplicationController
     @flashcard = @article.flashcards.build(flashcard_params)
 
     if @flashcard.save
-      set_correct_answers if %w[match_answers soll_ist].include? @flashcard.flashcard_type
+      # raise
+      set_correct_answers if %w[match_answers soll_ist table_quiz].include? @flashcard.flashcard_type
 
       # set_correct_answers if @flashcard.flashcard_type == "match_answers"
       flash[:notice] = "Flashcard created"
@@ -64,18 +72,8 @@ class FlashcardsController < ApplicationController
       flashcard_params[:correct_answers] = flashcard_params[:correct_answers].map { |order| @flashcard.answers[order.to_i - 1].id }
     end
 
-    # if @flashcard.flashcard_type == "soll_ist"
-    #   flashcard_params[:correct_answers] = flashcard_params[:answers_attributes].to_h.values.map {|h| h["content"] }
-    # end
-
-    # if @flashcard.flashcard.type == "soll_ist"
-
-    #   flashcard_params.params[:correct_answers] =
-    # end
-
     if @flashcard.update(flashcard_params)
-      # set_correct_answers if @flashcard.flashcard_type == "match_answers"
-      set_correct_answers if %w[match_answers soll_ist].include? @flashcard.flashcard_type
+      set_correct_answers if %w[match_answers soll_ist table_quiz].include? @flashcard.flashcard_type
 
       # raise
       flash[:notice] = "Flashcard updated"
@@ -135,12 +133,13 @@ class FlashcardsController < ApplicationController
   def soll_ist
     @flashcard = Flashcard.find(params[:id])
     authorize @flashcard, :show?
-
     @article = @flashcard.article
 
     # Check answers
     @answers = set_correct_order_answer.to_h.values.map(&:to_i)
     @user_answer = @flashcard.correct_answers == @answers
+    @table_headings = @flashcard.answers.pluck(:content).select { |v| v =~ /\D/ }
+    @table_answer_rows =  @flashcard.correct_answers.each_slice(4).to_a
 
     # Save flashcard
     @flashcard.save_answer_for!(current_user, @user_answer)
@@ -212,8 +211,10 @@ class FlashcardsController < ApplicationController
     if @flashcard.flashcard_type == "match_answers"
       correct_answers = @flashcard.answers.pluck(:id).select.with_index { |id, i| id if i.odd? }
     elsif @flashcard.flashcard_type == "soll_ist"
-      # debugger
       correct_answers = @flashcard.answers.pluck(:content).map(&:to_i)
+    else
+      correct_answers = @flashcard.answers.pluck(:content).select { |v| v =~ /\d/ }.map(&:to_f)
+      # raise
     end
     @flashcard.update_attribute(:correct_answers, correct_answers)
   end

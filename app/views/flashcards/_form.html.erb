@@ -32,6 +32,7 @@
   </div>
 
   <h2>Answers</h2>
+  <button  id="sollHabenView" class="btn btn-info">Soll/Haben view</button>
   <button  id="tableView" class="btn btn-info">Table view</button>
   <div class="answers" id="uniqAnswers">
     <%= link_to_add_association 'Add answer',
@@ -50,7 +51,7 @@
     <%= flashcard_form.file_field :image %>
   </div>
 
-<!-- Display posibility to choose the correct answers if needed -->
+<!-- Display posibility to choose the correct answers on edit page if needed -->
   <% if @flashcard.persisted? %>
 
     <% if @flashcard.flashcard_type != "match_answers" %>

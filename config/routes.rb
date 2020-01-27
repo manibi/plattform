@@ -24,8 +24,9 @@ Rails.application.routes.draw do
         post "answer_multiple_choice", to: "flashcards#answer_multiple_choice"
         post "answer_correct_order",   to: "flashcards#answer_correct_order"
         post "answer_match",           to: "flashcards#answer_match"
-        post "soll_ist",          to: "flashcards#soll_ist"
-        get "next_flashcard",          to: "flashcards#next_flashcard"
+        post "soll_ist",               to: "flashcards#soll_ist"
+        # post "table_quiz",             to: "flashcards#table_quiz"
+        get  "next_flashcard",         to: "flashcards#next_flashcard"
       end
     end
     get "quiz_results", to: "flashcards#results"

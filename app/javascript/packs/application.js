@@ -14,6 +14,7 @@ import "cocoon";
 
 // $(document).on("turbolinks:load", () => {
 const flashcardDragListEl = document.getElementById("answers-drag");
+const sollHabenViewBtnEl = document.getElementById("sollHabenView");
 const tableViewBtnEl = document.getElementById("tableView");
 const answersEl = document.getElementById("uniqAnswers");
 
@@ -23,6 +24,13 @@ if (flashcardDragListEl) {
     ghostClass: "blue-background"
   });
   // sortable();
+}
+
+if (sollHabenViewBtnEl) {
+  sollHabenViewBtnEl.addEventListener("click", e => {
+    e.preventDefault();
+    answersEl.classList.toggle("soll-haben-view");
+  });
 }
 
 if (tableViewBtnEl) {

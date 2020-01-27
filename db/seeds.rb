@@ -189,23 +189,27 @@ flashcard1_2_1 = js_article.flashcards.create!({
 
 flashcard1_2_2 = js_article.flashcards.create!({
   content: "First Profession Second Article: Question 2?",
-  flashcard_type: "multiple_choice",
+  flashcard_type: "soll_ist",
 })
 
 flashcard1_2_3 = js_article.flashcards.create!({
   content: "First Profession Second Article: Question 3?",
-  flashcard_type: "multiple_choice",
+  flashcard_type: "table_quiz",
 })
 
 # Add answers
 flashcard1_2_1.answers << Answer.all.sample(3)
-flashcard1_2_2.answers << Answer.all.sample(3)
-flashcard1_2_3.answers << Answer.all.sample(3)
+flashcard1_2_3.answers.create!([
+  { content: "Custom 1" },
+  { content: "Custom 2" },
+  { content: "Custom 3" },
+  { content: "Custom 4" }
+])
 
 
 flashcard1_2_1.update(correct_answers: [flashcard1_2_1.answers.first.id])
-flashcard1_2_2.update(correct_answers: [flashcard1_2_2.answers.first.id])
-flashcard1_2_3.update(correct_answers: [flashcard1_2_3.answers.first.id])
+flashcard1_2_2.update(correct_answers: [1, 2, 3, 4, 5, 6])
+flashcard1_2_3.update(correct_answers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
 
 
 

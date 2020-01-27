@@ -1,8 +1,5 @@
 <div class="card-body">
   <h4><%= flashcard.content %></h4>
-  <% soll_column = @flashcard.correct_answers.select{ |i| @flashcard.correct_answers.index(i).even?} %>
-  <% ist_column = @flashcard.correct_answers.select{ |i| @flashcard.correct_answers.index(i).odd?} %>
-
   <div class="row">
     <h4>Soll</h4>
     <h4 style="margin-left: 200px;">Haben</h4>
