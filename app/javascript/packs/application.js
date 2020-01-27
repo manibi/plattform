@@ -14,6 +14,8 @@ import "cocoon";
 
 // $(document).on("turbolinks:load", () => {
 const flashcardDragListEl = document.getElementById("answers-drag");
+const tableViewBtnEl = document.getElementById("tableView");
+const answersEl = document.getElementById("uniqAnswers");
 
 if (flashcardDragListEl) {
   const sortable = new Sortable(flashcardDragListEl, {
@@ -21,6 +23,13 @@ if (flashcardDragListEl) {
     ghostClass: "blue-background"
   });
   // sortable();
+}
+
+if (tableViewBtnEl) {
+  tableViewBtnEl.addEventListener("click", e => {
+    e.preventDefault();
+    answersEl.classList.toggle("table-view");
+  });
 }
 // });
 // check flashcard answer

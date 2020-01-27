@@ -9,8 +9,8 @@
         <%= render "flashcards/correct_order", flashcard: @flashcard %>
       <% when "match_answers" %>
         <%= render "flashcards/match_answers", flashcard: @flashcard %>
-      <% when "input_numbers" %>
-        <%= render "flashcards/input_numbers", flashcard: @flashcard %>
+      <% when "soll_ist" %>
+        <%= render "flashcards/soll_ist", flashcard: @flashcard %>
       <% end %>
 
     <% #if @flashcard.flashcard_type == "multiple_choice" %>

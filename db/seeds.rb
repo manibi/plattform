@@ -176,7 +176,7 @@ flashcard_match_1_1.update(correct_answers: [
 # Flashcard - input numbers - first article
 flashcard_numbers1_1 = rails_article.flashcards.create!({
   content: "First article: insert numbers",
-  flashcard_type: "input_numbers"
+  flashcard_type: "soll_ist"
 })
 flashcard_numbers1_1.update(correct_answers: [ 10, 100, 1000, 10_000 ])
 
@@ -284,7 +284,7 @@ flashcard_match2_1_1.update(correct_answers: [
 # Flashcard - input numbers - first article
 flashcard_numbers2_1_1 = bjj_article.flashcards.create!({
   content: "Second Profession: First article: insert numbers",
-  flashcard_type: "input_numbers"
+  flashcard_type: "soll_ist"
 })
 flashcard_numbers2_1_1.update(correct_answers: [ 10, 100, 1000, 10_000 ])
 

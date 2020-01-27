@@ -32,8 +32,9 @@
   </div>
 
   <h2>Answers</h2>
+  <button  id="tableView" class="btn btn-info">Table view</button>
   <div class="answers" id="uniqAnswers">
-    <%= link_to_add_association 'New answer',
+    <%= link_to_add_association 'Add answer',
                                 flashcard_form, :answers,
                                 class: 'btn btn-success my-2',
                                 data: {

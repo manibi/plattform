@@ -5,7 +5,7 @@ class FlashcardsController < ApplicationController
     @flashcard = Flashcard.new
     authorize @flashcard
     @articles = current_user.all_articles
-    @flashcard.answers.build
+    # @flashcard.answers.build
   end
 
   def show
@@ -36,7 +36,9 @@ class FlashcardsController < ApplicationController
     @flashcard = @article.flashcards.build(flashcard_params)
 
     if @flashcard.save
-      set_correct_answers if @flashcard.flashcard_type == "match_answers"
+      set_correct_answers if %w[match_answers soll_ist].include? @flashcard.flashcard_type
+
+      # set_correct_answers if @flashcard.flashcard_type == "match_answers"
       flash[:notice] = "Flashcard created"
       redirect_to edit_flashcard_path(@flashcard)
     else
@@ -46,6 +48,8 @@ class FlashcardsController < ApplicationController
 
   def edit
     @flashcard = Flashcard.find(params[:id])
+    @articles = current_user.all_articles
+
     authorize @flashcard
   end
 
@@ -60,8 +64,20 @@ class FlashcardsController < ApplicationController
       flashcard_params[:correct_answers] = flashcard_params[:correct_answers].map { |order| @flashcard.answers[order.to_i - 1].id }
     end
 
+    # if @flashcard.flashcard_type == "soll_ist"
+    #   flashcard_params[:correct_answers] = flashcard_params[:answers_attributes].to_h.values.map {|h| h["content"] }
+    # end
+
+    # if @flashcard.flashcard.type == "soll_ist"
+
+    #   flashcard_params.params[:correct_answers] =
+    # end
+
     if @flashcard.update(flashcard_params)
-      set_correct_answers if @flashcard.flashcard_type == "match_answers"
+      # set_correct_answers if @flashcard.flashcard_type == "match_answers"
+      set_correct_answers if %w[match_answers soll_ist].include? @flashcard.flashcard_type
+
+      # raise
       flash[:notice] = "Flashcard updated"
       redirect_to edit_flashcard_path(@flashcard)
     else
@@ -116,7 +132,7 @@ class FlashcardsController < ApplicationController
     render "flashcards/show"
   end
 
-  def input_numbers
+  def soll_ist
     @flashcard = Flashcard.find(params[:id])
     authorize @flashcard, :show?
 
@@ -193,7 +209,12 @@ class FlashcardsController < ApplicationController
   end
 
   def set_correct_answers
-    correct_answers = @flashcard.answers.pluck(:id).select.with_index { |id, i| id if i.odd? }
+    if @flashcard.flashcard_type == "match_answers"
+      correct_answers = @flashcard.answers.pluck(:id).select.with_index { |id, i| id if i.odd? }
+    elsif @flashcard.flashcard_type == "soll_ist"
+      # debugger
+      correct_answers = @flashcard.answers.pluck(:content).map(&:to_i)
+    end
     @flashcard.update_attribute(:correct_answers, correct_answers)
   end
 end

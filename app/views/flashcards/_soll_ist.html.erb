@@ -1,16 +1,14 @@
-<h2>Order</h2><div class="card-body">
+<div class="card-body">
   <h4><%= flashcard.content %></h4>
-  <%= image_tag flashcard.image if flashcard.image.attached? %>
   <% soll_column = @flashcard.correct_answers.select{ |i| @flashcard.correct_answers.index(i).even?} %>
   <% ist_column = @flashcard.correct_answers.select{ |i| @flashcard.correct_answers.index(i).odd?} %>
-  <%# middle = @flashcard.correct_answers.count / 2 %>
 
-  <div class="row" >
+  <div class="row">
     <h4>Soll</h4>
-    <h4 style="margin-left: 200px;">Ist</h4>
+    <h4 style="margin-left: 200px;">Haben</h4>
   </div>
 
-  <%= form_for input_numbers_article_flashcard_path(@article, @flashcard), url: {action: "input_numbers"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
+  <%= form_for soll_ist_article_flashcard_path(@article, @flashcard), url: {action: "soll_ist"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
 
 
         <ul class="answers-numbers row" id="answers" style="width: 400px">
@@ -18,13 +16,13 @@
               <li
                 style="padding: 10px;"
                 class=
-                <% if action_name == "input_numbers"%>
+                <% if action_name == "soll_ist"%>
                   <%= @user_answer ? "correct-answer" : "false-answer"  %>
                 <% end %>
                 <%= i.even? ? "left-column" : "right-column" %>
               >
                 <%= number_field_tag "flashcard[answer][#{i}]",
-                     (correct_answer if action_name == "input_numbers")
+                     (correct_answer if action_name == "soll_ist")
                 %>
               </li>
               <%# raise %>
@@ -34,7 +32,7 @@
                   class: "flashcard-btn btn btn-primary" if action_name == "show" %>
     <%= link_to "Next",
               next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
-              class: "flashcard-btn btn btn-primary" if action_name == "input_numbers" %>
+              class: "flashcard-btn btn btn-primary" if action_name == "soll_ist" %>
   <% end %>
   <hr>
     <p>correct answers</p>

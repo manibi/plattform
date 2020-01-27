@@ -11,7 +11,7 @@ class Flashcard < ApplicationRecord
 
   serialize :correct_answers, Array
 
-  FLASHCARD_TYPES = ["multiple_choice", "correct_order", "match_answers", "input_numbers"]
+  FLASHCARD_TYPES = ["multiple_choice", "correct_order", "match_answers", "soll_ist"]
 
   validates :content, presence: true, allow_blank: false
   validates :article_id, presence: true

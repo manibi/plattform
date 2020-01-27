@@ -3,6 +3,18 @@ ul {
   padding: 0;
 }
 
+.table-view {
+  .add_fields {
+    display: block;
+    max-width: 200px;
+  }
+
+  .nested-fields {
+    display: inline-block;
+    max-width: 50%;
+  }
+}
+
 ul.answers,
 ul.fixed-answers {
   li {
