@@ -41,7 +41,9 @@ class User < ApplicationRecord
   end
 
   def all_articles
-    Article.joins(:topic).where(topic_id: self.profession.topics)
+    Article.joins(:category).where(categories: {
+      topic: [self.profession.topics]
+    })
   end
 
   def bookmarked_articles

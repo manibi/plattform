@@ -1,6 +1,6 @@
 class FlashcardPolicy < ApplicationPolicy
   def show?
-    record.article.topic.profession == user.profession
+    record.article.category.topic.profession == user.profession
   end
 
   def new?
@@ -12,7 +12,7 @@ class FlashcardPolicy < ApplicationPolicy
   end
 
   def update?
-    user.author? && record.article.topic.profession == user.profession
+    user.author? && record.article.category.topic.profession == user.profession
   end
 
   def edit?
