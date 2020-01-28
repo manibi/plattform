@@ -7,12 +7,9 @@ class ArticlePolicy < ApplicationPolicy
     def resolve
       if user.student?
         scope.joins(:category)
-             .where(categories: { topic: [user.profession.topics] })
-            .left_outer_joins(:user_articles)
-            .where(user_articles: {article_id: nil}) #+ Article.joins
-            # TODO: return upcoming articles - all not read articles
-            (:user_articles)
-            #.where.not(user_articles: {user: user}) #- Article.joins(:user_articles).where(user_articles: {user: user})
+             .where(categories: { topic: [user.profession.topics] }) -
+        scope.joins(:user_articles)
+              .where(user_articles: { user: user, read: true })
       elsif user.author?
         scope.joins(:category)
              .where(categories: { topic: [user.profession.topics] })
