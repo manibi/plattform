@@ -61,9 +61,10 @@ class User < ApplicationRecord
   end
 
   def upcoming_articles
-    Article.left_outer_joins(:user_articles).where(user_articles: {
-      article_id: nil
-    })
+    Article.joins(:category)
+            .where(categories: { topic: [user.profession.topics] }) -
+    Article.joins(:user_articles)
+            .where(user_articles: { user: user, read: true })
   end
 
   # Return all answered flashcards
