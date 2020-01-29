@@ -25,19 +25,24 @@ developer_profession = Profession.first
 fighter_profession   = Profession.second
 
 puts "Creating users..."
-developer_profession.users.create!({
-  username: "author-login",
-  password: "password",
-  role: "author"
-})
-
-developer_profession.users.create!({
-    username: "login-string",
+developer_profession.users.create!([
+  {
+    username: "login1-1",
     password: "password"
-})
+  },
+  {
+    username: "login1-2",
+    password: "password"
+  },
+  {
+    username: "author-login",
+    password: "password",
+    role: "author"
+  }
+])
 
 fighter_profession.users.create!({
-  username: "login-string2",
+  username: "login2-1",
   password: "password"
 })
 
@@ -149,30 +154,30 @@ puts "Creating answers..."
 end
 
 puts "Creating flashcards..."
-# Ruby article
+#! Ruby article
 # 5 Multiple choice flashcards
 flashcard1_1 = ruby_article.flashcards.create!({
-  content: "First Article: Question 1?",
+  content: "Ruby Article: Question 1?",
   flashcard_type: "multiple_choice",
 })
 
 flashcard1_2 = ruby_article.flashcards.create!({
-  content: "First Article: Question 2?",
+  content: "Ruby Article: Question 2?",
   flashcard_type: "multiple_choice",
 })
 
 flashcard1_3 = ruby_article.flashcards.create!({
-  content: "First Article: Question 3?",
+  content: "Ruby Article: Question 3?",
   flashcard_type: "multiple_choice",
 })
 
 flashcard1_4 = ruby_article.flashcards.create!({
-  content: "First Article: Question 4?",
+  content: "Ruby Article: Question 4?",
   flashcard_type: "multiple_choice",
 })
 
 flashcard1_5 = ruby_article.flashcards.create!({
-  content: "First Article: Question 5?",
+  content: "Ruby Article: Question 5?",
   flashcard_type: "multiple_choice",
 })
 
@@ -224,119 +229,99 @@ flashcard_numbers1_1 = ruby_article.flashcards.create!({
 })
 flashcard_numbers1_1.update(correct_answers: [ 10, 100, 1000, 10_000 ])
 
+#! Python article
+# 3 Multiple choice flashcards
+flashcard1_2_1 = python_article.flashcards.create!({
+  content: "Python Article: Question 1?",
+  flashcard_type: "multiple_choice",
+})
 
-# # Second topic first article
-# flashcard1_2_1 = js_article.flashcards.create!({
-#   content: "First Profession Second Article: Question 1?",
-#   flashcard_type: "multiple_choice",
-# })
+flashcard1_2_2 = python_article.flashcards.create!({
+  content: "Python Article: Question 2?",
+  flashcard_type: "multiple_choice",
+})
 
-# flashcard1_2_2 = js_article.flashcards.create!({
-#   content: "First Profession Second Article: Question 2?",
-#   flashcard_type: "soll_ist",
-# })
+flashcard1_2_3 = python_article.flashcards.create!({
+  content: "Python Article: Question 3?",
+  flashcard_type: "multiple_choice",
+})
 
-# flashcard1_2_3 = js_article.flashcards.create!({
-#   content: "First Profession Second Article: Question 3?",
-#   flashcard_type: "table_quiz",
-# })
+# Add answers to choose from
+flashcard1_2_1.answers << Answer.all.sample(3)
+flashcard1_2_2.answers << Answer.all.sample(3)
+flashcard1_2_3.answers << Answer.all.sample(3)
 
-# # Add answers
-# flashcard1_2_1.answers << Answer.all.sample(3)
-# flashcard1_2_3.answers.create!([
-#   { content: "Custom 1" },
-#   { content: "Custom 2" },
-#   { content: "Custom 3" },
-#   { content: "Custom 4" }
-# ])
+# Add correct answers
+flashcard1_2_1.update(correct_answers: [flashcard1_2_1.answers.first.id])
+flashcard1_2_2.update(correct_answers: [
+  flashcard1_2_2.answers.second.id,flashcard1_2_2.answers.first.id
+  ])
+flashcard1_2_3.update(correct_answers: [flashcard1_2_3.answers.last.id])
 
+#! CSS article
+# 2 Drag and drop flashcards
+flashcard_order1_3_1 = css_article.flashcards.create!({
+  content: "CSS Article: Question 1 - Drag and Drop",
+  flashcard_type: "correct_order"
+})
 
-# flashcard1_2_1.update(correct_answers: [flashcard1_2_1.answers.first.id])
-# flashcard1_2_2.update(correct_answers: [1, 2, 3, 4, 5, 6])
-# flashcard1_2_3.update(correct_answers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+flashcard_order1_3_1.answers << Answer.all.sample(3)
+flashcard_order1_3_1.update(correct_answers: [
+  flashcard_order1_3_1.answers.last.id,
+  flashcard_order1_3_1.answers.first.id,
+  flashcard_order1_3_1.answers.second.id
+])
 
+flashcard_order1_3_2 = css_article.flashcards.create!({
+  content: "CSS Article: Question 2 - Drag and Drop",
+  flashcard_type: "correct_order"
+})
 
+flashcard_order1_3_2.answers << Answer.all.sample(3)
+flashcard_order1_3_2.update(correct_answers: [
+  flashcard_order1_3_2.answers.second.id,
+  flashcard_order1_3_2.answers.last.id,
+  flashcard_order1_3_2.answers.first.id,
+])
 
+# Match answers
+flashcard_match1_3_3 = css_article.flashcards.create!({
+  content: "CSS Article: Drag answers from the right column to match the left column",
+  flashcard_type: "match_answers"
+})
+flashcard_match1_3_3.answers << Answer.all.sample(6)
+flashcard_match1_3_3.update(correct_answers: [
+  flashcard_match1_3_3.answers.fourth.id,
+  flashcard_match1_3_3.answers.fifth.id,
+  flashcard_match1_3_3.answers.last.id,
+])
 
+# Input numbers soll/haben
+flashcard_numbers1_3_4 = css_article.flashcards.create!({
+  content: "First article: insert numbers",
+  flashcard_type: "soll_ist"
+})
+flashcard_numbers1_3_4.update(correct_answers: [ 10, 100, 1000, 10_000 ])
 
+# Input numbers table
+flashcard_numbers1_3_5 = css_article.flashcards.create!({
+  content: "First article: insert numbers",
+  flashcard_type: "table_quiz"
+})
+flashcard_numbers1_3_5.answers << Answer.create!([
+  { content: "Input"  },
+  { content: "Output" },
+  { content: "Costs"  },
+  { content: "Profit" }
+])
+flashcard_numbers1_3_5.update(correct_answers: [ 10, 100, 1000, 10_000, 10, 100, 1000, 10_000 ])
 
-
-# # Second Profession first topic first article
-# # New multiple choice flahscard for first article
-# flashcard2_1_1 = bjj_article.flashcards.create!({
-#   content: "Second Profession: First Article: Question 1?",
-#   flashcard_type: "multiple_choice",
-# })
-
-# flashcard2_1_2 = bjj_article.flashcards.create!({
-#   content: "Second Profession: First Article: Question 2?",
-#   flashcard_type: "multiple_choice",
-# })
-
-# flashcard2_1_3 = bjj_article.flashcards.create!({
-#   content: "Second Profession: First Article: Question 3?",
-#   flashcard_type: "multiple_choice",
-# })
-
-# flashcard2_1_4 = bjj_article.flashcards.create!({
-#   content: "Second Profession: First Article: Question 4?",
-#   flashcard_type: "multiple_choice",
-# })
-
-# flashcard2_1_5 = bjj_article.flashcards.create!({
-#   content: "Second Profession: First Article: Question 5?",
-#   flashcard_type: "multiple_choice",
-# })
-
-# # Add answers
-# flashcard2_1_1.answers << Answer.all.sample(3)
-# flashcard2_1_2.answers << Answer.all.sample(3)
-# flashcard2_1_3.answers << Answer.all.sample(3)
-# flashcard2_1_4.answers << Answer.all.sample(3)
-# flashcard2_1_5.answers << Answer.all.sample(3)
-
-# # Add correct answer
-# flashcard2_1_1.update(correct_answers: [flashcard2_1_1.answers.first.id])
-# flashcard2_1_2.update(correct_answers: [
-#   flashcard2_1_2.answers.second.id,flashcard2_1_2.answers.first.id
-#   ])
-# flashcard2_1_3.update(correct_answers: [flashcard2_1_3.answers.last.id])
-# flashcard2_1_4.update(correct_answers: [flashcard2_1_4.answers.first.id])
-# flashcard2_1_5.update(correct_answers: [flashcard2_1_5.answers.first.id])
-
-# # New correct order flahscard for first article
-# flashcard_order2_1_1 = bjj_article.flashcards.create!({
-#   content: "Second Profession: First Article: Question 1? Order",
-#   flashcard_type: "correct_order"
-# })
-
-# flashcard_order2_1_1.answers << Answer.all.sample(3)
-# flashcard_order2_1_1.update(correct_answers: [
-#   flashcard_order2_1_1.answers.last.id,
-#   flashcard_order2_1_1.answers.first.id,
-#   flashcard_order2_1_1.answers.second.id
-# ])
-
-# # Flashcard - match answers - first article
-# flashcard_match2_1_1 = bjj_article.flashcards.create!({
-#   content: "Second Profession: First Article: Drag answers from the right column to match the left column",
-#   flashcard_type: "match_answers"
-# })
-# flashcard_match2_1_1.answers << Answer.all.sample(6)
-# flashcard_match2_1_1.update(correct_answers: [
-#   flashcard_match2_1_1.answers.fifth.id,
-#   flashcard_match2_1_1.answers.last.id,
-#   flashcard_match2_1_1.answers.fourth.id
-# ])
-
-# # Flashcard - input numbers - first article
-# flashcard_numbers2_1_1 = bjj_article.flashcards.create!({
-#   content: "Second Profession: First article: insert numbers",
-#   flashcard_type: "soll_ist"
-# })
-# flashcard_numbers2_1_1.update(correct_answers: [ 10, 100, 1000, 10_000 ])
-
-
-
+#! Bjj Article
+# Input numbers soll/haben
+flashcard_numbers2_1_1 = bjj_article.flashcards.create!({
+  content: "BJJ article: insert numbers",
+  flashcard_type: "soll_ist"
+})
+flashcard_numbers2_1_1.update(correct_answers: [ 10, 100, 1000, 10_000 ])
 
 puts "Done."
