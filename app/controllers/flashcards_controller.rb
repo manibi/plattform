@@ -3,6 +3,11 @@ class FlashcardsController < ApplicationController
 
   # TODO: check for floats input not only integers - table quiz soll_ist
 
+  # Play article flashcards
+  def index
+    @articles = policy_scope(Flashcard)
+  end
+
   def new
     @flashcard = Flashcard.new
     authorize @flashcard

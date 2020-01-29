@@ -32,7 +32,7 @@ Rails.application.routes.draw do
     get "quiz_results", to: "flashcards#results"
   end
 
-  resources :flashcards, only: [:new, :create, :edit, :update, :destroy]
+  resources :flashcards, only: [:index, :new, :create, :edit, :update, :destroy]
 
   get "welcome",   to: "pages#welcome"
   get "dashboard", to: "pages#dashboard"

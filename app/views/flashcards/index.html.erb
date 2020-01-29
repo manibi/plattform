@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row">
+    <h1>Term flashcards</h1>
+  </div>
+  <div class="row">
+    <%  @articles.each do |article| %>
+      <div class="col-3">
+        <%= article.title %>
+        <br>
+        <% if article.read_for?(current_user) %>
+          <%= link_to "Do Quiz", [article, article.flashcards.first] %>
+        <% else %>
+          <%= link_to "Read article", article %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

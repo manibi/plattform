@@ -1,7 +1,7 @@
 <h1>Quiz</h1>
 <div class="container">
-    <div class="row">
-          <% if @flashcard.image.attached? %>
+  <div class="row">
+    <% if @flashcard.image.attached? %>
       <div class="col-md-4" style="margin-left: auto;">
         <!-- Button trigger modal -->
         <button type="button" class="flashcard-image__thumb" data-toggle="modal" data-target="#flashcardImage">
@@ -10,7 +10,7 @@
         </button>
       </div>
     <% end %>
-    </div>
+  </div>
   <div class="row">
     <div class="col-md-12">
       <% case @flashcard.flashcard_type %>
