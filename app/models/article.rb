@@ -1,5 +1,6 @@
+# Term
 class Article < ApplicationRecord
-  belongs_to  :topic
+  belongs_to  :category
   has_many    :chapters, dependent: :destroy
   has_many    :user_articles
   has_many    :users, through: :user_articles
@@ -7,7 +8,7 @@ class Article < ApplicationRecord
 
   validates :title, presence: true, allow_blank: false
   validates :description, presence: true, allow_blank: false
-  validates :topic_id, presence: true
+  validates :category_id, presence: true
 
   def read_for?(user)
     UserArticle.where(user: user, article: self, read: true).present?

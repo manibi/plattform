@@ -157,12 +157,15 @@ class FlashcardsController < ApplicationController
     @article = Article.find(params[:article_id])
     authorize @article, :show?
 
-    @upcoming_articles = current_user.upcoming_articles
+    @upcoming_articles = policy_scope(Article)
     @all_answered_flashcards = current_user.answered_flashcards_for(@article)
 
     # Next article to read
     if @upcoming_articles.empty?
-      @next_article = @article.topic.articles.first
+      @next_article = current_user.profession
+                                  .topics.first
+                                  .categories.first
+                                  .articles.first
     else
       @next_article = @upcoming_articles.first
     end
@@ -185,6 +188,7 @@ class FlashcardsController < ApplicationController
     else
       @next_flashcard = @wrong_answered_flashcards.sample
     end
+
     if @correct_answered_flashcards.count == flashcards_to_do.count
       redirect_to article_quiz_results_path(@article)
     else

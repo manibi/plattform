@@ -6,6 +6,7 @@ Answer.destroy_all
 UserFlashcard.destroy_all
 Flashcard.destroy_all
 Article.destroy_all
+Category.destroy_all
 Topic.destroy_all
 User.destroy_all
 Profession.destroy_all
@@ -24,19 +25,24 @@ developer_profession = Profession.first
 fighter_profession   = Profession.second
 
 puts "Creating users..."
-developer_profession.users.create!({
-  username: "author-login",
-  password: "password",
-  role: "author"
-})
-
-developer_profession.users.create!({
-    username: "login-string",
+developer_profession.users.create!([
+  {
+    username: "login1-1",
     password: "password"
-})
+  },
+  {
+    username: "login1-2",
+    password: "password"
+  },
+  {
+    username: "author-login",
+    password: "password",
+    role: "author"
+  }
+])
 
 fighter_profession.users.create!({
-  username: "login-string2",
+  username: "login2-1",
   password: "password"
 })
 
@@ -58,43 +64,85 @@ back_end_dev_topic  = developer_profession.topics.first
 front_end_dev_topic = developer_profession.topics.second
 bjj_topic           = fighter_profession.topics.first
 
-puts "Creating articles..."
-back_end_dev_topic.articles.create!([
+puts "Creating modules(categories)..."
+back_end_dev_topic.categories.create!([
   {
-  title: "Ruby on Rails",
-  description: "Ruby on Rails, sometimes known as 'RoR or just 'Rails, is an open source framework for Web development in Ruby, an object-oriented programming (OOP) language similar to Perl and Python"
+    title: "Programming Language",
+    description: "Ruby"
+  },
+  {
+    title: "Database",
+    description: "MySQL"
   }
 ])
 
-front_end_dev_topic.articles.create!([
+
+front_end_dev_topic.categories.create!([
   {
-  title: "Javascript",
-  description: "Suchergebnisse
-  Hervorgehobenes Snippet aus dem Web
-  What is JavaScript ? JavaScript is a dynamic computer programming language. It is lightweight and most commonly used as a part of web pages, whose implementations allow client-side script to interact with the user and make dynamic pages. It is an interpreted programming language with object-oriented capabilities."
+  title: "Design",
+  description: "Colors"
   }
 ])
 
-bjj_topic.articles.create!([
+bjj_topic.categories.create!([
+  {
+  title: "Defence",
+  description: "Guard basics"
+  }
+])
+
+puts "Creating terms(articles)..."
+back_end_dev_module  = back_end_dev_topic.categories.first
+back_end_dev_module2  = back_end_dev_topic.categories.second
+front_end_dev_module = front_end_dev_topic.categories.first
+bjj_module           = bjj_topic.categories.first
+
+back_end_dev_module.articles.create!([
+  {
+  title: "Ruby",
+  description: "Ruby was mainly designed as a general-purpose scripting language, which provides the wide support for the different applications of ruby. It is mainly getting used for a web application, standard libraries, servers, and other system utilities. Ruby has one of the great strength is metaprogramming."
+  },
+  {
+    title: "Python",
+    description: "Python is a general purpose and high level programming language. You can use Python for developing desktop GUI applications, websites and web applications. Also, Python, as a high level programming language, allows you to focus on core functionality of the application by taking care of common programming tasks."
+    },
+])
+
+back_end_dev_module2.articles.create!([
+  {
+  title: "MySQL",
+  description: "MySQL is an open-source relational database management system. Its name is a combination of My, the name of co-founder Michael Widenius's daughter, and SQL, the abbreviation for Structured Query Language."
+  }
+])
+
+front_end_dev_module.articles.create!([
+  {
+  title: "CSS",
+  description: "Cascading Style Sheets, kurz CSS genannt, ist eine Stylesheet-Sprache für elektronische Dokumente und zusammen mit HTML und DOM eine der Kernsprachen des World Wide Webs. Sie ist ein sogenannter living standard und wird vom World Wide Web Consortium beständig weiterentwickelt."
+  }
+])
+
+bjj_module.articles.create!([
   {
   title: "Closed guard",
   description: "Basics"
   }
 ])
 
-rails_article = back_end_dev_topic.articles.first
-js_article    = front_end_dev_topic.articles.first
-bjj_article   = bjj_topic.articles.first
+ruby_article    = back_end_dev_module.articles.first
+python_article  = back_end_dev_module.articles.second
+css_article     = front_end_dev_module.articles.first
+bjj_article     = bjj_module.articles.first
 
 puts "Creating chapters"
-rails_article.chapters.create!([
+ruby_article.chapters.create!([
   {
-  title: "Active Record",
-  content: "In software engineering, the active record pattern is an architectural pattern found in software that stores in-memory object data in relational databases."
+  title: "String",
+  content: "A String object holds and manipulates an arbitrary sequence of bytes, typically representing characters."
   },
   {
-    title: "Action View",
-    content: "Action View templates are written using embedded Ruby in tags mingled with HTML. To avoid cluttering the templates with boilerplate code, a number of helper classes provide common behavior for forms, dates, and strings. It's also easy to add new helpers to your application as it evolves."
+    title: "Integer",
+    content: "In Ruby, numbers without decimal points are called integers, and numbers with decimal points are usually called floating-point numbers or, more simply, floats (you must place at least one digit before the decimal point). An integer literal is simply a sequence of digits eg. 0, 123, 123456789."
   }
 ])
 
@@ -106,40 +154,41 @@ puts "Creating answers..."
 end
 
 puts "Creating flashcards..."
-# New multiple choice flahscard for first article
-flashcard1_1 = rails_article.flashcards.create!({
-  content: "First Article: Question 1?",
+#! Ruby article
+# 5 Multiple choice flashcards
+flashcard1_1 = ruby_article.flashcards.create!({
+  content: "Ruby Article: Question 1?",
   flashcard_type: "multiple_choice",
 })
 
-flashcard1_2 = rails_article.flashcards.create!({
-  content: "First Article: Question 2?",
+flashcard1_2 = ruby_article.flashcards.create!({
+  content: "Ruby Article: Question 2?",
   flashcard_type: "multiple_choice",
 })
 
-flashcard1_3 = rails_article.flashcards.create!({
-  content: "First Article: Question 3?",
+flashcard1_3 = ruby_article.flashcards.create!({
+  content: "Ruby Article: Question 3?",
   flashcard_type: "multiple_choice",
 })
 
-flashcard1_4 = rails_article.flashcards.create!({
-  content: "First Article: Question 4?",
+flashcard1_4 = ruby_article.flashcards.create!({
+  content: "Ruby Article: Question 4?",
   flashcard_type: "multiple_choice",
 })
 
-flashcard1_5 = rails_article.flashcards.create!({
-  content: "First Article: Question 5?",
+flashcard1_5 = ruby_article.flashcards.create!({
+  content: "Ruby Article: Question 5?",
   flashcard_type: "multiple_choice",
 })
 
-# Add answers
+# Add answers to choose from
 flashcard1_1.answers << Answer.all.sample(3)
 flashcard1_2.answers << Answer.all.sample(3)
 flashcard1_3.answers << Answer.all.sample(3)
 flashcard1_4.answers << Answer.all.sample(3)
 flashcard1_5.answers << Answer.all.sample(3)
 
-# Add correct answer
+# Add correct answers
 flashcard1_1.update(correct_answers: [flashcard1_1.answers.first.id])
 flashcard1_2.update(correct_answers: [
   flashcard1_2.answers.second.id,flashcard1_2.answers.first.id
@@ -148,8 +197,8 @@ flashcard1_3.update(correct_answers: [flashcard1_3.answers.last.id])
 flashcard1_4.update(correct_answers: [flashcard1_4.answers.first.id])
 flashcard1_5.update(correct_answers: [flashcard1_5.answers.first.id])
 
-# New correct order flahscard for first article
-flashcard_order1_1 = rails_article.flashcards.create!({
+# Drag and drop flashcard
+flashcard_order1_1 = ruby_article.flashcards.create!({
   content: "First Article: Question 1? Order",
   flashcard_type: "correct_order"
 })
@@ -161,8 +210,8 @@ flashcard_order1_1.update(correct_answers: [
   flashcard_order1_1.answers.second.id
 ])
 
-# Flashcard - match answers - first article
-flashcard_match_1_1 = rails_article.flashcards.create!({
+# Match answers
+flashcard_match_1_1 = ruby_article.flashcards.create!({
   content: "First Article: Drag answers from the right column to match the left column",
   flashcard_type: "match_answers"
 })
@@ -174,125 +223,105 @@ flashcard_match_1_1.update(correct_answers: [
 ])
 
 # Flashcard - input numbers - first article
-flashcard_numbers1_1 = rails_article.flashcards.create!({
+flashcard_numbers1_1 = ruby_article.flashcards.create!({
   content: "First article: insert numbers",
   flashcard_type: "soll_ist"
 })
 flashcard_numbers1_1.update(correct_answers: [ 10, 100, 1000, 10_000 ])
 
-
-# Second topic first article
-flashcard1_2_1 = js_article.flashcards.create!({
-  content: "First Profession Second Article: Question 1?",
+#! Python article
+# 3 Multiple choice flashcards
+flashcard1_2_1 = python_article.flashcards.create!({
+  content: "Python Article: Question 1?",
   flashcard_type: "multiple_choice",
 })
 
-flashcard1_2_2 = js_article.flashcards.create!({
-  content: "First Profession Second Article: Question 2?",
-  flashcard_type: "soll_ist",
+flashcard1_2_2 = python_article.flashcards.create!({
+  content: "Python Article: Question 2?",
+  flashcard_type: "multiple_choice",
 })
 
-flashcard1_2_3 = js_article.flashcards.create!({
-  content: "First Profession Second Article: Question 3?",
-  flashcard_type: "table_quiz",
+flashcard1_2_3 = python_article.flashcards.create!({
+  content: "Python Article: Question 3?",
+  flashcard_type: "multiple_choice",
 })
 
-# Add answers
+# Add answers to choose from
 flashcard1_2_1.answers << Answer.all.sample(3)
-flashcard1_2_3.answers.create!([
-  { content: "Custom 1" },
-  { content: "Custom 2" },
-  { content: "Custom 3" },
-  { content: "Custom 4" }
-])
+flashcard1_2_2.answers << Answer.all.sample(3)
+flashcard1_2_3.answers << Answer.all.sample(3)
 
-
+# Add correct answers
 flashcard1_2_1.update(correct_answers: [flashcard1_2_1.answers.first.id])
-flashcard1_2_2.update(correct_answers: [1, 2, 3, 4, 5, 6])
-flashcard1_2_3.update(correct_answers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
-
-
-
-
-
-
-
-# Second Profession first topic first article
-# New multiple choice flahscard for first article
-flashcard2_1_1 = bjj_article.flashcards.create!({
-  content: "Second Profession: First Article: Question 1?",
-  flashcard_type: "multiple_choice",
-})
-
-flashcard2_1_2 = bjj_article.flashcards.create!({
-  content: "Second Profession: First Article: Question 2?",
-  flashcard_type: "multiple_choice",
-})
-
-flashcard2_1_3 = bjj_article.flashcards.create!({
-  content: "Second Profession: First Article: Question 3?",
-  flashcard_type: "multiple_choice",
-})
-
-flashcard2_1_4 = bjj_article.flashcards.create!({
-  content: "Second Profession: First Article: Question 4?",
-  flashcard_type: "multiple_choice",
-})
-
-flashcard2_1_5 = bjj_article.flashcards.create!({
-  content: "Second Profession: First Article: Question 5?",
-  flashcard_type: "multiple_choice",
-})
-
-# Add answers
-flashcard2_1_1.answers << Answer.all.sample(3)
-flashcard2_1_2.answers << Answer.all.sample(3)
-flashcard2_1_3.answers << Answer.all.sample(3)
-flashcard2_1_4.answers << Answer.all.sample(3)
-flashcard2_1_5.answers << Answer.all.sample(3)
-
-# Add correct answer
-flashcard2_1_1.update(correct_answers: [flashcard2_1_1.answers.first.id])
-flashcard2_1_2.update(correct_answers: [
-  flashcard2_1_2.answers.second.id,flashcard2_1_2.answers.first.id
+flashcard1_2_2.update(correct_answers: [
+  flashcard1_2_2.answers.second.id,flashcard1_2_2.answers.first.id
   ])
-flashcard2_1_3.update(correct_answers: [flashcard2_1_3.answers.last.id])
-flashcard2_1_4.update(correct_answers: [flashcard2_1_4.answers.first.id])
-flashcard2_1_5.update(correct_answers: [flashcard2_1_5.answers.first.id])
+flashcard1_2_3.update(correct_answers: [flashcard1_2_3.answers.last.id])
 
-# New correct order flahscard for first article
-flashcard_order2_1_1 = bjj_article.flashcards.create!({
-  content: "Second Profession: First Article: Question 1? Order",
+#! CSS article
+# 2 Drag and drop flashcards
+flashcard_order1_3_1 = css_article.flashcards.create!({
+  content: "CSS Article: Question 1 - Drag and Drop",
   flashcard_type: "correct_order"
 })
 
-flashcard_order2_1_1.answers << Answer.all.sample(3)
-flashcard_order2_1_1.update(correct_answers: [
-  flashcard_order2_1_1.answers.last.id,
-  flashcard_order2_1_1.answers.first.id,
-  flashcard_order2_1_1.answers.second.id
+flashcard_order1_3_1.answers << Answer.all.sample(3)
+flashcard_order1_3_1.update(correct_answers: [
+  flashcard_order1_3_1.answers.last.id,
+  flashcard_order1_3_1.answers.first.id,
+  flashcard_order1_3_1.answers.second.id
 ])
 
-# Flashcard - match answers - first article
-flashcard_match2_1_1 = bjj_article.flashcards.create!({
-  content: "Second Profession: First Article: Drag answers from the right column to match the left column",
+flashcard_order1_3_2 = css_article.flashcards.create!({
+  content: "CSS Article: Question 2 - Drag and Drop",
+  flashcard_type: "correct_order"
+})
+
+flashcard_order1_3_2.answers << Answer.all.sample(3)
+flashcard_order1_3_2.update(correct_answers: [
+  flashcard_order1_3_2.answers.second.id,
+  flashcard_order1_3_2.answers.last.id,
+  flashcard_order1_3_2.answers.first.id,
+])
+
+# Match answers
+flashcard_match1_3_3 = css_article.flashcards.create!({
+  content: "CSS Article: Drag answers from the right column to match the left column",
   flashcard_type: "match_answers"
 })
-flashcard_match2_1_1.answers << Answer.all.sample(6)
-flashcard_match2_1_1.update(correct_answers: [
-  flashcard_match2_1_1.answers.fifth.id,
-  flashcard_match2_1_1.answers.last.id,
-  flashcard_match2_1_1.answers.fourth.id
+flashcard_match1_3_3.answers << Answer.all.sample(6)
+flashcard_match1_3_3.update(correct_answers: [
+  flashcard_match1_3_3.answers.fourth.id,
+  flashcard_match1_3_3.answers.fifth.id,
+  flashcard_match1_3_3.answers.last.id,
 ])
 
-# Flashcard - input numbers - first article
+# Input numbers soll/haben
+flashcard_numbers1_3_4 = css_article.flashcards.create!({
+  content: "First article: insert numbers",
+  flashcard_type: "soll_ist"
+})
+flashcard_numbers1_3_4.update(correct_answers: [ 10, 100, 1000, 10_000 ])
+
+# Input numbers table
+flashcard_numbers1_3_5 = css_article.flashcards.create!({
+  content: "First article: insert numbers",
+  flashcard_type: "table_quiz"
+})
+flashcard_numbers1_3_5.answers << Answer.create!([
+  { content: "Input"  },
+  { content: "Output" },
+  { content: "Costs"  },
+  { content: "Profit" }
+])
+flashcard_numbers1_3_5.update(correct_answers: [ 10, 100, 1000, 10_000, 10, 100, 1000, 10_000 ])
+
+#! Bjj Article
+# Input numbers soll/haben
 flashcard_numbers2_1_1 = bjj_article.flashcards.create!({
-  content: "Second Profession: First article: insert numbers",
+  content: "BJJ article: insert numbers",
   flashcard_type: "soll_ist"
 })
 flashcard_numbers2_1_1.update(correct_answers: [ 10, 100, 1000, 10_000 ])
-
-
-
 
 puts "Done."

@@ -32,11 +32,6 @@ class Flashcard < ApplicationRecord
     UserFlashcard.find_or_create_by(user: user, flashcard: self).update(correct: answer)
   end
 
-  # Create a false flashcard answer
-  def create_false_answer_for!(user)
-    UserFlashcard.find_or_create_by(user: user, flashcard: self).update(correct: false)
-  end
-
   # Reset played flashcards for one article
   def self.reset_for!(user, article)
     UserFlashcard.where(user: user, flashcard: article.flashcards).destroy_all

@@ -6,22 +6,22 @@ class ArticlePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       if user.student?
-        scope.joins(:topic)
-             .where(topic_id: user.profession.topics)
-             .left_outer_joins(:user_articles)
-             .where(user_articles: { article_id: nil })
+        scope.joins(:category)
+             .where(categories: { topic: [user.profession.topics] }) -
+        scope.joins(:user_articles)
+              .where(user_articles: { user: user, read: true })
       elsif user.author?
-        scope.joins(:topic)
-             .where(topic_id: user.profession.topics)
+        scope.joins(:category)
+             .where(categories: { topic: [user.profession.topics] })
       end
     end
   end
 
   def has_profession_student?
-    user.student? && user.profession == record.topic.profession
+    user.student? && user.profession == record.category.topic.profession
   end
 
   def has_profession_author?
-    user.author? && user.profession == record.topic.profession
+    user.author? && user.profession == record.category.topic.profession
   end
 end
