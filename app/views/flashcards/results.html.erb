@@ -1,18 +1,15 @@
 <div class="container">
   <h1>Flashcards results</h1>
   <div class="row">
-    <div id="congrats">
-      <h1 id="title"><%#= @flashcards_percentage >= 50 ? "Great Job!" : "Try again!" %></h1>
-    </div>
     <div class="flashcard-results">
         <p>Number of played flashcards: <b><%= @all_answered_flashcards.count %></b></p>
+        <p>Number of tries: <b><%= @tries %></b></p>
     </div>
+  </div>
+  <div class="row">
+    <%= link_to "Back to article", @article, class: "width-btn btn btn-outline-primary btn-lg" %>
+    <%= link_to "Repeat quiz", [@article, @article.flashcards.first], class: "width-btn btn btn-outline-success btn-lg ml-5" %>
+    <%= link_to "Next article", @next_article, class: "width-btn btn btn-outline-primary btn-lg ml-5" %>
   </div>
 </div>
 
-  <%# <div class="flashcard-results-buttons mt-5">%>
-    <%= link_to "Back to article", @article, class: "width-btn btn btn-outline-primary btn-lg" %>
-    <%#= link_to "Repeat quiz", @flashcard, class: "width-btn btn btn-outline-success btn-lg ml-5" %>
-    <%= link_to "Next article", @next_article, class: "width-btn btn btn-outline-primary btn-lg ml-5" %>
-  <%# </div>
-</div> %>

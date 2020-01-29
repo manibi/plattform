@@ -82,10 +82,15 @@ class User < ApplicationRecord
     })
   end
 
-    # Return tru if the flashcard is answered
-    def answered?(flashcard)
-      UserFlashcard.where(user: self, flashcard: flashcard).present?
-    end
+  # Return true if the flashcard is answered
+  def answered?(flashcard)
+    UserFlashcard.where(user: self, flashcard: flashcard).present?
+  end
+
+  # Return all user_flashcards for user, article
+  def user_flashcards_for(article)
+    UserFlashcard.where(user: self, flashcard: [article.flashcards])
+  end
 
   # Return all right answered flashcards
   def right_answered_flashcards

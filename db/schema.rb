@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_28_123859) do
+ActiveRecord::Schema.define(version: 2020_01_29_111132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(version: 2020_01_28_123859) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "tries", default: 0
     t.index ["flashcard_id"], name: "index_user_flashcards_on_flashcard_id"
     t.index ["user_id"], name: "index_user_flashcards_on_user_id"
   end

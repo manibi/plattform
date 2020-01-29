@@ -27,9 +27,12 @@ class Flashcard < ApplicationRecord
                       message:   "should be less than 5MB"
                     }
 
-  # Store flashcard answer
+  # Store flashcard answer, increment tries if answer is false
   def save_answer_for!(user, answer=false)
-    UserFlashcard.find_or_create_by(user: user, flashcard: self).update(correct: answer)
+    user_flashcard = UserFlashcard.find_or_create_by(user: user, flashcard: self)
+    tries = user_flashcard.tries
+    tries += 1
+    user_flashcard.update(correct: answer, tries: tries)
   end
 
   # Reset played flashcards for one article

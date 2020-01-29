@@ -101,6 +101,7 @@ class FlashcardsController < ApplicationController
       @user_answer = @answers.sort ==  @correct_answers
     else
       @user_answer = false
+
     end
 
     @flashcard.save_answer_for!(current_user, @user_answer)
@@ -159,6 +160,7 @@ class FlashcardsController < ApplicationController
 
     @upcoming_articles = policy_scope(Article)
     @all_answered_flashcards = current_user.answered_flashcards_for(@article)
+    @tries = current_user.user_flashcards_for(@article).pluck(:tries).sum
 
     # Next article to read
     if @upcoming_articles.empty?

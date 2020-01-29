@@ -91,6 +91,7 @@ bjj_topic.categories.create!([
   }
 ])
 
+#! Create terms(articles)
 puts "Creating terms(articles)..."
 back_end_dev_module  = back_end_dev_topic.categories.first
 back_end_dev_module2  = back_end_dev_topic.categories.second
@@ -131,6 +132,7 @@ bjj_module.articles.create!([
 
 ruby_article    = back_end_dev_module.articles.first
 python_article  = back_end_dev_module.articles.second
+mysql_article   = back_end_dev_module2.articles.first
 css_article     = front_end_dev_module.articles.first
 bjj_article     = bjj_module.articles.first
 
@@ -257,6 +259,35 @@ flashcard1_2_2.update(correct_answers: [
   flashcard1_2_2.answers.second.id,flashcard1_2_2.answers.first.id
   ])
 flashcard1_2_3.update(correct_answers: [flashcard1_2_3.answers.last.id])
+
+#! MySQL article
+# 3 Multiple choice flashcards
+flashcard1_2_1_1 = mysql_article.flashcards.create!({
+  content: "MySQL Article: Question 1?",
+  flashcard_type: "multiple_choice",
+})
+
+flashcard1_2_1_2 = mysql_article.flashcards.create!({
+  content: "MySQL Article: Question 2?",
+  flashcard_type: "multiple_choice",
+})
+
+flashcard1_2_1_3 = mysql_article.flashcards.create!({
+  content: "MySQL Article: Question 3?",
+  flashcard_type: "multiple_choice",
+})
+
+# Add answers to choose from
+flashcard1_2_1_1.answers << Answer.all.sample(3)
+flashcard1_2_1_2.answers << Answer.all.sample(3)
+flashcard1_2_1_3.answers << Answer.all.sample(3)
+
+# Add correct answers
+flashcard1_2_1_1.update(correct_answers: [flashcard1_2_1_1.answers.first.id])
+flashcard1_2_1_2.update(correct_answers: [
+  flashcard1_2_1_2.answers.second.id,flashcard1_2_1_2.answers.first.id
+  ])
+flashcard1_2_1_3.update(correct_answers: [flashcard1_2_1_3.answers.last.id])
 
 #! CSS article
 # 2 Drag and drop flashcards
