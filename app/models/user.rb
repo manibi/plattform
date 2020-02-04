@@ -1,9 +1,9 @@
 class User < ApplicationRecord
   belongs_to  :profession
-  has_many    :user_articles
+  has_many    :user_articles, dependent: :destroy
   has_many    :articles, through: :user_articles
-  has_many    :user_flashcards
-
+  has_many    :user_flashcards, dependent: :destroy
+  has_many    :custom_exams, dependent: :destroy
   enum role: [:student, :author, :company, :admin]
   after_initialize :set_default_role, if: :new_record?
 

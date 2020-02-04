@@ -34,6 +34,23 @@ Rails.application.routes.draw do
 
   resources :flashcards, only: [:index, :new, :create, :edit, :update, :destroy]
 
+  resources :custom_exams, only: [:show], path: "exams" do
+    get "results", to: "custom_exams#results"
+
+    resources :flashcards, only: :show do
+      member do
+        post "answer_multiple_choice", to: "flashcards#answer_multiple_choice"
+        post "answer_correct_order",   to: "flashcards#answer_correct_order"
+        post "answer_match",           to: "flashcards#answer_match"
+        post "soll_ist",               to: "flashcards#soll_ist"
+        # post "table_quiz",             to: "flashcards#table_quiz"
+        get  "next_flashcard",         to: "flashcards#next_flashcard"
+      end
+    end
+
+  end
+
+
   get "welcome",   to: "pages#welcome"
   get "dashboard", to: "pages#dashboard"
   get "author_dashboard", to: "pages#author_dashboard"

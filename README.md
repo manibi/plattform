@@ -49,3 +49,9 @@ Check gem vulnerabilities with bundle-audit
 ```shell
 $ bundle exec bundle-audit
 ```
+
+Pundit. Use the supplied generator to generate policies:
+
+```shell
+rails g pundit:policy model
+```

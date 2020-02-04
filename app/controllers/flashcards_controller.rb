@@ -18,9 +18,7 @@ class FlashcardsController < ApplicationController
   def show
     @flashcard = Flashcard.find(params[:id])
     authorize @flashcard
-
     @article = @flashcard.article
-    @article.read_for!(current_user) unless @article.read_for?(current_user)
 
     if @flashcard.flashcard_type == "match_answers"
       @dragabble_answers  = Answer.find(@flashcard.correct_answers)
@@ -28,13 +26,17 @@ class FlashcardsController < ApplicationController
     end
 
     if @flashcard.flashcard_type == "table_quiz"
-     @table_headings = @flashcard.answers.pluck(:content).select { |v| v =~ /\D/ }
-     @table_answer_rows =  @flashcard.correct_answers.each_slice(4).to_a
+    @table_headings = @flashcard.answers.pluck(:content).select { |v| v =~ /\D/ }
+    @table_answer_rows =  @flashcard.correct_answers.each_slice(4).to_a
     end
 
-    # Reset flashcards for this article if re-taking the quiz
-    if @article.flashcards.sort.first == @flashcard && current_user.correct_answered_flashcards_for(@article).count == @article.flashcards.count
-      Flashcard.reset_for!(current_user, @article)
+    if !request.path.include? "exams"
+      @article.read_for!(current_user) unless @article.read_for?(current_user)
+
+      # Reset flashcards for this article if re-taking the quiz
+      if @article.flashcards.sort.first == @flashcard && current_user.correct_answered_flashcards_for(@article).count == @article.flashcards.count
+        Flashcard.reset_for!(current_user, @article)
+      end
     end
   end
 
@@ -106,18 +108,23 @@ class FlashcardsController < ApplicationController
       @user_answer = @answers.sort ==  @correct_answers
     else
       @user_answer = false
-
     end
 
-    @flashcard.save_answer_for!(current_user, @user_answer)
-    # raise
-    render "flashcards/show"
+    if request.path.include? "exams"
+      @exam = CustomExam.find(params[:custom_exam_id])
+      # save exam answer
+      # @flashcard.save_exam_answer_for!(current_user, @user_answer)
+      # redirect to next flashcard
+      next_exam_flashcard(@exam)
+    else
+      @flashcard.save_answer_for!(current_user, @user_answer)
+      render "flashcards/show"
+    end
   end
 
   def answer_correct_order
     @flashcard = Flashcard.find(params[:id])
     authorize @flashcard, :show?
-
     @article = @flashcard.article
 
     if @flashcard.flashcard_type == 'match_answers'
@@ -129,11 +136,16 @@ class FlashcardsController < ApplicationController
     @answers = set_correct_order_answer.to_h.keys.map(&:to_i)
     @user_answer = @flashcard.correct_answers == @answers
 
-    # Save flashcard
-    @flashcard.save_answer_for!(current_user, @user_answer)
-
-    # Show results
-    render "flashcards/show"
+    if request.path.include? "exams"
+      @exam = CustomExam.find(params[:custom_exam_id])
+      # save exam answer
+      # @flashcard.save_exam_answer_for!(current_user, @user_answer)
+      # redirect to next flashcard
+      next_exam_flashcard(@exam)
+    else
+      @flashcard.save_answer_for!(current_user, @user_answer)
+      render "flashcards/show"
+    end
   end
 
   def soll_ist
@@ -147,11 +159,16 @@ class FlashcardsController < ApplicationController
     @table_headings = @flashcard.answers.pluck(:content).select { |v| v =~ /\D/ }
     @table_answer_rows =  @flashcard.correct_answers.each_slice(4).to_a
 
-    # Save flashcard
-    @flashcard.save_answer_for!(current_user, @user_answer)
-
-    # Show results
-    render "flashcards/show"
+    if request.path.include? "exams"
+      @exam = CustomExam.find(params[:custom_exam_id])
+      # save exam answer
+      # @flashcard.save_exam_answer_for!(current_user, @user_answer)
+      # redirect to next flashcard
+      next_exam_flashcard(@exam)
+    else
+      @flashcard.save_answer_for!(current_user, @user_answer)
+      render "flashcards/show"
+    end
   end
 
   # def result
@@ -228,5 +245,18 @@ class FlashcardsController < ApplicationController
       # raise
     end
     @flashcard.update_attribute(:correct_answers, correct_answers)
+  end
+
+  def next_exam_flashcard(exam)
+    @questions = exam.questions
+    current_question = Flashcard.find(params[:id]).id
+    flashcard_id = @questions.index(current_question) + 1
+
+    if flashcard_id < @questions.size
+      flashcard = Flashcard.find(@questions[flashcard_id])
+      redirect_to custom_exam_flashcard_path(exam, flashcard)
+    else
+      redirect_to custom_exam_results_path(exam)
+    end
   end
 end

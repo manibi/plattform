@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_29_111132) do
+ActiveRecord::Schema.define(version: 2020_02_04_131408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,14 @@ ActiveRecord::Schema.define(version: 2020_01_29_111132) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["article_id"], name: "index_chapters_on_article_id"
+  end
+
+  create_table "custom_exams", force: :cascade do |t|
+    t.text "questions"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_custom_exams_on_user_id"
   end
 
   create_table "flashcard_answers", force: :cascade do |t|
@@ -150,6 +158,7 @@ ActiveRecord::Schema.define(version: 2020_01_29_111132) do
   add_foreign_key "articles", "categories"
   add_foreign_key "categories", "topics"
   add_foreign_key "chapters", "articles"
+  add_foreign_key "custom_exams", "users"
   add_foreign_key "flashcard_answers", "answers"
   add_foreign_key "flashcard_answers", "flashcards"
   add_foreign_key "flashcards", "articles"

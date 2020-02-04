@@ -2,7 +2,11 @@
   <h4><%= flashcard.content %></h4>
 
 
-  <%= form_for answer_multiple_choice_article_flashcard_path(@article, @flashcard), url: {action: "answer_multiple_choice"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
+  <%= form_for answer_multiple_choice_article_flashcard_path(@article, @flashcard), url: { controller: "flashcards",
+                      action: "answer_multiple_choice"},
+                      method: :post,
+                      html: { id: "flashcardAnswerForm",
+                              "data-form-submitted": false } do |f| %>
     <% @flashcard.answers.each do |answer| %>
       <div class="flashcard-answer">
         <label

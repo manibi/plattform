@@ -35,6 +35,12 @@ class Flashcard < ApplicationRecord
     user_flashcard.update(correct: answer, tries: tries)
   end
 
+  #! Store exam flashcard answer
+  def save_exam_answer_for!(user, answer=false)
+    custom_exam_answer = CustomExamAnswer.find_or_create_by(user: user, flashcard: self)
+    custom_exam_answer.update(correct: answer, answered: true)
+  end
+
   # Reset played flashcards for one article
   def self.reset_for!(user, article)
     UserFlashcard.where(user: user, flashcard: article.flashcards).destroy_all
