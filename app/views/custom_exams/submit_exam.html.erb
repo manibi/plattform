@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <%= link_to "Submit your exam", custom_exam_results_path(@exam) %>
+    </div>
+  </div>
+  <div class="row">
+  <% @exam.questions.each.with_index do |q, i| %>
+    <div class="col-12">
+      <%= link_to "Question #{i + 1}", custom_exam_flashcard_path(@exam, @exam.questions[i]) %>
+    </div>
+  <% end %>
+  </div>
+</div>

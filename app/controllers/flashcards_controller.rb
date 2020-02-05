@@ -19,6 +19,7 @@ class FlashcardsController < ApplicationController
     @flashcard = Flashcard.find(params[:id])
     authorize @flashcard
     @article = @flashcard.article
+    @exam_flashcard = request.path.include? "exams"
 
     if @flashcard.flashcard_type == "match_answers"
       @dragabble_answers  = Answer.find(@flashcard.correct_answers)
@@ -30,7 +31,10 @@ class FlashcardsController < ApplicationController
     @table_answer_rows =  @flashcard.correct_answers.each_slice(4).to_a
     end
 
-    if !request.path.include? "exams"
+    if @exam_flashcard
+      @exam = CustomExam.find(params[:custom_exam_id])
+    else
+    # if !request.path.include? "exams"
       @article.read_for!(current_user) unless @article.read_for?(current_user)
 
       # Reset flashcards for this article if re-taking the quiz
@@ -112,8 +116,9 @@ class FlashcardsController < ApplicationController
 
     if request.path.include? "exams"
       @exam = CustomExam.find(params[:custom_exam_id])
+      question_answered = !!set_multiple_choice_answer
       # save exam answer
-      # @flashcard.save_exam_answer_for!(current_user, @user_answer)
+      @flashcard.save_exam_answer_for!(@exam, question_answered, @user_answer)
       # redirect to next flashcard
       next_exam_flashcard(@exam)
     else
@@ -138,8 +143,8 @@ class FlashcardsController < ApplicationController
 
     if request.path.include? "exams"
       @exam = CustomExam.find(params[:custom_exam_id])
-      # save exam answer
-      # @flashcard.save_exam_answer_for!(current_user, @user_answer)
+      # save exam answer, question will always count as answered
+      @flashcard.save_exam_answer_for!(@exam, true, @user_answer)
       # redirect to next flashcard
       next_exam_flashcard(@exam)
     else
@@ -161,8 +166,9 @@ class FlashcardsController < ApplicationController
 
     if request.path.include? "exams"
       @exam = CustomExam.find(params[:custom_exam_id])
+      question_answered = @answers.sum == 0
       # save exam answer
-      # @flashcard.save_exam_answer_for!(current_user, @user_answer)
+      @flashcard.save_exam_answer_for!(@exam, question_answered, @user_answer)
       # redirect to next flashcard
       next_exam_flashcard(@exam)
     else
@@ -170,11 +176,6 @@ class FlashcardsController < ApplicationController
       render "flashcards/show"
     end
   end
-
-  # def result
-  #   @flashcard = Flashcard.find(params[:id])
-  #   @article = @flashcard.article
-  # end
 
   def results
     @article = Article.find(params[:article_id])
@@ -197,7 +198,7 @@ class FlashcardsController < ApplicationController
     render "flashcards/results"
   end
 
-  # Return next flashcard or flashcard results
+  # Return next article flashcard or flashcard results
   def next_flashcard
     @flashcard = Flashcard.find(params[:id])
     authorize @flashcard, :show?
@@ -256,7 +257,7 @@ class FlashcardsController < ApplicationController
       flashcard = Flashcard.find(@questions[flashcard_id])
       redirect_to custom_exam_flashcard_path(exam, flashcard)
     else
-      redirect_to custom_exam_results_path(exam)
+      redirect_to custom_exam_submit_exam_path(exam)
     end
   end
 end

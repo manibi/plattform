@@ -36,6 +36,8 @@ Rails.application.routes.draw do
 
   resources :custom_exams, only: [:show], path: "exams" do
     get "results", to: "custom_exams#results"
+    get "submit_exam", to: "custom_exams#submit_exam"
+    get "info", to: "pages#exam_info"
 
     resources :flashcards, only: :show do
       member do

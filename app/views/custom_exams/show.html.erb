@@ -2,4 +2,5 @@
   <div class="row">
     <h2>Exam Nr. <%= current_user.custom_exams.count %></h2>
   </div>
+  <%= link_to "Start", custom_exam_info_path(@exam), class: "btn btn-primary" %>
 </div>
