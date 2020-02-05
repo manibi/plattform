@@ -15,6 +15,11 @@ class CustomExamsController < ApplicationController
 
   def results
     @exam = CustomExam.find(params[:custom_exam_id])
+    @exam.submit!
+
+    @answers = @exam.custom_exam_answers
+    @correct_answers = @exam.correct_answered_questions
+    @wrong_answers   = @exam.questions.size - @correct_answers
     authorize @exam, :show?
   end
 end

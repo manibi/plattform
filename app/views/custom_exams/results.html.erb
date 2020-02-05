@@ -2,4 +2,35 @@
   <div class="row">
     <h2>Results</h2>
   </div>
+  <div class="row">
+    <div class="col">
+      Score: <%= @correct_answers %> / <%= @exam.questions.count %>
+    </div>
+    <div class="col">
+      Right answers: <%= @correct_answers %>
+    </div>
+    <div class="col">
+      Wrong answers: <%= @exam.questions.size - @correct_answers %>
+    </div>
+        <div class="col">
+      Not answered: <%= @exam.unanswered_questions %>
+    </div>
+  </div>
+
+  <% @answers.each.with_index do |q, i| %>
+    <div class="row">
+     <div class="col">
+       <%= link_to "Question #{i + 1}", custom_exam_flashcard_path(@exam, @exam.questions[i]) %>
+     </div>
+     <div class="col">
+      <% if q.correct %>
+        <b class="bg-success">Correct</b>
+      <% elsif !q.answered %>
+        <span class="bg-warning">Not answered</span>
+      <% else %>
+        <em class="bg-danger">Wrong</em>
+      <% end %>
+     </div>
+    </div>
+  <% end %>
 </div>

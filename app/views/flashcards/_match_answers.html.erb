@@ -1,7 +1,6 @@
-<h2>Order</h2><div class="card-body">
+<h2>Order</h2>
+<div class="card-body">
   <h4><%= flashcard.content %></h4>
-  <%# middle = @flashcard.answers.count / 2 %>
-
   <div class="row">
     <!-- The fixed answers -->
     <div class="col">
@@ -37,12 +36,15 @@
         </ul>
     </div>
   </div>
-        <%= f.submit "Check",
-                      class: "flashcard-btn btn btn-primary" if action_name == "show" %>
-        <%= link_to "Next",
-                  next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
-                  class: "flashcard-btn btn btn-primary" if action_name == "answer_correct_order" %>
-      <% end %>
+
+  <% if !@exam.submitted %>
+    <%= f.submit "Check",
+                  class: "flashcard-btn btn btn-primary" if action_name == "show" %>
+  <% end %>
+  <%= link_to "Next",
+            next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
+            class: "flashcard-btn btn btn-primary" if action_name == "answer_correct_order" %>
+  <% end %>
   <hr>
     <p>correct answers</p>
     <p><%= flashcard.correct_answers %></p>

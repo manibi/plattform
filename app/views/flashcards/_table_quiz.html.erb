@@ -15,9 +15,7 @@
           </tr>
       </thead>
       <tbody>
-
-              <% j = -1 %>
-
+          <% j = -1 %>
           <% @table_answer_rows.each.with_index do |answer_row, i| %>
             <% if (i % 4).even? %>
               <tr>
@@ -42,41 +40,11 @@
                 </tr>
              <% end %>
           <% end %>
-
-
-
-
-          <!--<th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-          <td>@mdo</td>-->
-
     </table>
-
-<!--
-
-        <ul class="answers-numbers row" id="answers" style="width: 400px">
-
-          <%# @flashcard.correct_answers.each.with_index do |correct_answer, i| %>
-              <li
-                style="padding: 10px;"
-                class=
-                <%# if action_name == "soll_ist"%>
-                  <%#= @user_answer ? "correct-answer" : "false-answer"  %>
-                <%# end %>
-                <%#= i.even? ? "left-column" : "right-column" %>
-              >
-                <%#= number_field_tag "flashcard[answer][#{i}]",
-                     (correct_answer if action_name == "soll_ist")
-                %>
-              </li>
-              <%# raise %>
-          <%# end %>
-        </ul>
-        -->
-    <%= f.submit "Check",
+    <% if !@exam.submitted %>
+      <%= f.submit "Check",
                   class: "flashcard-btn btn btn-primary" if action_name == "show" %>
+    <% end %>
     <%= link_to "Next",
               next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
               class: "flashcard-btn btn btn-primary" if action_name == "soll_ist" %>

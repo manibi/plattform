@@ -19,13 +19,15 @@
                             answer.id, false,
                             # id: answer.id,
                             id: dom_id(answer),
-                            disabled: action_name == "answer_multiple_choice" %>
+                            disabled: action_name == "answer_multiple_choice" ||@exam.submitted %>
             <%= answer.content %>
         </label>
       </div>
   <% end %>
-  <%= f.submit "Check",
-                class: "flashcard-btn btn btn-primary" if action_name == "show" %>
+  <% if !@exam.submitted %>
+    <%= f.submit "Check",
+              class: "flashcard-btn btn btn-primary" if action_name == "show" %>
+  <% end %>
   <%= link_to "Next",
               next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
               class: "flashcard-btn btn btn-primary" if action_name == "answer_multiple_choice" %>

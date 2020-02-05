@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <%= link_to "Submit your exam", custom_exam_results_path(@exam) %>
+      <%= link_to "Submit your exam", custom_exam_results_path(@exam) if !@exam.submitted %>
     </div>
   </div>
   <div class="row">
