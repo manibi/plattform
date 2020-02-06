@@ -6,9 +6,10 @@ var customExamCategoriesEls = document.querySelectorAll(
 <%# Render categories if the topic checkbox is selected %>
 <%# When not checked, remove the category if the ceckbox value(category id) is included in the topic_category_ids %>
 if(<%= @add_categories %>) {
+  const examCategoriesParentEl = document.getElementById("examCategories")
   categories = ("<%= escape_javascript(
     render partial: 'new_exam_categories') %>");
-  document.getElementById("examCategories").insertAdjacentHTML(
+  examCategoriesParentEl.insertAdjacentHTML(
     'beforeend',
     categories
   );

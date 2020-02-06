@@ -19,12 +19,12 @@
                             answer.id, false,
                             # id: answer.id,
                             id: dom_id(answer),
-                            disabled: action_name == "answer_multiple_choice" ||@exam.submitted %>
+                            disabled: action_name == "answer_multiple_choice" ||@exam&.submitted %>
             <%= answer.content %>
         </label>
       </div>
   <% end %>
-  <% if !@exam.submitted %>
+  <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
     <%= f.submit "Check",
               class: "flashcard-btn btn btn-primary" if action_name == "show" %>
   <% end %>

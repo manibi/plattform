@@ -41,7 +41,7 @@
              <% end %>
           <% end %>
     </table>
-    <% if !@exam.submitted %>
+    <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
       <%= f.submit "Check",
                   class: "flashcard-btn btn btn-primary" if action_name == "show" %>
     <% end %>
