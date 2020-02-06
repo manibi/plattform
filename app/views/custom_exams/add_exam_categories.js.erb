@@ -1,0 +1,30 @@
+var customExamCategoriesEls = document.querySelectorAll(
+  ".category"
+);
+
+<%# The checkbox dispatches an ajax call on change %>
+<%# Render categories if the topic checkbox is selected %>
+<%# When not checked, remove the category if the ceckbox value(category id) is included in the topic_category_ids %>
+if(<%= @add_categories %>) {
+  categories = ("<%= escape_javascript(
+    render partial: 'new_exam_categories') %>");
+  document.getElementById("examCategories").insertAdjacentHTML(
+    'beforeend',
+    categories
+  );
+} else {
+  const topic_category_ids = <%= @topic.categories.pluck(:id) %>
+  const customExamTopicsEls = document.querySelectorAll(
+    "[name='exam[topic_id]']"
+  );
+
+  customExamCategoriesEls.forEach(category => {
+    category_id = category.querySelector("input").value;
+    if(topic_category_ids.indexOf(Number(category_id)) != -1) {
+      category.remove()
+    }
+  });
+
+}
+
+

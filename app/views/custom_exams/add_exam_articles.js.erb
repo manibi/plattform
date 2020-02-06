@@ -1,0 +1,27 @@
+var customExamArticlesEls = document.querySelectorAll(
+  ".article"
+);
+
+if(<%= @add_articles %>) {
+  articles = ("<%= escape_javascript(
+    render partial: 'new_exam_articles') %>");
+  document.getElementById("examArticles").insertAdjacentHTML(
+    'beforeend',
+    articles
+  );
+} else {
+  const category_article_ids = <%= @category.articles.pluck(:id) %>
+  const customExamCategoriesEls = document.querySelectorAll(
+    "[name='exam[category_id]']"
+  );
+
+  customExamArticlesEls.forEach(article => {
+    article_id = article.querySelector("input").value;
+    if(category_article_ids.indexOf(Number(article_id)) != -1) {
+      article.remove()
+    }
+  });
+
+}
+
+

@@ -1,0 +1,21 @@
+<% if @add_categories %>
+  <% @topic.categories.each do |category| %>
+      <div class="category">
+        <label>
+            <%= check_box_tag "exam[category_id]",
+                              category.id,
+                              false,
+                              id: dom_id(category),
+                             data: {
+                                remote: true,
+                                url: url_for(
+                                  action: :add_exam_articles,
+                                  id: dom_id(category)),
+                                method: "GET"
+                              }
+                              %>
+            <%= category.title %>
+          </label>
+      </div>
+  <% end %>
+<% end %>

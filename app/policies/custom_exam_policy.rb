@@ -1,5 +1,9 @@
 class CustomExamPolicy < ApplicationPolicy
 
+  def new?
+    true
+  end
+
   def show?
     record.user == user
   end

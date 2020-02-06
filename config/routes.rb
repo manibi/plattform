@@ -33,7 +33,9 @@ Rails.application.routes.draw do
 
   resources :flashcards, only: [:index, :new, :create, :edit, :update, :destroy]
 
-  resources :custom_exams, only: [:show], path: "exams" do
+  get "add_exam_categories", to: "custom_exams#add_exam_categories"
+  get "add_exam_articles", to: "custom_exams#add_exam_articles"
+  resources :custom_exams, only: [:new, :create, :show], path: "exams" do
     get "results", to: "custom_exams#results"
     get "submit_exam", to: "custom_exams#submit_exam"
     get "info", to: "pages#exam_info"

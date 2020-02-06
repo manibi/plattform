@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2 class="heading-4">Prüfungen</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h3>Erstelle eine individuelle Prüfungssimulation</h3>
+    </div>
+  </div>
+  <%= form_with model: @exam, local: true do |f| %>
+  <div class="row">
+    <div class="col">
+      <h6>Themen(topics)</h6>
+      <% current_user.profession.topics.each do |topic| %>
+        <label>
+          <%= check_box_tag "exam[topic_id]",
+                            topic.id,
+                            false,
+                            id: dom_id(topic),
+                            data: {
+                              remote: true,
+                              url: url_for(
+                                action: :add_exam_categories,
+                                id: dom_id(topic)),
+                              method: "GET"
+                            }
+                            %>
+          <%= topic.name %>
+        </label>
+      <% end %>
+    </div>
+    <div class="col" id="examCategories">
+      <h6>Module(categories)</h6>
+
+    </div>
+    <div class="col" id="examArticles">
+      <h6>Artikel</h6>
+    </div>
+  </div>
+    <%= f.submit "Start" %>
+  <% end %>
+</div>

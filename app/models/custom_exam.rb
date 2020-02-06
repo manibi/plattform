@@ -27,4 +27,9 @@ class CustomExam < ApplicationRecord
   def all_questions
     Flashcard.find(self.questions)
   end
+
+  # Return all flashcards from selected articles(array of articles ids)
+  def exam_questions_from(articles)
+    Flashcard.joins(:article).where(article: articles)
+  end
 end
