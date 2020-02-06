@@ -5,6 +5,7 @@ class CustomExam < ApplicationRecord
   serialize :questions, Array
 
   validates :user_id, presence: true
+  validates_length_of :questions, minimum: 1
 
   def submit!
     self.update(submitted: true)
@@ -29,7 +30,7 @@ class CustomExam < ApplicationRecord
   end
 
   # Return all flashcards from selected articles(array of articles ids)
-  def exam_questions_from(articles)
+  def self.exam_questions_from(articles)
     Flashcard.joins(:article).where(article: articles)
   end
 end

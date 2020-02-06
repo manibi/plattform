@@ -11,6 +11,21 @@ class CustomExamsController < ApplicationController
     authorize @exam
   end
 
+  def create
+    @exam = CustomExam.new(user: current_user)
+    authorize @exam, :new?
+    if exam_params
+      articles = exam_params[:article_ids]
+      @exam.questions = CustomExam.exam_questions_from(articles).pluck(:id)
+    end
+
+    if @exam.save
+      redirect_to @exam
+    else
+      render :new
+    end
+  end
+
   # TODO:check autorisation
   def submit_exam
     @exam = CustomExam.find(params[:custom_exam_id])
@@ -66,5 +81,9 @@ class CustomExamsController < ApplicationController
     else
       params.permit(:id)
     end
+  end
+
+  def exam_params
+    params.require(:exam).permit(article_ids: []) if params[:exam]
   end
 end

@@ -35,6 +35,7 @@ Rails.application.routes.draw do
 
   get "add_exam_categories", to: "custom_exams#add_exam_categories"
   get "add_exam_articles", to: "custom_exams#add_exam_articles"
+
   resources :custom_exams, only: [:new, :create, :show], path: "exams" do
     get "results", to: "custom_exams#results"
     get "submit_exam", to: "custom_exams#submit_exam"

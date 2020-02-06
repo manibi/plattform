@@ -2,7 +2,7 @@
   <% @category.articles.each do |article| %>
       <div class="article">
         <label>
-            <%= check_box_tag "exam[article_id]",
+            <%= check_box_tag "exam[article_ids][]",
                               article.id,
                               false,
                               id: dom_id(article)
