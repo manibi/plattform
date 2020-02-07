@@ -49,9 +49,7 @@ Rails.application.routes.draw do
         post "soll_ist",               to: "flashcards#soll_ist"
       end
     end
-
   end
-
 
   get "welcome",   to: "pages#welcome"
   get "dashboard", to: "pages#dashboard"
