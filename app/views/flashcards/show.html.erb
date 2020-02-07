@@ -18,7 +18,7 @@
                     custom_exam_results_path(@exam),
                     class: "btn btn-success" %>
       <% end %>
-      <% if @exam %>
+      <% if @exam && !@exam.submitted %>
         <p>
           <% if @flashcard.bookmarked_for?(@exam) %>
             <%= link_to 'Unbookmark flashcard', unbookmark_custom_exam_flashcard_path(@exam, @flashcard),                                      method: :patch,

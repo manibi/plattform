@@ -4,11 +4,18 @@ class CustomExamsController < ApplicationController
   def new
     @exam = CustomExam.new
     authorize @exam
+
+    @exams = current_user.custom_exams
   end
 
   def show
     @exam = CustomExam.find(params[:id])
     authorize @exam
+
+    @questions = @exam.all_questions
+    @answers = @exam.custom_exam_answers
+    @correct_answers = @exam.correct_answered_questions
+    @wrong_answers   = @exam.questions.size - @correct_answers
   end
 
   def create
@@ -35,13 +42,13 @@ class CustomExamsController < ApplicationController
 
   def results
     @exam = CustomExam.find(params[:custom_exam_id])
+    authorize @exam, :show?
     @exam.submit!
     @questions = @exam.all_questions
 
     @answers = @exam.custom_exam_answers
     @correct_answers = @exam.correct_answered_questions
     @wrong_answers   = @exam.questions.size - @correct_answers
-    authorize @exam, :show?
   end
 
   def add_exam_categories

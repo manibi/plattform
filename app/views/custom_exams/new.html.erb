@@ -41,4 +41,21 @@
   </div>
     <%= f.submit "Start" %>
   <% end %>
+
+  <!-- Finished and unfinished exams -->
+  <div class="row mt-5">
+    <div class="col">
+      <h3 class="heading-3">Finished Exams</h3>
+    </div>
+  </div>
+  <div class="row">
+      <% @exams.each.with_index do |exam, i| %>
+        <div class="col-4">
+        <%= link_to exam do %>
+          <p>Exam Nr.<%= i + 1 %> from <%= exam.created_at.to_date %></p>
+        <% end %>
+        </div>
+      <% end %>
+  </div>
 </div>
+
