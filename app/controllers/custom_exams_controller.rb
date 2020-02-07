@@ -20,13 +20,13 @@ class CustomExamsController < ApplicationController
     end
 
     if @exam.save
-      redirect_to @exam
+      # redirect_to @exam
+      redirect_to custom_exam_info_path(@exam)
     else
       render :new
     end
   end
 
-  # TODO:check autorisation
   def submit_exam
     @exam = CustomExam.find(params[:custom_exam_id])
     @questions = Flashcard.find(CustomExam.first.questions)
