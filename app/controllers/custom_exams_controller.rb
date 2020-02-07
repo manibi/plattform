@@ -36,6 +36,7 @@ class CustomExamsController < ApplicationController
   def results
     @exam = CustomExam.find(params[:custom_exam_id])
     @exam.submit!
+    @questions = @exam.all_questions
 
     @answers = @exam.custom_exam_answers
     @correct_answers = @exam.correct_answered_questions
