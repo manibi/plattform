@@ -33,7 +33,9 @@ if(<%= @add_categories %>) {
 
     // Remove categories and articles when a topic is unchecked
     if(topic_category_ids.indexOf(Number(category_id)) != -1) {
+     if(categoryInputEl.checked) {
       categoryInputEl.click();
+    }
       category.remove();
     }
   });
