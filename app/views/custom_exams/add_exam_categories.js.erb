@@ -6,13 +6,21 @@ var customExamCategoriesEls = document.querySelectorAll(
 <%# Render categories if the topic checkbox is selected %>
 <%# When not checked, remove the category if the ceckbox value(category id) is included in the topic_category_ids %>
 if(<%= @add_categories %>) {
-  const examCategoriesParentEl = document.getElementById("examCategories")
+  const examCategoriesParentEl = document.getElementById("examCategories");
   categories = ("<%= escape_javascript(
     render partial: 'new_exam_categories') %>");
   examCategoriesParentEl.insertAdjacentHTML(
     'beforeend',
     categories
   );
+
+  const categoryInputs = examCategoriesParentEl.querySelectorAll("input[type='checkbox']");
+  categoryInputs.forEach(el => {
+    if(!el.checked) {
+      el.click();
+    }
+  });
+
 } else {
   const topic_category_ids = <%= @topic.categories.pluck(:id) %>
   const customExamTopicsEls = document.querySelectorAll(
@@ -20,9 +28,13 @@ if(<%= @add_categories %>) {
   );
 
   customExamCategoriesEls.forEach(category => {
-    category_id = category.querySelector("input").value;
+    categoryInputEl = category.querySelector("input");
+    category_id = categoryInputEl.value;
     if(topic_category_ids.indexOf(Number(category_id)) != -1) {
-      category.remove()
+      categoryInputEl.click();
+      category.remove();
+
+
     }
   });
 
