@@ -14,13 +14,13 @@ if(<%= @add_categories %>) {
     categories
   );
 
+  // Add categories and articles when a topic is checked
   const categoryInputs = examCategoriesParentEl.querySelectorAll("input[type='checkbox']");
   categoryInputs.forEach(el => {
     if(!el.checked) {
       el.click();
     }
   });
-
 } else {
   const topic_category_ids = <%= @topic.categories.pluck(:id) %>
   const customExamTopicsEls = document.querySelectorAll(
@@ -30,14 +30,13 @@ if(<%= @add_categories %>) {
   customExamCategoriesEls.forEach(category => {
     categoryInputEl = category.querySelector("input");
     category_id = categoryInputEl.value;
+
+    // Remove categories and articles when a topic is unchecked
     if(topic_category_ids.indexOf(Number(category_id)) != -1) {
       categoryInputEl.click();
       category.remove();
-
-
     }
   });
-
 }
 
 
