@@ -1,11 +1,11 @@
 class CustomExamPolicy < ApplicationPolicy
 
   def new?
-    true
+    user.student?
   end
 
   def show?
-    record.user == user
+    user.student? && record.user.profession == user.profession
   end
 
   class Scope < Scope
