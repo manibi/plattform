@@ -27,7 +27,6 @@ class CustomExamsController < ApplicationController
     end
 
     if @exam.save
-      # redirect_to @exam
       redirect_to custom_exam_info_path(@exam)
     else
       render :new
