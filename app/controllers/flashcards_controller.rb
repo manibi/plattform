@@ -243,7 +243,6 @@ class FlashcardsController < ApplicationController
       correct_answers = @flashcard.answers.pluck(:content).map(&:to_i)
     else
       correct_answers = @flashcard.answers.pluck(:content).select { |v| v =~ /\d/ }.map(&:to_f)
-      # raise
     end
     @flashcard.update_attribute(:correct_answers, correct_answers)
   end
