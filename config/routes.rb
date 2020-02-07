@@ -47,6 +47,8 @@ Rails.application.routes.draw do
         post "answer_correct_order",   to: "flashcards#answer_correct_order"
         post "answer_match",           to: "flashcards#answer_match"
         post "soll_ist",               to: "flashcards#soll_ist"
+        post  "bookmark",              to: "flashcards#bookmark"
+        patch "unbookmark",            to: "flashcards#unbookmark"
       end
     end
   end

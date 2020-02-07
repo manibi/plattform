@@ -51,4 +51,16 @@ class Flashcard < ApplicationRecord
   def self.reset_all_for!(user)
     UserFlashcard.where(user: user).destroy_all
   end
+
+  def bookmarked_for?(exam)
+    CustomExamAnswer.where(custom_exam: exam, flashcard: self, bookmarked: true).present?
+  end
+
+  def bookmark_for!(exam)
+    CustomExamAnswer.find_or_create_by(custom_exam: exam, flashcard: self).update(bookmarked: true)
+  end
+
+  def unbookmark_for!(exam)
+    CustomExamAnswer.where(custom_exam: exam, flashcard: self).update(bookmarked: false)
+  end
 end

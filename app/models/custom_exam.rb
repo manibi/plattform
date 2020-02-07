@@ -11,14 +11,12 @@ class CustomExam < ApplicationRecord
     self.update(submitted: true)
   end
 
-  def submit_custom_exam?
-    if self.custom_exam_answers.any?
-      self.custom_exam_answers.last.flashcard.id == self.questions.last
-    end
-  end
-
   def correct_answered_questions
     self.custom_exam_answers.where(correct: true).count
+  end
+
+  def answered_questions
+    self.custom_exam_answers.where(answered: true).count
   end
 
   def unanswered_questions

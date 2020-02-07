@@ -13,20 +13,26 @@
   </div>
   <div class="row">
     <div class="col-12">
-      <% if @exam&.submit_custom_exam? && !@exam.submitted %>
-        <%= link_to "Review exam page",
-                    custom_exam_submit_exam_path(@exam),
+      <% if @exam&.submitted %>
+        <%= link_to "Exam results",
+                    custom_exam_results_path(@exam),
                     class: "btn btn-success" %>
       <% end %>
-
-    <% if @exam&.submitted %>
-      <%= link_to "Exam results",
-                  custom_exam_results_path(@exam),
-                  class: "btn btn-success" %>
-    <% end %>
-  <%# raise %>
+      <% if @exam %>
+        <p>
+          <% if @flashcard.bookmarked_for?(@exam) %>
+            <%= link_to 'Unbookmark flashcard', unbookmark_custom_exam_flashcard_path(@exam, @flashcard),                                      method: :patch,
+                                              class: "btn btn-warning" %>
+          <% else %>
+            <%= link_to 'Bookmark flashcard', bookmark_custom_exam_flashcard_path(@exam, @flashcard),
+                                            method: :post,
+                                            class: "btn btn-primary" %>
+          <% end %>
+        </p>
+      <% end %>
     </div>
-    <div class="col-md-12">
+
+    <div class="col-md-8">
       <% case @flashcard.flashcard_type %>
       <% when "multiple_choice" %>
         <%= render "flashcards/multiple_choice", flashcard: @flashcard %>
@@ -38,6 +44,21 @@
         <%= render "flashcards/soll_ist", flashcard: @flashcard %>
       <% when "table_quiz" %>
         <%= render "flashcards/table_quiz", flashcard: @flashcard %>
+      <% end %>
+    </div>
+
+    <% if @exam %>
+      <div class="col-md-4">
+        <% @questions.each.with_index do |q, i| %>
+          <ul>
+            <li>
+              <%= link_to "Question #{i + 1}", custom_exam_flashcard_path(@exam, @exam.questions[i]) %>
+              <% if @exam.answer_for(q)&.bookmarked %>
+                <span class="badge badge-pill badge-primary">Marked</span>
+              <% end %>
+            </li>
+          </ul>
+        <% end %>
       <% end %>
     </div>
   </div>

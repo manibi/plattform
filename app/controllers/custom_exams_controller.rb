@@ -29,7 +29,7 @@ class CustomExamsController < ApplicationController
 
   def submit_exam
     @exam = CustomExam.find(params[:custom_exam_id])
-    @questions = Flashcard.find(CustomExam.first.questions)
+    @questions = @exam.all_questions
     authorize @exam, :show?
   end
 

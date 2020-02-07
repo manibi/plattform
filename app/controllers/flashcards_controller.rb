@@ -33,6 +33,7 @@ class FlashcardsController < ApplicationController
 
     if @exam_flashcard
       @exam = CustomExam.find(params[:custom_exam_id])
+      @questions = @exam.all_questions
     else
     # if !request.path.include? "exams"
       @article.read_for!(current_user) unless @article.read_for?(current_user)
@@ -91,6 +92,29 @@ class FlashcardsController < ApplicationController
       redirect_to edit_flashcard_path(@flashcard)
     else
       render :edit
+    end
+  end
+
+  # Bookmark exam flashcard
+  def bookmark
+    @flashcard = Flashcard.find(params[:id])
+    authorize @flashcard, :show?
+
+    if request.path.include? "exams"
+      @exam = CustomExam.find(params[:custom_exam_id])
+      @flashcard.bookmark_for!(@exam)
+      redirect_to custom_exam_flashcard_path(@exam, @flashcard)
+    end
+  end
+
+  def unbookmark
+    @flashcard = Flashcard.find(params[:id])
+    authorize @flashcard, :show?
+
+    if request.path.include? "exams"
+      @exam = CustomExam.find(params[:custom_exam_id])
+      @flashcard.unbookmark_for!(@exam)
+      redirect_to custom_exam_flashcard_path(@exam, @flashcard)
     end
   end
 
