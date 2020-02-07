@@ -12,6 +12,20 @@
     <% end %>
   </div>
   <div class="row">
+    <div class="col-12">
+      <% if @exam&.submit_custom_exam? && !@exam.submitted %>
+        <%= link_to "Review exam page",
+                    custom_exam_submit_exam_path(@exam),
+                    class: "btn btn-success" %>
+      <% end %>
+
+    <% if @exam&.submitted %>
+      <%= link_to "Exam results",
+                  custom_exam_results_path(@exam),
+                  class: "btn btn-success" %>
+    <% end %>
+  <%# raise %>
+    </div>
     <div class="col-md-12">
       <% case @flashcard.flashcard_type %>
       <% when "multiple_choice" %>

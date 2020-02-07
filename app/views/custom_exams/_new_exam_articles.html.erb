@@ -1,0 +1,14 @@
+<% if @add_articles %>
+  <% @category.articles.each do |article| %>
+      <div class="article">
+        <label>
+            <%= check_box_tag "exam[article_ids][]",
+                              article.id,
+                              true,
+                              id: dom_id(article)
+                              %>
+            <%= article.title %>
+          </label>
+      </div>
+  <% end %>
+<% end %>

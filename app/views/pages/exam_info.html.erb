@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2 class="heading-4">Ready to pass the exam<%= ", #{current_user.first_name}" if current_user.first_name.present? %>?</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <p>
+        TODO: add infos based on profession from db
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <%= link_to "Start the exam", custom_exam_flashcard_path(@exam, @first_flashcard) %>
+    </div>
+  </div>
+</div>

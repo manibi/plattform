@@ -1,4 +1,5 @@
-<h2>Order</h2><div class="card-body">
+<h2>Order</h2>
+<div class="card-body">
   <h4><%= flashcard.content %></h4>
 
   <%= form_for answer_correct_order_article_flashcard_path(@article, @flashcard), url: {action: "answer_correct_order"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
@@ -16,12 +17,15 @@
           </li>
       <% end %>
     </ul>
-  <%= f.submit "Check",
-                class: "flashcard-btn btn btn-primary" if action_name == "show" %>
-  <%= link_to "Next",
-              next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
-              class: "flashcard-btn btn btn-primary" if action_name == "answer_correct_order" %>
-<% end %>
+
+    <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
+      <%= f.submit "Check",
+                  class: "flashcard-btn btn btn-primary" if action_name == "show" %>
+    <% end %>
+    <%= link_to "Next",
+                next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
+                class: "flashcard-btn btn btn-primary" if action_name == "answer_correct_order" %>
+  <% end %>
 
   <hr>
     <p>correct answers</p>

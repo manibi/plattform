@@ -25,7 +25,6 @@ Rails.application.routes.draw do
         post "answer_correct_order",   to: "flashcards#answer_correct_order"
         post "answer_match",           to: "flashcards#answer_match"
         post "soll_ist",               to: "flashcards#soll_ist"
-        # post "table_quiz",             to: "flashcards#table_quiz"
         get  "next_flashcard",         to: "flashcards#next_flashcard"
       end
     end
@@ -33,6 +32,24 @@ Rails.application.routes.draw do
   end
 
   resources :flashcards, only: [:index, :new, :create, :edit, :update, :destroy]
+
+  get "add_exam_categories", to: "custom_exams#add_exam_categories"
+  get "add_exam_articles", to: "custom_exams#add_exam_articles"
+
+  resources :custom_exams, only: [:new, :create, :show], path: "exams" do
+    get "results", to: "custom_exams#results"
+    get "submit_exam", to: "custom_exams#submit_exam"
+    get "info", to: "pages#exam_info"
+
+    resources :flashcards, only: :show do
+      member do
+        post "answer_multiple_choice", to: "flashcards#answer_multiple_choice"
+        post "answer_correct_order",   to: "flashcards#answer_correct_order"
+        post "answer_match",           to: "flashcards#answer_match"
+        post "soll_ist",               to: "flashcards#soll_ist"
+      end
+    end
+  end
 
   get "welcome",   to: "pages#welcome"
   get "dashboard", to: "pages#dashboard"

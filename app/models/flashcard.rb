@@ -2,6 +2,7 @@ class Flashcard < ApplicationRecord
   belongs_to        :article
   has_many          :user_flashcards, dependent: :destroy
   has_many          :flashcard_answers, dependent: :destroy
+  has_many          :custom_exam_answers
   has_many          :answers, through: :flashcard_answers
   has_one_attached  :image
 
@@ -33,6 +34,12 @@ class Flashcard < ApplicationRecord
     tries = user_flashcard.tries
     tries += 1
     user_flashcard.update(correct: answer, tries: tries)
+  end
+
+  # Store exam flashcard answer
+  def save_exam_answer_for!(exam, question_answered, answer=false)
+    custom_exam_answer = CustomExamAnswer.find_or_create_by(custom_exam: exam, flashcard: self)
+    custom_exam_answer.update(answered: question_answered, correct: answer)
   end
 
   # Reset played flashcards for one article

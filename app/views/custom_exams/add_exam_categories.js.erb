@@ -1,0 +1,42 @@
+var customExamCategoriesEls = document.querySelectorAll(
+  ".category"
+);
+
+<%# The checkbox dispatches an ajax call on change %>
+<%# Render categories if the topic checkbox is selected %>
+<%# When not checked, remove the category if the ceckbox value(category id) is included in the topic_category_ids %>
+if(<%= @add_categories %>) {
+  const examCategoriesParentEl = document.getElementById("examCategories");
+  categories = ("<%= escape_javascript(
+    render partial: 'new_exam_categories') %>");
+  examCategoriesParentEl.insertAdjacentHTML(
+    'beforeend',
+    categories
+  );
+
+  // Add categories and articles when a topic is checked
+  const categoryInputs = examCategoriesParentEl.querySelectorAll("input[type='checkbox']");
+  categoryInputs.forEach(el => {
+    if(!el.checked) {
+      el.click();
+    }
+  });
+} else {
+  const topic_category_ids = <%= @topic.categories.pluck(:id) %>
+  const customExamTopicsEls = document.querySelectorAll(
+    "[name='exam[topic_id]']"
+  );
+
+  customExamCategoriesEls.forEach(category => {
+    categoryInputEl = category.querySelector("input");
+    category_id = categoryInputEl.value;
+
+    // Remove categories and articles when a topic is unchecked
+    if(topic_category_ids.indexOf(Number(category_id)) != -1) {
+      categoryInputEl.click();
+      category.remove();
+    }
+  });
+}
+
+
