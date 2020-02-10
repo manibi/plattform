@@ -1,0 +1,47 @@
+<% if user_signed_in? %>
+  <ul class="nav flex-column text-center">
+
+    <% if current_user.author? %>
+      <li class="nav-item">
+        <%= link_to "Author Dashboard", author_dashboard_path, class: "nav-link btn-warning" %>
+      </li>
+    <% elsif current_user.student? %>
+      <li class="nav-item">
+        <%= link_to dashboard_path, class: "nav-link" do %>
+          <div class="row">
+            <i class="material-icons-sharp">home</i>
+            <p>Dashboard</p>
+          </div>
+        <% end %>
+      </li>
+    <% end %>
+
+    <li class="nav-item">
+      <%= link_to articles_path, class: "nav-link" do %>
+        <div class="row">
+          <i class="material-icons-sharp">local_library</i>
+          <p>Artikel</p>
+        </div>
+      <% end %>
+    </li>
+
+    <li class="nav-item">
+      <%= link_to flashcards_path, class: "nav-link" do %>
+        <div class="row">
+          <i class="material-icons-sharp">dynamic_feed</i>
+          <p>Quiz</p>
+        </div>
+      <% end %>
+    </li>
+
+    <li class="nav-item">
+      <%= link_to new_custom_exam_path, class: "nav-link" do %>
+        <div class="row">
+          <i class="material-icons-sharp">description</i>
+          <p>Prüfungen</p>
+        </div>
+      <% end %>
+    </li>
+
+  </ul>
+<% end %>
