@@ -1,1 +1,64 @@
-<h1>Dashboard</h1>
+<div class="container">
+	<!-- Welcome back message -->
+	<div class="row mt-3">
+		<div class="col-12">
+		Welcome back Mark
+		</div>
+	</div>
+	<!-- Stats -->
+	<div class="row mt-3">
+		<div class="col-3">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Stat 1</h5>
+			    </div>
+			</div>
+		</div>
+		<div class="col-3">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Stat 2</h5>
+			    </div>
+			</div>
+		</div>
+		<div class="col-3">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Stat 3</h5>
+			    </div>
+			</div>
+		</div>
+		<div class="col-3">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Stat 4</h5>
+			    </div>
+			</div>
+		</div>
+	</div>
+	<!-- Current Topic -->
+	<div class="row mt-3">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Ongoing Topic</h5>
+					<%# @upcoming_topics.each do |topic| %>
+						<!-- <div class="row">
+							<%#= topic.title %>
+						</div> -->
+					<%# end %>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Tips of the month -->
+	<div class="row mt-3">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Tip of the month</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
