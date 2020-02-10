@@ -1,0 +1,23 @@
+<ul class="nav nav-pills nav-fill">
+	<% if user_signed_in? %>
+		<li class="nav-item">
+			search
+		</li>
+		<li class="nav-item">
+			notifications
+		</li>
+		<li class="nav-item">
+			profile
+		</li>
+		<li class="nav-item">
+			dropdown with 
+			- account settings (&logout)
+		  <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "nav-link" %>
+		</li>
+		
+	<% else %>
+	  <li class="nav-item">
+	    <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+	  </li>
+<% end %>
+</ul>
