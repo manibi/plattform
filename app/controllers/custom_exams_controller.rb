@@ -23,20 +23,11 @@ class CustomExamsController < ApplicationController
     authorize @exam, :new?
     if exam_params
       articles = exam_params[:article_ids]
-      # raise
-      # if exam_params[:answered] == "correct"
-      #   @exam.questions = CustomExam.exam_questions_from(articles).where(answered_correct_in_exam: true).pluck(:id)
-      # elsif exam_params[:answered] == "wrong"
-      #   @exam.questions = CustomExam.exam_questions_from(articles).where(answered_correct_in_exam: false).pluck(:id)
-      # else
-      #   @exam.questions = CustomExam.exam_questions_from(articles).pluck(:id)
-      # end
       @exam.questions = CustomExam.exam_questions_from(articles).pluck(:id)
     end
 
 
     if @exam.questions.any? && @exam.save
-      # raise
       redirect_to custom_exam_info_path(@exam)
     else
       render :new
