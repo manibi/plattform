@@ -1,23 +1,69 @@
 <div class="container">
-  <%# <div class="row"> %>
-    <h1>Articles</h1>
-    <h3>Bookmarked Articles <%= @bookmarked_articles.size %></h3>
-    <% if @bookmarked_articles.blank? %>
-        <p>No bookmarked articles</p>
-    <% else %>
-       <ul>
-        <%= render @bookmarked_articles %>
-      </ul>
-    <% end %>
-
-    <h3>Upcoming Articles <%= @upcoming_articles.size %></h3>
-    <ul>
-      <%= render @upcoming_articles %>
-    </ul>
-
-    <h3>Read Articles <%= @read_articles.size %></h3>
-    <ul>
-      <%= render @read_articles %>
-    </ul>
-  <%# </div> %>
+	<div class="row">
+		<div class="col-12">
+		Artikel
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item">
+			    	<a class="nav-link active" id="topic-tab" data-toggle="tab" href="#topic" role="tab" aria-controls="topic" aria-selected="true">Themen</a>
+				</li>
+				<li class="nav-item">
+			    	<a class="nav-link" id="open-tab" data-toggle="tab" href="#open" role="tab" aria-controls="open" aria-selected="false">Offen</a>
+				</li>
+				<li class="nav-item">
+			    	<a class="nav-link" id="marked-tab" data-toggle="tab" href="#marked" role="tab" aria-controls="marked" aria-selected="false">Markiert</a>
+				</li>
+				<li class="nav-item">
+			    	<a class="nav-link" id="read-tab" data-toggle="tab" href="#read" role="tab" aria-controls="read" aria-selected="false">Gelesen</a>
+				</li>
+			</ul>
+	</div>
+	<div class="row">
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade show active" id="topic" role="tabpanel" aria-labelledby="topic-tab">
+					<!-- topic tab -->
+					<% @bookmarked_articles.each do |bookmarked_article| %>
+						<div class="col-3">
+							<div class="card">
+								<%= bookmarked_article.title %>
+							</div>
+						</div>
+					<% end %>
+				</div>
+				<div class="tab-pane fade" id="open" role="tabpanel" aria-labelledby="open-tab">
+					<!-- bookmarked tab -->
+					<% @bookmarked_articles.each do |bookmarked_article| %>
+						<div class="col-3">
+							<div class="card">
+								<%= bookmarked_article.title %>
+							</div>
+						</div>
+					<% end %>
+				</div>
+				<div class="tab-pane fade" id="marked" role="tabpanel" aria-labelledby="marked-tab">
+					<!-- upcoming tab -->
+					<% @upcoming_articles.each do |upcoming_article| %>
+						<div class="col-3">
+							<div class="card">
+								<%= upcoming_article.title %>
+							</div>
+						</div>
+					<% end %>
+				</div>
+				<div class="tab-pane fade" id="read" role="tabpanel" aria-labelledby="read-tab">
+					<!-- read tab -->
+					<% @read_articles.each do |read_article| %>
+						<div class="col-3">
+							<div class="card">
+								<%= read_article.title %>
+							</div>
+						</div>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
