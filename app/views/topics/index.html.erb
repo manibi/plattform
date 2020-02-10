@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2 class="heading-2">
+        Topics
+      </h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <% @topics.each do |topic| %>
+      <div class="col-4">
+        <%= link_to topic do %>
+          <div class="card">
+            <div class="card-body">
+              <%= topic.name %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

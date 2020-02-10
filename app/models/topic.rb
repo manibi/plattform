@@ -1,4 +1,7 @@
 class Topic < ApplicationRecord
+  include PgSearch::Model
+  multisearchable against: [:name]
+
   belongs_to  :profession
   has_many    :categories, dependent: :destroy
 

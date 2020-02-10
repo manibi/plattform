@@ -11,6 +11,10 @@ class UserPolicy < ApplicationPolicy
     current_user? && user.student?
   end
 
+  def search?
+    current_user?
+  end
+
   class Scope < Scope
     def resolve
       if user.admin?

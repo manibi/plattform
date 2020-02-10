@@ -1,5 +1,8 @@
 # Term
 class Article < ApplicationRecord
+  include PgSearch::Model
+  multisearchable against: [:title]
+
   belongs_to  :category
   has_many    :chapters, dependent: :destroy
   has_many    :user_articles
