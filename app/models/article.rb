@@ -5,6 +5,7 @@ class Article < ApplicationRecord
   has_many    :user_articles
   has_many    :users, through: :user_articles
   has_many    :flashcards, dependent: :destroy
+  has_one_attached  :image
 
   validates :title, presence: true, allow_blank: false
   validates :description, presence: true, allow_blank: false

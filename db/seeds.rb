@@ -1,3 +1,5 @@
+require "open-uri"
+
 puts "Cleaning DB..."
 Chapter.destroy_all
 UserArticle.destroy_all
@@ -135,6 +137,9 @@ python_article  = back_end_dev_module.articles.second
 mysql_article   = back_end_dev_module2.articles.first
 css_article     = front_end_dev_module.articles.first
 bjj_article     = bjj_module.articles.first
+
+file = URI.open('https://giantbomb1.cbsistatic.com/uploads/original/9/99864/2419866-nes_console_set.png')
+ruby_article.image.attach(io: file, filename: 'nes.png', content_type: 'image/png')
 
 puts "Creating chapters"
 ruby_article.chapters.create!([
