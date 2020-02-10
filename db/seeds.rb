@@ -2,6 +2,8 @@ puts "Cleaning DB..."
 Chapter.destroy_all
 UserArticle.destroy_all
 FlashcardAnswer.destroy_all
+CustomExamAnswer.destroy_all
+CustomExam.destroy_all
 Answer.destroy_all
 UserFlashcard.destroy_all
 Flashcard.destroy_all

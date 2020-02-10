@@ -28,9 +28,9 @@
        <%= link_to "Question #{i + 1}", custom_exam_flashcard_path(@exam, @exam.questions[i]) %>
      </div>
      <div class="col">
-      <% if @exam.answer_for(q).correct %>
+      <% if @exam.answer_for(q)&.correct %>
         <b class="bg-success">Correct</b>
-      <% elsif !@exam.answer_for(q).answered %>
+      <% elsif !@exam.answer_for(q)&.answered %>
         <span class="bg-warning">Not answered</span>
       <% else %>
         <em class="bg-danger">Wrong</em>

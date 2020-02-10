@@ -39,7 +39,8 @@ class Flashcard < ApplicationRecord
   # Store exam flashcard answer
   def save_exam_answer_for!(exam, question_answered, answer=false)
     custom_exam_answer = CustomExamAnswer.find_or_create_by(custom_exam: exam, flashcard: self)
-    custom_exam_answer.update(answered: question_answered, correct: answer)
+
+    custom_exam_answer.update(answered: question_answered, correct: answer, answered_correct_in_exam: answer)
   end
 
   # Reset played flashcards for one article

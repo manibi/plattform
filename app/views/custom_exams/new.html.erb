@@ -38,11 +38,10 @@
     <div class="col" id="examArticles">
       <h6>Artikel</h6>
     </div>
-    <!--
     <div class="col" id="examPastFlashcards">
       <h6>Previously answered</h6>
         <label>
-          <%= radio_button_tag "exam[answered]", "all" %>
+          <%= radio_button_tag "exam[answered]", "all", true %>
           All
         </label>
         <label>
@@ -54,7 +53,6 @@
           Wrong
         </label>
     </div>
-    -->
   </div>
     <%= f.submit "Start" %>
   <% end %>
