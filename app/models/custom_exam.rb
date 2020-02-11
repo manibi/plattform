@@ -20,7 +20,7 @@ class CustomExam < ApplicationRecord
   end
 
   def unanswered_questions
-    self.custom_exam_answers.where(answered: false).count
+    self.custom_exam_answers.where(answered: false).count if self.custom_exam_answers.any?
   end
 
   def all_questions

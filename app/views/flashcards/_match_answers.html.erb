@@ -8,7 +8,7 @@
         <% @static_answers.each do |answer| %>
             <li class=
               <% if action_name == "answer_correct_order"%>
-                <%= @user_answer ? "correct-answer" : "false-answer"  %>
+                <%= @is_answer_correct ? "correct-answer" : "false-answer"  %>
               <% end %>
             >
               <%= answer.id %> - <%= answer.content %>
@@ -24,7 +24,7 @@
           <% @dragabble_answers.shuffle.each do |answer| %>
               <li class=
                 <% if action_name == "answer_correct_order"%>
-                  <%= @user_answer ? "correct-answer" : "false-answer"  %>
+                  <%= @is_answer_correct ? "correct-answer" : "false-answer"  %>
                 <% end %>
               >
                 <%= answer.id %> - <%= answer.content %>

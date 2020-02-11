@@ -18,6 +18,7 @@
                     custom_exam_results_path(@exam),
                     class: "btn btn-success" %>
       <% end %>
+
       <% if @exam && !@exam.submitted %>
         <p>
           <% if @flashcard.bookmarked_for?(@exam) %>
@@ -49,16 +50,21 @@
 
     <% if @exam %>
       <div class="col-md-4">
-        <% @questions.each.with_index do |q, i| %>
-          <ul>
-            <li>
-              <%= link_to "Question #{i + 1}", custom_exam_flashcard_path(@exam, @exam.questions[i]) %>
-              <% if @exam.answer_for(q)&.bookmarked %>
-                <span class="badge badge-pill badge-primary">Marked</span>
-              <% end %>
-            </li>
+        <ul>
+          <li>
+            <%= link_to "Submit exam page",
+            custom_exam_submit_exam_path(@exam),
+            class: "btn btn-success" %>
+          </li>
+          <% @questions.each.with_index do |q, i| %>
+              <li>
+                <%= link_to "Question #{i + 1}", custom_exam_flashcard_path(@exam, @exam.questions[i]) %>
+                <% if @exam.answer_for(q)&.bookmarked %>
+                  <span class="badge badge-pill badge-primary">Marked</span>
+                <% end %>
+              </li>
+          <% end %>
           </ul>
-        <% end %>
       <% end %>
     </div>
   </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_11_112635) do
+ActiveRecord::Schema.define(version: 2020_02_11_120138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 2020_02_11_112635) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "bookmarked", default: false
     t.boolean "answered_correct_in_exam", default: false
+    t.text "user_answers"
     t.index ["custom_exam_id"], name: "index_custom_exam_answers_on_custom_exam_id"
     t.index ["flashcard_id"], name: "index_custom_exam_answers_on_flashcard_id"
   end

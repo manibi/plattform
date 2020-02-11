@@ -15,10 +15,11 @@
           <%= "false-answer" if action_name == "answer_multiple_choice" &&
           @answers &.include?(answer.id) %>
         >
+        <%# raise %>
           <%= check_box_tag "flashcard[answer_ids][]",
                             answer.id, false,
-                            # id: answer.id,
                             id: dom_id(answer),
+                            checked: @user_answers&.include?(answer.id),
                             disabled: action_name == "answer_multiple_choice" ||@exam&.submitted %>
             <%= answer.content %>
         </label>
