@@ -10,10 +10,8 @@ class UsersController < ApplicationController
 
   def update
     if current_user.update(user_params)
-      # raise
       redirect_to profile_path
     else
-      # flash[:notice] = current_user.errors.any?
       render :edit
     end
   end
