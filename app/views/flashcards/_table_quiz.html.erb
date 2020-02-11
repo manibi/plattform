@@ -28,7 +28,7 @@
                     <%= @user_answer ? "correct-answer" : "false-answer"  %>
                   <% end %>
                 >
-                    <%= number_field_tag "flashcard[answer][#{j += 1 }]",
+                    <%= text_field_tag "flashcard[answer][#{j += 1 }]",
                       (correct_answer if action_name == "soll_ist")
                     %>
 

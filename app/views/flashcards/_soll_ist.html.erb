@@ -18,7 +18,7 @@
                 <% end %>
                 <%= i.even? ? "left-column" : "right-column" %>
               >
-                <%= number_field_tag "flashcard[answer][#{i}]",
+                <%= text_field_tag "flashcard[answer][#{i}]",
                      (correct_answer if action_name == "soll_ist")
                 %>
               </li>

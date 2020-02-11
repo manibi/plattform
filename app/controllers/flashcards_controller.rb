@@ -183,7 +183,7 @@ class FlashcardsController < ApplicationController
     @article = @flashcard.article
 
     # Check answers
-    @answers = set_correct_order_answer.to_h.values.map(&:to_i)
+    @answers = set_correct_order_answer.to_h.values.map(&:to_f)
     @user_answer = @flashcard.correct_answers == @answers
     @table_headings = @flashcard.answers.pluck(:content).select { |v| v =~ /\D/ }
     @table_answer_rows =  @flashcard.correct_answers.each_slice(4).to_a
