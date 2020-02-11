@@ -1,68 +1,94 @@
 <div class="container">
-  <div class="row">
-    <div class="col-8">
-      <h1 class="heading-2">
-        <%= @article.title %>
-        <span class="badge badge-primary">
-          <%= 'read' if @article.read_for?(current_user) %>
-        </span>
-        <span class="badge badge-secondary">
-          <%= 'bookmarked' if @article.bookmarked_for?(current_user) %>
-        </span>
-      </h1>
-    </div>
-    <div class="col-4">
-        <p>
-          <% if @article.bookmarked_for?(current_user) %>
-            <%= link_to 'Unbookmark article', unbookmark_article_path(@article),                                      method: :patch,
-                                              class: "btn btn-warning" %>
-          <% else %>
-            <%= link_to 'Bookmark article', bookmark_article_path(@article),
-                                            method: :post,
-                                            class: "btn btn-primary" %>
-          <% end %>
-        </p>
-    </div>
+  <div class="row mt-3 col-12">
+    breadcrumbs
   </div>
-
-  <div class="row">
-    <div class="col-12">
-      <h3 class="heading-4">Description</h3>
-      <p><%= @article.description %></p>
-    </div>
-  </div>
-
-  <div class="row">
-    <% if @article.image.attached? %>
-        <div class="col-md-5">
-          <div class="article-photo">
-            <!-- Button trigger modal -->
-            <button type="button" class="article-image__thumb" data-toggle="modal" data-target="#ArticleImage">
-              <%= cl_image_tag @article.image.key %>
-            </button>
+  <div class="row flex-row flex-nowrap mt-3">
+    <!-- article -->
+    <div class="col-9">
+      <div class="card">
+        <!-- article headline -->
+        <div class="row">
+          <div class="col-9">
+            <h1 class="heading-2">
+              <%= @article.title %>
+              <span class="badge badge-primary">
+                <%= 'read' if @article.read_for?(current_user) %>
+              </span>
+              <span class="badge badge-secondary">
+                <%= 'bookmarked' if @article.bookmarked_for?(current_user) %>
+              </span>
+            </h1>
+          </div>
+          <div class="col-3">
+            <p>
+              <% if @article.bookmarked_for?(current_user) %>
+                <%= link_to 'Unbookmark article', unbookmark_article_path(@article),                                      method: :patch,
+                                                  class: "btn btn-warning" %>
+              <% else %>
+                <%= link_to 'Bookmark article', bookmark_article_path(@article),
+                                                method: :post,
+                                                class: "btn btn-primary" %>
+              <% end %>
+            </p>
+          </div>
         </div>
+        <!-- article description -->
+        <div class="row">
+          <div class="col-12">
+            <h3 class="heading-4">Description</h3>
+            <p><%= @article.description %></p>
+          </div>
+        </div>
+        <!-- article image -->
+        <div class="row">
+          <% if @article.image.attached? %>
+              <div class="col-md-5">
+                <div class="article-photo">
+                  <!-- Button trigger modal -->
+                  <button type="button" class="article-image__thumb" data-toggle="modal" data-target="#ArticleImage">
+                    <%= cl_image_tag @article.image.key %>
+                  </button>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <!-- article chapters -->
+        <div class="row">
+          <div class="col-12">
+          <h4 class="heading-4">Chapters</h4>
+            <ul>
+              <%= render @article.chapters %>
+            </ul>
+          </div>
+        </div>
+        <%= link_to "Quiz", article_flashcard_path(@article, @flashcard) %>
       </div>
-    <% end %>
-  </div>
 
-  <div class="row">
-    <div class="col-12">
-    <h4 class="heading-4">Chapters</h4>
+      <% if @article.image.attached? %>
+        <!-- Modal -->
+        <div class="modal fade" id="ArticleImage" tabindex="-1" role="dialog" aria-labelledby="ArticleImage" aria-hidden="true">
+          <div class="modal-dialog modal-xl" role="img">
+            <div class="modal-content">
+              <%= cl_image_tag @article.image.key %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-3">
+      <div class="card">
       <ul>
-        <%= render @article.chapters %>
+        <li>Definition</li>
+        <li>Erläuterung</li>
+        <li>Praxisbeispiel</li>
+        <li>Verwandte Themen</li>
       </ul>
+      </div>
+      <div class="card mt-3">
+        Quiz Call to Action
+      </div>
     </div>
   </div>
-  <%= link_to "Quiz", article_flashcard_path(@article, @flashcard) %>
 </div>
 
-<% if @article.image.attached? %>
-  <!-- Modal -->
-  <div class="modal fade" id="ArticleImage" tabindex="-1" role="dialog" aria-labelledby="ArticleImage" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="img">
-      <div class="modal-content">
-        <%= cl_image_tag @article.image.key %>
-      </div>
-    </div>
-  </div>
-<% end %>
+
