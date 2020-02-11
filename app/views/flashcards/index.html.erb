@@ -1,18 +1,36 @@
 <div class="container">
-  <div class="row">
-    <h1>Term flashcards</h1>
+  <!-- quiz header -->
+  <div class="row col-12 justify-content-between">
+    <div class="py-3">
+      <h3>Quiz</h3>
+    </div>
+    <div class="">Grid/List View</div>
   </div>
+  <!-- quiz topics -->
   <div class="row">
     <%  @articles.each do |article| %>
-      <div class="col-3">
-        <%= article.title %>
-        <br>
+      <div class="col-lg-3">
         <% if article.read_for?(current_user) %>
-          <%= link_to "Do Quiz", [article, article.flashcards.first] %>
+          <%= link_to [article, article.flashcards.first] do %>
+            <div class="card">
+              <%= article.title %>
+              <br>
+              <div class="row justify-content-around">
+                <div class="col-6 m-1 btn-primary">Do Quiz</div>
+              </div>
+            </div>
+          <% end %>
         <% else %>
-          <%= link_to "Read article", article %>
+          <%= link_to article do %>
+            <div class="card">
+              <%= article.title %>
+              <br>
+              Read article
+            </div>
+          <% end %>
         <% end %>
       </div>
     <% end %>
   </div>
 </div>
+

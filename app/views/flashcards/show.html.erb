@@ -1,76 +1,84 @@
-<h1>Quiz</h1>
 <div class="container">
-  <div class="row">
-    <% if @flashcard.image.attached? %>
-      <div class="col-md-4" style="margin-left: auto;">
-        <!-- Button trigger modal -->
-        <button type="button" class="flashcard-image__thumb" data-toggle="modal" data-target="#flashcardImage">
-          <%= cl_image_tag @flashcard.image.key,
-                            width: 200, height: 100, crop: :fill %>
-        </button>
-      </div>
-    <% end %>
+  <div class="row col-12 mt-3">
+    breadcrumbs
   </div>
-  <div class="row">
-    <div class="col-12">
-      <% if @exam&.submitted %>
-        <%= link_to "Exam results",
-                    custom_exam_results_path(@exam),
-                    class: "btn btn-success" %>
-      <% end %>
-      <% if @exam && !@exam.submitted %>
-        <p>
-          <% if @flashcard.bookmarked_for?(@exam) %>
-            <%= link_to 'Unbookmark flashcard', unbookmark_custom_exam_flashcard_path(@exam, @flashcard),                                      method: :patch,
-                                              class: "btn btn-warning" %>
-          <% else %>
-            <%= link_to 'Bookmark flashcard', bookmark_custom_exam_flashcard_path(@exam, @flashcard),
-                                            method: :post,
-                                            class: "btn btn-primary" %>
+  <div class="row col-12 mt-3 justify-content-around">
+    <div class="card col-8 p-3">
+      <div class="container">
+        <div class="row">
+          <% if @flashcard.image.attached? %>
+            <div class="col-md-4" style="margin-left: auto;">
+              <!-- Button trigger modal -->
+              <button type="button" class="flashcard-image__thumb" data-toggle="modal" data-target="#flashcardImage">
+                <%= cl_image_tag @flashcard.image.key,
+                                  width: 200, height: 100, crop: :fill %>
+              </button>
+            </div>
           <% end %>
-        </p>
-      <% end %>
-    </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <% if @exam&.submitted %>
+              <%= link_to "Exam results",
+                          custom_exam_results_path(@exam),
+                          class: "btn btn-success" %>
+            <% end %>
+            <% if @exam && !@exam.submitted %>
+              <p>
+                <% if @flashcard.bookmarked_for?(@exam) %>
+                  <%= link_to 'Unbookmark flashcard', unbookmark_custom_exam_flashcard_path(@exam, @flashcard),                                      method: :patch,
+                                                    class: "btn btn-warning" %>
+                <% else %>
+                  <%= link_to 'Bookmark flashcard', bookmark_custom_exam_flashcard_path(@exam, @flashcard),
+                                                  method: :post,
+                                                  class: "btn btn-primary" %>
+                <% end %>
+              </p>
+            <% end %>
+          </div>
 
-    <div class="col-md-8">
-      <% case @flashcard.flashcard_type %>
-      <% when "multiple_choice" %>
-        <%= render "flashcards/multiple_choice", flashcard: @flashcard %>
-      <% when "correct_order" %>
-        <%= render "flashcards/correct_order", flashcard: @flashcard %>
-      <% when "match_answers" %>
-        <%= render "flashcards/match_answers", flashcard: @flashcard %>
-      <% when "soll_ist" %>
-        <%= render "flashcards/soll_ist", flashcard: @flashcard %>
-      <% when "table_quiz" %>
-        <%= render "flashcards/table_quiz", flashcard: @flashcard %>
-      <% end %>
-    </div>
+          <div class="col-md-8">
+            <% case @flashcard.flashcard_type %>
+            <% when "multiple_choice" %>
+              <%= render "flashcards/multiple_choice", flashcard: @flashcard %>
+            <% when "correct_order" %>
+              <%= render "flashcards/correct_order", flashcard: @flashcard %>
+            <% when "match_answers" %>
+              <%= render "flashcards/match_answers", flashcard: @flashcard %>
+            <% when "soll_ist" %>
+              <%= render "flashcards/soll_ist", flashcard: @flashcard %>
+            <% when "table_quiz" %>
+              <%= render "flashcards/table_quiz", flashcard: @flashcard %>
+            <% end %>
+          </div>
 
-    <% if @exam %>
-      <div class="col-md-4">
-        <% @questions.each.with_index do |q, i| %>
-          <ul>
-            <li>
-              <%= link_to "Question #{i + 1}", custom_exam_flashcard_path(@exam, @exam.questions[i]) %>
-              <% if @exam.answer_for(q)&.bookmarked %>
-                <span class="badge badge-pill badge-primary">Marked</span>
+          <% if @exam %>
+            <div class="col-md-4">
+              <% @questions.each.with_index do |q, i| %>
+                <ul>
+                  <li>
+                    <%= link_to "Question #{i + 1}", custom_exam_flashcard_path(@exam, @exam.questions[i]) %>
+                    <% if @exam.answer_for(q)&.bookmarked %>
+                      <span class="badge badge-pill badge-primary">Marked</span>
+                    <% end %>
+                  </li>
+                </ul>
               <% end %>
-            </li>
-          </ul>
-        <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <% if @flashcard.image.attached? %>
+        <!-- Modal -->
+        <div class="modal fade" id="flashcardImage" tabindex="-1" role="dialog" aria-labelledby="flashcardImage" aria-hidden="true">
+          <div class="modal-dialog modal-xl" role="img">
+            <div class="modal-content">
+              <%= cl_image_tag @flashcard.image.key %>
+            </div>
+          </div>
+        </div>
       <% end %>
     </div>
   </div>
 </div>
-
-<% if @flashcard.image.attached? %>
-  <!-- Modal -->
-  <div class="modal fade" id="flashcardImage" tabindex="-1" role="dialog" aria-labelledby="flashcardImage" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="img">
-      <div class="modal-content">
-        <%= cl_image_tag @flashcard.image.key %>
-      </div>
-    </div>
-  </div>
-<% end %>
