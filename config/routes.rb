@@ -8,9 +8,9 @@ Rails.application.routes.draw do
   get 'profile',      to: 'users#show'
   get 'profile/edit', to: 'users#edit'
 
-  resources :users,      only: :update
-  resources :topics,     only: [:index, :show]
-  resources :categories, only: :show
+  resources :users,      only:    :update
+  resources :topics,     except:  :destroy
+  resources :categories, only:    :show
 
   resources :articles,   only: [:index, :show] do
     member do

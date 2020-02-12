@@ -8,6 +8,7 @@ class ArticlesController < ApplicationController
 
     # Author view
     @all_articles = current_user.all_articles
+    @topics = current_user.profession.topics
 
     # Render views for student or author
     render current_user.student? ? 'articles/index' : 'articles/author_index'

@@ -3,6 +3,22 @@ class TopicPolicy < ApplicationPolicy
     record.profession == user.profession
   end
 
+  def new?
+    user.author?
+  end
+
+  def create?
+    new?
+  end
+
+  def edit?
+    new?
+  end
+
+  def update?
+    edit?
+  end
+
   class Scope < Scope
     def resolve
       if user.student?

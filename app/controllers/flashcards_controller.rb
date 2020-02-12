@@ -58,10 +58,8 @@ class FlashcardsController < ApplicationController
     @flashcard = @article.flashcards.build(flashcard_params)
 
     if @flashcard.save
-      # raise
       set_correct_answers if %w[match_answers soll_ist table_quiz].include? @flashcard.flashcard_type
 
-      # set_correct_answers if @flashcard.flashcard_type == "match_answers"
       flash[:notice] = "Flashcard created"
       redirect_to edit_flashcard_path(@flashcard)
     else
