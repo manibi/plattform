@@ -61,7 +61,6 @@
             </ul>
           </div>
         </div>
-        <%= link_to "Quiz", article_flashcard_path(@article, @flashcard) %>
       </div>
 
       <% if @article.image.attached? %>
@@ -75,8 +74,8 @@
         </div>
       <% end %>
     </div>
-    <div class="col-3">
-      <div class="card">
+    <div class="col-3 position-sticky">
+      <div class="card position-sticky sticky-top">
       <ul>
         <li>Definition</li>
         <li>Erläuterung</li>
@@ -86,6 +85,7 @@
       </div>
       <div class="card mt-3">
         Quiz Call to Action
+        <%= link_to "Quiz", article_flashcard_path(@article, @flashcard) %>
       </div>
     </div>
   </div>
