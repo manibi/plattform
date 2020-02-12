@@ -7,19 +7,18 @@
 
   <%= form_for soll_ist_article_flashcard_path(@article, @flashcard), url: {action: "soll_ist"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
 
-
         <ul class="answers-numbers row" id="answers" style="width: 400px">
           <% @flashcard.correct_answers.each.with_index do |correct_answer, i| %>
               <li
                 style="padding: 10px;"
                 class=
                 <% if action_name == "soll_ist"%>
-                  <%= @user_answer ? "correct-answer" : "false-answer"  %>
+                  <%= @is_answer_correct ? "correct-answer" : "false-answer"  %>
                 <% end %>
                 <%= i.even? ? "left-column" : "right-column" %>
               >
-                <%= number_field_tag "flashcard[answer][#{i}]",
-                     (correct_answer if action_name == "soll_ist")
+                <%= text_field_tag "flashcard[answer][#{i}]",
+                     (action_name == "soll_ist" ? correct_answer : (@user_answers[i] if @user_answers))
                 %>
               </li>
               <%# raise %>

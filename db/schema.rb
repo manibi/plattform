@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_07_113557) do
+ActiveRecord::Schema.define(version: 2020_02_11_120138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2020_02_07_113557) do
     t.text "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "explanation"
   end
 
   create_table "articles", force: :cascade do |t|
@@ -77,6 +78,8 @@ ActiveRecord::Schema.define(version: 2020_02_07_113557) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "bookmarked", default: false
+    t.boolean "answered_correct_in_exam", default: false
+    t.text "user_answers"
     t.index ["custom_exam_id"], name: "index_custom_exam_answers_on_custom_exam_id"
     t.index ["flashcard_id"], name: "index_custom_exam_answers_on_flashcard_id"
   end
@@ -107,6 +110,15 @@ ActiveRecord::Schema.define(version: 2020_02_07_113557) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["article_id"], name: "index_flashcards_on_article_id"
+  end
+
+  create_table "pg_search_documents", force: :cascade do |t|
+    t.text "content"
+    t.string "searchable_type"
+    t.bigint "searchable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable_type_and_searchable_id"
   end
 
   create_table "professions", force: :cascade do |t|

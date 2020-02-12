@@ -34,8 +34,11 @@ class FlashcardsController < ApplicationController
     if @exam_flashcard
       @exam = CustomExam.find(params[:custom_exam_id])
       @questions = @exam.all_questions
+      @user_answers = @flashcard.user_answers_for(@exam)
+
+      # raise
+
     else
-    # if !request.path.include? "exams"
       @article.read_for!(current_user) unless @article.read_for?(current_user)
 
       # Reset flashcards for this article if re-taking the quiz
@@ -133,20 +136,20 @@ class FlashcardsController < ApplicationController
 
     if set_multiple_choice_answer
       @answers = set_multiple_choice_answer[:answer_ids].map(&:to_i)
-      @user_answer = @answers.sort ==  @correct_answers
+      @is_answer_correct = @answers.sort ==  @correct_answers
     else
-      @user_answer = false
+      @is_answer_correct = false
     end
 
     if request.path.include? "exams"
       @exam = CustomExam.find(params[:custom_exam_id])
       question_answered = !!set_multiple_choice_answer
       # save exam answer
-      @flashcard.save_exam_answer_for!(@exam, question_answered, @user_answer)
+      @flashcard.save_exam_answer_for!(@exam, question_answered, @answers, @is_answer_correct)
       # redirect to next flashcard
       next_exam_flashcard(@exam)
     else
-      @flashcard.save_answer_for!(current_user, @user_answer)
+      @flashcard.save_answer_for!(current_user, @is_answer_correct)
       render "flashcards/show"
     end
   end
@@ -163,16 +166,16 @@ class FlashcardsController < ApplicationController
 
     # Check answers
     @answers = set_correct_order_answer.to_h.keys.map(&:to_i)
-    @user_answer = @flashcard.correct_answers == @answers
+    @is_answer_correct = @flashcard.correct_answers == @answers
 
     if request.path.include? "exams"
       @exam = CustomExam.find(params[:custom_exam_id])
       # save exam answer, question will always count as answered
-      @flashcard.save_exam_answer_for!(@exam, true, @user_answer)
+      @flashcard.save_exam_answer_for!(@exam, true, @answers, @is_answer_correct)
       # redirect to next flashcard
       next_exam_flashcard(@exam)
     else
-      @flashcard.save_answer_for!(current_user, @user_answer)
+      @flashcard.save_answer_for!(current_user, @is_answer_correct)
       render "flashcards/show"
     end
   end
@@ -183,20 +186,22 @@ class FlashcardsController < ApplicationController
     @article = @flashcard.article
 
     # Check answers
-    @answers = set_correct_order_answer.to_h.values.map(&:to_i)
-    @user_answer = @flashcard.correct_answers == @answers
+    @answers = set_correct_order_answer.to_h.values.map(&:to_f)
+    @is_answer_correct = @flashcard.correct_answers == @answers
     @table_headings = @flashcard.answers.pluck(:content).select { |v| v =~ /\D/ }
     @table_answer_rows =  @flashcard.correct_answers.each_slice(4).to_a
 
     if request.path.include? "exams"
       @exam = CustomExam.find(params[:custom_exam_id])
-      question_answered = @answers.sum == 0
+      question_answered = @answers.sum != 0
       # save exam answer
-      @flashcard.save_exam_answer_for!(@exam, question_answered, @user_answer)
+      @flashcard.save_exam_answer_for!(@exam, question_answered, @answers, @is_answer_correct)
       # redirect to next flashcard
       next_exam_flashcard(@exam)
     else
-      @flashcard.save_answer_for!(current_user, @user_answer)
+      @flashcard.save_answer_for!(current_user, @is_answer_correct)
+    # raise
+
       render "flashcards/show"
     end
   end

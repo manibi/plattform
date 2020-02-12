@@ -5,12 +5,14 @@ Rails.application.routes.draw do
     put 'users' => 'devise/registrations#update', :as => 'user_registration'
   end
 
-
-  get 'profile', to: 'users#show'
+  get 'profile',      to: 'users#show'
   get 'profile/edit', to: 'users#edit'
-  resources :users, only: :update
 
-  resources :articles, only: [:index, :show] do
+  resources :users,      only: :update
+  resources :topics,     only: [:index, :show]
+  resources :categories, only: :show
+
+  resources :articles,   only: [:index, :show] do
     member do
       post  "read"
       # TODO! remove unread - just for testing
@@ -34,12 +36,12 @@ Rails.application.routes.draw do
   resources :flashcards, only: [:index, :new, :create, :edit, :update, :destroy]
 
   get "add_exam_categories", to: "custom_exams#add_exam_categories"
-  get "add_exam_articles", to: "custom_exams#add_exam_articles"
+  get "add_exam_articles",   to: "custom_exams#add_exam_articles"
 
   resources :custom_exams, only: [:new, :create, :show], path: "exams" do
-    get "results", to: "custom_exams#results"
-    get "submit_exam", to: "custom_exams#submit_exam"
-    get "info", to: "pages#exam_info"
+    get "results",      to: "custom_exams#results"
+    get "submit_exam",  to: "custom_exams#submit_exam"
+    get "info",         to: "pages#exam_info"
 
     resources :flashcards, only: :show do
       member do
@@ -53,9 +55,10 @@ Rails.application.routes.draw do
     end
   end
 
-  get "welcome",   to: "pages#welcome"
-  get "dashboard", to: "pages#dashboard"
+  get "welcome",          to: "pages#welcome"
+  get "dashboard",        to: "pages#dashboard"
   get "author_dashboard", to: "pages#author_dashboard"
+  get "search",           to: "pages#search"
 
   root to: "pages#landing_page"
 end

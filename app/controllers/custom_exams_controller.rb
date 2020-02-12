@@ -26,7 +26,8 @@ class CustomExamsController < ApplicationController
       @exam.questions = CustomExam.exam_questions_from(articles).pluck(:id)
     end
 
-    if @exam.save
+
+    if @exam.questions.any? && @exam.save
       redirect_to custom_exam_info_path(@exam)
     else
       render :new
@@ -91,6 +92,6 @@ class CustomExamsController < ApplicationController
   end
 
   def exam_params
-    params.require(:exam).permit(article_ids: []) if params[:exam]
+    params.require(:exam).permit(:answered, article_ids: []) if params[:exam]
   end
 end

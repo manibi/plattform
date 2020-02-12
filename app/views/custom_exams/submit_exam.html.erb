@@ -1,7 +1,10 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <%= link_to "Submit your exam", custom_exam_results_path(@exam) if !@exam.submitted %>
+      <%= link_to "Submit your exam",
+                  custom_exam_results_path(@exam),
+                  class: "btn btn-primary",
+                  data: { confirm: 'Are you sure?' } if !@exam.submitted %>
     </div>
   </div>
   <div class="row">
@@ -9,11 +12,11 @@
     <div class="col-12">
       <%= link_to "Question #{i + 1}", custom_exam_flashcard_path(@exam, @exam.questions[i]) %>
 
-      <% if @exam.answer_for(q).bookmarked %>
+      <% if @exam.answer_for(q)&.bookmarked %>
         <span class="badge badge-pill badge-primary">Marked</span>
       <% end %>
 
-      <% if @exam.answer_for(q).answered %>
+      <% if @exam.answer_for(q)&.answered %>
         <span class="badge badge-pill badge-success">Answered</span>
       <% else %>
         <span class="badge badge-pill badge-warning">Not answered</span>

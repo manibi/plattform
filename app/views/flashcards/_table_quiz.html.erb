@@ -25,14 +25,12 @@
               <% answer_row.each do |correct_answer| %>
                 <td class=
                   <% if action_name == "soll_ist"%>
-                    <%= @user_answer ? "correct-answer" : "false-answer"  %>
+                    <%= @is_answer_correct ? "correct-answer" : "false-answer"  %>
                   <% end %>
                 >
-                    <%= number_field_tag "flashcard[answer][#{j += 1 }]",
-                      (correct_answer if action_name == "soll_ist")
-                    %>
-
-                  <%#= correct_answer %>
+                  <%= text_field_tag "flashcard[answer][#{j += 1 }]",
+                    (action_name == "soll_ist" ? correct_answer : (@user_answers[i] if @user_answers))
+                  %>
                 </td>
               <% end %>
 

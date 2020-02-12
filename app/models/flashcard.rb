@@ -37,9 +37,10 @@ class Flashcard < ApplicationRecord
   end
 
   # Store exam flashcard answer
-  def save_exam_answer_for!(exam, question_answered, answer=false)
+  def save_exam_answer_for!(exam, question_answered, user_answers=[], answer=false)
     custom_exam_answer = CustomExamAnswer.find_or_create_by(custom_exam: exam, flashcard: self)
-    custom_exam_answer.update(answered: question_answered, correct: answer)
+
+    custom_exam_answer.update(answered: question_answered, correct: answer, answered_correct_in_exam: answer, user_answers: user_answers)
   end
 
   # Reset played flashcards for one article
@@ -62,5 +63,11 @@ class Flashcard < ApplicationRecord
 
   def unbookmark_for!(exam)
     CustomExamAnswer.where(custom_exam: exam, flashcard: self).update(bookmarked: false)
+  end
+
+  # In exam return an array of user picked answer ids
+  def user_answers_for(exam)
+    exam_answer = self.custom_exam_answers.find_by(custom_exam: exam)
+    exam_answer.user_answers if exam_answer
   end
 end

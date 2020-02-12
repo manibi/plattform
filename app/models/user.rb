@@ -21,6 +21,13 @@ class User < ApplicationRecord
 
   validates :username, presence: true, uniqueness: true, length: { minimum: 6 }
   validates :profession_id, presence: true
+  validates :exam_date, presence: true, on: :update
+  validate  :validate_dated_around_now, on: :update
+
+  # Make sure exam_date isn't in the past or more than 5 years in the future
+  def validate_dated_around_now
+    self.errors.add(:exam_date, "is not valid") unless ((Date.today)..(5.years.from_now)).include?(self.exam_date)
+  end
 
   # Set default role to student
   def set_default_role

@@ -1,5 +1,13 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!, only: [:dashboard, :author_dashboard]
+  before_action :authenticate_user!, except: [:landing_page]
+
+  def search
+    authorize current_user, :show?
+    if params[:query]
+      @results = PgSearch.multisearch(params[:query])
+      # raise
+    end
+  end
 
   def landing_page
   end

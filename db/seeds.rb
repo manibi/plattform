@@ -4,6 +4,8 @@ puts "Cleaning DB..."
 Chapter.destroy_all
 UserArticle.destroy_all
 FlashcardAnswer.destroy_all
+CustomExamAnswer.destroy_all
+CustomExam.destroy_all
 Answer.destroy_all
 UserFlashcard.destroy_all
 Flashcard.destroy_all
@@ -234,7 +236,7 @@ flashcard_numbers1_1 = ruby_article.flashcards.create!({
   content: "First article: insert numbers",
   flashcard_type: "soll_ist"
 })
-flashcard_numbers1_1.update(correct_answers: [ 10, 100, 1000, 10_000 ])
+flashcard_numbers1_1.update(correct_answers: [ 10.2, 100, 1000.4, 10_000 ])
 
 #! Python article
 # 3 Multiple choice flashcards
@@ -350,7 +352,7 @@ flashcard_numbers1_3_5.answers << Answer.create!([
   { content: "Costs"  },
   { content: "Profit" }
 ])
-flashcard_numbers1_3_5.update(correct_answers: [ 10, 100, 1000, 10_000, 10, 100, 1000, 10_000 ])
+flashcard_numbers1_3_5.update(correct_answers: [ 10.2, 100, 1000, 10_000, 10, 100.4, 1000, 10_000 ])
 
 #! Bjj Article
 # Input numbers soll/haben
