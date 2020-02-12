@@ -1,41 +1,50 @@
-<div class="card-body">
+<div class="text-center">
+  Question 1/7
+</div>
+<div class="card-title text-center mt-3">
   <h4><%= flashcard.content %></h4>
+</div>
+<div class="card-body">
+  
 
+<%= form_for answer_multiple_choice_article_flashcard_path(@article, @flashcard), url: { controller: "flashcards",
+                    action: "answer_multiple_choice"},
+                    method: :post,
+                    html: { id: "flashcardAnswerForm",
+                            "data-form-submitted": false } do |f| %>
+  <% @flashcard.answers.each do |answer| %>
+    <div class="flashcard-answer">
+      <label
+        class=
+        <%= "correct-answer" if action_name == "answer_multiple_choice" &&  @correct_answers.include?(answer.id)  %>
+        <%= "false-answer" if action_name == "answer_multiple_choice" &&
+        @answers &.include?(answer.id) %>
+      >
+        <%= check_box_tag "flashcard[answer_ids][]",
+                          answer.id, false,
+                          # id: answer.id,
+                          id: dom_id(answer),
+                          disabled: action_name == "answer_multiple_choice" ||@exam&.submitted %>
+          <%= answer.content %>
+      </label>
+    </div>
+<% end %>
+</div>
 
-  <%= form_for answer_multiple_choice_article_flashcard_path(@article, @flashcard), url: { controller: "flashcards",
-                      action: "answer_multiple_choice"},
-                      method: :post,
-                      html: { id: "flashcardAnswerForm",
-                              "data-form-submitted": false } do |f| %>
-    <% @flashcard.answers.each do |answer| %>
-      <div class="flashcard-answer">
-        <label
-          class=
-          <%= "correct-answer" if action_name == "answer_multiple_choice" &&  @correct_answers.include?(answer.id)  %>
-          <%= "false-answer" if action_name == "answer_multiple_choice" &&
-          @answers &.include?(answer.id) %>
-        >
-          <%= check_box_tag "flashcard[answer_ids][]",
-                            answer.id, false,
-                            # id: answer.id,
-                            id: dom_id(answer),
-                            disabled: action_name == "answer_multiple_choice" ||@exam&.submitted %>
-            <%= answer.content %>
-        </label>
-      </div>
-  <% end %>
-  <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
-    <%= f.submit "Check",
-              class: "flashcard-btn btn btn-primary" if action_name == "show" %>
-  <% end %>
-  <%= link_to "Next",
-              next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
-              class: "flashcard-btn btn btn-primary" if action_name == "answer_multiple_choice" %>
+<hr>
+<p>correct answers</p>
+<% @flashcard.correct_answers.each do |correct_answer| %>
+  <p>- <%= Answer.find(correct_answer).content %></p>
+<% end %>
+<hr>
+
+<% if !@exam_flashcard || (@exam && !@exam.submitted) %>
+  <%= f.submit "Check",
+            class: "flashcard-btn btn btn-primary btn-block" if action_name == "show" %>
+<% end %>
+<%= link_to "Next",
+            next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
+            class: "flashcard-btn btn btn-primary btn-block" if action_name == "answer_multiple_choice" %>
 <% end %>
 
-  <hr>
-    <p>correct answers</p>
-    <% @flashcard.correct_answers.each do |correct_answer| %>
-      <p>- <%= Answer.find(correct_answer).content %></p>
-    <% end %>
-</div>
+
