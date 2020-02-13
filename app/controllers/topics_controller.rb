@@ -19,8 +19,7 @@ class TopicsController < ApplicationController
     authorize @topic
 
     if @topic.save
-      flash[:notice] = "Topic created!"
-      redirect_to articles_path
+      redirect_to articles_path, , notice: "Topic created!"
     else
       render :new
     end
@@ -31,8 +30,7 @@ class TopicsController < ApplicationController
 
   def update
     if @topic.update(topic_params)
-      flash[:notice] = "Topic updated!"
-      redirect_to articles_path
+      redirect_to articles_path, notice: "Topic updated!"
     else
       render :edit
     end

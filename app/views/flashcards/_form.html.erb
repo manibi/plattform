@@ -1,11 +1,4 @@
-<% if @flashcard.errors.any? %>
-  <ul>
-    <% @flashcard.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-  </ul>
-<% end %>
-
+<%= render "devise/shared/error_messages", resource: @flashcard %>
 <%= form_with model: @flashcard, local: true  do |flashcard_form| %>
   <div class="form-group">
     <%= flashcard_form.label :content, "Question" %>
@@ -16,7 +9,7 @@
     <%= flashcard_form.label "Article" %>
     <%= flashcard_form.select "article",
           options_for_select(
-            @articles.map { |article| [article.title, article.id]},
+            @articles.map { |article| [article.title, article.id] },
             @flashcard.article ? @flashcard.article.id : false
           ) %>
   </div>
@@ -72,3 +65,4 @@
     <%= flashcard_form.submit class: "btn btn-primary" %>
   </div>
 <% end %>
+    <%= link_to 'View Flashcard', article_flashcard_path(@flashcard.article, @flashcard), class: "btn btn-warning mt-3" if @flashcard.persisted? %>

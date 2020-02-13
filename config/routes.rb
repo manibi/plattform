@@ -10,9 +10,9 @@ Rails.application.routes.draw do
 
   resources :users,      only:    :update
   resources :topics,     except:  :destroy
-  resources :categories, only:    :show
+  resources :categories, except:  :destroy
 
-  resources :articles,   only: [:index, :show] do
+  resources :articles,   except:  :destroy do
     member do
       post  "read"
       # TODO! remove unread - just for testing

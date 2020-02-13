@@ -4,7 +4,23 @@ class CategoryPolicy < ApplicationPolicy
     record.topic.profession == user.profession
   end
 
-  class Scope < Scope
+  def new?
+    user.author?
+  end
+
+  def create?
+    new?
+  end
+
+  def edit?
+    user.author?
+  end
+
+  def update?
+    edit?
+  end
+
+ class Scope < Scope
     def resolve
       scope.all
     end

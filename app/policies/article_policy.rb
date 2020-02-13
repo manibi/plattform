@@ -3,6 +3,23 @@ class ArticlePolicy < ApplicationPolicy
     has_profession_student? || has_profession_author?
   end
 
+  def new?
+    user.author?
+  end
+
+  def create?
+    new?
+  end
+
+  def update?
+    user.author?
+  end
+
+  def edit?
+    update?
+  end
+
+
   class Scope < Scope
     def resolve
       if user.student?

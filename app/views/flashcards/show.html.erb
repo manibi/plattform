@@ -10,6 +10,10 @@
         </button>
       </div>
     <% end %>
+
+    <% if current_user.author? %>
+      <%= link_to 'Edit Question', edit_flashcard_path(@flashcard), class: "btn btn-warning" %>
+    <% end %>
   </div>
   <div class="row">
     <div class="col-12">
