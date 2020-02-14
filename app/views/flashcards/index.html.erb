@@ -8,7 +8,7 @@
         <%= article.title %>
         <br>
         <% if article.read_for?(current_user) %>
-          <%= link_to "Do Quiz", [article, article.flashcards.first] %>
+          <%= link_to "Do Quiz", [article, article.flashcards.first], :"data-turbolinks" => false %>
         <% else %>
           <%= link_to "Read article", article %>
         <% end %>
