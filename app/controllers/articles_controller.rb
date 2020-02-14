@@ -8,6 +8,8 @@ class ArticlesController < ApplicationController
 
     # Author view
     @all_articles = current_user.all_articles
+    @topics = current_user.profession.topics
+    @categories = current_user.all_categories
 
     # Render views for student or author
     render current_user.student? ? 'articles/index' : 'articles/author_index'
@@ -18,6 +20,45 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
     authorize @article
     @flashcard = @article.flashcards.first
+  end
+
+  def new
+    @article = Article.new
+    authorize @article
+    @categories = current_user.all_categories
+  end
+
+  def create
+    @new_article = Article.new
+    authorize @new_article
+    @categories = current_user.all_categories
+    chapter_params = article_params[:chapters_attributes]
+    @article = Article.new(article_params)
+    @article.build(chapter_params) if @article.persisted?
+
+    # raise
+    if @article.save
+      redirect_to edit_article_path(@article), notice: "Article created!"
+    else
+      render :new
+    end
+  end
+
+  def edit
+    @article = Article.find(params[:id])
+    authorize @article
+    @categories = current_user.all_categories
+  end
+
+  def update
+    @article = Article.find(params[:id])
+    authorize @article
+
+    if @article.update(article_params)
+      redirect_to @article, notice: "Article updated!"
+    else
+      render :edit
+    end
   end
 
   def read
@@ -50,5 +91,15 @@ class ArticlesController < ApplicationController
 
     @article.unbookmark_for!(current_user)
     redirect_to @article
+  end
+
+  private
+
+  def article_params
+    params.require(:article).permit(:category_id,
+                                    :image,
+                                    :title,
+                                    :description,
+                                    chapters_attributes: Chapter.attribute_names.map(&:to_sym).push(:_destroy))
   end
 end

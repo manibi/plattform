@@ -54,16 +54,14 @@ class FlashcardsController < ApplicationController
 
     @article_id = new_flashcard_params.delete("article").to_i
     @article = Article.find(@article_id)
+    @articles = current_user.all_articles
     flashcard_params = new_flashcard_params.except(:article)
     @flashcard = @article.flashcards.build(flashcard_params)
 
     if @flashcard.save
-      # raise
       set_correct_answers if %w[match_answers soll_ist table_quiz].include? @flashcard.flashcard_type
 
-      # set_correct_answers if @flashcard.flashcard_type == "match_answers"
-      flash[:notice] = "Flashcard created"
-      redirect_to edit_flashcard_path(@flashcard)
+      redirect_to edit_flashcard_path(@flashcard), notice: "Flashcard created!"
     else
       render :new
     end
@@ -90,9 +88,8 @@ class FlashcardsController < ApplicationController
     if @flashcard.update(flashcard_params)
       set_correct_answers if %w[match_answers soll_ist table_quiz].include? @flashcard.flashcard_type
 
-      # raise
-      flash[:notice] = "Flashcard updated"
-      redirect_to edit_flashcard_path(@flashcard)
+      # redirect_to edit_flashcard_path(@flashcard), notice: "Flashcard updated!"
+      redirect_to article_flashcard_path(@flashcard.article, @flashcard), notice: "Flashcard updated!"
     else
       render :edit
     end

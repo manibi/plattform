@@ -11,6 +11,7 @@
     <%  @articles.each do |article| %>
       <div class="col-lg-3">
         <% if article.read_for?(current_user) %>
+<<<<<<< HEAD
           <%= link_to [article, article.flashcards.first] do %>
             <div class="card">
               <%= article.title %>
@@ -20,6 +21,9 @@
               </div>
             </div>
           <% end %>
+=======
+          <%= link_to "Do Quiz", [article, article.flashcards.first], :"data-turbolinks" => false %>
+>>>>>>> 0418f27ea71b2d2394b19349231f67771733cb75
         <% else %>
           <%= link_to article do %>
             <div class="card">

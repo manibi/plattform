@@ -1,41 +1,21 @@
 require("@rails/ujs").start();
-// require("turbolinks").start();
+require("turbolinks").start();
 require("@rails/activestorage").start();
 require("channels");
 // require("jquery");
 
 // libraries
-import Sortable from "sortablejs";
 import "bootstrap";
 import "../stylesheets/application";
 import "./bootstrap_custom.js";
 import "@fortawesome/fontawesome-free/js/all";
 import "cocoon";
+import { autocompleteSearch } from "../components/autocompleteSearch";
+import { playFlashcards } from "../components/playFlashcards";
+import { authorView } from "../components/authorView";
 
-// $(document).on("turbolinks:load", () => {
-const flashcardDragListEl = document.getElementById("answers-drag");
-const sollHabenViewBtnEl = document.getElementById("sollHabenView");
-const tableViewBtnEl = document.getElementById("tableView");
-const answersEl = document.getElementById("uniqAnswers");
-
-if (flashcardDragListEl) {
-  const sortable = new Sortable(flashcardDragListEl, {
-    animation: 150,
-    ghostClass: "blue-background"
-  });
-  // sortable();
-}
-
-if (sollHabenViewBtnEl) {
-  sollHabenViewBtnEl.addEventListener("click", e => {
-    e.preventDefault();
-    answersEl.classList.toggle("soll-haben-view");
-  });
-}
-
-if (tableViewBtnEl) {
-  tableViewBtnEl.addEventListener("click", e => {
-    e.preventDefault();
-    answersEl.classList.toggle("table-view");
-  });
-}
+document.addEventListener("turbolinks:load", () => {
+  authorView();
+  playFlashcards();
+  autocompleteSearch();
+});

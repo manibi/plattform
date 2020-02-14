@@ -38,13 +38,13 @@
 <% end %>
 <hr>
 
-<% if !@exam_flashcard || (@exam && !@exam.submitted) %>
-  <%= f.submit "Check",
-            class: "flashcard-btn btn btn-primary btn-block" if action_name == "show" %>
-<% end %>
-<%= link_to "Next",
-            next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
-            class: "flashcard-btn btn btn-primary btn-block" if action_name == "answer_multiple_choice" %>
+  <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
+    <%= f.submit "Check",
+              class: "flashcard-btn btn btn-primary", :"data-turbolinks" => false if action_name == "show" %>
+  <% end %>
+  <%= link_to "Next",
+              next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
+              class: "flashcard-btn btn btn-primary", :"data-turbolinks" => false if action_name == "answer_multiple_choice" %>
 <% end %>
 
 

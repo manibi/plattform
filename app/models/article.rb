@@ -3,16 +3,28 @@ class Article < ApplicationRecord
   include PgSearch::Model
   multisearchable against: [:title]
 
-  belongs_to  :category
-  has_many    :chapters, dependent: :destroy
-  has_many    :user_articles
-  has_many    :users, through: :user_articles
-  has_many    :flashcards, dependent: :destroy
+  belongs_to        :category
+  has_many          :chapters, dependent: :destroy
+  has_many          :user_articles
+  has_many          :users, through: :user_articles
+  has_many          :flashcards, dependent: :destroy
   has_one_attached  :image
+
+  accepts_nested_attributes_for :chapters,
+                                allow_destroy: true,
+                                reject_if: proc { |att| att['title'].blank? || att['content'].blank? }
 
   validates :title, presence: true, allow_blank: false
   validates :description, presence: true, allow_blank: false
   validates :category_id, presence: true
+  validates :image, content_type: {
+                      in: %w[image/jpeg image/gif image/png],
+                      message: "must be a valid image format"
+                    },
+                    size: {
+                      less_than: 5.megabytes,
+                      message:   "should be less than 5MB"
+                    }
 
   def read_for?(user)
     UserArticle.where(user: user, article: self, read: true).present?
