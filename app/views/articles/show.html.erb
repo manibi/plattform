@@ -56,7 +56,7 @@
       </ul>
     </div>
   </div>
-  <%= link_to "Quiz", article_flashcard_path(@article, @flashcard) if @flashcard %>
+  <%= link_to "Quiz", article_flashcard_path(@article, @flashcard), :"data-turbolinks" => false if @flashcard %>
 </div>
 
 <% if @article.image.attached? %>

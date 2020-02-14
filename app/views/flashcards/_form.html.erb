@@ -62,7 +62,8 @@
   <% end %>
 
   <div class="form-actions mt-5">
-    <%= flashcard_form.submit class: "btn btn-primary" %>
+    <%= flashcard_form.submit class: "btn btn-primary", :"data-turbolinks" => false %>
   </div>
 <% end %>
-    <%= link_to 'View Flashcard', article_flashcard_path(@flashcard.article, @flashcard), class: "btn btn-warning mt-3" if @flashcard.persisted? %>
+
+<%= link_to 'View Flashcard', article_flashcard_path(@flashcard.article, @flashcard), class: "btn btn-warning mt-3" if @flashcard.persisted? %>
