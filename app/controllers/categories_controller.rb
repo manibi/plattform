@@ -33,7 +33,7 @@ class CategoriesController < ApplicationController
     @topics = current_user.profession.topics
 
     if @category.update(category_params)
-      redirect_to articles_path, , notice: "Module updated!"
+      redirect_to articles_path, notice: "Module updated!"
     else
       render :edit
     end

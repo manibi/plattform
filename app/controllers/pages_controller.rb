@@ -5,7 +5,6 @@ class PagesController < ApplicationController
     authorize current_user, :show?
     if params[:query]
       @results = PgSearch.multisearch(params[:query])
-      # raise
     end
   end
 

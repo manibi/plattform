@@ -19,7 +19,7 @@ class TopicsController < ApplicationController
     authorize @topic
 
     if @topic.save
-      redirect_to articles_path, , notice: "Topic created!"
+      redirect_to articles_path, notice: "Topic created!"
     else
       render :new
     end
