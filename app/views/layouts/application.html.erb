@@ -47,45 +47,9 @@
         </div>
       </div>
     </div>
-<<<<<<< HEAD
-=======
-    <% if user_signed_in? %>
-      <%#= form_tag search_path, method: :get, class: "form-inline w-100" do %>
-        <%#= text_field_tag :query,
-          params[:query],
-          class: "form-control",
-          placeholder: "Search for a topic, module, term...",
-          style: "width: 60%;"
-        %>
-
-
-       <!-- <input type="search" name="query" id="autocompleteSearch"> -->
-
-        <%= form_with url: search_path,
-                      local: true,
-                      method: :get,
-                      html: {
-                        class:"form-inline w-100" } do |f| %>
-
-          <%= f.text_field :query,
-            class: "form-control",
-            placeholder: "Search for a topic, module, term...",
-            style: "width: 60%;",
-            id: "autocompleteSearch"
-          %>
-
-        <%= submit_tag "Search", class: "btn btn-primary d-none" %>
-      <% end %>
-    <% end %>
-    <% if user_signed_in? && current_user.exam_date.blank? %>
-      <%= render 'shared/reminder', message: User::UPDATE_PROFILE_MESSAGE %>
-    <% end %>
-
-    <%= render 'shared/flashes' %>
-    <%= yield %>
+    
 
     <!-- debug: display params in develpment -->
     <%= debug(params) if Rails.env.development? %>
->>>>>>> 0418f27ea71b2d2394b19349231f67771733cb75
   </body>
 </html>
