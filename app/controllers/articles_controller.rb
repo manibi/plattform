@@ -5,6 +5,7 @@ class ArticlesController < ApplicationController
     @upcoming_articles = policy_scope(Article)
     @bookmarked_articles = current_user.bookmarked_articles
     @read_articles = current_user.read_articles
+    @topics = policy_scope(Topic)
 
     # Author view
     @all_articles = current_user.all_articles
