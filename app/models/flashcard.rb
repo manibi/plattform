@@ -65,6 +65,32 @@ class Flashcard < ApplicationRecord
     CustomExamAnswer.where(custom_exam: exam, flashcard: self).update(bookmarked: false)
   end
 
+  def authored_by?(user)
+    UserFlashcard.where(user: user, flashcard: self, author: true).present?
+  end
+
+  def sign_flashcard!(user)
+    UserFlashcard.find_or_create_by(user: user, flashcard: self).update(author: true)
+  end
+
+  def main_author
+    User.joins(:user_flashcards).find_by(user_flashcards: { author: true,
+                                                      flashcard: self })
+  end
+
+  def edited_by?(user)
+    UserFlashcard.where(user: user, flashcard: self, editor: true).present?
+  end
+
+  def sign_edit_flashcard!(user)
+    UserFlashcard.find_or_create_by(user: user, flashcard: self).update(editor: true)
+  end
+
+  def editors
+    User.joins(:user_flashcards).where(user_flashcards: { editor: true,
+                                                      flashcard: self })
+  end
+
   # In exam return an array of user picked answer ids
   def user_answers_for(exam)
     exam_answer = self.custom_exam_answers.find_by(custom_exam: exam)

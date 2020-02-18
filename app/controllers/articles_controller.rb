@@ -94,6 +94,11 @@ class ArticlesController < ApplicationController
     redirect_to @article
   end
 
+  def flashcards
+    @article = Article.find(params[:id])
+    authorize @article, :edit?
+  end
+
   private
 
   def article_params

@@ -1,10 +1,6 @@
 <div class="container">
   <div class="row">
     <div class="col-md-8">
-      <p>
-        <em>* When author authorisation will be implemented: The reminder will be removed and the author dashbord will be updated</em>
-      </p>
-
       <h2 class="mb-5">
         Welcome<%= ", #{current_user.first_name}" if current_user.first_name.present? %>
       </h2>
@@ -22,4 +18,53 @@
       </div>
     </div>
   </div>
+
+  <div class="row mt-5">
+    <div class="col">
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="authored_articles-tab" data-toggle="tab" href="#authored_articles" role="tab" aria-controls="authored_articles" aria-selected="true">Authored articles</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="edited_articles-tab" data-toggle="tab" href="#edited_articles" role="tab" aria-controls="edited_articles" aria-selected="false">Edited articles</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="authored_flashcards-tab" data-toggle="tab" href="#authored_flashcards" role="tab" aria-controls="authored_flashcards" aria-selected="false">Authored flashcards</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="edited_flashcards-tab" data-toggle="tab" href="#edited_flashcards" role="tab" aria-controls="edited_flashcards" aria-selected="false">Edited flashcards</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-8">
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div class="tab-pane active" id="authored_articles" role="tabpanel" aria-labelledby="authored_articles-tab">
+          <ul class="list-group list-group-flush">
+              <%= render partial: "articles/author_article_list", collection: current_user.authored_articles, as: :article %>
+            </ul>
+        </div>
+        <div class="tab-pane" id="edited_articles" role="tabpanel" aria-labelledby="edited_articles-tab">
+          <ul class="list-group list-group-flush">
+            <%= render partial: "articles/author_article_list", collection: current_user.edited_articles, as: :article %>
+          </ul>
+        </div>
+        <div class="tab-pane" id="authored_flashcards" role="tabpanel" aria-labelledby="authored_flashcards-tab">
+          <ul class="list-group list-group-flush">
+            <%= render partial: "flashcards/author_flashcard_list_item", collection: current_user.authored_flashcards, as: :flashcard %>
+          </ul>
+        </div>
+        <div class="tab-pane" id="edited_flashcards" role="tabpanel" aria-labelledby="edited_flashcards-tab">
+          <ul class="list-group list-group-flush">
+            <%= render partial: "flashcards/author_flashcard_list_item", collection: current_user.edited_flashcards, as: :flashcard %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

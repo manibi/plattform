@@ -1,9 +1,12 @@
 
 <li class="list-group-item d-flex">
-  <%= link_to article.title,
+  <%= link_to "#{article_counter+1}. #{article.title}",
               article %>
   <%= link_to "Edit",
               edit_article_path(article),
               class: "btn btn-warning",
               style: "margin-left: auto;" %>
+  <%= link_to "Edit flashcards",
+              flashcards_article_path(article),
+              class: "btn btn-info ml-2" %>
 </li>

@@ -1,7 +1,6 @@
 class PagesController < ApplicationController
   before_action :authenticate_user!, except: [:landing_page]
 
-# !TODO: separate autocomplete and search in 2 actions
   def search
     authorize current_user, :show?
     if params[:query]

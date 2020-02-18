@@ -59,6 +59,7 @@ class FlashcardsController < ApplicationController
     @flashcard = @article.flashcards.build(flashcard_params)
 
     if @flashcard.save
+      @flashcard.sign_flashcard!(current_user)
       set_correct_answers if %w[match_answers soll_ist table_quiz].include? @flashcard.flashcard_type
 
       redirect_to edit_flashcard_path(@flashcard), notice: "Flashcard created!"
@@ -86,9 +87,9 @@ class FlashcardsController < ApplicationController
     end
 
     if @flashcard.update(flashcard_params)
+      @flashcard.sign_edit_flashcard!(current_user)
       set_correct_answers if %w[match_answers soll_ist table_quiz].include? @flashcard.flashcard_type
 
-      # redirect_to edit_flashcard_path(@flashcard), notice: "Flashcard updated!"
       redirect_to article_flashcard_path(@flashcard.article, @flashcard), notice: "Flashcard updated!"
     else
       render :edit

@@ -1,5 +1,28 @@
 <h1>Quiz</h1>
 <div class="container">
+  <% if current_user.author? %>
+
+    <div class="row">
+      <div class="col">
+        <h5 class="badge badge-primary">
+        <%= "by #{current_user.first_name}" %>
+          </h5>
+          <h5>Editors:</h5>
+          <% @flashcard.editors.each do |editor| %>
+            <h5 class="badge badge-primary">
+              <%= editor.first_name %>
+            </h5>
+          <% end %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <%= link_to 'Edit Question', edit_flashcard_path(@flashcard), class: "btn btn-warning" %>
+      </div>
+    </div>
+  <% end %>
+
   <div class="row">
     <% if @flashcard.image.attached? %>
       <div class="col-md-4" style="margin-left: auto;">
@@ -10,11 +33,8 @@
         </button>
       </div>
     <% end %>
-
-    <% if current_user.author? %>
-      <%= link_to 'Edit Question', edit_flashcard_path(@flashcard), class: "btn btn-warning" %>
-    <% end %>
   </div>
+
   <div class="row">
     <div class="col-12">
       <% if @exam&.submitted %>

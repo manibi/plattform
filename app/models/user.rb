@@ -99,6 +99,20 @@ class User < ApplicationRecord
     })
   end
 
+  def authored_flashcards
+    Flashcard.joins(:user_flashcards).where(user_flashcards: {
+      user: self,
+      author: true
+    })
+  end
+
+  def edited_flashcards
+    Flashcard.joins(:user_flashcards).where(user_flashcards: {
+      user: self,
+      editor: true
+    })
+  end
+
   # Return all answered flashcards
   def answered_flashcards
     Flashcard.joins(:user_flashcards).where(user_flashcards: {

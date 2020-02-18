@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       patch "unread"
       post  "bookmark"
       patch "unbookmark"
+      get "flashcards"
     end
 
     resources :flashcards, only: :show do

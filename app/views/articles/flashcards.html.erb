@@ -1,0 +1,10 @@
+<div class="row justify-content-center">
+  <div class="col-5">
+      <% if @article.flashcards.any? %>
+        <%= render partial: "flashcards/author_flashcard_list_item", collection: @article.flashcards, as: :flashcard %>
+        <% else %>
+        <h2>The article has no flashcards.</h2>
+        <%= link_to "Create flashcards", new_flashcard_path, class: "btn btn-primary" %>
+      <% end %>
+  </div>
+</div>
