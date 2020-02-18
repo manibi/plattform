@@ -1,5 +1,21 @@
 <div class="container">
   <div class="row">
+    <div class="col">
+      <% if current_user.author? %>
+        <h5 class="badge badge-primary">
+          <%= "by #{current_user.first_name}" %>
+        </h5>
+        <h5>Editors:</h5>
+        <% @article.editors.each do |editor| %>
+        <h5 class="badge badge-primary">
+          <%= editor.first_name %>
+        </h5>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="col-8">
       <h1 class="heading-2">
         <%= @article.title %>
@@ -21,7 +37,7 @@
                                             method: :post,
                                             class: "btn btn-primary" %>
           <% end %>
-          <% if @current_user.author? %>
+          <% if current_user.author? %>
             <%= link_to 'Edit article', edit_article_path(@article), class: "btn btn-warning" %>
           <% end %>
         </p>

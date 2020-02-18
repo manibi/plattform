@@ -224,6 +224,7 @@ class FlashcardsController < ApplicationController
     render "flashcards/results"
   end
 
+  # ! Refactor with Queue class?
   # Return next article flashcard or flashcard results
   def next_flashcard
     @flashcard = Flashcard.find(params[:id])

@@ -36,8 +36,8 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
     @article.build(chapter_params) if @article.persisted?
 
-    # raise
     if @article.save
+      @article.sign_article!(current_user)
       redirect_to edit_article_path(@article), notice: "Article created!"
     else
       render :new
@@ -55,6 +55,7 @@ class ArticlesController < ApplicationController
     authorize @article
 
     if @article.update(article_params)
+      @article.sign_edit_article!(current_user)
       redirect_to @article, notice: "Article updated!"
     else
       render :edit

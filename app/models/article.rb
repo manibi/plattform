@@ -49,4 +49,30 @@ class Article < ApplicationRecord
   def unbookmark_for!(user)
     UserArticle.where(user: user, article: self).update(bookmarked: false)
   end
+
+  def authored_by?(user)
+    UserArticle.where(user: user, article: self, author: true).present?
+  end
+
+  def sign_article!(user)
+    UserArticle.find_or_create_by(user: user, article: self).update(author: true)
+  end
+
+  def main_author
+    User.joins(:user_articles).find_by(user_articles: { author: true,
+                                                      article: self })
+  end
+
+  def edited_by?(user)
+    UserArticle.where(user: user, article: self, editor: true).present?
+  end
+
+  def sign_edit_article!(user)
+    UserArticle.find_or_create_by(user: user, article: self).update(editor: true)
+  end
+
+  def editors
+    User.joins(:user_articles).where(user_articles: { editor: true,
+                                                      article: self })
+  end
 end

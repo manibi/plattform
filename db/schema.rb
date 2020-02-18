@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_11_120138) do
+ActiveRecord::Schema.define(version: 2020_02_18_092600) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,6 +142,8 @@ ActiveRecord::Schema.define(version: 2020_02_11_120138) do
     t.bigint "article_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "author", default: false
+    t.boolean "editor", default: false
     t.index ["article_id"], name: "index_user_articles_on_article_id"
     t.index ["user_id", "article_id"], name: "index_user_articles_on_user_id_and_article_id", unique: true
     t.index ["user_id"], name: "index_user_articles_on_user_id"

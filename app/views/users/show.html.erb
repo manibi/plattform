@@ -31,12 +31,14 @@
               <%= current_user.birth_date if current_user.birth_date.present? %>
             </td>
           </tr>
-              <tr>
-            <th scope="row">Exam day</th>
-            <td>
-              <%= current_user.exam_date.to_formatted_s(:long) if current_user.exam_date.present? %>
-            </td>
-          </tr>
+          <% if current_user.student? %>
+            <tr>
+              <th scope="row">Exam day</th>
+              <td>
+                <%= current_user.exam_date.to_formatted_s(:long) if current_user.exam_date.present? %>
+              </td>
+            </tr>
+          <% end %>
         </tbody>
       </table>
       <%= link_to 'Edit profile', profile_edit_path, class: "btn btn-info" %>

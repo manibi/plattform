@@ -1,1 +1,9 @@
-<%= link_to article.title, article, class: "list-group-item list-group-item-action"  %>
+
+<li class="list-group-item d-flex">
+  <%= link_to article.title,
+              article %>
+  <%= link_to "Edit",
+              edit_article_path(article),
+              class: "btn btn-warning",
+              style: "margin-left: auto;" %>
+</li>
