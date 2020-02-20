@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     if current_user.student?
       resource.exam_date.nil? ? welcome_path : dashboard_path
     elsif current_user.author?
-      resource.email.nil? ? welcome_path : dashboard_path
+      resource.email.blank? ? welcome_path : author_dashboard_path
     end
   end
 

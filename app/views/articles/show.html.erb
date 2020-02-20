@@ -2,8 +2,11 @@
   <div class="row">
     <div class="col">
       <% if current_user.author? %>
+      <h5 class="badge badge-success">
+          <%= @article.draft ? "Draft" : "Public" %>
+        </h5>
         <h5 class="badge badge-primary">
-          <%= "by #{current_user.first_name}" %>
+          <%= "by #{current_user.first_name.present? ? @article.main_author.first_name : 'No name'}" %>
         </h5>
         <h5>Editors:</h5>
         <% @article.editors.each do |editor| %>
@@ -16,7 +19,7 @@
   </div>
 
   <div class="row">
-    <div class="col-8">
+    <div class="col-6">
       <h1 class="heading-2">
         <%= @article.title %>
         <span class="badge badge-primary">
@@ -27,20 +30,30 @@
         </span>
       </h1>
     </div>
-    <div class="col-4">
-        <p>
-          <% if @article.bookmarked_for?(current_user) %>
-            <%= link_to 'Unbookmark article', unbookmark_article_path(@article),                                      method: :patch,
-                                              class: "btn btn-warning" %>
-          <% else %>
-            <%= link_to 'Bookmark article', bookmark_article_path(@article),
-                                            method: :post,
-                                            class: "btn btn-primary" %>
-          <% end %>
-          <% if current_user.author? %>
-            <%= link_to 'Edit article', edit_article_path(@article), class: "btn btn-warning" %>
-          <% end %>
-        </p>
+    <div class="col-6">
+      <!-- Render publish and edit if author -->
+      <% if current_user.author? %>
+        <% if @article.draft? %>
+          <%= link_to 'Publish article', publish_article_path(@article),
+                                          method: :post,
+                                          class: "btn btn-success" %>
+        <% else %>
+          <%= link_to 'Unpublish article', unpublish_article_path(@article),                                method: :patch,
+                                           class: "btn btn-danger" %>
+        <% end %>
+        <%= link_to 'Edit article',
+                    edit_article_path(@article),
+                    class: "btn btn-warning" %>
+      <% end %>
+
+      <% if @article.bookmarked_for?(current_user) %>
+        <%= link_to 'Unbookmark article', unbookmark_article_path(@article),                                 method: :patch,
+                                          class: "btn btn-warning" %>
+      <% else %>
+        <%= link_to 'Bookmark article', bookmark_article_path(@article),
+                                        method: :post,
+                                        class: "btn btn-primary" %>
+      <% end %>
     </div>
   </div>
 

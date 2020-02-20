@@ -3,6 +3,8 @@ class Article < ApplicationRecord
   include PgSearch::Model
   multisearchable against: [:title]
 
+  before_save :ensure_published_at, :unless => :draft
+
   belongs_to        :category
   has_many          :chapters, dependent: :destroy
   has_many          :user_articles
@@ -25,6 +27,10 @@ class Article < ApplicationRecord
                       less_than: 5.megabytes,
                       message:   "should be less than 5MB"
                     }
+
+  # Scopes
+  scope :draft,     -> { where(draft: true) }
+  scope :published, -> { where(draft: false) }
 
   def read_for?(user)
     UserArticle.where(user: user, article: self, read: true).present?
@@ -50,12 +56,13 @@ class Article < ApplicationRecord
     UserArticle.where(user: user, article: self).update(bookmarked: false)
   end
 
-  def authored_by?(user)
-    UserArticle.where(user: user, article: self, author: true).present?
-  end
-
+  # Set article author
   def sign_article!(user)
     UserArticle.find_or_create_by(user: user, article: self).update(author: true)
+  end
+
+  def authored_by?(user)
+    UserArticle.where(user: user, article: self, author: true).present?
   end
 
   def main_author
@@ -74,5 +81,20 @@ class Article < ApplicationRecord
   def editors
     User.joins(:user_articles).where(user_articles: { editor: true,
                                                       article: self })
+  end
+
+  def publish!
+    self.draft = false
+    self.save
+  end
+
+  def unpublish!
+    self.update(draft: true, published_at: nil)
+  end
+
+  protected
+
+  def ensure_published_at
+    self.published_at ||= Time.zone.now
   end
 end

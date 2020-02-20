@@ -1,5 +1,6 @@
 class ArticlesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_article, except: [:index, :new, :create]
 
   def index
     @upcoming_articles = policy_scope(Article)
@@ -15,10 +16,7 @@ class ArticlesController < ApplicationController
     render current_user.student? ? 'articles/index' : 'articles/author_index'
   end
 
-  # Set all flashcard answers to false for one article when showing it
   def show
-    @article = Article.find(params[:id])
-    authorize @article
     @flashcard = @article.flashcards.first
   end
 
@@ -45,15 +43,10 @@ class ArticlesController < ApplicationController
   end
 
   def edit
-    @article = Article.find(params[:id])
-    authorize @article
     @categories = current_user.all_categories
   end
 
   def update
-    @article = Article.find(params[:id])
-    authorize @article
-
     if @article.update(article_params)
       @article.sign_edit_article!(current_user)
       redirect_to @article, notice: "Article updated!"
@@ -63,23 +56,16 @@ class ArticlesController < ApplicationController
   end
 
   def read
-    @article = Article.find(params[:id])
-    authorize @article, :show?
-
     @article.read_for!(current_user)
     redirect_to @article
   end
 
   def unread
-    @article = Article.find(params[:id])
     @article.unread_for!(current_user)
     redirect_to @article
   end
 
   def bookmark
-    @article = Article.find(params[:id])
-    authorize @article, :show?
-
     @article.bookmark_for!(current_user)
     @article.read_for!(current_user) unless @article.read_for?(current_user)
 
@@ -87,19 +73,29 @@ class ArticlesController < ApplicationController
   end
 
   def unbookmark
-    @article = Article.find(params[:id])
-    authorize @article, :show?
-
     @article.unbookmark_for!(current_user)
     redirect_to @article
   end
 
+  def publish
+    @article.publish!
+    redirect_to @article
+  end
+
+  def unpublish
+    @article.unpublish!
+    redirect_to @article
+  end
+
   def flashcards
-    @article = Article.find(params[:id])
-    authorize @article, :edit?
   end
 
   private
+
+  def set_article
+    @article = Article.find(params[:id])
+    authorize @article
+  end
 
   def article_params
     params.require(:article).permit(:category_id,

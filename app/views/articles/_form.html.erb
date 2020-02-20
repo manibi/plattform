@@ -52,6 +52,7 @@
                                   association_insertion_node: '#chapter', association_insertion_method: :append
                                 } if @article.persisted? %>
    <%= f.submit class: "btn btn-primary" %>
+   <%= link_to "Article page", @article, class: "btn btn-warning" if @article.persisted? %>
 
   </div>
 <% end %>

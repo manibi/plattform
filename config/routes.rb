@@ -19,6 +19,8 @@ Rails.application.routes.draw do
       patch "unread"
       post  "bookmark"
       patch "unbookmark"
+      post  "publish"
+      patch "unpublish"
       get "flashcards"
     end
 
