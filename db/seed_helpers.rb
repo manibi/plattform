@@ -19,15 +19,14 @@ def generate_author_licences(licences_num)
   end
 end
 
-# def add_profession_to!(authors, profession_name)
-#   authors.map do |author|
-#     author[:profession] = profession_name
-#     author
-#   end
-# end
-
 def store_users(filepath_json_file, users_json_data)
   File.open(filepath_json_file, 'wb') do |file|
     file.write(JSON.generate(users_json_data))
   end
+end
+
+# Find and return the category in the current row from the csv file
+def find_category(row, start, finish)
+  idx = (start..finish).to_a.filter { |i| row[i] }.first
+  row[idx]
 end

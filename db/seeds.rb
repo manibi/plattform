@@ -1,7 +1,5 @@
 require "csv"
-# require "securerandom"
-require_relative "./seed_users/seed_users"
-
+require_relative "./seed_helpers"
 
 puts "Cleaning DB..."
 Chapter.destroy_all
@@ -51,33 +49,65 @@ buero_management.users.create!(SIEMENS_BUERO_MANAGEMENT_STUDENTS)
 
 # Store generated users in files
 store_users(
-  "#{Dir.pwd}/db/seed_users/generated_users/industriekaufleute_authors.json", INDUSTRIEKAUF_AUTHORS)
+  "#{Dir.pwd}/db/generated_users/industriekaufleute_authors.json", INDUSTRIEKAUF_AUTHORS)
 store_users(
-  "#{Dir.pwd}/db/seed_users/generated_users/industriekaufleute_students.json", SIEMENS_INDUSTRIEKAUF_STUDENTS)
+  "#{Dir.pwd}/db/generated_users/industriekaufleute_students.json", SIEMENS_INDUSTRIEKAUF_STUDENTS)
 store_users(
-  "#{Dir.pwd}/db/seed_users/generated_users/buero_management_authors.json", BUERO_MANAGEMENT_AUTHORS)
+  "#{Dir.pwd}/db/generated_users/buero_management_authors.json", BUERO_MANAGEMENT_AUTHORS)
 store_users(
-  "#{Dir.pwd}/db/seed_users/generated_users/buero_management_students.json", SIEMENS_BUERO_MANAGEMENT_STUDENTS)
+  "#{Dir.pwd}/db/generated_users/buero_management_students.json", SIEMENS_BUERO_MANAGEMENT_STUDENTS)
 
- puts "Import data to db"
-# puts Dir.pwd
+# ! Import data
+puts "Import csv data to db"
+puts "Start Industriekaufleute data..."
+
 data_industriekaufleute = CSV.parse(File.read("#{Dir.pwd}/db/seed_files/data_industriekaufleute.csv"), headers: true)
-# file1 = CSV.parse(File.read("data.csv"), headers: true)
 
+data_industriekaufleute.each do |row|
+  # Topics
+  industriekauf.topics.create!({ name: row[1] }) unless Topic.find_by(name: row[1])
 
-# ! topics
-puts "Store topics..."
-# data_industriekaufleute.by_col[1].uniq.each do |topic|
-#   industriekauf.topics.create!({ name: topic })
-# end
+  # Categories
+  # ! categories have no description scraped
+  category = find_category(row, 2, 14)
+  topic = Topic.find_by(name: row[1])
+  topic.categories.create!({
+    title: category
+  }) unless Category.find_by(title: category)
 
-# loop over rows
-# if topic is stored
-# else create topic
-# if category is stored
-# else create category
-# then create article
+  # Articles
+  article_name = row["Fachbegriff"]
+  article_description = row["Definition"]
+  db_category = Category.find_by(title: category)
 
+  db_category.articles.create!({
+    title: article_name,
+    description: article_description,
+    draft: false,
+    published_at: Time.now
+  })
 
-puts "Generate categories"
+  # Chapters
+  db_article = Article.find_by(title: article_name)
+  article_chapter1 = row["Erläuterung"]
+  article_chapter2 = row["Praxisbeispiel aus der Wirtschaft"]
+  article_chapter3 = row["Verwandte Themen"]
+
+  db_article.chapters.create!({
+    title: "Erläuterung",
+    content: article_chapter1
+  }) if row[20]
+
+  db_article.chapters.create!({
+    title: "Praxisbeispiel aus der Wirtschaft",
+    content: article_chapter2
+  }) if row[21]
+
+  db_article.chapters.create!({
+    title: "Verwandte Themen",
+    content: article_chapter3
+  }) if row[22]
+end
+
+puts "Industriekaufleute data...done"
 
