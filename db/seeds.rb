@@ -94,19 +94,20 @@ data_industriekaufleute.each do |row|
   article_chapter3 = row["Verwandte Themen"]
 
   db_article.chapters.create!({
-    title: "Erläuterung",
-    content: article_chapter1
-  }) if row[20]
+    title: "Verwandte Themen",
+    content: article_chapter3
+  }) if row[22]
+
 
   db_article.chapters.create!({
     title: "Praxisbeispiel aus der Wirtschaft",
     content: article_chapter2
-  }) if row[21]
+    }) if row[21]
 
   db_article.chapters.create!({
-    title: "Verwandte Themen",
-    content: article_chapter3
-  }) if row[22]
+    title: "Erläuterung",
+    content: article_chapter1
+  }) if row[20]
 end
 
 puts "Industriekaufleute data...done"

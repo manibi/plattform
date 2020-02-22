@@ -51,9 +51,9 @@ class ArticlePolicy < ApplicationPolicy
     def resolve
       if user.student?
         scope.published.joins(:category)
-             .where(categories: { topic: [user.profession.topics] }) -
+             .where(categories: { topic: [user.profession.topics] }).order(:published_at) -
         scope.published.joins(:user_articles)
-              .where(user_articles: { user: user, read: true })
+              .where(user_articles: { user: user, read: true }).order(:published_at)
       elsif user.author?
         scope.joins(:category)
              .where(categories: { topic: [user.profession.topics] })

@@ -3,7 +3,7 @@ require "securerandom"
 def generate_student_licences(company, profession, licences_num)
   (0...licences_num).to_a.map do |i|
       {
-        username: "#{company.downcase}-#{profession.downcase}-#{Time.now.getutc.to_i + i}",
+        username: "#{company.downcase}-#{profession.downcase}-#{SecureRandom.hex[0..6]}",
         password: SecureRandom.hex[0..10]
       }
   end
