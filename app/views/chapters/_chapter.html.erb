@@ -4,7 +4,7 @@
       <% links_names = chapter.content.split(", ") %>
       <% links_names.each do |link_name| %>
         <% if article = Article.find_by(title: link_name.strip) %>
-          <%= link_to link_name, article_path(article) %>
+          <%= link_to link_name, article_path(article), class: "btn btn-outline-success" %>
         <% else %>
         <%# raise %>
           <%= link_name %>
