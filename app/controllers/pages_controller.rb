@@ -30,6 +30,7 @@ class PagesController < ApplicationController
 
   def company_dashboard
     authorize current_company
+    @users = current_company.users
   end
 
   def exam_info

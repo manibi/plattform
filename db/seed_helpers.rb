@@ -3,18 +3,20 @@ require "securerandom"
 def generate_student_licences(company, profession, licences_num)
   (0...licences_num).to_a.map do |i|
       {
-        username: "#{company.downcase}-#{profession.downcase}-#{SecureRandom.hex[0..6]}",
-        password: SecureRandom.hex[0..10]
+        username: "#{company.name.downcase}-#{profession.downcase}-#{SecureRandom.hex[0..6]}",
+        password: SecureRandom.hex[0..10],
+        company_id: company.id
       }
   end
 end
 
-def generate_author_licences(licences_num)
+def generate_author_licences(company, licences_num)
   (0...licences_num).to_a.map do |i|
      {
       username: "author-#{SecureRandom.hex[0..6]}",
       password: SecureRandom.hex[0..10],
-      role: "author"
+      role: "author",
+      company_id: company.id
     }
   end
 end

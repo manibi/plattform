@@ -15,6 +15,7 @@ Category.destroy_all
 Topic.destroy_all
 User.destroy_all
 Profession.destroy_all
+Company.destroy_all
 
 # ! professions
 puts "Add professions..."
@@ -29,17 +30,39 @@ Profession.create!([
 industriekauf = Profession.first
 buero_management = Profession.second
 
+# ! companies
+puts "Generate companies"
+Company.create!([
+  {
+    username: "mozubi",
+    password: "123456",
+    name: "Mozubi",
+    email: "contact@mozubi.com",
+    contact_person_name: "Mark B."
+  },
+  {
+    username: "siemens",
+    password: "123456",
+    name: "Siemens",
+    email: "contact@siemens.com",
+    contact_person_name: "Mary B."
+  },
+])
+
+mozubi = Company.first
+siemens = Company.second
+
 # ! users
 puts "Generate users"
 # Authors
-INDUSTRIEKAUF_AUTHORS = generate_author_licences(3)
-BUERO_MANAGEMENT_AUTHORS = generate_author_licences(3)
+INDUSTRIEKAUF_AUTHORS = generate_author_licences(mozubi, 3)
+BUERO_MANAGEMENT_AUTHORS = generate_author_licences(mozubi, 3)
 
 # Students
 SIEMENS_INDUSTRIEKAUF_STUDENTS = generate_student_licences(
-  "Siemens", industriekauf.name, 3)
+  siemens, industriekauf.name, 3)
 SIEMENS_BUERO_MANAGEMENT_STUDENTS = generate_student_licences(
-  "Siemens", buero_management.name, 3)
+  siemens, buero_management.name, 3)
 
 industriekauf.users.create!(INDUSTRIEKAUF_AUTHORS)
 industriekauf.users.create!(SIEMENS_INDUSTRIEKAUF_STUDENTS)
