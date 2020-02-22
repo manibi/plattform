@@ -1,0 +1,40 @@
+<section class="edit-profile container">
+  <div class="row">
+    <div class="col-md-6">
+      <% if current_company.name.present? %>
+        <h2 class="mb-5">
+          <%= current_company.name %>
+        </h2>
+      <% end %>
+      <table class="table table-striped mt-5">
+        <tbody>
+          <tr>
+            <th scope="row">Contact</th>
+            <td>
+              <%= current_company.contact_person_name if current_company.contact_person_name.present? %>
+            </td>
+          </tr>
+            <th scope="row">Email</th>
+            <td>
+              <%= current_company.email if current_company.email.present? %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Address</th>
+            <td>
+              <%= current_company.address if current_company.address.present? %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Phone Number</th>
+            <td>
+              <%= current_company.phone_number if current_company.phone_number.present? %>
+            </td>
+          <tr>
+        </tbody>
+      </table>
+      <%= link_to 'Edit profile', company_profile_edit_path, class: "btn btn-info" %>
+      <%= link_to "Change your password", edit_company_registration_path, class: "btn btn-danger"%>
+    </div>
+  </div>
+</section>

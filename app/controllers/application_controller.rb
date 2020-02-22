@@ -1,8 +1,11 @@
 class ApplicationController < ActionController::Base
   include Pundit
+  # include Accessible
+  # skip_before_action :check_user, only: :destroy
 
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
+  # before_action :authenticate_company!
   after_action :verify_authorized, except: :index, unless: :skip_pundit?
   after_action :verify_policy_scoped, only: :index, unless: :skip_pundit?
   #! uncomment for production
@@ -20,13 +23,9 @@ class ApplicationController < ActionController::Base
   end
 
   # Redirect after login
-  def after_sign_in_path_for(resource)
-    if current_user.student?
-      resource.exam_date.nil? ? welcome_path : dashboard_path
-    elsif current_user.author?
-      resource.email.blank? ? welcome_path : author_dashboard_path
-    end
-  end
+  # def after_sign_in_path_for(resource)
+  #   check_user
+  # end
 
   # Register new user without email, use just a uniq string
   def configure_permitted_parameters
