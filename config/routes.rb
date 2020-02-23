@@ -17,7 +17,12 @@ Rails.application.routes.draw do
   get 'company/profile/edit', to: 'companies#edit'
 
   resources :users,      only:    :update
-  resources :companies,  only:    :update
+  resources :companies,  only:    :update do
+    member do
+      get "user/:user_id",           to: "companies#user_details", as: :user
+    end
+  end
+  get "company_dashboard",  to: "companies#company_dashboard"
   resources :topics,     except:  :destroy
   resources :categories, except:  :destroy
 
@@ -70,7 +75,6 @@ Rails.application.routes.draw do
   get "welcome",            to: "pages#welcome"
   get "dashboard",          to: "pages#dashboard"
   get "author_dashboard",   to: "pages#author_dashboard"
-  get "company_dashboard",  to: "pages#company_dashboard"
   get "search",             to: "pages#search"
 
   root to: "pages#landing_page"

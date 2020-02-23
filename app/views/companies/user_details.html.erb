@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h4>
+        <%= display_user_name(@user) %>
+      </h4>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+
+      <table class="table table-striped">
+        <tbody>
+          <tr>
+            <th scope="row">Exam date</th>
+            <td>
+              <%= @user.exam_date.present? ? @user.exam_date : "Not added" %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Read articles</th>
+            <td>
+              <%= "#{@articles_percentage}%" %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Played flashcards</th>
+            <td>
+              <%= "#{@flashcards_percentage}%" %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Exams taken</th>
+            <td><%= @exams %></td>
+          </tr>
+          <tr>
+            <th scope="row">Overall progress</th>
+            <td>
+              <%= @overall_progress %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

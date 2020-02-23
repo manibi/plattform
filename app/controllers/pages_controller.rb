@@ -1,6 +1,5 @@
 class PagesController < ApplicationController
   before_action :authenticate_user!, except: [:landing_page, :company_dashboard]
-  before_action :authenticate_company!, only: [:company_dashboard]
 
   def search
     authorize current_user, :show?
@@ -26,11 +25,6 @@ class PagesController < ApplicationController
 
   def author_dashboard
     authorize current_user
-  end
-
-  def company_dashboard
-    authorize current_company
-    @users = current_company.users
   end
 
   def exam_info

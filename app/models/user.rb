@@ -173,4 +173,10 @@ class User < ApplicationRecord
       correct: false
     })
   end
+
+  # Return all user profession flashcards
+  # ! add flashcards and check
+  def profession_flashcards
+    Flashcard.joins(:article).where(article: self.all_articles)
+  end
 end

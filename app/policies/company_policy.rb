@@ -4,7 +4,23 @@ class CompanyPolicy < ApplicationPolicy
   end
 
   def show?
-    record.is_a? Company
+    current_company?
+  end
+
+  def edit?
+    update?
+  end
+
+  def update?
+    current_company?
+  end
+
+  def user_details?
+    current_company?
+  end
+
+  def company_dashboard?
+    current_company?
   end
 
   class Scope < Scope
@@ -16,6 +32,6 @@ class CompanyPolicy < ApplicationPolicy
   private
 
   def current_company?
-    record.is_a? Company
+    record == user
   end
 end
