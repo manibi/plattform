@@ -33,6 +33,9 @@ class CompaniesController < ApplicationController
 
   def company_dashboard
     @users = current_company.users
+    @company_professions = @company.professions.uniq
+    # Return collections of users based on professions
+
   end
 
   # Set pundit user to a company instance

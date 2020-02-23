@@ -13,6 +13,18 @@
       <table class="table table-striped">
         <tbody>
           <tr>
+            <th scope="row">Profession</th>
+            <td>
+              <%= @user.profession.name.capitalize %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">User</th>
+            <td>
+              <%= @user.author? ? "Author" : "Student" %>
+            </td>
+          </tr>
+          <tr>
             <th scope="row">Exam date</th>
             <td>
               <%= @user.exam_date.present? ? @user.exam_date : "Not added" %>

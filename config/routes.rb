@@ -17,11 +17,9 @@ Rails.application.routes.draw do
   get 'company/profile/edit', to: 'companies#edit'
 
   resources :users,      only:    :update
-  resources :companies,  only:    :update do
-    member do
-      get "user/:user_id",           to: "companies#user_details", as: :user
-    end
-  end
+  resources :companies,  only:    :update
+
+  get "company/:user_id",   to: "companies#user_details", as: :company_user
   get "company_dashboard",  to: "companies#company_dashboard"
   resources :topics,     except:  :destroy
   resources :categories, except:  :destroy
