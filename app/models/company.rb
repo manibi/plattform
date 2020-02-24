@@ -12,4 +12,8 @@ class Company < ApplicationRecord
 
   has_many :users
   has_many :professions, through: :users
+
+  def students_for(profession)
+    Company.first.users.where(profession: profession)
+  end
 end

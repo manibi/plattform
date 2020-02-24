@@ -32,12 +32,12 @@ class CompaniesController < ApplicationController
   end
 
   def company_dashboard
-    # @users = current_company.users
+    @users = current_company.users
     company_professions = @company.professions.uniq
 
     # Return collections of users based on professions
     @professions_users = company_professions.map.with_index do |profession, i|
-      instance_variable_set("@profession_#{i += 1}", profession.students)
+      instance_variable_set("@profession_#{i += 1}", @company.students_for(profession))
     end
   end
 
