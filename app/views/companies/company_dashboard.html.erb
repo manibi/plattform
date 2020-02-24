@@ -1,21 +1,23 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <h1><%= current_company.name %></h1>
+      <h1 class="mb-5"><%= current_company.name %></h1>
     </div>
   </div>
-
-  <div class="row">
-    <div class="col">
-      <% @users.each do |user| %>
-        <%= link_to company_user_path(user) do %>
-          <div class="card">
-            <div class="card-body">
-               <h4><%= display_user_name(@user) %></h4>
+  <% @professions_users.each do |profession_users| %>
+    <div class="row my-4" style="border-bottom: 1px #eee solid">
+      <h4 class="mr-3"><%= profession_users.first.profession.name %></h4>
+      <div class="col">
+        <% profession_users.each do |user| %>
+          <%= link_to company_user_path(user) do %>
+            <div class="card mb-3">
+              <div class="card-body">
+                <h4><%= display_user_name(@user) %></h4>
+              </div>
             </div>
-          </div>
+          <% end %>
         <% end %>
-      <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>

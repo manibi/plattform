@@ -32,10 +32,14 @@ class CompaniesController < ApplicationController
   end
 
   def company_dashboard
-    @users = current_company.users
-    @company_professions = @company.professions.uniq
-    # Return collections of users based on professions
+    # @users = current_company.users
+    company_professions = @company.professions.uniq
 
+    # Return collections of users based on professions
+    @professions_users = company_professions.map.with_index do |profession, i|
+      instance_variable_set("@profession_#{i += 1}", profession.students)
+    end
+    # raise
   end
 
   # Set pundit user to a company instance
