@@ -15,7 +15,6 @@
           <%= "false-answer" if action_name == "answer_multiple_choice" &&
           @answers &.include?(answer.id) %>
         >
-        <%# raise %>
           <%= check_box_tag "flashcard[answer_ids][]",
                             answer.id, false,
                             id: dom_id(answer),
@@ -24,15 +23,15 @@
             <%= answer.content %>
         </label>
       </div>
+    <% end %>
+    <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
+      <%= f.submit "Check",
+                class: "flashcard-btn btn btn-primary", :"data-turbolinks" => false if action_name == "show" %>
+    <% end %>
+    <%= link_to "Next",
+                next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
+                class: "flashcard-btn btn btn-primary", :"data-turbolinks" => false if action_name == "answer_multiple_choice" %>
   <% end %>
-  <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
-    <%= f.submit "Check",
-              class: "flashcard-btn btn btn-primary", :"data-turbolinks" => false if action_name == "show" %>
-  <% end %>
-  <%= link_to "Next",
-              next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
-              class: "flashcard-btn btn btn-primary", :"data-turbolinks" => false if action_name == "answer_multiple_choice" %>
-<% end %>
 
   <hr>
     <p>correct answers</p>
