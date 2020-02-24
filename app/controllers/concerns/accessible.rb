@@ -14,11 +14,10 @@ module Accessible
       flash.clear
 
       if current_user.student?
-        redirect_to (current_user.exam_date.nil? ? welcome_path : dashboard_path)
+        redirect_to (current_user.exam_date.nil? ? welcome_path : dashboard_path) and return
       elsif current_user.author?
-        redirect_to (current_user.email.blank? ? welcome_path : author_dashboard_path)
+        redirect_to (current_user.email.blank? ? welcome_path : author_dashboard_path) and return
       end
-      return
     end
   end
 end

@@ -1,7 +1,5 @@
 class ApplicationController < ActionController::Base
   include Pundit
-  # include Accessible
-  # skip_before_action :check_user, only: :destroy
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   # before_action :authenticate_user!
@@ -23,9 +21,20 @@ class ApplicationController < ActionController::Base
   end
 
   # Redirect after login
-  # def after_sign_in_path_for(resource)
-  #   check_user
-  # end
+  def after_sign_in_path_for(resource)
+    if current_company
+      flash.clear
+      company_dashboard_path
+    elsif current_user
+      flash.clear
+
+      if current_user.student?
+        current_user.exam_date.nil? ? welcome_path : dashboard_path
+      elsif current_user.author?
+        current_user.email.blank? ? welcome_path : author_dashboard_path
+      end
+    end
+  end
 
   # Register new user without email, use just a uniq string
   def configure_permitted_parameters
