@@ -5,7 +5,9 @@ def generate_student_licences(company, profession, licences_num)
       {
         username: "#{company.name.downcase}-#{profession.downcase}-#{SecureRandom.hex[0..6]}",
         password: SecureRandom.hex[0..10],
-        company_id: company.id
+        company_id: company.id,
+        first_name: "student-#{i}",
+        last_name: "Test siemens"
       }
   end
 end
@@ -16,7 +18,9 @@ def generate_author_licences(company, licences_num)
       username: "author-#{SecureRandom.hex[0..6]}",
       password: SecureRandom.hex[0..10],
       role: "author",
-      company_id: company.id
+      company_id: company.id,
+      first_name: "author-#{i}",
+      last_name:  "test mozubi"
     }
   end
 end
