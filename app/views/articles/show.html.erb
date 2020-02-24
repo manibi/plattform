@@ -30,20 +30,23 @@
         </span>
       </h1>
     </div>
-    <div class="col-6">
+    <div class="col-3 d-flex flex-column align-items-start">
       <!-- Render publish and edit if author -->
       <% if current_user.author? %>
         <% if @article.draft? %>
           <%= link_to 'Publish article', publish_article_path(@article),
                                           method: :post,
-                                          class: "btn btn-success" %>
+                                          class: "btn btn-success mb-2" %>
         <% else %>
           <%= link_to 'Unpublish article', unpublish_article_path(@article),                                method: :patch,
-                                           class: "btn btn-danger" %>
+                                           class: "btn btn-danger mb-2" %>
         <% end %>
         <%= link_to 'Edit article',
                     edit_article_path(@article),
-                    class: "btn btn-warning" %>
+                    class: "btn btn-warning mb-2" %>
+        <%= link_to 'Edit flashcards',
+                    flashcards_article_path(@article),
+                    class: "btn btn-warning mb-2" %>
       <% end %>
 
       <% if @article.bookmarked_for?(current_user) %>
