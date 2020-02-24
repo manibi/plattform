@@ -9,7 +9,6 @@
 
   <div class="row">
     <div class="col">
-
       <table class="table table-striped">
         <tbody>
           <tr>
@@ -24,37 +23,63 @@
               <%= @user.author? ? "Author" : "Student" %>
             </td>
           </tr>
-          <tr>
-            <th scope="row">Exam date</th>
-            <td>
-              <%= @user.exam_date.present? ? @user.exam_date : "Not added" %>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">Read articles</th>
-            <td>
-              <%= "#{@articles_percentage}%" %>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">Played flashcards</th>
-            <td>
-              <%= "#{@flashcards_percentage}%" %>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">Exams taken</th>
-            <td><%= @exams %></td>
-          </tr>
-          <tr>
-            <th scope="row">Overall progress</th>
-            <td>
-              <%= @overall_progress %>
-            </td>
-          </tr>
+          <% if @user.student? %>
+            <tr>
+              <th scope="row">Exam date</th>
+              <td>
+                <%= @user.exam_date.present? ? @user.exam_date : "Not added" %>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Read articles</th>
+              <td>
+                <%= "#{@articles_percentage}%" %>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Played flashcards</th>
+              <td>
+                <%= "#{@flashcards_percentage}%" %>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Exams taken</th>
+              <td><%= @exams %></td>
+            </tr>
+            <tr>
+              <th scope="row">Overall progress</th>
+              <td>
+                <%= @overall_progress %>
+              </td>
+            </tr>
+          <% elsif @user.author? %>
+            <tr>
+              <th scope="row">Articles created</th>
+              <td>
+                <%= @user.authored_articles.count %>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Articles edited</th>
+              <td>
+                <%= @user.edited_articles.count %>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Flashcards created</th>
+              <td>
+                <%= @user.authored_flashcards.count %>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Flashcards edited</th>
+              <td>
+                <%= @user.edited_flashcards.count %>
+              </td>
+            </tr>
+          <% end %>
         </tbody>
       </table>
-
     </div>
   </div>
 </div>
