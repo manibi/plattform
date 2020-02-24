@@ -2,7 +2,8 @@ class ApplicationController < ActionController::Base
   include Pundit
 
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
+  # before_action :authenticate_company!
   after_action :verify_authorized, except: :index, unless: :skip_pundit?
   after_action :verify_policy_scoped, only: :index, unless: :skip_pundit?
   #! uncomment for production
@@ -21,10 +22,17 @@ class ApplicationController < ActionController::Base
 
   # Redirect after login
   def after_sign_in_path_for(resource)
-    if current_user.student?
-      resource.exam_date.nil? ? welcome_path : dashboard_path
-    elsif current_user.author?
-      resource.email.blank? ? welcome_path : author_dashboard_path
+    if current_company
+      flash.clear
+      company_dashboard_path
+    elsif current_user
+      flash.clear
+
+      if current_user.student?
+        current_user.exam_date.nil? ? welcome_path : dashboard_path
+      elsif current_user.author?
+        current_user.email.blank? ? welcome_path : author_dashboard_path
+      end
     end
   end
 

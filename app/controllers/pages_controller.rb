@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!, except: [:landing_page]
+  before_action :authenticate_user!, except: [:landing_page, :company_dashboard]
 
   def search
     authorize current_user, :show?
@@ -8,7 +8,7 @@ class PagesController < ApplicationController
       @topics = @results.where(searchable_type: "Topic")
       @categories = @results.where(searchable_type: "Category")
       @articles = @results.where(searchable_type: "Article")
-# raise
+
       respond_to do |format|
         format.html {}
         format.json {}

@@ -3,6 +3,7 @@
 
 class User < ApplicationRecord
   belongs_to  :profession
+  belongs_to  :company
   has_many    :user_articles, dependent: :destroy
   has_many    :articles, through: :user_articles
   has_many    :user_flashcards, dependent: :destroy
@@ -24,6 +25,7 @@ class User < ApplicationRecord
 
   validates :username, presence: true, uniqueness: true, length: { minimum: 6 }
   validates :profession_id, presence: true
+  validates :company_id, presence: true
   validates :exam_date, presence: true, on: :update, if: :is_student?
   validate  :validate_dated_around_now, on: :update, if: :is_student?
 
@@ -170,5 +172,11 @@ class User < ApplicationRecord
       flashcard: article.flashcards,
       correct: false
     })
+  end
+
+  # Return all user profession flashcards
+  # ! add flashcards and check
+  def profession_flashcards
+    Flashcard.joins(:article).where(article: self.all_articles)
   end
 end
