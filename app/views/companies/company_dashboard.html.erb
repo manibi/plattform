@@ -8,15 +8,7 @@
     <div class="row my-4" style="border-bottom: 1px #eee solid">
       <h4 class="mr-3"><%= profession_users.first.profession.name %></h4>
       <div class="col">
-        <% profession_users.each do |user| %>
-          <%= link_to company_user_path(user) do %>
-            <div class="card mb-3">
-              <div class="card-body">
-                <h4><%= display_user_name(@user) %></h4>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
+        <%= render partial: "companies/profession_user", collection: profession_users, as: :user %>
       </div>
     </div>
   <% end %>
