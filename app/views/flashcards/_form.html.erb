@@ -24,24 +24,17 @@
       ) %>
   </div>
 
+  <div class="form-group mt-5">
+    <%= flashcard_form.file_field :image %>
+  </div>
+
   <h2>Answers</h2>
   <button  id="sollHabenView" class="btn btn-info">Soll/Haben view</button>
   <button  id="tableView" class="btn btn-info">Table view</button>
   <div class="answers" id="uniqAnswers">
-    <%= link_to_add_association 'Add answer',
-                                flashcard_form, :answers,
-                                class: 'btn btn-success my-2',
-                                data: {
-                                  association_insert_node: '#uniqAnswers', association_insertion_method: :append
-                                } %>
-
     <%= flashcard_form.fields_for :answers do |builder| %>
       <%= render 'answer_fields', f: builder %>
     <% end %>
-  </div>
-
-  <div class="form-group mt-5">
-    <%= flashcard_form.file_field :image %>
   </div>
 
 <!-- Display posibility to choose the correct answers on edit page if needed -->
@@ -62,6 +55,12 @@
   <% end %>
 
   <div class="form-actions mt-5">
+  <%= link_to_add_association 'Add answer',
+                                flashcard_form, :answers,
+                                class: 'btn btn-success my-2',
+                                data: {
+                                  association_insertion_node: '#uniqAnswers', association_insertion_method: :append
+                                } %>
     <%= flashcard_form.submit class: "btn btn-primary", :"data-turbolinks" => false %>
   </div>
 <% end %>
