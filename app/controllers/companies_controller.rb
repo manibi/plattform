@@ -37,7 +37,7 @@ class CompaniesController < ApplicationController
 
     # Return collections of users based on professions
     @professions_users = company_professions.map.with_index do |profession, i|
-      instance_variable_set("@profession_#{i += 1}", @company.students_for(profession))
+      instance_variable_set("@profession_#{i += 1}", @company.users_for(profession))
     end
   end
 
