@@ -33,13 +33,13 @@
             <tr>
               <th scope="row">Read articles</th>
               <td>
-                <%= "#{@articles_percentage}%" %>
+                <%= "#{@user.read_articles.count} - Total: #{@articles_percentage}%" %>
               </td>
             </tr>
             <tr>
               <th scope="row">Played flashcards</th>
               <td>
-                <%= "#{@flashcards_percentage}%" %>
+                <%= "#{@user.answered_flashcards.count} - Total: #{@flashcards_percentage}%" %>
               </td>
             </tr>
             <tr>

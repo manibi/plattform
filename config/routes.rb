@@ -1,15 +1,26 @@
 Rails.application.routes.draw do
-  devise_for :companies, skip: [:registrations]
-  as :company do
-    get 'companies/edit' => 'companies/registrations#edit', :as => 'edit_company_registration'
-    put 'companies' => 'companies/registrations#update', :as => 'company_registration'
-  end
+  devise_for :companies, controllers: {
+    sessions: 'companies/sessions',
+    passwords: 'companies/passwords',
+    registrations: 'companies/registrations'
+}
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    passwords: 'users/passwords',
+    registrations: 'users/registrations'
+}
 
-  devise_for :users, skip: [:registrations]
-  as :user do
-    get 'users/edit' => 'users/registrations#edit', :as => 'edit_user_registration'
-    put 'users' => 'users/registrations#update', :as => 'user_registration'
-  end
+  # devise_for :companies, skip: [:registrations]
+  # as :company do
+  #   get 'companies/edit' => 'companies/registrations#edit', :as => 'edit_company_registration'
+  #   put 'companies' => 'companies/registrations#update', :as => 'company_registration'
+  # end
+
+  # devise_for :users, skip: [:registrations]
+  # as :user do
+  #   get 'users/edit' => 'users/registrations#edit', :as => 'edit_user_registration'
+  #   put 'users' => 'users/registrations#update', :as => 'user_registration'
+  # end
 
   get 'profile',              to: 'users#show'
   get 'profile/edit',         to: 'users#edit'
@@ -73,6 +84,7 @@ Rails.application.routes.draw do
   get "welcome",            to: "pages#welcome"
   get "dashboard",          to: "pages#dashboard"
   get "author_dashboard",   to: "pages#author_dashboard"
+  get "admin_dashboard",    to: "pages#admin_dashboard"
   get "search",             to: "pages#search"
 
   root to: "pages#landing_page"

@@ -1,10 +1,10 @@
 class TopicPolicy < ApplicationPolicy
   def show?
-    record.profession == user.profession
+    record.profession == user.profession || user.admin?
   end
 
   def new?
-    user.author?
+    user.author? || user.admin?
   end
 
   def create?

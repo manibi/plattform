@@ -32,6 +32,8 @@ class ApplicationController < ActionController::Base
         current_user.exam_date.nil? ? welcome_path : dashboard_path
       elsif current_user.author?
         current_user.email.blank? ? welcome_path : author_dashboard_path
+      elsif current_user.admin?
+      admin_dashboard_path
       end
     end
   end

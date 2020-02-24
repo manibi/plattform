@@ -11,6 +11,10 @@ class UserPolicy < ApplicationPolicy
     current_user? && user.student?
   end
 
+  def admin_dashboard?
+    user.admin?
+  end
+
   def search?
     current_user?
   end

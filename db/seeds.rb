@@ -54,6 +54,17 @@ siemens = Company.second
 
 # ! users
 puts "Generate users"
+# Admin
+User.create!({
+  username: "#{mozubi.name.downcase}-admin-1",
+  password: "123456",
+  company_id: mozubi.id,
+  profession: Profession.first,
+  first_name: "Chris",
+  last_name: "Admin",
+  role: :admin
+})
+
 # Authors
 INDUSTRIEKAUF_AUTHORS = generate_author_licences(mozubi, 3)
 BUERO_MANAGEMENT_AUTHORS = generate_author_licences(mozubi, 3)
