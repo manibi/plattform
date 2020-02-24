@@ -1,6 +1,5 @@
 class UserPolicy < ApplicationPolicy
   def show?
-    raise
     current_user? || user.admin?
   end
 
