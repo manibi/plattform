@@ -25,10 +25,14 @@ Profession.create!([
   },
   {
     name: "Büromanagement"
+  },
+  {
+    name: "Controlling"
   }
 ])
-industriekauf = Profession.first
+industriekauf    = Profession.first
 buero_management = Profession.second
+controlling      = Profession.third
 
 # ! companies
 puts "Generate companies"
@@ -59,7 +63,7 @@ User.create!({
   username: "#{mozubi.name.downcase}-admin-1",
   password: "123456",
   company_id: mozubi.id,
-  profession: Profession.first,
+  profession: controlling,
   first_name: "Chris",
   last_name: "Admin",
   role: :admin

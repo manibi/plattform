@@ -1,9 +1,9 @@
 <% unless user.admin? %>
-<%= link_to company_user_path(user) do %>
-  <div class="card mb-3">
-    <div class="card-body">
-      <h4><%= display_user_name(user) %></h4>
+  <%= link_to company_user_path(user) do %>
+    <div class="card mb-3">
+      <div class="card-body">
+        <h4><%= display_user_name(user) %></h4>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
 <% end %>

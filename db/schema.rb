@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_22_191102) do
+ActiveRecord::Schema.define(version: 2020_02_25_083453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -174,6 +174,20 @@ ActiveRecord::Schema.define(version: 2020_02_22_191102) do
     t.index ["user_id"], name: "index_user_articles_on_user_id"
   end
 
+  create_table "user_credentials", force: :cascade do |t|
+    t.string "username"
+    t.string "password"
+    t.integer "role"
+    t.bigint "user_id"
+    t.bigint "company_id"
+    t.bigint "profession_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["company_id"], name: "index_user_credentials_on_company_id"
+    t.index ["profession_id"], name: "index_user_credentials_on_profession_id"
+    t.index ["user_id"], name: "index_user_credentials_on_user_id"
+  end
+
   create_table "user_flashcards", force: :cascade do |t|
     t.boolean "correct"
     t.bigint "flashcard_id", null: false
@@ -223,6 +237,9 @@ ActiveRecord::Schema.define(version: 2020_02_22_191102) do
   add_foreign_key "topics", "professions"
   add_foreign_key "user_articles", "articles"
   add_foreign_key "user_articles", "users"
+  add_foreign_key "user_credentials", "companies"
+  add_foreign_key "user_credentials", "professions"
+  add_foreign_key "user_credentials", "users"
   add_foreign_key "user_flashcards", "flashcards"
   add_foreign_key "user_flashcards", "users"
   add_foreign_key "users", "companies"

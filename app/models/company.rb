@@ -11,6 +11,7 @@ class Company < ApplicationRecord
                       :message => "- Phone numbers must be not valid."
 
   has_many :users
+  has_many :user_credentials
   has_many :professions, through: :users
 
   def users_for(profession)
