@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   include UsersHelper
   before_action :authenticate_user!
-  before_action :set_user, only: [:show, :edit, :update]
+  before_action :set_user, only: [:show, :edit, :update, :new_author, :generate_author]
 
   def new
     @user = User.new
@@ -48,10 +48,43 @@ class UsersController < ApplicationController
     end
   end
 
+  def new_author
+    authorize current_user, :create?
+    @professions = Profession.all
+  end
+
+  def generate_author
+    authorize current_user, :create?
+    company = Company.find_by(name: "Mozubi")
+    profession = Profession.find(author_params[:profession_id])
+    new_authors_params = generate_authors(company,
+      profession,
+      author_params[:authors_number].to_i)
+
+    if User.create(new_authors_params)
+      flash[:notice] = "#{new_authors_params.size} #{"author".pluralize(new_authors_params)} created."
+
+    # Save credentials for printing
+    save_author_credentials(new_authors_params, current_user)
+
+    redirect_to admin_dashboard_path
+    end
+  end
+
+  def new_student
+  end
+
+  def generate_student
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:first_name, :last_name, :birth_date, :exam_date, :email, :role)
+  end
+
+  def author_params
+    params.permit(:profession_id, :authors_number)
   end
 
   def set_user

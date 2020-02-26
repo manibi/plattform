@@ -5,6 +5,8 @@ class Companies::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
   include Accessible
   skip_before_action :check_user, except: [:new, :create]
+  # prepend_before_action :require_no_authentication, only: [:cancel]
+
   # GET /resource/sign_up
   # def new
   #   super

@@ -2,4 +2,5 @@
   <th scope="row"><%= user_counter + 1 %></th>
   <td><%= user.username %></td>
   <td><%= user.password %></td>
+  <td><%= user.profession.name if user.author? || user.student? %></td>
 </tr>

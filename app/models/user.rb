@@ -5,6 +5,7 @@ class User < ApplicationRecord
   belongs_to  :profession
   belongs_to  :company
   has_many    :user_credentials
+  has_many    :company_credentials
   has_many    :user_articles, dependent: :destroy
   has_many    :articles, through: :user_articles
   has_many    :user_flashcards, dependent: :destroy

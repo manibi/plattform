@@ -11,8 +11,9 @@
       <div class="row">
         <%= link_to "Admin", new_user_path, class: "btn btn-danger ml-3" %>
         <%= link_to "Profession", new_profession_path, class: "btn btn-primary ml-3" %>
-        <%= link_to "Company", new_topic_path, class: "btn btn-primary ml-3" %>
-        <%= link_to "Student", new_topic_path, class: "btn btn-primary ml-3" %>
+        <%= link_to "Company", new_company_path, class: "btn btn-primary ml-3" %>
+        <%= link_to "Author", new_author_path, class: "btn btn-primary ml-3" %>
+        <%= link_to "Student", new_student_path, class: "btn btn-primary ml-3" %>
         <%= link_to "Topic", new_topic_path, class: "btn btn-success ml-3" %>
         <%= link_to "Module", new_category_path, class: "btn btn-info ml-3" %>
         <%= link_to "Article", new_article_path, class: "btn btn-secondary ml-3" %>
@@ -27,7 +28,15 @@
       <ul class="nav nav-tabs" id="myTab" role="tablist">
 
         <li class="nav-item">
-          <a class="nav-link active" id="admins-tab" data-toggle="tab" href="#admins" role="tab" aria-controls="admins" aria-selected="true">Admin users</a>
+          <a class="nav-link active" id="admins-tab" data-toggle="tab" href="#admins" role="tab" aria-controls="admins" aria-selected="true">Admins</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" id="authors-tab" data-toggle="tab" href="#authors" role="tab" aria-controls="authors" aria-selected="true">Authors</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" id="companies-tab" data-toggle="tab" href="#companies" role="tab" aria-controls="companies" aria-selected="false">Companies</a>
         </li>
 
         <li class="nav-item">
@@ -57,6 +66,37 @@
           </table>
         </div>
 
+        <div class="tab-pane" id="authors" role="tabpanel" aria-labelledby="authors-tab">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Password</th>
+                <th scope="col">Profession</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render partial: "users/generated_user", collection: UserCredential.author, as: :user %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tab-pane" id="companies" role="tabpanel" aria-labelledby="companies-tab">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Password</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render partial: "companies/generated_company", collection: CompanyCredential.all, as: :company %>
+            </tbody>
+          </table>
+        </div>
+
         <div class="tab-pane" id="professions" role="tabpanel" aria-labelledby="professions-tab">
           <table class="table table-striped">
             <thead>
@@ -70,6 +110,8 @@
             </tbody>
           </table>
         </div>
+
+
       </div>
     </div>
   </div>

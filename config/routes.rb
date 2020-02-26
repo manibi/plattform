@@ -26,11 +26,16 @@ Rails.application.routes.draw do
   get 'profile',              to: 'users#show'
   get 'profile/edit',         to: 'users#edit'
 
-  resources :companies,       only: [:new, :update]
+  get 'new_author',      to: 'users#new_author'
+  post 'generate_author',     to: 'users#generate_author'
+  get 'new_student',     to: 'users#new_student'
+  post 'generate_student',    to: 'users#generate_student'
+
+  resources :companies,       only: [:new, :create, :update]
   get 'company/profile',      to: 'companies#show'
   get 'company/profile/edit', to: 'companies#edit'
-  get "company/:user_id",   to: "companies#user_details", as: :company_user
-  get "company_dashboard",  to: "companies#company_dashboard"
+  get "company/:user_id",     to: "companies#user_details", as: :company_user
+  get "company_dashboard",    to: "companies#company_dashboard"
 
   resources :topics,     except:  :destroy
   resources :categories, except:  :destroy
