@@ -13,6 +13,8 @@ Flashcard.destroy_all
 Article.destroy_all
 Category.destroy_all
 Topic.destroy_all
+UserCredential.destroy_all
+CompanyCredential.destroy_all
 User.destroy_all
 Profession.destroy_all
 Company.destroy_all
@@ -27,12 +29,16 @@ Profession.create!([
     name: "Büromanagement"
   },
   {
+    name: "Industriemechanik"
+  },
+  {
     name: "Controlling"
   }
 ])
 industriekauf    = Profession.first
 buero_management = Profession.second
-controlling      = Profession.third
+industriemechanik = Profession.third
+controlling      = Profession.last
 
 # ! companies
 puts "Generate companies"
@@ -69,6 +75,31 @@ User.create!({
   role: :admin
 })
 
+# Student
+User.create!([
+  {
+    username: "#{siemens.name.downcase}-student-1",
+    password: "123456",
+    company_id: siemens.id,
+    profession: industriemechanik,
+    role: :student
+  },
+  {
+    username: "#{siemens.name.downcase}-student-2",
+    password: "123456",
+    company_id: siemens.id,
+    profession: industriekauf,
+    role: :student
+  },
+  {
+    username: "#{siemens.name.downcase}-student-3",
+    password: "123456",
+    company_id: siemens.id,
+    profession: buero_management,
+    role: :student
+  }
+])
+
 # Authors
 # INDUSTRIEKAUF_AUTHORS = generate_author_licences(mozubi, 3)
 # BUERO_MANAGEMENT_AUTHORS = generate_author_licences(mozubi, 3)
@@ -97,56 +128,114 @@ User.create!({
 
 # ! Import data
 puts "Import csv data to db"
-puts "Start Industriekaufleute data..."
+# puts "Start Industriekaufleute data..."
 
-data_industriekaufleute = CSV.parse(File.read("#{Dir.pwd}/db/seed_files/data_industriekaufleute.csv"), headers: true)
+# data_industriekaufleute = CSV.parse(File.read("#{Dir.pwd}/db/seed_files/data_industriekaufleute.csv"), headers: true)
 
-data_industriekaufleute.each do |row|
-  # Topics
-  industriekauf.topics.create!({ name: row[1] }) unless Topic.find_by(name: row[1])
+# data_industriekaufleute.each do |row|
+#   # Topics
+#   industriekauf.topics.create!({ name: row[1] }) unless Topic.find_by(name: row[1])
+
+#   # Categories
+#   # ! categories have no description scraped
+#   category = find_category(row, 2, 14)
+#   topic = Topic.find_by(name: row[1])
+#   topic.categories.create!({
+#     title: category
+#   }) unless Category.find_by(title: category)
+
+#   # Articles
+#   if row["Inhalt"].include? "Artikel"
+#     article_name = row["Fachbegriff"]
+#     article_description = row["Definition"]
+#     db_category = Category.find_by(title: category)
+
+#     db_category.articles.create!({
+#       title: article_name,
+#       description: article_description,
+#       draft: false,
+#       published_at: Time.now
+#     })
+#   end
+
+#  # Chapters
+#   db_article = Article.find_by(title: article_name)
+#   article_chapter1 = row["Erläuterung"]
+#   article_chapter2 = row["Praxisbeispiel aus der Wirtschaft"]
+#   article_chapter3 = row["Verwandte Themen"]
+
+#   db_article.chapters.create!({
+#     title: "Verwandte Themen",
+#     content: article_chapter3
+#   }) if row[22]
+
+
+#   db_article.chapters.create!({
+#     title: "Praxisbeispiel aus der Wirtschaft",
+#     content: article_chapter2
+#     }) if row[21]
+
+#   db_article.chapters.create!({
+#     title: "Erläuterung",
+#     content: article_chapter1
+#   }) if row[20]
+# end
+
+puts "Industriekaufleute data...done"
+puts "Start Industiemechaniker data..."
+data_industriemechanik = CSV.parse(File.read("#{Dir.pwd}/db/seed_files/data_industriemechaniker.csv"), headers: true)
+
+data_industriemechanik.each do |row|
+    # Topics
+    topic_name = row[1].strip
+    industriemechanik.topics.create!({ name: topic_name }) unless Topic.where(name: topic_name).exists?
 
   # Categories
-  # ! categories have no description scraped
-  category = find_category(row, 2, 14)
+  category = find_category(row, 2, 17)
   topic = Topic.find_by(name: row[1])
   topic.categories.create!({
     title: category
   }) unless Category.find_by(title: category)
 
   # Articles
-  article_name = row["Fachbegriff"]
-  article_description = row["Definition"]
+  article_name = row["Fachbegriff"].strip
   db_category = Category.find_by(title: category)
 
-  db_category.articles.create!({
-    title: article_name,
-    description: article_description,
-    draft: false,
-    published_at: Time.now
-  })
+  if row["Inhalt"].include?("Artikel") && !db_category.articles.where(title: article_name).exists?
+  article_description = row["Definition"].strip
+
+
+    db_category.articles.create!({
+      title: article_name,
+      description: article_description,
+      draft: false,
+      published_at: Time.now
+    })
+  end
 
   # Chapters
   db_article = Article.find_by(title: article_name)
   article_chapter1 = row["Erläuterung"]
-  article_chapter2 = row["Praxisbeispiel aus der Wirtschaft"]
+  article_chapter2 = row["Praxisbeispiel"]
   article_chapter3 = row["Verwandte Themen"]
 
-  db_article.chapters.create!({
-    title: "Verwandte Themen",
-    content: article_chapter3
-  }) if row[22]
+  if db_article && db_article.chapters.empty?
+    db_article.chapters.create!({
+      title: "Verwandte Themen",
+      content: article_chapter3
+    }) if row[25]
 
 
-  db_article.chapters.create!({
-    title: "Praxisbeispiel aus der Wirtschaft",
-    content: article_chapter2
-    }) if row[21]
+    db_article.chapters.create!({
+      title: "Praxisbeispiel",
+      content: article_chapter2
+      }) if row[24]
 
-  db_article.chapters.create!({
-    title: "Erläuterung",
-    content: article_chapter1
-  }) if row[20]
+    db_article.chapters.create!({
+      title: "Erläuterung",
+      content: article_chapter1
+    }) if row[23]
+  end
 end
-
-puts "Industriekaufleute data...done"
+puts "Industiemechaniker data...done"
 
