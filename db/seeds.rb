@@ -57,43 +57,43 @@ mozubi = Company.first
 siemens = Company.second
 
 # ! users
-puts "Generate users"
+puts "Generate admin"
 # Admin
 User.create!({
   username: "#{mozubi.name.downcase}-admin-1",
   password: "123456",
   company_id: mozubi.id,
   profession: controlling,
-  first_name: "Chris",
-  last_name: "Admin",
+  first_name: "Admin 1",
+  last_name: "Mozubi",
   role: :admin
 })
 
 # Authors
-INDUSTRIEKAUF_AUTHORS = generate_author_licences(mozubi, 3)
-BUERO_MANAGEMENT_AUTHORS = generate_author_licences(mozubi, 3)
+# INDUSTRIEKAUF_AUTHORS = generate_author_licences(mozubi, 3)
+# BUERO_MANAGEMENT_AUTHORS = generate_author_licences(mozubi, 3)
 
 # Students
-SIEMENS_INDUSTRIEKAUF_STUDENTS = generate_student_licences(
-  siemens, industriekauf.name, 3)
-SIEMENS_BUERO_MANAGEMENT_STUDENTS = generate_student_licences(
-  siemens, buero_management.name, 3)
+# SIEMENS_INDUSTRIEKAUF_STUDENTS = generate_student_licences(
+#   siemens, industriekauf.name, 3)
+# SIEMENS_BUERO_MANAGEMENT_STUDENTS = generate_student_licences(
+#   siemens, buero_management.name, 3)
 
-industriekauf.users.create!(INDUSTRIEKAUF_AUTHORS)
-industriekauf.users.create!(SIEMENS_INDUSTRIEKAUF_STUDENTS)
+# industriekauf.users.create!(INDUSTRIEKAUF_AUTHORS)
+# industriekauf.users.create!(SIEMENS_INDUSTRIEKAUF_STUDENTS)
 
-buero_management.users.create!(BUERO_MANAGEMENT_AUTHORS)
-buero_management.users.create!(SIEMENS_BUERO_MANAGEMENT_STUDENTS)
+# buero_management.users.create!(BUERO_MANAGEMENT_AUTHORS)
+# buero_management.users.create!(SIEMENS_BUERO_MANAGEMENT_STUDENTS)
 
 # Store generated users in files
-store_users(
-  "#{Dir.pwd}/db/generated_users/industriekaufleute_authors.json", INDUSTRIEKAUF_AUTHORS)
-store_users(
-  "#{Dir.pwd}/db/generated_users/industriekaufleute_students.json", SIEMENS_INDUSTRIEKAUF_STUDENTS)
-store_users(
-  "#{Dir.pwd}/db/generated_users/buero_management_authors.json", BUERO_MANAGEMENT_AUTHORS)
-store_users(
-  "#{Dir.pwd}/db/generated_users/buero_management_students.json", SIEMENS_BUERO_MANAGEMENT_STUDENTS)
+# store_users(
+#   "#{Dir.pwd}/db/generated_users/industriekaufleute_authors.json", INDUSTRIEKAUF_AUTHORS)
+# store_users(
+#   "#{Dir.pwd}/db/generated_users/industriekaufleute_students.json", SIEMENS_INDUSTRIEKAUF_STUDENTS)
+# store_users(
+#   "#{Dir.pwd}/db/generated_users/buero_management_authors.json", BUERO_MANAGEMENT_AUTHORS)
+# store_users(
+#   "#{Dir.pwd}/db/generated_users/buero_management_students.json", SIEMENS_BUERO_MANAGEMENT_STUDENTS)
 
 # ! Import data
 puts "Import csv data to db"
