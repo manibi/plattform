@@ -1,0 +1,8 @@
+<li class="list-group-item d-flex">
+  <%= link_to "#{flashcard_counter+1}. #{flashcard.content}",
+              article_flashcard_path(flashcard.article, flashcard) %>
+  <%= link_to "Edit",
+              edit_flashcard_path(flashcard),
+              class: "btn btn-warning",
+              style: "margin-left: auto;" %>
+</li>

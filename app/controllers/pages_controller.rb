@@ -1,7 +1,6 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!, except: [:landing_page]
+  before_action :authenticate_user!, except: [:landing_page, :company_dashboard]
 
-# !TODO: separate autocomplete and search in 2 actions
   def search
     authorize current_user, :show?
     if params[:query]
@@ -9,7 +8,7 @@ class PagesController < ApplicationController
       @topics = @results.where(searchable_type: "Topic")
       @categories = @results.where(searchable_type: "Category")
       @articles = @results.where(searchable_type: "Article")
-# raise
+
       respond_to do |format|
         format.html {}
         format.json {}

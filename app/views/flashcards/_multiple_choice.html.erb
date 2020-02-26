@@ -37,7 +37,28 @@
   <p>- <%= Answer.find(correct_answer).content %></p>
 <% end %>
 <hr>
-
+<%= form_for answer_multiple_choice_article_flashcard_path(@article, @flashcard), url: { controller: "flashcards",
+                    action: "answer_multiple_choice"},
+                    method: :post,
+                    html: { id: "flashcardAnswerForm",
+                            "data-form-submitted": false } do |f| %>
+  <% @flashcard.answers.each do |answer| %>
+    <div class="flashcard-answer">
+      <label
+        class=
+        <%= "correct-answer" if action_name == "answer_multiple_choice" &&  @correct_answers.include?(answer.id)  %>
+        <%= "false-answer" if action_name == "answer_multiple_choice" &&
+        @answers &.include?(answer.id) %>
+      >
+        <%= check_box_tag "flashcard[answer_ids][]",
+                          answer.id, false,
+                          id: dom_id(answer),
+                          checked: @user_answers&.include?(answer.id),
+                          disabled: action_name == "answer_multiple_choice" ||@exam&.submitted %>
+          <%= answer.content %>
+      </label>
+    </div>
+  <% end %>
   <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
     <%= f.submit "Check",
               class: "flashcard-btn btn btn-primary", :"data-turbolinks" => false if action_name == "show" %>

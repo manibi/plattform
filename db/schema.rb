@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_11_120138) do
+ActiveRecord::Schema.define(version: 2020_02_22_191102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,8 @@ ActiveRecord::Schema.define(version: 2020_02_11_120138) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "category_id"
+    t.boolean "draft", default: true
+    t.datetime "published_at"
     t.index ["category_id"], name: "index_articles_on_category_id"
   end
 
@@ -68,6 +70,29 @@ ActiveRecord::Schema.define(version: 2020_02_11_120138) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["article_id"], name: "index_chapters_on_article_id"
+  end
+
+  create_table "companies", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "username"
+    t.string "name"
+    t.string "address"
+    t.string "phone_number"
+    t.string "contact_person_name"
+    t.index ["email"], name: "index_companies_on_email"
+    t.index ["reset_password_token"], name: "index_companies_on_reset_password_token", unique: true
+    t.index ["username"], name: "index_companies_on_username", unique: true
   end
 
   create_table "custom_exam_answers", force: :cascade do |t|
@@ -142,6 +167,8 @@ ActiveRecord::Schema.define(version: 2020_02_11_120138) do
     t.bigint "article_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "author", default: false
+    t.boolean "editor", default: false
     t.index ["article_id"], name: "index_user_articles_on_article_id"
     t.index ["user_id", "article_id"], name: "index_user_articles_on_user_id_and_article_id", unique: true
     t.index ["user_id"], name: "index_user_articles_on_user_id"
@@ -154,6 +181,8 @@ ActiveRecord::Schema.define(version: 2020_02_11_120138) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "tries", default: 0
+    t.boolean "author", default: false
+    t.boolean "editor", default: false
     t.index ["flashcard_id"], name: "index_user_flashcards_on_flashcard_id"
     t.index ["user_id"], name: "index_user_flashcards_on_user_id"
   end
@@ -173,6 +202,8 @@ ActiveRecord::Schema.define(version: 2020_02_11_120138) do
     t.string "last_name"
     t.bigint "profession_id"
     t.integer "role"
+    t.bigint "company_id"
+    t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["email"], name: "index_users_on_email"
     t.index ["profession_id"], name: "index_users_on_profession_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -194,5 +225,6 @@ ActiveRecord::Schema.define(version: 2020_02_11_120138) do
   add_foreign_key "user_articles", "users"
   add_foreign_key "user_flashcards", "flashcards"
   add_foreign_key "user_flashcards", "users"
+  add_foreign_key "users", "companies"
   add_foreign_key "users", "professions"
 end

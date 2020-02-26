@@ -5,19 +5,42 @@
   <div class="row col-12 mt-3 justify-content-around">
     <div class="card col-8 p-3">
       <div class="container">
-        <div class="row">
-          <% if @flashcard.image.attached? %>
-            <div class="col-md-4" style="margin-left: auto;">
-              <!-- Button trigger modal -->
-              <button type="button" class="flashcard-image__thumb" data-toggle="modal" data-target="#flashcardImage">
-                <%= cl_image_tag @flashcard.image.key,
-                                  width: 200, height: 100, crop: :fill %>
-              </button>
-            </div>
-    <% if current_user.author? %>
-      <%= link_to 'Edit Question', edit_flashcard_path(@flashcard), class: "btn btn-warning" %>
+  <% if current_user.author? %>
+
+    <div class="row">
+      <div class="col">
+        <h5 class="badge badge-primary">
+        <%= "by #{current_user.first_name}" %>
+          </h5>
+          <h5>Editors:</h5>
+          <% @flashcard.editors.each do |editor| %>
+            <h5 class="badge badge-primary">
+              <%= editor.first_name %>
+            </h5>
+          <% end %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <%= link_to 'Edit Question', edit_flashcard_path(@flashcard), class: "btn btn-warning" %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <% if @flashcard.image.attached? %>
+      <div class="col-md-4" style="margin-left: auto;">
+        <!-- Button trigger modal -->
+        <button type="button" class="flashcard-image__thumb" data-toggle="modal" data-target="#flashcardImage">
+          <%= cl_image_tag @flashcard.image.key,
+                            width: 200, height: 100, crop: :fill %>
+        </button>
+      </div>
     <% end %>
-<!-- ======= -->
+  </div>
+
+
   <div class="row">
     <div class="col-12">
       <% if @exam&.submitted %>
@@ -74,23 +97,6 @@
             <% end %>
           </div>
 
-<<<<<<< HEAD
-          <% if @exam %>
-            <div class="col-md-4">
-              <% @questions.each.with_index do |q, i| %>
-                <ul>
-                  <li>
-                    <%= link_to "Question #{i + 1}", custom_exam_flashcard_path(@exam, @exam.questions[i]) %>
-                    <% if @exam.answer_for(q)&.bookmarked %>
-                      <span class="badge badge-pill badge-primary">Marked</span>
-                    <% end %>
-                  </li>
-                </ul>
-              <% end %>
-            <% end %>
-          </div>
-        </div>
-=======
     <% if @exam %>
       <div class="col-md-4">
         <ul>

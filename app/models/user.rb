@@ -1,5 +1,9 @@
+# scope for all authors User.author
+# scope for all students User.student
+
 class User < ApplicationRecord
   belongs_to  :profession
+  belongs_to  :company
   has_many    :user_articles, dependent: :destroy
   has_many    :articles, through: :user_articles
   has_many    :user_flashcards, dependent: :destroy
@@ -21,8 +25,9 @@ class User < ApplicationRecord
 
   validates :username, presence: true, uniqueness: true, length: { minimum: 6 }
   validates :profession_id, presence: true
-  validates :exam_date, presence: true, on: :update
-  validate  :validate_dated_around_now, on: :update
+  validates :company_id, presence: true
+  validates :exam_date, presence: true, on: :update, if: :is_student?
+  validate  :validate_dated_around_now, on: :update, if: :is_student?
 
   # Make sure exam_date isn't in the past or more than 5 years in the future
   def validate_dated_around_now
@@ -32,6 +37,10 @@ class User < ApplicationRecord
   # Set default role to student
   def set_default_role
     self.role ||= :student
+  end
+
+  def is_student?
+    self.student?
   end
 
   # Remove devise email validations
@@ -72,10 +81,38 @@ class User < ApplicationRecord
   end
 
   def upcoming_articles
-    Article.joins(:category)
+    Article.published.joins(:category)
             .where(categories: { topic: [user.profession.topics] }) -
-    Article.joins(:user_articles)
+    Article.published.joins(:user_articles)
             .where(user_articles: { user: user, read: true })
+  end
+
+  def authored_articles
+    Article.joins(:user_articles).where(user_articles: {
+      user: self,
+      author: true
+    })
+  end
+
+  def edited_articles
+    Article.joins(:user_articles).where(user_articles: {
+      user: self,
+      editor: true
+    })
+  end
+
+  def authored_flashcards
+    Flashcard.joins(:user_flashcards).where(user_flashcards: {
+      user: self,
+      author: true
+    })
+  end
+
+  def edited_flashcards
+    Flashcard.joins(:user_flashcards).where(user_flashcards: {
+      user: self,
+      editor: true
+    })
   end
 
   # Return all answered flashcards
@@ -135,5 +172,11 @@ class User < ApplicationRecord
       flashcard: article.flashcards,
       correct: false
     })
+  end
+
+  # Return all user profession flashcards
+  # ! add flashcards and check
+  def profession_flashcards
+    Flashcard.joins(:article).where(article: self.all_articles)
   end
 end

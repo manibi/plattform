@@ -59,6 +59,85 @@
               <%= render @article.chapters %>
             </ul>
           </div>
+<!-- ======= -->
+Cristians part
+  <div class="row">
+    <div class="col">
+      <% if current_user.author? %>
+      <h5 class="badge badge-success">
+          <%= @article.draft ? "Draft" : "Public" %>
+        </h5>
+        <h5 class="badge badge-primary">
+          <%= "by #{current_user.first_name.present? ? @article.main_author.first_name : 'No name'}" %>
+        </h5>
+        <h5>Editors:</h5>
+        <% @article.editors.each do |editor| %>
+        <h5 class="badge badge-primary">
+          <%= editor.first_name %>
+        </h5>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <h1 class="heading-2">
+        <%= @article.title %>
+        <span class="badge badge-primary">
+          <%= 'read' if @article.read_for?(current_user) %>
+        </span>
+        <span class="badge badge-secondary">
+          <%= 'bookmarked' if @article.bookmarked_for?(current_user) %>
+        </span>
+      </h1>
+    </div>
+    <div class="col-3 d-flex flex-column align-items-start">
+      <!-- Render publish and edit if author -->
+      <% if current_user.author? %>
+        <% if @article.draft? %>
+          <%= link_to 'Publish article', publish_article_path(@article),
+                                          method: :post,
+                                          class: "btn btn-success mb-2" %>
+        <% else %>
+          <%= link_to 'Unpublish article', unpublish_article_path(@article),                                method: :patch,
+                                           class: "btn btn-danger mb-2" %>
+        <% end %>
+        <%= link_to 'Edit article',
+                    edit_article_path(@article),
+                    class: "btn btn-warning mb-2" %>
+        <%= link_to 'Edit flashcards',
+                    flashcards_article_path(@article),
+                    class: "btn btn-warning mb-2" %>
+      <% end %>
+
+      <% if @article.bookmarked_for?(current_user) %>
+        <%= link_to 'Unbookmark article', unbookmark_article_path(@article),                                 method: :patch,
+                                          class: "btn btn-warning" %>
+      <% else %>
+        <%= link_to 'Bookmark article', bookmark_article_path(@article),
+                                        method: :post,
+                                        class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <h3 class="heading-4">Definition</h3>
+      <p><%= @article.description %></p>
+    </div>
+  </div>
+
+  <div class="row">
+    <% if @article.image.attached? %>
+        <div class="col-md-5">
+          <div class="article-photo">
+            <!-- Button trigger modal -->
+            <button type="button" class="article-image__thumb" data-toggle="modal" data-target="#ArticleImage">
+              <%= cl_image_tag @article.image.key %>
+            </button>
+<!-- >>>>>>> e0c4009ef9f1a3464402ba4ae76f95bcee64ff16 -->
         </div>
       </div>
 

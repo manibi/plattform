@@ -39,6 +39,7 @@
         <% if user_signed_in? && current_user.exam_date.blank? %>
           <%= render 'shared/reminder', message: User::UPDATE_PROFILE_MESSAGE %>
         <% end %>
+<!-- <<<<<<< HEAD -->
         <%= render 'shared/flashes' %>
         <%= yield %>
         <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -48,6 +49,92 @@
       </div>
     </div>
     
+<!-- ======= -->
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <% if user_signed_in? && !company_signed_in? %>
+            <li class="nav-item">
+              <%= link_to "Profile", profile_path, class: "nav-link" %>
+            </li>
+
+            <% if current_user.student? %>
+              <li class="nav-item">
+                <%= link_to "Dashboard", dashboard_path, class: "nav-link" %>
+              </li>
+            <% end %>
+
+            <% if current_user.author? %>
+              <li class="nav-item">
+                <%= link_to "Dashboard", author_dashboard_path, class: "nav-link" %>
+              </li>
+            <% end %>
+
+            <li class="nav-item">
+              <%= link_to "Library", articles_path, class: "nav-link" %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to "Flashcards", flashcards_path, class: "nav-link" %>
+            </li>
+
+            <% if current_user.student? %>
+              <li class="nav-item">
+                <%= link_to "Exams", new_custom_exam_path, class: "nav-link" %>
+              </li>
+            <% end %>
+
+            <li class="nav-item">
+              <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "nav-link" %>
+            </li>
+          <% elsif company_signed_in? %>
+            <li class="nav-item">
+              <%= link_to "Dashboard", company_dashboard_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Profile", company_profile_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Log out", destroy_company_session_path, method: :delete, class: "nav-link" %>
+            </li>
+          <% else %>
+            <li class="nav-item">
+              <%= link_to "Student login", new_user_session_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Company login", new_company_session_path, class: "nav-link" %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <% if user_signed_in? %>
+      <%= form_with url: search_path,
+                    local: true,
+                    method: :get,
+                    html: {
+                      class:"form-inline w-100" } do |f| %>
+
+        <%= f.text_field :query,
+          class: "form-control",
+          placeholder: "Search for a topic, module, term...",
+          style: "width: 60%;",
+          id: "autocompleteSearch"
+        %>
+        <%= submit_tag "Search", class: "btn btn-primary d-none" %>
+      <% end %>
+    <% end %>
+    <% if user_signed_in? && current_user.exam_date.blank? && current_user.student? %>
+      <%= render 'shared/reminder', message: User::UPDATE_PROFILE_MESSAGE %>
+    <% end %>
+
+    <%= render 'shared/flashes' %>
+    <%= yield %>
+<!-- >>>>>>> e0c4009ef9f1a3464402ba4ae76f95bcee64ff16 -->
 
     <!-- debug: display params in develpment -->
     <%= debug(params) if Rails.env.development? %>
