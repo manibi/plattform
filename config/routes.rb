@@ -29,12 +29,12 @@ Rails.application.routes.draw do
   resources :companies,       only: [:new, :update]
   get 'company/profile',      to: 'companies#show'
   get 'company/profile/edit', to: 'companies#edit'
-
-
   get "company/:user_id",   to: "companies#user_details", as: :company_user
   get "company_dashboard",  to: "companies#company_dashboard"
+
   resources :topics,     except:  :destroy
   resources :categories, except:  :destroy
+  resources :professions, only: [:new, :create, :edit, :update]
 
   resources :articles,   except:  :destroy do
     member do
