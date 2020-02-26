@@ -21,7 +21,7 @@
           <%= f.label "Profession", class: "mr-2" %>
           <%= f.select "profession_id",
                 options_for_select(
-                  @professions.map { |profession| [profession.name, profession.id] }.select { |name| name != "Controlling"  }
+                  @professions.map { |profession| [profession.name, profession.id] }.select { |p| p[0] != "Controlling" }
                 ) %>
         </div>
 
