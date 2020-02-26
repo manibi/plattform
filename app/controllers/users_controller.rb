@@ -72,9 +72,27 @@ class UsersController < ApplicationController
   end
 
   def new_student
+    authorize current_user, :create?
+    @companies = Company.all
+    @professions = Profession.all
   end
 
   def generate_student
+    authorize current_user, :create?
+    company = Company.find(student_params[:company_id])
+    profession = Profession.find(student_params[:profession_id])
+    new_students_params = generate_students(company,
+      profession,
+      student_params[:students_number].to_i)
+
+    if User.create(new_students_params)
+      flash[:notice] = "#{new_students_params.size} #{"student".pluralize(new_students_params)} created."
+
+    # Save credentials for printing
+    save_students_credentials(new_students_params, current_user)
+
+    redirect_to admin_dashboard_path
+    end
   end
 
   private
@@ -85,6 +103,10 @@ class UsersController < ApplicationController
 
   def author_params
     params.permit(:profession_id, :authors_number)
+  end
+
+  def student_params
+    params.permit(:company_id, :profession_id, :students_number)
   end
 
   def set_user

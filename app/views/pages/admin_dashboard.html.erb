@@ -36,6 +36,10 @@
         </li>
 
         <li class="nav-item">
+          <a class="nav-link" id="students-tab" data-toggle="tab" href="#students" role="tab" aria-controls="students" aria-selected="true">Students</a>
+        </li>
+
+        <li class="nav-item">
           <a class="nav-link" id="companies-tab" data-toggle="tab" href="#companies" role="tab" aria-controls="companies" aria-selected="false">Companies</a>
         </li>
 
@@ -78,6 +82,23 @@
             </thead>
             <tbody>
               <%= render partial: "users/generated_user", collection: UserCredential.author, as: :user %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tab-pane" id="students" role="tabpanel" aria-labelledby="students-tab">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Company</th>
+                <th scope="col">Profession</th>
+                <th scope="col">Username</th>
+                <th scope="col">Password</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render partial: "users/generated_user", collection: UserCredential.student, as: :user %>
             </tbody>
           </table>
         </div>
