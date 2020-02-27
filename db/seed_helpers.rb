@@ -36,3 +36,13 @@ def find_category(row, start, finish)
   idx = (start..finish).to_a.filter { |i| row[i] }.first
   row[idx]
 end
+
+def mutiple_choice_answers_for(row, question_idx)
+  {
+    "#{row[question_idx + 2]}": row[question_idx + 3],
+    "#{row[question_idx + 4]}": row[question_idx + 5],
+    "#{row[question_idx + 6]}": row[question_idx + 7],
+    "#{row[question_idx + 8]}": row[question_idx + 9],
+    "#{row[question_idx + 10]}": row[question_idx + 11]
+  }
+end

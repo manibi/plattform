@@ -145,7 +145,7 @@ puts "Import csv data to db"
 #   }) unless Category.find_by(title: category)
 
 #   # Articles
-#   if row["Inhalt"].include? "Artikel"
+#  if row["Inhalt"].include?("Artikel") && !db_category.articles.where(title: article_name).exists?
 #     article_name = row["Fachbegriff"]
 #     article_description = row["Definition"]
 #     db_category = Category.find_by(title: category)
@@ -157,6 +157,7 @@ puts "Import csv data to db"
 #       published_at: Time.now
 #     })
 #   end
+# end
 
 #  # Chapters
 #   db_article = Article.find_by(title: article_name)
@@ -164,6 +165,7 @@ puts "Import csv data to db"
 #   article_chapter2 = row["Praxisbeispiel aus der Wirtschaft"]
 #   article_chapter3 = row["Verwandte Themen"]
 
+#  if db_article && db_article.chapters.empty?
 #   db_article.chapters.create!({
 #     title: "Verwandte Themen",
 #     content: article_chapter3
@@ -179,6 +181,7 @@ puts "Import csv data to db"
 #     title: "Erläuterung",
 #     content: article_chapter1
 #   }) if row[20]
+#  end
 # end
 
 puts "Industriekaufleute data...done"
@@ -202,8 +205,7 @@ data_industriemechanik.each do |row|
   db_category = Category.find_by(title: category)
 
   if row["Inhalt"].include?("Artikel") && !db_category.articles.where(title: article_name).exists?
-  article_description = row["Definition"].strip
-
+    article_description = row["Definition"].strip
 
     db_category.articles.create!({
       title: article_name,
@@ -235,6 +237,42 @@ data_industriemechanik.each do |row|
       title: "Erläuterung",
       content: article_chapter1
     }) if row[23]
+  end
+
+  if quiz_question = row[28]
+    answers = mutiple_choice_answers_for(row, 28)
+  elsif quiz_question = row[40]
+    answers = mutiple_choice_answers_for(row, 40)
+  elsif quiz_question = row[63]
+    answers = mutiple_choice_answers_for(row, 63)
+  end
+
+  if db_article && row["Inhalt"].include?("Mehrfachantworten") && db_article.flashcards.where(content: quiz_question.strip).empty?
+
+    flashcard = db_article.flashcards.create!({
+      content: quiz_question.strip,
+      flashcard_type: "multiple_choice"
+    })
+
+    answers.each do |answer, expl|
+      flashcard.answers << Answer.create!({
+        content: answer,
+        explanation: expl
+      })
+    end
+    if flashcard.answers.third.content.start_with?("R:")
+    correct_answers = [
+      flashcard.answers.first.id,
+      flashcard.answers.second.id,
+      flashcard.answers.third.id
+    ]
+    else
+      correct_answers = [
+        flashcard.answers.first.id,
+        flashcard.answers.second.id
+      ]
+    end
+    flashcard.update(correct_answers: correct_answers)
   end
 end
 puts "Industiemechaniker data...done"
