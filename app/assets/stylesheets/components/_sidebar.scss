@@ -1,0 +1,20 @@
+.sidebar-text {
+	padding-left: 20px;
+}
+
+.sidebar-icon {
+	color: $dark-light-gray;
+}
+
+.sticky-sidebar {
+	position: -webkit-sticky !important;
+	position: sticky !important;
+    top: 0;
+    bottom: 0;
+    // position: absolute;
+    height: 100vh;
+}
+
+.sidebar {
+	height: $sidebar-height;
+}

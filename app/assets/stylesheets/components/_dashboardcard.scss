@@ -1,0 +1,19 @@
+.success-icon {
+	color: $success;
+}
+
+.pending-icon {
+	color: $warning;
+}
+
+.card {
+	border: none !important;
+	border-radius: 20px !important;
+}
+
+.article_row:nth-child(odd) {
+	// background-color: red;
+}
+.article_row:nth-child(even) {
+	background-color: $light-white-gray;
+}

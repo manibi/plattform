@@ -1,102 +1,139 @@
 <div class="container">
-  <div class="row">
-    <div class="col">
-      <% if current_user.author? %>
-      <h5 class="badge badge-success">
-          <%= @article.draft ? "Draft" : "Public" %>
-        </h5>
-        <h5 class="badge badge-primary">
-          <%= "by #{current_user.first_name.present? ? @article.main_author.first_name : 'No name'}" %>
-        </h5>
-        <h5>Editors:</h5>
-        <% @article.editors.each do |editor| %>
-        <h5 class="badge badge-primary">
-          <%= editor.first_name %>
-        </h5>
-        <% end %>
-      <% end %>
+    <div class="row my-3 pt-3 col-12 breadcrumbs ml-3">
+      <%= link_to "Alle Lernfelder", topics_path %> &nbsp
+      <div class="breadcrumb-arrow"> > </div> &nbsp
+      <%= link_to @topic.name, @topic %> &nbsp
+      <div class="breadcrumb-arrow"> > </div> &nbsp
+      <%= link_to @category.title, @category %> &nbsp
+      <div class="breadcrumb-arrow"> > </div> &nbsp
+      <%= @article.title %>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-6">
-      <h1 class="heading-2">
-        <%= @article.title %>
-        <span class="badge badge-primary">
-          <%= 'read' if @article.read_for?(current_user) %>
-        </span>
-        <span class="badge badge-secondary">
-          <%= 'bookmarked' if @article.bookmarked_for?(current_user) %>
-        </span>
-      </h1>
-    </div>
-    <div class="col-3 d-flex flex-column align-items-start">
-      <!-- Render publish and edit if author -->
-      <% if current_user.author? %>
-        <% if @article.draft? %>
-          <%= link_to 'Publish article', publish_article_path(@article),
-                                          method: :post,
-                                          class: "btn btn-success mb-2" %>
-        <% else %>
-          <%= link_to 'Unpublish article', unpublish_article_path(@article),                                method: :patch,
-                                           class: "btn btn-danger mb-2" %>
-        <% end %>
-        <%= link_to 'Edit article',
-                    edit_article_path(@article),
-                    class: "btn btn-warning mb-2" %>
-        <%= link_to 'Edit flashcards',
-                    flashcards_article_path(@article),
-                    class: "btn btn-warning mb-2" %>
-      <% end %>
-
-      <% if @article.bookmarked_for?(current_user) %>
-        <%= link_to 'Unbookmark article', unbookmark_article_path(@article),                                 method: :patch,
-                                          class: "btn btn-warning" %>
-      <% else %>
-        <%= link_to 'Bookmark article', bookmark_article_path(@article),
-                                        method: :post,
-                                        class: "btn btn-primary" %>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-12">
-      <h3 class="heading-4">Definition</h3>
-      <p><%= @article.description %></p>
-    </div>
-  </div>
-
-  <div class="row">
-    <% if @article.image.attached? %>
-        <div class="col-md-5">
-          <div class="article-photo">
-            <!-- Button trigger modal -->
-            <button type="button" class="article-image__thumb" data-toggle="modal" data-target="#ArticleImage">
-              <%= cl_image_tag @article.image.key %>
-            </button>
+  <div class="row flex-row flex-nowrap mt-3">
+    <!-- article -->
+    <div class="col-9">
+      <div class="card">
+        <div class="row">
+          <div class="col">
+            <% if current_user.author? %>
+            <h5 class="badge badge-success">
+                <%= @article.draft ? "Draft" : "Public" %>
+              </h5>
+              <h5 class="badge badge-primary">
+                <%= "by #{current_user.first_name.present? ? @article.main_author.first_name : 'No name'}" %>
+              </h5>
+              <h5>Editors:</h5>
+              <% @article.editors.each do |editor| %>
+              <h5 class="badge badge-primary">
+                <%= editor.first_name %>
+              </h5>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <!-- article headline -->
+        <div class="row">
+          <div class="col-9">
+            <h1 class="heading-2">
+              <%= @article.title %>
+              <span class="badge badge-primary">
+                <%= 'read' if @article.read_for?(current_user) %>
+              </span>
+              <span class="badge badge-secondary">
+                <%= 'bookmarked' if @article.bookmarked_for?(current_user) %>
+              </span> 
+            </h1>
+          </div>
+          <div class="col-3">
+            <p>
+              <% if current_user.author? %>
+                <% if @article.draft? %>
+                  <%= link_to 'Publish article', publish_article_path(@article),
+                                                  method: :post,
+                                                  class: "btn btn-success mb-2" %>
+                <% else %>
+                  <%= link_to 'Unpublish article', unpublish_article_path(@article),                                method: :patch,
+                                                   class: "btn btn-danger mb-2" %>
+                <% end %>
+                <%= link_to 'Edit article',
+                            edit_article_path(@article),
+                            class: "btn btn-warning mb-2" %>
+                <%= link_to 'Edit flashcards',
+                            flashcards_article_path(@article),
+                            class: "btn btn-warning mb-2" %>
+              <% end %>
+              <% if @article.bookmarked_for?(current_user) %>
+                <%= link_to unbookmark_article_path(@article),                                 method: :patch,
+                                                  class: "btn btn-primary" do %>
+                  <i class="material-icons-sharp bookmark-icon">bookmark</i>
+                  Markierung entfernen
+                <% end %>
+              <% else %>
+                <%= link_to bookmark_article_path(@article),
+                                                method: :post,
+                                                class: "btn btn-outline-primary" do %>
+                  <i class="material-icons-sharp bookmark-icon">bookmark_border</i>
+                  Artikel markieren
+                <% end %>
+              <% end %>
+            </p>
+          </div>
+        </div>
+        <!-- article description -->
+        <div class="row">
+          <div class="col-12">
+            <h3 class="heading-4">Definition</h3>
+            <p><%= @article.description %></p>
+          </div>
+        </div>
+        <!-- article image -->
+        <div class="row">
+          <% if @article.image.attached? %>
+              <div class="col-md-5">
+                <div class="article-photo">
+                  <!-- Button trigger modal -->
+                  <button type="button" class="article-image__thumb" data-toggle="modal" data-target="#ArticleImage">
+                    <%= cl_image_tag @article.image.key %>
+                  </button>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <!-- article chapters -->
+        <div class="row">
+          <div class="col-12">
+            <ul>
+              <%= render @article.chapters.sort_by { |chap| chap.title } %>
+            </ul>
+          </div>
         </div>
       </div>
-    <% end %>
-  </div>
-
-  <div class="row">
-    <div class="col-12">
-      <ul>
-        <%= render @article.chapters %>
-      </ul>
+      <% if @article.image.attached? %>
+        <!-- Modal -->
+        <div class="modal fade" id="ArticleImage" tabindex="-1" role="dialog" aria-labelledby="ArticleImage" aria-hidden="true">
+          <div class="modal-dialog modal-xl" role="img">
+            <div class="modal-content">
+              <%= cl_image_tag @article.image.key %>
+            </div>
+          </div>
+        </div>
+      <% end %>
     </div>
-  </div>
-  <%= link_to "Quiz", article_flashcard_path(@article, @flashcard), :"data-turbolinks" => false if @flashcard %>
-</div>
-
-<% if @article.image.attached? %>
-  <!-- Modal -->
-  <div class="modal fade" id="ArticleImage" tabindex="-1" role="dialog" aria-labelledby="ArticleImage" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="img">
-      <div class="modal-content">
-        <%= cl_image_tag @article.image.key %>
+    <div class="col-3 position-sticky">
+      <div class="card position-sticky sticky-top">
+      <ul>
+        <%  @article.chapters.sort_by { |chap| chap.title }.each do |chap| %>
+        <li><%# raise %><%= chap.title %></li>
+        <% end %>
+      </ul>
+      </div>
+      <%# if @flashcard %>
+      <div class="card mt-3 quizcard">
+        Bereit zum Quiz über <%= @article.title %>?
+        <%= link_to "Quiz", article_flashcard_path(@article, @flashcard), :"data-turbolinks" => false if @flashcard %>
+        <button type="button" class="btn btn-outline-primary">Primary</button>
+        <%# end %>
       </div>
     </div>
   </div>
-<% end %>
+</div>
+

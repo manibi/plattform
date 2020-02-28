@@ -15,6 +15,43 @@
   </head>
 
   <body>
+<<<<<<< HEAD
+    <div class="container-fluid">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-2 sticky-sidebar">
+          <!-- left navbar logo -->
+          <div class="row text-center border-bottom navbar">
+            <%= image_tag "https://res.cloudinary.com/mozubi/image/upload/v1582744555/Mozubi/Logo_schwarz_e4slbq.png", style: 'width:100%' %>
+          </div>
+          <!-- sidebar -->
+          <div class="row p-4 border-right sidebar">
+            <%= render 'shared/sidebar' %>
+          </div>
+        </div>
+        <!-- right column -->
+        <div class="col-10 main-content">
+          <!-- right navbar -->
+          <div class="row navbar border-bottom sticky sticky-top">
+            <div class="col-12">
+              <%= render 'shared/navbar' %>
+            </div>
+          </div>
+          <!-- content -->
+          <div class="row">
+            <% if user_signed_in? && current_user.exam_date.blank? %>
+              <%= link_to profile_path do %>
+                <%= render 'shared/reminder', message: User::UPDATE_PROFILE_MESSAGE %>
+              <% end %>
+            <% end %>
+            <%= render 'shared/flashes' %>
+            <%= yield %>
+            <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+            <!-- debug: display params in develpment -->
+            <%#= debug(params) if Rails.env.development? %>
+          </div>
+        </div>
+=======
 
     <!-- test navbar -->
     <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
@@ -89,32 +126,8 @@
             </li>
           <% end %>
         </ul>
+>>>>>>> 2cee83667a6966871ad676b8e828ef63a98efe89
       </div>
     </div>
-    <% if user_signed_in? %>
-      <%= form_with url: search_path,
-                    local: true,
-                    method: :get,
-                    html: {
-                      class:"form-inline w-100" } do |f| %>
-
-        <%= f.text_field :query,
-          class: "form-control",
-          placeholder: "Search for a topic, module, term...",
-          style: "width: 60%;",
-          id: "autocompleteSearch"
-        %>
-        <%= submit_tag "Search", class: "btn btn-primary d-none" %>
-      <% end %>
-    <% end %>
-    <% if user_signed_in? && current_user.exam_date.blank? && current_user.student? %>
-      <%= render 'shared/reminder', message: User::UPDATE_PROFILE_MESSAGE %>
-    <% end %>
-
-    <%= render 'shared/flashes' %>
-    <%= yield %>
-
-    <!-- debug: display params in develpment -->
-    <%= debug(params) if Rails.env.development? %>
   </body>
 </html>

@@ -23,7 +23,7 @@ class User < ApplicationRecord
          :authentication_keys => [:username]
 
   VALID_EMAIL_REGEX = /\A[^@\s]+@[^@\s]+\z/
-  UPDATE_PROFILE_MESSAGE = "Please complete your profile, add an exam date!"
+  UPDATE_PROFILE_MESSAGE = "Bitte vervollständige dein Profil und füge das Datum deiner Abschlussprüfung hinzu!"
 
   validates :username, presence: true, uniqueness: true, length: { minimum: 6 }
   validates :profession_id, presence: true
@@ -33,7 +33,7 @@ class User < ApplicationRecord
 
   # Make sure exam_date isn't in the past or more than 5 years in the future
   def validate_dated_around_now
-    self.errors.add(:exam_date, "is not valid") unless ((Date.today)..(5.years.from_now)).include?(self.exam_date)
+    self.errors.add(:exam_date, "ist kein korrektes Datum, bitte versuche es erneut.") unless ((Date.today)..(5.years.from_now)).include?(self.exam_date)
   end
 
   # Set default role to student

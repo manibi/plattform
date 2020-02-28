@@ -6,6 +6,7 @@ class ArticlesController < ApplicationController
     @upcoming_articles = policy_scope(Article)
     @bookmarked_articles = current_user.bookmarked_articles
     @read_articles = current_user.read_articles
+    @topics = policy_scope(Topic)
 
     # Author view
     @all_articles = current_user.all_articles
@@ -18,6 +19,10 @@ class ArticlesController < ApplicationController
 
   def show
     @flashcard = @article.flashcards.first
+    @categories = current_user.all_categories
+    @category = @categories.find(@article.category_id)
+    @topics = current_user.profession.topics
+    @topic = @topics.find(@category.topic_id)
   end
 
   def new

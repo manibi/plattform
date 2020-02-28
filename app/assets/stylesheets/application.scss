@@ -1,11 +1,13 @@
-// Graphical variables
-@import "config/fonts";
-@import "config/colors";
-@import "config/general";
-@import "config/bootstrap_variables";
-
 // External libraries
 @import "bootstrap/scss/bootstrap";
+
+// Graphical variables
+@import "config/colors";
+@import "config/fonts";
+@import "config/general";
+@import "config/icons";
+@import "config/bootstrap_variables";
+@import "config/sizes";
 
 // Your CSS partials
 @import "components/index";

@@ -1,23 +1,45 @@
+
+<div class="container-fluid py-3 h-100">
+  <div class="row mh-100">
+    <!-- article header -->
+    <div class="row col-12 justify-content-between">
+      <div class="py-3">
+        <h3>Topics</h3>
+      </div>
+      <div class="">Grid/List View</div>
+    </div>
+    <div class="col-12 mh-100">
+      <!-- tabs -->
+      <ul class="nav nav-tabs justify-content-center" role="tablist">
+        <li role="presentation" class="nav-item">
+          <a href="#topic" aria-controls="topic" role="tab" data-toggle="tab" class="nav-link active">
+            Themen
+          </a>
+        </li>
+        <li role="presentation" class="nav-item">
+          <a href="#upcoming" aria-controls="upcoming" role="tab" data-toggle="tab" class="nav-link">
+            Offen
+          </a>
+        </li>
+        <li role="presentation" class="nav-item">
+          <a href="#bookmarked" aria-controls="bookmarked" role="tab" data-toggle="tab" class="nav-link">
+            Markiert
+          </a>
+        </li>
+        <li role="presentation" class="nav-item">
+          <a href="#read" aria-controls="read" role="tab" data-toggle="tab" class="nav-link">
+            Gelesen
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content mh-100">
+        <%= render 'list_view' %>
+        <%#= render 'grid_view' %>
+      </div>
+    </div>
+  </div>
+
 <div class="container">
   <%= link_to "All nested topics", topics_path, class: "btn btn-primary" %>
 
-  <h1>Articles</h1>
-  <h3>Bookmarked Articles <%= @bookmarked_articles.size %></h3>
-  <% if @bookmarked_articles.blank? %>
-      <p>No bookmarked articles</p>
-  <% else %>
-      <ul>
-      <%= render @bookmarked_articles %>
-    </ul>
-  <% end %>
-
-  <h3>Upcoming Articles <%= @upcoming_articles.size %></h3>
-  <ul>
-    <%= render @upcoming_articles %>
-  </ul>
-
-  <h3>Read Articles <%= @read_articles.size %></h3>
-  <ul>
-    <%= render @read_articles %>
-  </ul>
 </div>
