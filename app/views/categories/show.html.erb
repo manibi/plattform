@@ -1,23 +1,60 @@
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <h2 class="heading-2">
+<div class="container header">  
+  <div class="my-3 h-100">
+    <div class="row mh-100">
+      <!-- breadcrumbs -->
+      <div class="row mt-3 col-12 breadcrumbs ml-3">
+        <%= link_to "Alle Lernfelder", topics_path %> &nbsp
+        <div class="breadcrumb-arrow"> > </div> &nbsp
+        <%= link_to @topic.name, @topic %> &nbsp
+        <div class="breadcrumb-arrow"> > </div> &nbsp
         <%= @category.title %>
-      </h2>
+      </div>
+      <!-- article header -->
+      <div class="row col-12 justify-content-between">
+        <div class="col-6 py-3">
+          <h3><%= @category.title %></h3>
+        </div>
+        <div class="col-2">Grid/List View</div>
+      </div>
+      <div class="col-12 mh-100">
+        <!-- tabs -->
+        <ul class="nav nav-tabs justify-content-center" role="tablist">
+          <li role="presentation" class="nav-item">
+            <a href="#topic" aria-controls="topic" role="tab" data-toggle="tab" class="nav-link active">
+              Themen
+            </a>
+          </li>
+          <li role="presentation" class="nav-item">
+            <a href="#upcoming" aria-controls="upcoming" role="tab" data-toggle="tab" class="nav-link">
+              Offen
+            </a>
+          </li>
+          <li role="presentation" class="nav-item">
+            <a href="#bookmarked" aria-controls="bookmarked" role="tab" data-toggle="tab" class="nav-link">
+              Markiert
+            </a>
+          </li>
+          <li role="presentation" class="nav-item">
+            <a href="#read" aria-controls="read" role="tab" data-toggle="tab" class="nav-link">
+              Gelesen
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="tab-content mh-100">
+    <%#= render 'list_view' %>
+    <%= render 'grid_view' %>
     </div>
   </div>
 
-  <div class="row">
-    <% @category.articles.each do |article| %>
-      <div class="col-4">
-        <%= link_to article do %>
-          <div class="card">
-            <div class="card-body">
-              <%= article.title %>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
+<!-- <div class="container">
+  <%#= link_to "All nested topics", topics_path, class: "btn btn-primary" %>
+
+</div> -->
+
+
 </div>

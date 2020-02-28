@@ -2,57 +2,134 @@
 	<!-- Welcome back message -->
 	<div class="row mt-3">
 		<div class="col-12">
-		Welcome back Mark
+		<strong>Willkommen zurück, Mark!</strong>
+		<p>Mach weiter so, du bist schon sehr weit gekommen.</p>
 		</div>
 	</div>
 	<!-- Stats -->
 	<div class="row mt-3">
 		<div class="col-3">
-			<div class="card">
-				<div class="card-body">
-					<h5 class="card-title">Stat 1</h5>
+			<div class="card col-12 h-100">
+				<div class="row">
+					<div class="col-4">
+						<div class="donut-chart chart1">
+							<div class="slice one"></div>
+							<div class="slice two"></div>
+							<div class="chart-center">
+						    	<span></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-8">						
+						<strong class="card-title">Tage</strong>
+						<p>Bis zu deinem Exam</p>
+					</div>
 			    </div>
 			</div>
 		</div>
 		<div class="col-3">
-			<div class="card">
-				<div class="card-body">
-					<h5 class="card-title">Stat 2</h5>
+			<div class="card col-12 h-100">
+				<div class="row">
+					<div class="col-4">
+						<div class="donut-chart chart2">
+							<div class="slice one"></div>
+							<div class="slice two"></div>
+							<div class="chart-center">
+						    	<span></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-8">						
+						<strong class="card-title">Artikel</strong>
+						<p>gelesen</p>
+					</div>
 			    </div>
 			</div>
 		</div>
 		<div class="col-3">
-			<div class="card">
-				<div class="card-body">
-					<h5 class="card-title">Stat 3</h5>
+			<div class="card col-12 h-100">
+				<div class="row">
+					<div class="col-4">
+						<div class="donut-chart chart3">
+							<div class="slice one"></div>
+							<div class="slice two"></div>
+							<div class="chart-center">
+						    	<span></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-8">						
+						<strong class="card-title">Quiz</strong>
+						<p>Korrekt beantwortet</p>
+					</div>
 			    </div>
 			</div>
 		</div>
 		<div class="col-3">
-			<div class="card">
-				<div class="card-body">
-					<h5 class="card-title">Stat 4</h5>
+			<div class="card col-12 h-100">
+				<div class="row">
+					<div class="col-4">
+						<div class="donut-chart chart4">
+							<div class="slice one"></div>
+							<div class="slice two"></div>
+							<div class="chart-center">
+						    	<span></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-8">						
+						<strong class="card-title">Prüfungen</strong>
+						<p>erfolgreich absolviert</p>
+					</div>
 			    </div>
 			</div>
 		</div>
 	</div>
 	<!-- Current Topic -->
-	<div class="row mt-3">
+	<div class="row my-3">
 		<div class="col-12">
-			<div class="card">
+			<div class="card col-12">
 				<div class="card-body">
-					<h5 class="card-title">Ongoing Topic</h5>
-					<%# @upcoming_topics.each do |topic| %>
-						<!-- <div class="row">
-							<%#= topic.title %>
-						</div> -->
-					<%# end %>
+					<div class="card-body-topic pb-3">
+						<strong>
+						<%= @current_topic.name.upcase %>
+						</strong>
+					</div>
+					<div class="card-body-category pb-3">
+						<strong>
+						<%= @current_category.title %>
+						</strong>
+					</div>
+					<div class="card-body-articles pb-3 border-bottom">
+		              	<% @current_category.articles.each do |article| %>
+		              		<div class="row article_row p-1">
+			                	<div class="card-body-topic-title col-11">
+			                		<%= link_to article do  %>
+			                 			<%= article.title %>
+			                 		<% end %>
+			                	</div>
+			                	<div class="card-body-topic-status">
+			                 		<%= render inline: @not_read_articles.include?(article) ? '<i class="material-icons-sharp pending-icon">schedule</i>' : '<i class="material-icons-sharp success-icon">check_circle</i>' %>
+			              		</div>
+		                	</div>
+		             	<% end %>
+		            </div>
+		            <div class="row p-3 align-items-center">
+		            	<div class="col-10">
+		            		<div class="">Verbleibende Lesezeit bei diesem Thema: <strong>23 Minuten</strong></div>
+		            	</div>
+		            	<div class="col-1">
+		            		<%= link_to @current_article do %>
+		    				<div class="btn btn-primary">Weiterlesen</div>
+		    				<% end %>
+		            	</div>
+		            </div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- Tips of the month -->
-	<div class="row mt-3">
+	<!-- <div class="row mt-3">
 		<div class="col-12">
 			<div class="card">
 				<div class="card-body">
@@ -60,5 +137,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </div>

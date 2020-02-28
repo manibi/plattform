@@ -2,43 +2,43 @@
   <ul class="nav flex-column text-center">
 
     <% if current_user.author? %>
-      <li class="nav-item">
+      <li class="nav-item my-2">
         <%= link_to "Author Dashboard", author_dashboard_path, class: "nav-link btn-warning" %>
       </li>
     <% elsif current_user.student? %>
-      <li class="nav-item">
+      <li class="nav-item my-2">
         <%= link_to dashboard_path, class: "nav-link" do %>
           <div class="row">
-            <i class="material-icons-sharp">home</i>
-            <p>Dashboard</p>
+            <i class="material-icons-sharp sidebar-icon">home</i>
+            <div class="sidebar-text">Dashboard</div>
           </div>
         <% end %>
       </li>
     <% end %>
 
-    <li class="nav-item">
-      <%= link_to articles_path, class: "nav-link" do %>
+    <li class="nav-item my-2">
+      <%= link_to topics_path, class: "nav-link" do %>
         <div class="row">
-          <i class="material-icons-sharp">local_library</i>
-          <p>Artikel</p>
+          <i class="material-icons-sharp sidebar-icon">local_library</i>
+          <div class="sidebar-text">Artikel</div>
         </div>
       <% end %>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item my-2">
       <%= link_to flashcards_path, class: "nav-link" do %>
         <div class="row">
-          <i class="material-icons-sharp">dynamic_feed</i>
-          <p>Quiz</p>
+          <i class="material-icons-sharp sidebar-icon">dynamic_feed</i>
+          <div class="sidebar-text">Quiz</div>
         </div>
       <% end %>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item my-2">
       <%= link_to new_custom_exam_path, class: "nav-link" do %>
         <div class="row">
-          <i class="material-icons-sharp">description</i>
-          <p>Prüfungen</p>
+          <i class="material-icons-sharp sidebar-icon">description</i>
+          <div class="sidebar-text">Prüfungen</div>
         </div>
       <% end %>
     </li>

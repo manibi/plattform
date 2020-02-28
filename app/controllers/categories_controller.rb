@@ -3,6 +3,11 @@ class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update]
 
   def show
+    @topics = current_user.profession.topics
+    @topic = @topics.find(@category.topic_id)
+    @upcoming_articles = policy_scope(Article)
+    @bookmarked_articles = current_user.bookmarked_articles
+    @read_articles = current_user.read_articles
   end
 
   def new

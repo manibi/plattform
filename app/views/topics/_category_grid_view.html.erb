@@ -1,0 +1,64 @@
+<!-- topic tab -->
+<div role="tabpanel" class="tab-pane active py-3" id="topic">
+  <div class="row flex-row flex-nowrap">
+    <% @categories.each do |category| %>
+      <div class="col-lg-3 my-2">
+        <%= link_to category do %>
+          <div class="card topic-card">
+            <div class="card-name">
+              <%= category.title %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<!-- upcoming tab -->
+<div role="tabpanel" class="tab-pane py-3 mh-100" id="upcoming">
+  <div class="row">  
+    <% @upcoming_categories.each do |upcoming_category| %>
+      <div class="col-lg-3 my-2">
+        <%= link_to upcoming_category do %>
+          <div class="card topic-card">
+            <div class="card-name">
+              <%= upcoming_category.title %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<!-- bookmarked tab -->
+<div role="tabpanel" class="tab-pane py-3 mh-100" id="bookmarked">
+  <div class="row">
+    <% @bookmarked_categories.each do |bookmarked_category| %>
+      <div class="col-lg-3 my-2">
+        <%= link_to bookmarked_category do %>
+          <div class="card topic-card">
+            <div class="card-name">
+              <%= bookmarked_category.title %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<!-- read tab -->
+<div role="tabpanel" class="tab-pane py-3 mh-100" id="read">
+  <div class="row">  
+    <% @read_categories.each do |read_category| %>
+      <div class="col-lg-3 my-2">
+        <%= link_to read_category do  %>
+          <div class="card topic-card">
+            <div class="card-name">
+              <%= read_category.title %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

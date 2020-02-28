@@ -113,7 +113,7 @@ data_industriekaufleute.each do |row|
   # Chapters
   db_article = Article.find_by(title: article_name)
   article_chapter1 = row["Erläuterung"]
-  article_chapter2 = row["Praxisbeispiel aus der Wirtschaft"]
+  article_chapter2 = row["Praxisbeispiel aus dem Unternehmen"]
   article_chapter3 = row["Verwandte Themen"]
 
   db_article.chapters.create!({
@@ -123,7 +123,7 @@ data_industriekaufleute.each do |row|
 
 
   db_article.chapters.create!({
-    title: "Praxisbeispiel aus der Wirtschaft",
+    title: "Praxisbeispiel aus dem Unternehmen",
     content: article_chapter2
     }) if row[21]
 
