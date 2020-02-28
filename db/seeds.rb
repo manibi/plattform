@@ -305,7 +305,7 @@ data_industriemechanik.each do |row|
    flashcard.answers << Answer.create!(answers)
 
     # Matching correct answers
-    flashcard.update(correct_answers: flashcard.answers.pluck(:id).select.with_index { |a, i| i.odd? })
+    flashcard.update(correct_answers: flashcard.answers.pluck(:id).select.with_index { |a, i| i.even? })
   end
 
 
