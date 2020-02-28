@@ -97,6 +97,20 @@ User.create!([
     company_id: siemens.id,
     profession: buero_management,
     role: :student
+  },
+  {
+    username: "#{siemens.name.downcase}-student-4",
+    password: "123456",
+    company_id: siemens.id,
+    profession: industriemechanik,
+    role: :student
+  },
+  {
+    username: "#{siemens.name.downcase}-student-5",
+    password: "123456",
+    company_id: siemens.id,
+    profession: industriemechanik,
+    role: :student
   }
 ])
 
