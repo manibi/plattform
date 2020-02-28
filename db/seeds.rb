@@ -56,7 +56,7 @@ Company.create!([
     name: "Siemens",
     email: "contact@siemens.com",
     contact_person_name: "Mary B."
-  },
+  }
 ])
 
 mozubi = Company.first
@@ -204,7 +204,7 @@ data_industriemechanik.each do |row|
   article_name = row["Fachbegriff"].strip
   db_category = Category.find_by(title: category)
 
-  if row["Inhalt"].include?("Artikel") && !db_category.articles.where(title: article_name).exists?
+  if row["Inhalt"].include?("Artikel") && db_category.articles.where(title: article_name).empty?
     article_description = row["Definition"].strip
 
     db_category.articles.create!({
@@ -239,40 +239,28 @@ data_industriemechanik.each do |row|
     }) if row[23]
   end
 
-  if quiz_question = row[28]
-    answers = mutiple_choice_answers_for(row, 28)
-  elsif quiz_question = row[40]
-    answers = mutiple_choice_answers_for(row, 40)
-  elsif quiz_question = row[63]
+  # if quiz_question = row[28]
+  #   answers = mutiple_choice_answers_for(row, 28)
+  # elsif quiz_question = row[40]
+  #   answers = mutiple_choice_answers_for(row, 40)
+  # elsif quiz_question = row[63]
+  #   answers = mutiple_choice_answers_for(row, 63)
+  # end
+
+  if db_article && row["Inhalt"].include?("Mehrfachantworten")# && db_article.flashcards.where(content: quiz_question.strip).empty?
+
+    quiz_question = row[63]
     answers = mutiple_choice_answers_for(row, 63)
-  end
-
-  if db_article && row["Inhalt"].include?("Mehrfachantworten") && db_article.flashcards.where(content: quiz_question.strip).empty?
-
     flashcard = db_article.flashcards.create!({
-      content: quiz_question.strip,
+      content: quiz_question.strip.capitalize,
       flashcard_type: "multiple_choice"
     })
 
-    answers.each do |answer, expl|
-      flashcard.answers << Answer.create!({
-        content: answer,
-        explanation: expl
-      })
-    end
-    if flashcard.answers.third.content.start_with?("R:")
-    correct_answers = [
-      flashcard.answers.first.id,
-      flashcard.answers.second.id,
-      flashcard.answers.third.id
-    ]
-    else
-      correct_answers = [
-        flashcard.answers.first.id,
-        flashcard.answers.second.id
-      ]
-    end
-    flashcard.update(correct_answers: correct_answers)
+    # Add answers to choose from
+    add_flashcard_answers(flashcard, answers)
+
+    # For multiple correct answers
+    add_multiple_choice_answers_for(flashcard)
   end
 end
 puts "Industiemechaniker data...done"

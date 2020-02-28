@@ -46,3 +46,31 @@ def mutiple_choice_answers_for(row, question_idx)
     "#{row[question_idx + 10]}": row[question_idx + 11]
   }
 end
+
+def add_flashcard_answers(flashcard, answers)
+  answers.each do |answer, expl|
+    flashcard.answers << Answer.create!({
+      content: answer,
+      explanation: expl
+    })
+  end
+end
+
+def add_multiple_choice_answers_for(flashcard)
+  if flashcard.answers.third.content.start_with?("R:")
+    flashcard.answers.third.update(
+      content: flashcard.answers.third.content[2..-1].strip)
+
+    correct_answers = [
+      flashcard.answers.first.id,
+      flashcard.answers.second.id,
+      flashcard.answers.third.id
+    ]
+  else
+    correct_answers = [
+      flashcard.answers.first.id,
+      flashcard.answers.second.id
+    ]
+  end
+  flashcard.update(correct_answers: correct_answers)
+end
