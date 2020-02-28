@@ -261,8 +261,7 @@ data_industriemechanik.each do |row|
   #   answers = mutiple_choice_answers_for(row, 63)
   # end
 
-  if db_article && row["Inhalt"].include?("Mehrfachantworten")# && db_article.flashcards.where(content: quiz_question.strip).empty?
-
+  if db_article && row["Inhalt"].include?("Mehrfachantworten")
     quiz_question = row[63]
     answers = mutiple_choice_answers_for(row, 63)
     flashcard = db_article.flashcards.create!({
@@ -276,6 +275,55 @@ data_industriemechanik.each do |row|
     # For multiple correct answers
     add_multiple_choice_answers_for(flashcard)
   end
+
+  # Multiple choice one correct answer
+  if db_article && row["Inhalt"].include?("Mehrfachwahlaufgabe")
+    quiz_question = row[28]
+    answers = mutiple_choice_answers_for(row, 28)
+    flashcard = db_article.flashcards.create!({
+      content: quiz_question.strip.capitalize,
+      flashcard_type: "multiple_choice"
+    })
+
+    # Add answers to choose from
+    add_flashcard_answers(flashcard, answers)
+
+    # One correct answer
+    flashcard.update(correct_answers: [flashcard.answers.first.id])
+  end
+
+  if db_article && row["Inhalt"].include?("Rechenaufgabe")
+    quiz_question = row[51]
+    answers = mutiple_choice_answers_for(row, 51)
+    flashcard = db_article.flashcards.create!({
+      content: quiz_question.strip.capitalize,
+      flashcard_type: "multiple_choice"
+    })
+
+    # Add answers to choose from
+    add_flashcard_answers(flashcard, answers)
+
+    # One correct answer
+    flashcard.update(correct_answers: [flashcard.answers.first.id])
+  end
+
+  if db_article && row["Inhalt"].include?("Zuordnungsaufgabe")
+    quiz_question = "Zuordnungsaufgabe"
+    answers = match_answers_flashcard_for(row, 76)
+    flashcard = db_article.flashcards.create!({
+      content: quiz_question,
+      flashcard_type: "match_answers"
+    })
+
+    # Add answers to choose from
+   flashcard.answers << Answer.create!(answers)
+
+    # Matching correct answers
+    flashcard.update(correct_answers: flashcard.answers.pluck(:id).select.with_index { |a, i| i.even? })
+  end
+
+
+
 end
 puts "Industiemechaniker data...done"
 

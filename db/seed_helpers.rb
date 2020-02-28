@@ -47,6 +47,13 @@ def mutiple_choice_answers_for(row, question_idx)
   }
 end
 
+
+def match_answers_flashcard_for(row, question_idx)
+  (0..9).to_a.map do |i|
+    { content: row[question_idx + i] }
+  end
+end
+
 def add_flashcard_answers(flashcard, answers)
   answers.each do |answer, expl|
     flashcard.answers << Answer.create!({
