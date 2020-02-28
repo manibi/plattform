@@ -35,9 +35,6 @@ class FlashcardsController < ApplicationController
       @exam = CustomExam.find(params[:custom_exam_id])
       @questions = @exam.all_questions
       @user_answers = @flashcard.user_answers_for(@exam)
-
-      # raise
-
     else
       @article.read_for!(current_user) unless @article.read_for?(current_user)
 

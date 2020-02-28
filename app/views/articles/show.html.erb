@@ -40,7 +40,7 @@
               </span>
               <span class="badge badge-secondary">
                 <%= 'bookmarked' if @article.bookmarked_for?(current_user) %>
-              </span> 
+              </span>
             </h1>
           </div>
           <div class="col-3">
@@ -121,17 +121,16 @@
     <div class="col-3 position-sticky">
       <div class="card position-sticky sticky-top">
       <ul>
-        <%  @article.chapters.sort_by { |chap| chap.title }.each do |chap| %>
-        <li><%# raise %><%= chap.title %></li>
+        <% @article.chapters.sort_by { |chap| chap.title }.each do |chap| %>
+        <li><%= chap.title %></li>
         <% end %>
       </ul>
       </div>
-      <%# if @flashcard %>
+      <% if @flashcard %>
       <div class="card mt-3 quizcard">
         Bereit zum Quiz über <%= @article.title %>?
-        <%= link_to "Quiz", article_flashcard_path(@article, @flashcard), :"data-turbolinks" => false if @flashcard %>
-        <button type="button" class="btn btn-outline-primary">Primary</button>
-        <%# end %>
+        <%= link_to "Quiz", article_flashcard_path(@article, @flashcard), class: "btn btn-primary", :"data-turbolinks" => false if @flashcard %>
+        <% end %>
       </div>
     </div>
   </div>

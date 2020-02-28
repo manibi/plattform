@@ -34,3 +34,5 @@ yarn-debug.log*
 *.swp
 .DS_Store
 todo.md
+
+_temp.html.erb
