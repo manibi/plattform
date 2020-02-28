@@ -1,0 +1,9 @@
+<%= render "devise/shared/error_messages", resource: @profession %>
+<%= form_with model: @profession, local: true, class: "form-inline" do |f| %>
+  <div class="form-group">
+    <%= f.label :name, class: "sr-only" %>
+    <%= f.text_field :name, required: true, class: "form-control", placeholder: "Name..." %>
+  </div>
+
+  <%= f.submit class: "btn btn-primary ml-3" %>
+<% end %>

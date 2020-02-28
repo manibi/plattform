@@ -15,6 +15,7 @@
   </head>
 
   <body>
+<<<<<<< HEAD
     <div class="container-fluid">
       <div class="row">
         <!-- left column -->
@@ -50,6 +51,82 @@
             <%#= debug(params) if Rails.env.development? %>
           </div>
         </div>
+=======
+
+    <!-- test navbar -->
+    <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
+      <%= link_to root_path, class: "navbar-brand" do %>
+        <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/logo.png" %>
+        <% end %>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <% if user_signed_in? && !company_signed_in? %>
+            <li class="nav-item">
+              <%= link_to "Profile", profile_path, class: "nav-link" %>
+            </li>
+
+            <% if current_user.student? %>
+              <li class="nav-item">
+                <%= link_to "Dashboard", dashboard_path, class: "nav-link" %>
+              </li>
+            <% end %>
+
+            <% if current_user.author? %>
+              <li class="nav-item">
+                <%= link_to "Dashboard", author_dashboard_path, class: "nav-link" %>
+              </li>
+            <% end %>
+
+            <% if current_user.admin? %>
+              <li class="nav-item">
+                <%= link_to "Dashboard", admin_dashboard_path, class: "nav-link" %>
+              </li>
+            <% end %>
+
+              <li class="nav-item">
+                <%= link_to "Library", articles_path, class: "nav-link" %>
+              </li>
+
+            <% unless current_user.admin? %>
+              <li class="nav-item">
+                <%= link_to "Flashcards", flashcards_path, class: "nav-link" %>
+              </li>
+            <% end %>
+
+            <% if current_user.student? %>
+              <li class="nav-item">
+                <%= link_to "Exams", new_custom_exam_path, class: "nav-link" %>
+              </li>
+            <% end %>
+
+            <li class="nav-item">
+              <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "nav-link" %>
+            </li>
+          <% elsif company_signed_in? %>
+            <li class="nav-item">
+              <%= link_to "Dashboard", company_dashboard_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Profile", company_profile_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Log out", destroy_company_session_path, method: :delete, class: "nav-link" %>
+            </li>
+          <% else %>
+            <li class="nav-item">
+              <%= link_to "User login", new_user_session_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Company login", new_company_session_path, class: "nav-link" %>
+            </li>
+          <% end %>
+        </ul>
+>>>>>>> 2cee83667a6966871ad676b8e828ef63a98efe89
       </div>
     </div>
   </body>

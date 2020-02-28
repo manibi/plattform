@@ -1,10 +1,10 @@
 class ArticlePolicy < ApplicationPolicy
   def show?
-    (has_profession_student? && article_published?) || has_profession_author?
+    (has_profession_student? && article_published?) || has_profession_author? || user.admin?
   end
 
   def new?
-    user.author?
+    user.author? || user.admin?
   end
 
   def create?
@@ -12,7 +12,7 @@ class ArticlePolicy < ApplicationPolicy
   end
 
   def update?
-    user.author?
+    user.author? || user.admin?
   end
 
   def edit?

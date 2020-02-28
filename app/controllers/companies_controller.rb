@@ -1,9 +1,36 @@
 class CompaniesController < ApplicationController
-  before_action :authenticate_company!
-  before_action :set_authorize_company
+  before_action :authenticate_company!, except: [:new, :create]
+  before_action :authenticate_user!,    only:   [:new, :create]
+  before_action :set_authorize_company, except: [:new, :create]
   include ApplicationHelper
+  include CompaniesHelper
 
   def show
+  end
+
+
+  def new
+    @company = Company.new
+    authorize current_user
+  end
+
+  def create
+    # @company = Company.new
+    authorize current_user
+    new_company_params = generate_company(company_params)
+    @company = Company.new(new_company_params)
+
+    # Save credentials for printing
+    new_company_credentials = new_company_params.extract!(:username, :password, :name)
+    @company_credentials = CompanyCredential.new(new_company_credentials.merge({ user: current_user }))
+
+    if @company.save
+      @company_credentials.save
+      flash[:notice] = "Company added."
+      redirect_to admin_dashboard_path
+    else
+      render :new
+    end
   end
 
   def edit
@@ -43,7 +70,11 @@ class CompaniesController < ApplicationController
 
   # Set pundit user to a company instance
   def pundit_user
-    current_company
+    # if action_name == "new"
+    #   current_user
+    # else
+      current_user || current_company
+    # end
   end
 
   private

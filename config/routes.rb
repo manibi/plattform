@@ -1,4 +1,15 @@
 Rails.application.routes.draw do
+#   devise_for :companies, controllers: {
+#     sessions: 'companies/sessions',
+#     passwords: 'companies/passwords',
+#     registrations: 'companies/registrations'
+# }
+#   devise_for :users, controllers: {
+#     sessions: 'users/sessions',
+#     passwords: 'users/passwords',
+#     registrations: 'users/registrations'
+# }
+
   devise_for :companies, skip: [:registrations]
   as :company do
     get 'companies/edit' => 'companies/registrations#edit', :as => 'edit_company_registration'
@@ -11,18 +22,24 @@ Rails.application.routes.draw do
     put 'users' => 'users/registrations#update', :as => 'user_registration'
   end
 
+  resources :users,           only: [:new, :create, :update]
   get 'profile',              to: 'users#show'
   get 'profile/edit',         to: 'users#edit'
+
+  get 'new_author',      to: 'users#new_author'
+  post 'generate_author',     to: 'users#generate_author'
+  get 'new_student',     to: 'users#new_student'
+  post 'generate_student',    to: 'users#generate_student'
+
+  resources :companies,       only: [:new, :create, :update]
   get 'company/profile',      to: 'companies#show'
   get 'company/profile/edit', to: 'companies#edit'
+  get "company/:user_id",     to: "companies#user_details", as: :company_user
+  get "company_dashboard",    to: "companies#company_dashboard"
 
-  resources :users,      only:    :update
-  resources :companies,  only:    :update
-
-  get "company/:user_id",   to: "companies#user_details", as: :company_user
-  get "company_dashboard",  to: "companies#company_dashboard"
   resources :topics,     except:  :destroy
   resources :categories, except:  :destroy
+  resources :professions, only: [:new, :create, :edit, :update]
 
   resources :articles,   except:  :destroy do
     member do
@@ -73,6 +90,7 @@ Rails.application.routes.draw do
   get "welcome",            to: "pages#welcome"
   get "dashboard",          to: "pages#dashboard"
   get "author_dashboard",   to: "pages#author_dashboard"
+  get "admin_dashboard",    to: "pages#admin_dashboard"
   get "search",             to: "pages#search"
 
   root to: "pages#landing_page"

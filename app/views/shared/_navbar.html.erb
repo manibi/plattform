@@ -1,5 +1,5 @@
 <ul class="nav nav-pills nav-fill">
-	<% if user_signed_in? %>
+	<% if user_signed_in? && !company_signed_in? %>
 		<li class="nav-item col-8">
 			<%= form_with url: search_path,
 			                    local: true,
@@ -14,7 +14,7 @@
 	        %>
 	        <%= submit_tag "Search", class: "btn btn-primary d-none" %>
 	      <% end %>
-		</li>
+		</li> 
 		<li class="nav-item">
 			<!-- notifications -->
 		</li>
@@ -26,9 +26,19 @@
 			- account settings (&logout) -->
 		  <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "nav-link" %>
 		</li>	
-	<% else %>
-	  <li class="nav-item">
-	    <%= link_to "Login", new_user_session_path, class: "nav-link" %>
-	  </li>
-	<% end %>
+	<% elsif company_signed_in? %>
+        <li class="nav-item">
+          <%= link_to "Profile", company_profile_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Log out", destroy_company_session_path, method: :delete, class: "nav-link" %>
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <%= link_to "User login", new_user_session_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Company login", new_company_session_path, class: "nav-link" %>
+        </li>
+      <% end %>
 </ul>

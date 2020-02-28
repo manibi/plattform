@@ -7,19 +7,23 @@ class CompanyPolicy < ApplicationPolicy
     current_company?
   end
 
+  def new?
+    create?
+  end
+
+  def create?
+    user.admin?
+  end
+
   def edit?
-    update?
+    update? || user.admin?
   end
 
   def update?
-    current_company?
+    current_company? || user.admin?
   end
 
   def user_details?
-    current_company?
-  end
-
-  def company_dashboard?
     current_company?
   end
 
