@@ -20,7 +20,11 @@ class PagesController < ApplicationController
   end
 
   def dashboard
-    authorize current_user, :show?
+    authorize current_user
+  end
+
+  def admin_dashboard
+    authorize current_user
   end
 
   def author_dashboard
@@ -32,5 +36,4 @@ class PagesController < ApplicationController
     @first_flashcard = Flashcard.find(@exam.questions.first)
     authorize current_user, :show?
   end
-
 end

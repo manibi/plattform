@@ -1,11 +1,11 @@
 class CategoryPolicy < ApplicationPolicy
 
   def show?
-    record.topic.profession == user.profession
+    record.topic.profession == user.profession || user.admin?
   end
 
   def new?
-    user.author?
+    user.author? || user.admin?
   end
 
   def create?
@@ -13,7 +13,7 @@ class CategoryPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.author?
+    user.author? || user.admin?
   end
 
   def update?

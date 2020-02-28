@@ -1,4 +1,13 @@
 class UserPolicy < ApplicationPolicy
+
+  def new?
+    user.admin?
+  end
+
+  def create?
+    new?
+  end
+
   def show?
     current_user? || user.admin?
   end
@@ -9,6 +18,10 @@ class UserPolicy < ApplicationPolicy
 
   def dashboard?
     current_user? && user.student?
+  end
+
+  def admin_dashboard?
+    user.admin?
   end
 
   def search?

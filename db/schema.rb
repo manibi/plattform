@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_22_191102) do
+ActiveRecord::Schema.define(version: 2020_02_26_091301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,16 @@ ActiveRecord::Schema.define(version: 2020_02_22_191102) do
     t.index ["username"], name: "index_companies_on_username", unique: true
   end
 
+  create_table "company_credentials", force: :cascade do |t|
+    t.string "name"
+    t.string "username"
+    t.string "password"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_company_credentials_on_user_id"
+  end
+
   create_table "custom_exam_answers", force: :cascade do |t|
     t.boolean "answered", default: false
     t.boolean "correct", default: false
@@ -174,6 +184,20 @@ ActiveRecord::Schema.define(version: 2020_02_22_191102) do
     t.index ["user_id"], name: "index_user_articles_on_user_id"
   end
 
+  create_table "user_credentials", force: :cascade do |t|
+    t.string "username"
+    t.string "password"
+    t.integer "role"
+    t.bigint "user_id"
+    t.bigint "company_id"
+    t.bigint "profession_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["company_id"], name: "index_user_credentials_on_company_id"
+    t.index ["profession_id"], name: "index_user_credentials_on_profession_id"
+    t.index ["user_id"], name: "index_user_credentials_on_user_id"
+  end
+
   create_table "user_flashcards", force: :cascade do |t|
     t.boolean "correct"
     t.bigint "flashcard_id", null: false
@@ -214,6 +238,7 @@ ActiveRecord::Schema.define(version: 2020_02_22_191102) do
   add_foreign_key "articles", "categories"
   add_foreign_key "categories", "topics"
   add_foreign_key "chapters", "articles"
+  add_foreign_key "company_credentials", "users"
   add_foreign_key "custom_exam_answers", "custom_exams"
   add_foreign_key "custom_exam_answers", "flashcards"
   add_foreign_key "custom_exams", "users"
@@ -223,6 +248,9 @@ ActiveRecord::Schema.define(version: 2020_02_22_191102) do
   add_foreign_key "topics", "professions"
   add_foreign_key "user_articles", "articles"
   add_foreign_key "user_articles", "users"
+  add_foreign_key "user_credentials", "companies"
+  add_foreign_key "user_credentials", "professions"
+  add_foreign_key "user_credentials", "users"
   add_foreign_key "user_flashcards", "flashcards"
   add_foreign_key "user_flashcards", "users"
   add_foreign_key "users", "companies"

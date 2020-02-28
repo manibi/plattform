@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <h2 class="display-4">Generate authors</h2>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mt-5">
+    <div class="col-6">
+      <p class="lead">Selct profession and number of authors to generate.</p>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mt-5">
+    <div class="col-6">
+      <%= form_with url: generate_author_path,
+                    local: true,
+                    class: "form-inline" do |f| %>
+
+        <div class="form-group">
+          <%= f.label "Profession", class: "mr-2" %>
+          <%= f.select "profession_id",
+                options_for_select(
+                  @professions.map { |profession| [profession.name, profession.id] }.select { |p| p[0] != "Controlling" }
+                ) %>
+        </div>
+
+
+        <div class="form-group ml-5">
+          <%= f.label :authors_number, class: "mr-2" %>
+          <%= f.number_field :authors_number,
+                            class: "form-control",
+                            style: "width: 100px;" %>
+        </div>
+
+        <%= submit_tag "Generate", class: "btn btn-primary mt-3" %>
+      <% end %>
+    </div>
+  </div>
+</div>

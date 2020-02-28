@@ -17,7 +17,7 @@ class Article < ApplicationRecord
                                 reject_if: proc { |att| att['title'].blank? || att['content'].blank? }
 
   validates :title, presence: true, allow_blank: false
-  validates :description, presence: true, allow_blank: false
+  validates :description, presence: true, allow_blank: true
   validates :category_id, presence: true
   validates :image, content_type: {
                       in: %w[image/jpeg image/gif image/png],
