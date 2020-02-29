@@ -1,24 +1,35 @@
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :username %><br />
-    <%= f.text_field :username, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<div class="container text-center login-form">
+  <div class="row justify-content-center">
+    <div class="col-12 pt-5">
+      <h2>Anmelden</h2>
     </div>
-  <% end %>
+    <div class="col-12 py-2">
+      <p>Gib einfach deine Kontaktdaten ein um dich anzumelden.</p>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
+    <div class="login-box p-3">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="field py-2">
+        <%= f.label "deine email" %><br />
+        <%= f.text_field :username, autofocus: true %>
+      </div>
+
+      <div class="field py-2">
+        <%= f.label "dein passwort" %><br />
+        <%= f.password_field :password, autocomplete: "current-password" %>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <div class="field py-2">
+          <%= f.check_box :remember_me %>
+          <%= f.label "Angemeldet bleiben" %>
+        </div>
+      <% end %>
+
+      <div class="actions">
+        <%= f.submit "Anmelden", class: "btn btn-primary login-btn"%>
+      </div>
+    <% end %>
+    </div>
   </div>
-<% end %>
+</div>

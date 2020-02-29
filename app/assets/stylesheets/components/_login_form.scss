@@ -1,0 +1,22 @@
+.login-form {
+	// background-color: red;
+	height: $login-height;
+	h2 {
+		font-weight: 700;
+	}
+}
+
+.login-box {
+	background-color: white;
+	width: 50vh;
+	border-radius: 20px;
+
+	.field {
+		// border-radius: 20px;
+	}
+}
+
+.login-btn {
+	width: 100%;
+	// border-radius: 20px;
+}

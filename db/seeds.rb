@@ -103,6 +103,20 @@ User.create!([
     role: :student
   },
   {
+    username: "#{siemens.name.downcase}-student-4",
+    password: "123456",
+    company_id: siemens.id,
+    profession: industriemechanik,
+    role: :student
+  },
+  {
+    username: "#{siemens.name.downcase}-student-5",
+    password: "123456",
+    company_id: siemens.id,
+    profession: industriemechanik,
+    role: :student
+  },
+  {
     username: "handel-student-1",
     password: "123456",
     company_id: siemens.id,
