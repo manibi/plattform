@@ -3,7 +3,8 @@
   <% if chapter.title == "Verwandte Themen" %>
       <% links_names = chapter.content.split(", ") %>
       <% links_names.each do |link_name| %>
-        <% if article = Article.find_by(title: link_name.strip) %>
+      <% p link_name %>
+        <% if article = Article.find_by(title: link_name.downcase) %>
           <%= link_to link_name.capitalize, article_path(article), class: "btn btn-outline-success" %>
         <% else %>
           <%= link_name.capitalize %>

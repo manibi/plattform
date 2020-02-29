@@ -1,21 +1,22 @@
 <section class="edit-profile container">
-  <div class="row">
+  <div class="row justify-content-center">
     <div class="col-md-6">
+      <h2 class="text-center my-5">Profil Einstellungen</h2>
       <% if current_user.first_name.present? %>
-        <h2 class="mb-5">
-          <%="Hi, #{current_user.first_name}" %>
-        </h2>
+        <h4 class="mb-2">
+          <%="Benutzer Daten von #{current_user.first_name}" %>
+        </h4>
       <% end %>
-      <table class="table table-striped mt-5">
+      <table class="table table-striped my-3">
         <tbody>
           <tr>
-            <th scope="row">First Name</th>
+            <th scope="row">Vorname</th>
             <td>
               <%= current_user.first_name if current_user.first_name.present? %>
             </td>
           </tr>
           <tr>
-            <th scope="row">Last Name</th>
+            <th scope="row">Nachname</th>
             <td>
               <%= current_user.last_name if current_user.last_name.present? %>
             </td>
@@ -26,14 +27,14 @@
             </td>
           </tr>
               <tr>
-            <th scope="row">Birthday</th>
+            <th scope="row">Geburtsdatum</th>
             <td>
               <%= current_user.birth_date if current_user.birth_date.present? %>
             </td>
           </tr>
           <% if current_user.student? %>
             <tr>
-              <th scope="row">Exam day</th>
+              <th scope="row">Datum der Abschlussprüfung</th>
               <td>
                 <%= current_user.exam_date.to_formatted_s(:long) if current_user.exam_date.present? %>
               </td>
@@ -41,8 +42,10 @@
           <% end %>
         </tbody>
       </table>
-      <%= link_to 'Edit profile', profile_edit_path, class: "btn btn-info" %>
-      <%= link_to "Change your password", edit_user_registration_path, class: "btn btn-danger"%>
+      <div class="text-center">
+        <%= link_to 'Profil anpassen', profile_edit_path, class: "btn btn-primary" %>
+        <%= link_to "Passwort ändern", edit_user_registration_path, class: "btn btn-warning"%>
+      </div>
     </div>
   </div>
 </section>
