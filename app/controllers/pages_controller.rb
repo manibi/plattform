@@ -31,10 +31,10 @@ class PagesController < ApplicationController
     else
       @current_article = @not_read_articles.first
     end
-    @articles = current_user.all_articles
+    @articles = policy_scope(Article)
     @current_topic = @current_article.category.topic
     @current_category = @current_article.category
-    @current_articles = @current_category.find(@articles.map{ |a| a.category_id })
+    # @current_articles = @current_category.find(@articles.map{ |a| a.category_id })
     @category_index = @current_category.id
     @category_index = @current_topic.categories.find(@current_article.category_id)
     @article_index = @category_index.article_ids.find_index(@current_article)
