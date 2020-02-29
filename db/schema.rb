@@ -38,9 +38,12 @@ ActiveRecord::Schema.define(version: 2020_02_26_091301) do
 
   create_table "answers", force: :cascade do |t|
     t.text "content"
+    t.boolean "right_answer", default: false
+    t.bigint "flashcard_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "explanation"
+    t.index ["flashcard_id"], name: "index_answers_on_flashcard_id"
   end
 
   create_table "articles", force: :cascade do |t|
@@ -139,8 +142,6 @@ ActiveRecord::Schema.define(version: 2020_02_26_091301) do
 
   create_table "flashcards", force: :cascade do |t|
     t.text "content"
-    t.string "flashcard_type"
-    t.text "correct_answers"
     t.bigint "article_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -235,6 +236,7 @@ ActiveRecord::Schema.define(version: 2020_02_26_091301) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "answers", "flashcards"
   add_foreign_key "articles", "categories"
   add_foreign_key "categories", "topics"
   add_foreign_key "chapters", "articles"
