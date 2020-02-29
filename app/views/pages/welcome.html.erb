@@ -1,17 +1,17 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-6">
-      <h1>Welcome to Mozubi</h1>
+  <div class="row justify-content-center text-center">
+    <div class="col-md-6 my-3">
+      <h1>Willkommen bei Mozubi</h1>
       <% if current_user.student? %>
-        <p>
-          Please complete your profile, change password and add an exam date.
+        <p class="py-2">
+          Bitte vervollständige dein Profil indem du das Datum deiner Abschlussprüfung angibst und dein Passwort anpasst.
         </p>
       <% else %>
-        <p>
-          Please complete your profile, change password.
+        <p class="py-2">
+          Bitte vervollständige dein Profil und passe dein Passwort an.
         </p>
       <% end %>
-      <%= link_to 'Update profile', profile_edit_path, class: "btn btn-info" %>
+      <%= link_to 'Profil anpassen', profile_edit_path, class: "btn btn-primary my-3 px-5" %>
     </div>
   </div>
 </div>
