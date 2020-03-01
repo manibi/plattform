@@ -31,13 +31,18 @@
 			<div class="card col-12 h-100">
 				<div class="row">
 					<div class="col-4">
-						<div class="donut-chart chart2">
+						<div class="donut-chart chart2" style="#{$color: black!important}">
 							<div class="slice one"></div>
 							<div class="slice two"></div>
 							<div class="chart-center">
-						    	<span></span>
+						    	<!-- <span></span> -->
+						    	<span class="w-100" value="<%= $perc =(current_user.articles - @not_read_articles).count %>" max="<%= @articles.count %>"></span>
 							</div>
 						</div>
+					</div>
+					<%# raise %>
+					<div class="progress-percentage">
+					  <%= '%.2f' % (((current_user.articles - @not_read_articles).count * 100) / (@articles.count)) %>%
 					</div>
 					<div class="col-8">						
 						<strong class="card-title">Artikel</strong>
