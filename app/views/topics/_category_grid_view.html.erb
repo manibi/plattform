@@ -5,8 +5,31 @@
       <div class="col-lg-3 my-2">
         <%= link_to category do %>
           <div class="card topic-card">
-            <div class="card-name">
+            <div class="card-name pt-1 pb-4">
               <%= category.title %>
+            </div>
+          <div class="card-progress">
+              <div class="row col-12 justify-content-between">
+                <div class="read-text">
+                  Gelesen
+                </div>
+                <div class="progress-percentage">
+                  <%= '%.2f' % (((category.articles & @read_articles).count * 100) / (category.articles.count)) %>%
+                </div>
+              </div>
+              <progress class="w-100" value="<%= (category.articles & @read_articles).count %>" max="<%= (category.articles.count) %>"></progress>
+            </div>
+            <div class="card-stats row">
+              <div class="read-articles pr-5">
+                <i class="material-icons-sharp stats-icon">library_books</i>
+                <%= category.articles.count %>
+                Artikel
+              </div>
+              <div class="reading-time row mx-0">
+                <i class="material-icons-sharp stats-icon">access_time</i>
+                  <%= category.articles.count %>
+                  min/Lesen
+              </div>
             </div>
           </div>
         <% end %>
