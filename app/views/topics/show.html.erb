@@ -9,32 +9,32 @@
       </div>
       <!-- article header -->
       <div class="row col-12 justify-content-between">
-        <div class="col-6 py-3">
+        <div class="col-10 py-3">
           <h3><%= @topic.name %></h3>
         </div>
-        <div class="col-2">Grid/List View</div>
+        <!-- <div class="col-2">Grid/List View</div> -->
       </div>
       <div class="col-12 mh-100">
         <!-- tabs -->
         <ul class="nav nav-tabs justify-content-center" role="tablist">
           <li role="presentation" class="nav-item">
             <a href="#topic" aria-controls="topic" role="tab" data-toggle="tab" class="nav-link active">
-              Themen
+              Alle
             </a>
           </li>
           <li role="presentation" class="nav-item">
             <a href="#upcoming" aria-controls="upcoming" role="tab" data-toggle="tab" class="nav-link">
-              Offen
+              Offene
             </a>
           </li>
           <li role="presentation" class="nav-item">
             <a href="#bookmarked" aria-controls="bookmarked" role="tab" data-toggle="tab" class="nav-link">
-              Markiert
+              Markierte
             </a>
           </li>
           <li role="presentation" class="nav-item">
             <a href="#read" aria-controls="read" role="tab" data-toggle="tab" class="nav-link">
-              Gelesen
+              Gelesene
             </a>
           </li>
         </ul>
@@ -48,11 +48,4 @@
     <%= render 'category_grid_view' %>
     </div>
   </div>
-
-<!-- <div class="container">
-  <%#= link_to "All nested topics", topics_path, class: "btn btn-primary" %>
-
-</div> -->
-
-
 </div>

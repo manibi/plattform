@@ -1,4 +1,7 @@
-<div class="container">
+<div class="container d-flex justify-content-center">
+  <div class="card mt-3 col-6">
+    
+    <!-- Question out of -->
     <div class="text-center">
       <p> Question
         <% if @exam %>
@@ -9,116 +12,120 @@
       </p>
     </div>
 
-  <!-- Author -->
-  <div class="row mt-3 justify-content-around">
-    <div class="card col-8 p-3">
-      <% if current_user.author? %>
-        <div class="row">
-          <div class="col">
-            <h5 class="badge badge-primary">
-            <%= "by #{current_user.first_name}" %>
-              </h5>
-              <h5>Editors:</h5>
-              <% @flashcard.editors.each do |editor| %>
-                <h5 class="badge badge-primary">
-                  <%= editor.first_name %>
+    <!-- Author -->
+    <% if current_user.author? %>
+      <div class="row mt-3 justify-content-around">
+        <div class="card p-3">
+          <div class="row">
+            <div class="col">
+              <h5 class="badge badge-primary">
+              <%= "by #{current_user.first_name}" %>
                 </h5>
-              <% end %>
+                <h5>Editors:</h5>
+                <% @flashcard.editors.each do |editor| %>
+                  <h5 class="badge badge-primary">
+                    <%= editor.first_name %>
+                  </h5>
+                <% end %>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <%= link_to 'Edit Question', edit_flashcard_path(@flashcard), class: "btn btn-warning" %>
+            </div>
           </div>
         </div>
-
-        <div class="row">
-          <div class="col">
-            <%= link_to 'Edit Question', edit_flashcard_path(@flashcard), class: "btn btn-warning" %>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  </div><!-- row -->
-
-  <div class="row">
-    <% if @flashcard.image.attached? %>
-      <div class="col-4" style="margin-left: auto;">
-        <!-- Button trigger modal -->
-        <button type="button" class="flashcard-image__thumb" data-toggle="modal" data-target="#flashcardImage">
-          <%= cl_image_tag @flashcard.image.key,
-                            width: 200, height: 100, crop: :fill %>
-        </button>
       </div>
     <% end %>
-  </div><!-- row -->
 
-  <!-- Exam flashcard -->
-  <div class="row">
-    <div class="col-12">
-      <% if @exam&.submitted %>
-        <%= link_to "Exam results",
-                    custom_exam_results_path(@exam),
-                    class: "btn btn-success" %>
+    <!-- Image -->
+    <div class="row">
+      <% if @flashcard.image.attached? %>
+        <div class="col-4" style="margin-left: auto;">
+          <!-- Button trigger modal -->
+          <button type="button" class="flashcard-image__thumb" data-toggle="modal" data-target="#flashcardImage">
+            <%= cl_image_tag @flashcard.image.key,
+                              width: 200, height: 100, crop: :fill %>
+          </button>
+        </div>
       <% end %>
+    </div>
 
-      <% if @exam && !@exam.submitted %>
-        <% if @flashcard.bookmarked_for?(@exam) %>
-          <%= link_to 'Unbookmark flashcard', unbookmark_custom_exam_flashcard_path(@exam, @flashcard),                                      method: :patch,
-                                            class: "btn btn-warning" %>
-        <% else %>
-          <%= link_to 'Bookmark flashcard', bookmark_custom_exam_flashcard_path(@exam, @flashcard),
-                                          method: :post,
-                                          class: "btn btn-primary" %>
-
-
+    <!-- Exam flashcard -->
+    <div class="row">
+      <div class="col-12">
+        <% if @exam&.submitted %>
+          <%= link_to "Exam results",
+                      custom_exam_results_path(@exam),
+                      class: "btn btn-success" %>
         <% end %>
-      <% end %>
 
-    </div>
-  </div><!-- row -->
-
-  <div class="row">
-    <div class="col-8">
-      <% case @flashcard.flashcard_type %>
-      <% when "multiple_choice" %>
-        <%= render "flashcards/multiple_choice", flashcard: @flashcard %>
-      <% when "correct_order" %>
-        <%= render "flashcards/correct_order", flashcard: @flashcard %>
-      <% when "match_answers" %>
-        <%= render "flashcards/match_answers", flashcard: @flashcard %>
-      <% when "soll_ist" %>
-        <%= render "flashcards/soll_ist", flashcard: @flashcard %>
-      <% when "table_quiz" %>
-        <%= render "flashcards/table_quiz", flashcard: @flashcard %>
-      <% end %>
-    </div>
-
-    <div class="col-4">
-      <% if @exam %>
-        <ul>
-          <li>
-            <%= link_to "Submit exam page",
-            custom_exam_submit_exam_path(@exam),
-            class: "btn btn-success" %>
-          </li>
-          <% @questions.each.with_index do |q, i| %>
-              <li>
-                <%= link_to "Question #{i + 1}", custom_exam_flashcard_path(@exam, @exam.questions[i]) %>
-                <% if @exam.answer_for(q)&.bookmarked %>
-                  <span class="badge badge-pill badge-primary">Marked</span>
-                <% end %>
-              </li>
+        <% if @exam && !@exam.submitted %>
+          <% if @flashcard.bookmarked_for?(@exam) %>
+            <%= link_to 'Unbookmark flashcard', unbookmark_custom_exam_flashcard_path(@exam, @flashcard),                                      method: :patch,
+                                              class: "btn btn-warning" %>
+          <% else %>
+            <%= link_to 'Bookmark flashcard', bookmark_custom_exam_flashcard_path(@exam, @flashcard),
+                                            method: :post,
+                                            class: "btn btn-primary" %>
           <% end %>
-          </ul>
         <% end %>
       </div>
-  </div><!-- row -->
-
-<% if @flashcard.image.attached? %>
-  <!-- Modal -->
-  <div class="modal fade" id="flashcardImage" tabindex="-1" role="dialog" aria-labelledby="flashcardImage" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="img">
-      <div class="modal-content">
-        <%= cl_image_tag @flashcard.image.key %>
-      </div>
     </div>
-  </div>
-<% end %>
-</div><!-- container -->
 
+    <!-- Flashcard content -->
+    <div class="row">
+      <% if @exam %>
+        <div class="col-8">
+      <% else %>
+        <div class="col-12">
+      <% end %>
+        <% case @flashcard.flashcard_type %>
+        <% when "multiple_choice" %>
+          <%= render "flashcards/multiple_choice", flashcard: @flashcard %>
+        <% when "correct_order" %>
+          <%= render "flashcards/correct_order", flashcard: @flashcard %>
+        <% when "match_answers" %>
+          <%= render "flashcards/match_answers", flashcard: @flashcard %>
+        <% when "soll_ist" %>
+          <%= render "flashcards/soll_ist", flashcard: @flashcard %>
+        <% when "table_quiz" %>
+          <%= render "flashcards/table_quiz", flashcard: @flashcard %>
+        <% end %>
+      </div>
+      <% if @exam %>
+      <div class="col-4">
+          <ul>
+            <li>
+              <%= link_to "Submit exam page",
+              custom_exam_submit_exam_path(@exam),
+              class: "btn btn-success" %>
+            </li>
+            <% @questions.each.with_index do |q, i| %>
+                <li>
+                  <%= link_to "Question #{i + 1}", custom_exam_flashcard_path(@exam, @exam.questions[i]) %>
+                  <% if @exam.answer_for(q)&.bookmarked %>
+                    <span class="badge badge-pill badge-primary">Marked</span>
+                  <% end %>
+                </li>
+            <% end %>
+            </ul>
+          <% end %>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <% if @flashcard.image.attached? %>
+      <div class="modal fade" id="flashcardImage" tabindex="-1" role="dialog" aria-labelledby="flashcardImage" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="img">
+          <div class="modal-content">
+            <%= cl_image_tag @flashcard.image.key %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+
+  </div>

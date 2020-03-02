@@ -11,15 +11,15 @@ const autocompleteSearch = () => {
     categories: [
       {
         listLocation: "topics",
-        header: "<b>Topics</b>"
+        header: "<b>Lernfelder</b>"
       },
       {
         listLocation: "categories",
-        header: "<b>Categories</b>"
+        header: "<b>Kategorien</b>"
       },
       {
         listLocation: "articles",
-        header: "<b>Articles</b>"
+        header: "<b>Artikel</b>"
       }
     ],
     list: {

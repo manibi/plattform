@@ -31,51 +31,47 @@
           </div>
         </div>
         <!-- article headline -->
-        <div class="row">
+        <div class="row justify-content-between">
           <div class="col-9">
             <h1 class="heading-2">
               <%= @article.title %>
-              <span class="badge badge-primary">
-                <%= 'read' if @article.read_for?(current_user) %>
+              <!-- <span class="badge badge-primary">
+                <%#= 'read' if @article.read_for?(current_user) %>
               </span>
               <span class="badge badge-secondary">
-                <%= 'bookmarked' if @article.bookmarked_for?(current_user) %>
-              </span>
+                <%#= 'bookmarked' if @article.bookmarked_for?(current_user) %>
+              </span> -->
             </h1>
           </div>
-          <div class="col-3">
-            <p>
+          <div class="col-1 row mx-0 align-items-center">
               <% if current_user.author? %>
                 <% if @article.draft? %>
-                  <%= link_to 'Publish article', publish_article_path(@article),
+                  <%= link_to 'Artikel veröffentlichen', publish_article_path(@article),
                                                   method: :post,
                                                   class: "btn btn-success mb-2" %>
                 <% else %>
-                  <%= link_to 'Unpublish article', unpublish_article_path(@article),                                method: :patch,
+                  <%= link_to 'Artikel nicht veröffentlichen', unpublish_article_path(@article),                                method: :patch,
                                                    class: "btn btn-danger mb-2" %>
                 <% end %>
-                <%= link_to 'Edit article',
+                <%= link_to 'Artikel anpassen',
                             edit_article_path(@article),
                             class: "btn btn-warning mb-2" %>
-                <%= link_to 'Edit flashcards',
+                <%= link_to 'Quiz anpassen',
                             flashcards_article_path(@article),
                             class: "btn btn-warning mb-2" %>
               <% end %>
               <% if @article.bookmarked_for?(current_user) %>
                 <%= link_to unbookmark_article_path(@article),                                 method: :patch,
-                                                  class: "btn btn-primary" do %>
+                                                  class: "" do %>
                   <i class="material-icons-sharp bookmark-icon">bookmark</i>
-                  Markierung entfernen
                 <% end %>
               <% else %>
                 <%= link_to bookmark_article_path(@article),
                                                 method: :post,
-                                                class: "btn btn-outline-primary" do %>
+                                                class: "" do %>
                   <i class="material-icons-sharp bookmark-icon">bookmark_border</i>
-                  Artikel markieren
                 <% end %>
               <% end %>
-            </p>
           </div>
         </div>
         <!-- article description -->
