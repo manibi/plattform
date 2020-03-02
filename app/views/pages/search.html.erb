@@ -1,13 +1,17 @@
 <div class="container">
-  <div class="row" id="search-items">
-      <% @results.each do |result| %>
-       <% if result.searchable_type == "Topic" && result.searchable.profession == current_user.profession %>
-           <%= render "card_link_topic", result: result %>
-        <% elsif result.searchable_type == "Category" && result.searchable.topic.profession == current_user.profession %>
-          <%= render "card_link", result: result %>
-        <% elsif result.searchable_type == "Article" && result.searchable.category.topic.profession == current_user.profession %>
-          <%= render "card_link", result: result %>
-        <% end %>
+  <div class="row" id="searchItems">
+    <div class="col">
+        <!-- p renders if no search items are found, change text content in emptySearchPage.js -->
+        <p class="lead" id="emptySearch"></p>
+    </div>
+    <% @results.each do |result| %>
+      <% if result.searchable_type == "Topic" && result.searchable.profession == current_user.profession %>
+          <%= render "card_link_topic", result: result %>
+      <% elsif result.searchable_type == "Category" && result.searchable.topic.profession == current_user.profession %>
+        <%= render "card_link", result: result %>
+      <% elsif result.searchable_type == "Article" && result.searchable.category.topic.profession == current_user.profession %>
+        <%= render "card_link", result: result %>
       <% end %>
+    <% end %>
   </div>
 </div>

@@ -1,8 +1,9 @@
 const emptySearchPage = () => {
-  const searchItems = document.getElementById('search-items');
-  if (searchItems && searchItems.children.length == 0) {
-    searchItems.textContent = "Try again!"
+  const searchItems = document.getElementById('searchItems');
+  const emptySearch = document.getElementById('emptySearch');
+
+  if (searchItems && searchItems.childElementCount == 1) {
+    emptySearch.textContent = "Nothing here! Search again...";
   }
 }
-
-export { emptySearchPage }
+export { emptySearchPage };
