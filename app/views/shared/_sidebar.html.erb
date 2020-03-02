@@ -3,15 +3,58 @@
     <!-- Dashboard -->
     <% if current_user.author? %>
       <li class="nav-item my-2">
-        <%= link_to "Author Dashboard", author_dashboard_path, class: "nav-link btn-warning" %>
+        <%= link_to author_dashboard_path, class: "nav-link" do %>
+          <div class="row">
+            <i class="material-icons-sharp sidebar-icon">home</i>
+            <div class="sidebar-text">Dashboard</div>
+          </div>
+        <% end %>
+      </li>
+      <!-- Author library -->
+      <li class="nav-item my-2">
+        <%= link_to articles_path, class: "nav-link" do %>
+          <div class="row">
+            <i class="material-icons-sharp sidebar-icon">menu_book</i>
+            <div class="sidebar-text">Library</div>
+          </div>
+        <% end %>
       </li>
     <% end %>
     <% if current_user.student? %>
-      <li class="nav-item my-2"> 
+      <li class="nav-item my-2">
         <%= link_to dashboard_path, class: "nav-link" do %>
           <div class="row">
             <i class="material-icons-sharp sidebar-icon">home</i>
             <div class="sidebar-text">Dashboard</div>
+          </div>
+        <% end %>
+      </li>
+
+      <!-- Article -->
+      <li class="nav-item my-2">
+        <%= link_to topics_path, class: "nav-link" do %>
+          <div class="row">
+            <i class="material-icons-sharp sidebar-icon">menu_book</i>
+            <div class="sidebar-text">Artikel</div>
+          </div>
+        <% end %>
+      </li>
+
+      <!-- Quiz -->
+      <li class="nav-item my-2">
+        <%= link_to flashcards_path, class: "nav-link" do %>
+          <div class="row">
+            <i class="material-icons-sharp sidebar-icon">dynamic_feed</i>
+            <div class="sidebar-text">Quiz</div>
+          </div>
+        <% end %>
+      </li>
+      <!-- Exams -->
+      <li class="nav-item my-2">
+        <%= link_to new_custom_exam_path, class: "nav-link" do %>
+          <div class="row">
+            <i class="material-icons-sharp sidebar-icon">description</i>
+            <div class="sidebar-text">Prüfungen</div>
           </div>
         <% end %>
       </li>
@@ -21,33 +64,7 @@
         <%= link_to "Dashboard", admin_dashboard_path, class: "nav-link" %>
       </li>
     <% end %>
-    <!-- Artikel -->
-    <li class="nav-item my-2">
-      <%= link_to topics_path, class: "nav-link" do %>
-        <div class="row">
-          <i class="material-icons-sharp sidebar-icon">menu_book</i>
-          <div class="sidebar-text">Artikel</div>
-        </div>
-      <% end %>
-    </li>
-    <!-- Quiz -->
-    <li class="nav-item my-2">
-      <%= link_to flashcards_path, class: "nav-link" do %>
-        <div class="row">
-          <i class="material-icons-sharp sidebar-icon">dynamic_feed</i>
-          <div class="sidebar-text">Quiz</div>
-        </div>
-      <% end %>
-    </li>
-    <!-- Prüfungen -->
-    <li class="nav-item my-2">
-      <%= link_to new_custom_exam_path, class: "nav-link" do %>
-        <div class="row">
-          <i class="material-icons-sharp sidebar-icon">description</i>
-          <div class="sidebar-text">Prüfungen</div>
-        </div>
-      <% end %>
-    </li>
+
   <!-- Company Dashboard -->
   <% elsif company_signed_in? %>
     <li class="nav-item">

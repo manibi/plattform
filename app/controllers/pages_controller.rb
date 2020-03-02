@@ -39,7 +39,8 @@ class PagesController < ApplicationController
     @category_index = @current_category.id
     @category_index = @current_topic.categories.find(@current_article.category_id)
     @article_index = @category_index.article_ids.find_index(@current_article)
-    authorize current_user
+    # raise
+
   end
 
   def author_dashboard
