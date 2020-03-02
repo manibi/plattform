@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row">
+  <div class="row" id="search-items">
       <% @results.each do |result| %>
        <% if result.searchable_type == "Topic" && result.searchable.profession == current_user.profession %>
            <%= render "card_link_topic", result: result %>
@@ -7,10 +7,6 @@
           <%= render "card_link", result: result %>
         <% elsif result.searchable_type == "Article" && result.searchable.category.topic.profession == current_user.profession %>
           <%= render "card_link", result: result %>
-        <% else %>
-          <p>
-            No results. Try again!
-          </p>
         <% end %>
       <% end %>
   </div>
