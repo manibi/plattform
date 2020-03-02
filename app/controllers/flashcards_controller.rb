@@ -219,6 +219,11 @@ class FlashcardsController < ApplicationController
       @next_article = @upcoming_articles.first
     end
 
+    @categories = current_user.all_categories
+    @category = @categories.find(@article.category_id)
+    @topics = current_user.profession.topics
+    @topic = @topics.find(@category.topic_id)
+
     render "flashcards/results"
   end
 
