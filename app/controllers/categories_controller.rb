@@ -5,10 +5,13 @@ class CategoriesController < ApplicationController
   def show
     @topics = current_user.profession.topics
     @topic = @topics.find(@category.topic_id)
+    @articles = policy_scope(Article)
+    @category = Category.find(params[:id])
+    @category_articles = @articles.select { |a| a.category_id == @category.id }
 
-    @upcoming_articles = policy_scope(Article)
-    @bookmarked_articles = current_user.bookmarked_articles
-    @read_articles = current_user.read_articles
+    @read_articles = @category.articles.select { |a| current_user.read_articles.include?(a) }
+    @upcoming_articles = @category.articles.select { |a| @read_articles.exclude?(a) }
+    @bookmarked_articles = @category.articles.select { |a| current_user.bookmarked_articles.include?(a) }
   end
 
   def new
@@ -20,7 +23,7 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(category_params)
     @topics = current_user.profession.topics
-# raise
+    # raise
     authorize @category
 
     if @category.save

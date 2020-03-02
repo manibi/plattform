@@ -126,7 +126,12 @@
 		            </div>
 		            <div class="row p-3 align-items-center">
 		            	<div class="col-10">
-		            		<div class="">Verbleibende Lesezeit bei diesem Thema: <strong>23 Minuten</strong></div>
+		            		<div class="">
+		            			Verbleibende Lesezeit bei dieser Kategorie: 
+		            			<strong>
+		            				<%= @current_category.articles.count * 2.5 %> 
+		            			Minuten</strong>
+		            		</div>
 		            	</div>
 		            	<div class="col-1">
 		            		<%= link_to @current_article do %>

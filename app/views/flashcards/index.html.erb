@@ -18,32 +18,6 @@
 <div class="container">
   <div class="tab-content mh-100">
     <%#= render 'list_view' %>
-    <%#= render 'topic_grid_view' %>
+    <%= render 'grid_view' %>
     <!-- quiz topics -->
-  <div class="row py-3">
-    <%  @articles.each do |article| %>
-      <div class="col-lg-3 my-2">
-        <% if article.read_for?(current_user) %>
-          <%= link_to [article, article.flashcards.first] do %>
-            <div class="card quiz-card">
-              <%= article.title %>
-              <br>
-              <div class="row justify-content-around">
-                <div class="col-6 m-1 btn btn-primary">Do Quiz</div>
-              </div>
-            </div>
-          <% end %>
-        <% else %>
-          <%= link_to [article, article.flashcards.first], :"data-turbolinks" => false do %>
-            <div class="card quiz-card">
-              <%= article.title %>
-              <br>
-              Read article
-            </div>
-          <% end %>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-  </div>
 </div>

@@ -56,7 +56,7 @@ class TopicsController < ApplicationController
     @categories = current_user.all_categories
 
     @upcoming_categories = @categories.find(@upcoming_articles.map { |a| a.category_id })
-    @upcoming_topics = @topics.find(@upcoming_categories.map { |c| c.topic_id })
+    @upcoming_topics = (@topics.find(@upcoming_categories.map { |c| c.topic_id })).sort
     @bookmarked_categories = @categories.find(@bookmarked_articles.map { |a| a.category_id })
     @bookmarked_topics = @topics.find(@bookmarked_categories.map { |c| c.topic_id })
     @read_categories = @categories.find(@read_articles.map { |a| a.category_id })
@@ -72,8 +72,8 @@ class TopicsController < ApplicationController
     @topic = Topic.find(params[:id])
     @topic_categories = @categories.select { |c| c.topic_id == @topic.id }
 
-    @upcoming_categories = @topic_categories.find(@upcoming_articles.map{|c|c.category_id })
-    @bookmarked_categories = @topic_categories.find(@bookmarked_articles.map { |a| a.category_id })
-    @read_categories = @topic_categories.find(@read_articles.map { |a| a.category_id })
+    @upcoming_categories = @topic_categories.select{ |c| @upcoming_articles.map { |a| a.category_id }.include?(c.id)}
+    @bookmarked_categories = @topic_categories.select{ |c| @bookmarked_articles.map { |a| a.category_id }.include?(c.id)}
+    @read_categories = @topic_categories.select{ |c| @read_articles.map { |a| a.category_id }.include?(c.id)}
   end
 end

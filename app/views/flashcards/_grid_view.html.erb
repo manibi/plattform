@@ -1,0 +1,27 @@
+<!-- quiz topic tab -->
+<div class="row">
+  <% @articles.each do |article| %>
+    <div class="col-lg-3 my-2">
+      <div class="card topic-card justify-content-between">
+        <div class="card-name pt-1 pb-4">
+          <%= article.title %>
+        </div>
+        <div class="card-bottom">
+          <div class="row justify-content-around">
+            <div class="col-6 m-1 btn btn-primary">
+              <% if article.read_for?(current_user) %>
+                <%= link_to [article, article.flashcards.first] do %>
+                Zum Quiz
+                <% end %>
+              <% else %>
+                <%= link_to [article, article.flashcards.first], :"data-turbolinks" => false do %>
+                Zum Artikel
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
