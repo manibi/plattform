@@ -19,18 +19,24 @@
       </div>
     </div>
   </div>
-      <div class="row col-12 mt-3 justify-content-around">
+      <div class="row col-12 mt-3 justify-content-around h-50">
         <div class="card col-8 p-3">
-          <div class="container">
-            <div class="text-center">
-              Lies dir vor dem Quiz am besten immer gründlich den dazugehörigen Artikel durch!
+          <div class="container row mx-0 justify-content-between h-100">
+            <div class="results-header">
+              <div class="text-center">
+                Lies dir vor dem Quiz am besten immer gründlich den dazugehörigen Artikel durch!
+              </div>
+              <div class="card-title text-center mt-3">
+                <h4>Auswertung</h4>
+              </div>
             </div>
-            <div class="card-title text-center mt-3">
-              <h4>Auswertung</h4>
-            </div>
-            <div class="card-body row">
-              <p>Fragen in diesem Quiz: <b><%= @all_answered_flashcards.count %></b></p>
-              <p class="ml-auto">Anzahl der Versuche: <b><%= @tries %></b></p>
+            <div class="card-body row align-items-bottom justify-content-between pb-0">
+              <div class="align-text-bottom"> 
+                Fragen in diesem Quiz: <b><%= @all_answered_flashcards.count %></b>
+              </div>
+              <div class="align-text-bottom">
+                Anzahl der Versuche: <b><%= @tries %></b>
+              </div>
             </div>
           </div>
         </div>
