@@ -18,4 +18,5 @@ document.addEventListener("turbolinks:load", () => {
   authorView();
   playFlashcards();
   autocompleteSearch();
+  gtag('config', 'UA-159154786-1');
 });
