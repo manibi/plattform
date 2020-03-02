@@ -4,35 +4,41 @@
     <% @category.articles.each do |article| %>
       <div class="col-lg-3 my-2">
         <%= link_to article do %>
-          <div class="card topic-card">
+          <div class="card topic-card justify-content-between">
             <div class="card-name pt-1 pb-4">
               <%= article.title %>
             </div>
-            <div class="card-progress">
-              <% if @read_articles.include?(article) %>
+            <div class="card-bottom">
+              <div class="card-progress">
                 <div class="row col-12 justify-content-between">
                   <div class="read-text">
                     Gelesen
                   </div>
-                  <div class="progress-percentage">
-                    100%
-                  </div>
+                  <% if @read_articles.include?(article) %>
+                    <div class="progress-percentage">
+                      100%
+                    </div>
+                    <progress class="w-100" value="100" max="100"></progress>
+                  <% else %>
+                    <div class="progress-percentage">
+                      100%
+                    </div>
+                    <progress class="w-100" value="100" max="100"></progress>
+                  <% end %>
                 </div>
-                <progress class="w-100" value="100" max="100"></progress>
-              <% else %>
-                <div class="row col-12 justify-content-between">
-                  <div class="read-text">
-                    Gelesen
-                  </div>
-                  <div class="progress-percentage">
-                    0%
-                  </div>
+              </div>
+              <div class="card-stats row justify-content-between">
+                <div class="read-articles row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">library_books</i>
+                  1
+                  Artikel
                 </div>
-                <progress class="w-100" value="0" max="100"></progress>
-              <% end %>
-            </div>
-            <div class="card-stats">
-              <i class="material-icons-sharp sidebar-icon">library_books</i>
+                <div class="reading-time row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">access_time</i>
+                    <%= 1 * 2.5 %>
+                    min/Lesen
+                </div>
+              </div>
             </div>
           </div>
         <% end %>
@@ -40,16 +46,47 @@
     <% end %>
   </div>
 </div>
-<%# raise %>
 <!-- upcoming tab -->
 <div role="tabpanel" class="tab-pane py-3 mh-100" id="upcoming">
-  <div class="row">  
+  <div class="row">
     <% @upcoming_articles.each do |upcoming_article| %>
       <div class="col-lg-3 my-2">
         <%= link_to upcoming_article do %>
-          <div class="card topic-card">
-            <div class="card-name">
+          <div class="card topic-card justify-content-between">
+            <div class="card-name pt-1 pb-4">
               <%= upcoming_article.title %>
+            </div>
+            <div class="card-bottom">
+              <div class="card-progress">
+                <div class="row col-12 justify-content-between">
+                  <div class="read-text">
+                    Gelesen
+                  </div>
+                  <% if @read_articles.include?(upcoming_article) %>
+                    <div class="progress-percentage">
+                      100%
+                    </div>
+                    <progress class="w-100" value="100" max="100"></progress>
+                  <% else %>
+                    <div class="progress-percentage">
+                      100%
+                    </div>
+                    <progress class="w-100" value="100" max="100"></progress>
+                  <% end %>
+                </div>
+              </div>
+              <div class="card-stats row justify-content-between">
+                <div class="read-articles row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">library_books</i>
+                  1
+                  Artikel
+                </div>
+                <div class="reading-time row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">access_time</i>
+                    <%= 1 * 2.5 %>
+                    min/Lesen
+                </div>
+              </div>
             </div>
           </div>
         <% end %>
@@ -63,9 +100,41 @@
     <% @bookmarked_articles.each do |bookmarked_article| %>
       <div class="col-lg-3 my-2">
         <%= link_to bookmarked_article do %>
-          <div class="card topic-card">
-            <div class="card-name">
+          <div class="card topic-card justify-content-between">
+            <div class="card-name pt-1 pb-4">
               <%= bookmarked_article.title %>
+            </div>
+            <div class="card-bottom">
+              <div class="card-progress">
+                <div class="row col-12 justify-content-between">
+                  <div class="read-text">
+                    Gelesen
+                  </div>
+                  <% if @read_articles.include?(bookmarked_article) %>
+                    <div class="progress-percentage">
+                      100%
+                    </div>
+                    <progress class="w-100" value="100" max="100"></progress>
+                  <% else %>
+                    <div class="progress-percentage">
+                      100%
+                    </div>
+                    <progress class="w-100" value="100" max="100"></progress>
+                  <% end %>
+                </div>
+              </div>
+              <div class="card-stats row justify-content-between">
+                <div class="read-articles row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">library_books</i>
+                  1
+                  Artikel
+                </div>
+                <div class="reading-time row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">access_time</i>
+                    <%= 1 * 2.5 %>
+                    min/Lesen
+                </div>
+              </div>
             </div>
           </div>
         <% end %>
@@ -75,13 +144,45 @@
 </div>
 <!-- read tab -->
 <div role="tabpanel" class="tab-pane py-3 mh-100" id="read">
-  <div class="row">  
+  <div class="row">
     <% @read_articles.each do |read_article| %>
       <div class="col-lg-3 my-2">
-        <%= link_to read_article do  %>
-          <div class="card topic-card">
-            <div class="card-name">
+        <%= link_to read_article do %>
+          <div class="card topic-card justify-content-between">
+            <div class="card-name pt-1 pb-4">
               <%= read_article.title %>
+            </div>
+            <div class="card-bottom">
+              <div class="card-progress">
+                <div class="row col-12 justify-content-between">
+                  <div class="read-text">
+                    Gelesen
+                  </div>
+                  <% if @read_articles.include?(read_article) %>
+                    <div class="progress-percentage">
+                      100%
+                    </div>
+                    <progress class="w-100" value="100" max="100"></progress>
+                  <% else %>
+                    <div class="progress-percentage">
+                      100%
+                    </div>
+                    <progress class="w-100" value="100" max="100"></progress>
+                  <% end %>
+                </div>
+              </div>
+              <div class="card-stats row justify-content-between">
+                <div class="read-articles row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">library_books</i>
+                  1
+                  Artikel
+                </div>
+                <div class="reading-time row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">access_time</i>
+                    <%= 1 * 2.5 %>
+                    min/Lesen
+                </div>
+              </div>
             </div>
           </div>
         <% end %>
