@@ -42,7 +42,11 @@
               </div>
             </div>
             <!-- content -->
+            <% if user_signed_in? || company_signed_in? %>
             <div class="row">
+            <% else %>
+            <div class="row w-100">
+            <% end %>
               <% if user_signed_in? && current_user.exam_date.blank? %>
                 <%= link_to profile_path, style: "width: 100%" do %>
                   <%= render 'shared/reminder', message: User::UPDATE_PROFILE_MESSAGE %>
