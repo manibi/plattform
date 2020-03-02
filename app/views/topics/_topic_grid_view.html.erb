@@ -1,3 +1,4 @@
+<%# raise %>
 <!-- topic tab -->
 <div role="tabpanel" class="tab-pane active py-3" id="topic">
   <div class="row">
@@ -20,7 +21,6 @@
                     </div>
                   </div>
                   <progress class="w-100" value="<%= (@read_categories.select { |c| c.topic_id == topic.id }.count) %>" max="<%= (@categories.select { |c| c.topic_id }.count) %>"></progress>
-                  <%# raise %>
                 </div>
                 <div class="card-stats row justify-content-between">
                   <div class="read-articles row mx-0 align-items-center">
