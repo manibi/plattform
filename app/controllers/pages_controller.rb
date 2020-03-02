@@ -8,7 +8,7 @@ class PagesController < ApplicationController
       @topics = @results.where(searchable_type: "Topic")
       @categories = @results.where(searchable_type: "Category")
       @articles = @results.where(searchable_type: "Article")
-# raise
+
       respond_to do |format|
         format.html {}
         format.json {}
