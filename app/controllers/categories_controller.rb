@@ -9,9 +9,9 @@ class CategoriesController < ApplicationController
     @category = Category.find(params[:id])
     @category_articles = @articles.select { |a| a.category_id == @category.id }
 
-    @read_articles = current_user.read_articles
+    @read_articles = @category.articles.select { |a| current_user.read_articles.include?(a) }
     @upcoming_articles = @category.articles.select { |a| @read_articles.exclude?(a) }
-    @bookmarked_articles = current_user.bookmarked_articles
+    @bookmarked_articles = @category.articles.select { |a| current_user.bookmarked_articles.include?(a) }
   end
 
   def new
