@@ -75,6 +75,13 @@
                   Artikel markieren
                 <% end %>
               <% end %>
+              <% unless @article.read_for?(current_user) %>
+                  <%= link_to "Artikel als gelesen markieren",
+                              read_article_path(@article),
+                              method: :post,
+                              class: "btn btn-outline-primary mt-2"%>
+
+              <% end %>
             </p>
           </div>
         </div>
