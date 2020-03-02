@@ -4,11 +4,12 @@
     <% @topics.each do |topic| %>
       <div class="col-lg-3 my-2">
         <%= link_to topic do %>
-          <div class="card topic-card">
-            <div class="card-name pt-1 pb-4">
+          <div class="card topic-card justify-content-between">
+            <div class="card-name pt-1 pb-3">
               <%= topic.name %>
             </div>
-            <div class="card-progress">
+            <div class="card-bottom">
+              <div class="card-progress">
                 <div class="row col-12 justify-content-between">
                   <div class="read-text">
                     Gelesen
@@ -19,6 +20,19 @@
                 </div>
                 <progress class="w-100" value="<%= (@read_categories.select { |c| c.topic_id == topic.id }.count) %>" max="<%= (@categories.select { |c| c.topic_id }.count) %>"></progress>
                 <%# raise %>
+              </div>
+              <div class="card-stats row justify-content-between">
+                <div class="read-articles row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">library_books</i>
+                  <%= topic.categories.map{|c| c.articles.count}.sum %>
+                  Artikel
+                </div>
+                <div class="reading-time row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">access_time</i>
+                    <%= topic.categories.map{|c| c.articles.count}.sum * 2.5 %>
+                    min/Lesen
+                </div>
+              </div>
             </div>
           </div>
         <% end %>
@@ -28,13 +42,39 @@
 </div>
 <!-- upcoming tab -->
 <div role="tabpanel" class="tab-pane py-3 mh-100" id="upcoming">
-  <div class="row">  
+  <div class="row">
     <% @upcoming_topics.each do |upcoming_topic| %>
       <div class="col-lg-3 my-2">
         <%= link_to upcoming_topic do %>
-          <div class="card topic-card">
-            <div class="card-name">
+          <div class="card topic-card justify-content-between">
+            <div class="card-name pt-1 pb-3">
               <%= upcoming_topic.name %>
+            </div>
+            <div class="card-bottom">
+              <div class="card-progress">
+                <div class="row col-12 justify-content-between">
+                  <div class="read-text">
+                    Gelesen
+                  </div>
+                  <div class="progress-percentage">
+                    <%= '%.2f' % ((@read_categories.select { |c| c.topic_id == upcoming_topic.id }.count * 100) / @categories.select { |c| c.topic_id }.count) %>%
+                  </div>
+                </div>
+                <progress class="w-100" value="<%= (@read_categories.select { |c| c.topic_id == upcoming_topic.id }.count) %>" max="<%= (@categories.select { |c| c.topic_id }.count) %>"></progress>
+                <%# raise %>
+              </div>
+              <div class="card-stats row justify-content-between">
+                <div class="read-articles row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">library_books</i>
+                  <%= upcoming_topic.categories.map{|c| c.articles.count}.sum %>
+                  Artikel
+                </div>
+                <div class="reading-time row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">access_time</i>
+                    <%= upcoming_topic.categories.map{|c| c.articles.count}.sum * 2.5 %>
+                    min/Lesen
+                </div>
+              </div>
             </div>
           </div>
         <% end %>
@@ -48,9 +88,35 @@
     <% @bookmarked_topics.each do |bookmarked_topic| %>
       <div class="col-lg-3 my-2">
         <%= link_to bookmarked_topic do %>
-          <div class="card topic-card">
-            <div class="card-name">
+          <div class="card topic-card justify-content-between">
+            <div class="card-name pt-1 pb-3">
               <%= bookmarked_topic.name %>
+            </div>
+            <div class="card-bottom">
+              <div class="card-progress">
+                <div class="row col-12 justify-content-between">
+                  <div class="read-text">
+                    Gelesen
+                  </div>
+                  <div class="progress-percentage">
+                    <%= '%.2f' % ((@read_categories.select { |c| c.topic_id == bookmarked_topic.id }.count * 100) / @categories.select { |c| c.topic_id }.count) %>%
+                  </div>
+                </div>
+                <progress class="w-100" value="<%= (@read_categories.select { |c| c.topic_id == bookmarked_topic.id }.count) %>" max="<%= (@categories.select { |c| c.topic_id }.count) %>"></progress>
+                <%# raise %>
+              </div>
+              <div class="card-stats row justify-content-between">
+                <div class="read-articles row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">library_books</i>
+                  <%= bookmarked_topic.categories.map{|c| c.articles.count}.sum %>
+                  Artikel
+                </div>
+                <div class="reading-time row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">access_time</i>
+                    <%= bookmarked_topic.categories.map{|c| c.articles.count}.sum * 2.5 %>
+                    min/Lesen
+                </div>
+              </div>
             </div>
           </div>
         <% end %>
@@ -60,13 +126,39 @@
 </div>
 <!-- read tab -->
 <div role="tabpanel" class="tab-pane py-3 mh-100" id="read">
-  <div class="row">  
+  <div class="row">
     <% @read_topics.each do |read_topic| %>
       <div class="col-lg-3 my-2">
-        <%= link_to read_topic do  %>
-          <div class="card topic-card">
-            <div class="card-name">
+        <%= link_to read_topic do %>
+          <div class="card topic-card justify-content-between">
+            <div class="card-name pt-1 pb-3">
               <%= read_topic.name %>
+            </div>
+            <div class="card-bottom">
+              <div class="card-progress">
+                <div class="row col-12 justify-content-between">
+                  <div class="read-text">
+                    Gelesen
+                  </div>
+                  <div class="progress-percentage">
+                    <%= '%.2f' % ((@read_categories.select { |c| c.topic_id == read_topic.id }.count * 100) / @categories.select { |c| c.topic_id }.count) %>%
+                  </div>
+                </div>
+                <progress class="w-100" value="<%= (@read_categories.select { |c| c.topic_id == read_topic.id }.count) %>" max="<%= (@categories.select { |c| c.topic_id }.count) %>"></progress>
+                <%# raise %>
+              </div>
+              <div class="card-stats row justify-content-between">
+                <div class="read-articles row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">library_books</i>
+                  <%= read_topic.categories.map{|c| c.articles.count}.sum %>
+                  Artikel
+                </div>
+                <div class="reading-time row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">access_time</i>
+                    <%= read_topic.categories.map{|c| c.articles.count}.sum * 2.5 %>
+                    min/Lesen
+                </div>
+              </div>
             </div>
           </div>
         <% end %>

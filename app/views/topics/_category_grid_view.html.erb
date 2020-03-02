@@ -4,31 +4,33 @@
     <% @categories.each do |category| %>
       <div class="col-lg-3 my-2">
         <%= link_to category do %>
-          <div class="card topic-card">
+          <div class="card topic-card justify-content-between">
             <div class="card-name pt-1 pb-4">
               <%= category.title %>
             </div>
-          <div class="card-progress">
-              <div class="row col-12 justify-content-between">
-                <div class="read-text">
-                  Gelesen
+            <div class="card-bottom">
+              <div class="card-progress">
+                <div class="row col-12 justify-content-between">
+                  <div class="read-text">
+                    Gelesen
+                  </div>
+                  <div class="progress-percentage">
+                    <%= '%.2f' % (((category.articles & @read_articles).count * 100) / (category.articles.count)) %>%
+                  </div>
                 </div>
-                <div class="progress-percentage">
-                  <%= '%.2f' % (((category.articles & @read_articles).count * 100) / (category.articles.count)) %>%
-                </div>
+                <progress class="w-100" value="<%= (category.articles & @read_articles).count %>" max="<%= (category.articles.count) %>"></progress>
               </div>
-              <progress class="w-100" value="<%= (category.articles & @read_articles).count %>" max="<%= (category.articles.count) %>"></progress>
-            </div>
-            <div class="card-stats row">
-              <div class="read-articles pr-5">
-                <i class="material-icons-sharp stats-icon">library_books</i>
-                <%= category.articles.count %>
-                Artikel
-              </div>
-              <div class="reading-time row mx-0">
-                <i class="material-icons-sharp stats-icon">access_time</i>
+              <div class="card-stats row justify-content-between">
+                <div class="read-articles row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">library_books</i>
                   <%= category.articles.count %>
-                  min/Lesen
+                  Artikel
+                </div>
+                <div class="reading-time row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">access_time</i>
+                    <%= category.articles.count * 2.5 %>
+                    min/Lesen
+                </div>
               </div>
             </div>
           </div>
@@ -39,13 +41,38 @@
 </div>
 <!-- upcoming tab -->
 <div role="tabpanel" class="tab-pane py-3 mh-100" id="upcoming">
-  <div class="row">  
+  <div class="row">
     <% @upcoming_categories.each do |upcoming_category| %>
       <div class="col-lg-3 my-2">
         <%= link_to upcoming_category do %>
-          <div class="card topic-card">
-            <div class="card-name">
+          <div class="card topic-card justify-content-between">
+            <div class="card-name pt-1 pb-4">
               <%= upcoming_category.title %>
+            </div>
+            <div class="card-bottom">
+              <div class="card-progress">
+                <div class="row col-12 justify-content-between">
+                  <div class="read-text">
+                    Gelesen
+                  </div>
+                  <div class="progress-percentage">
+                    <%= '%.2f' % (((upcoming_category.articles & @read_articles).count * 100) / (upcoming_category.articles.count)) %>%
+                  </div>
+                </div>
+                <progress class="w-100" value="<%= (upcoming_category.articles & @read_articles).count %>" max="<%= (upcoming_category.articles.count) %>"></progress>
+              </div>
+              <div class="card-stats row justify-content-between">
+                <div class="read-articles row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">library_books</i>
+                  <%= upcoming_category.articles.count %>
+                  Artikel
+                </div>
+                <div class="reading-time row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">access_time</i>
+                    <%= upcoming_category.articles.count * 2.5 %>
+                    min/Lesen
+                </div>
+              </div>
             </div>
           </div>
         <% end %>
@@ -59,9 +86,34 @@
     <% @bookmarked_categories.each do |bookmarked_category| %>
       <div class="col-lg-3 my-2">
         <%= link_to bookmarked_category do %>
-          <div class="card topic-card">
-            <div class="card-name">
+          <div class="card topic-card justify-content-between">
+            <div class="card-name pt-1 pb-4">
               <%= bookmarked_category.title %>
+            </div>
+            <div class="card-bottom">
+              <div class="card-progress">
+                <div class="row col-12 justify-content-between">
+                  <div class="read-text">
+                    Gelesen
+                  </div>
+                  <div class="progress-percentage">
+                    <%= '%.2f' % (((bookmarked_category.articles & @read_articles).count * 100) / (bookmarked_category.articles.count)) %>%
+                  </div>
+                </div>
+                <progress class="w-100" value="<%= (bookmarked_category.articles & @read_articles).count %>" max="<%= (bookmarked_category.articles.count) %>"></progress>
+              </div>
+              <div class="card-stats row justify-content-between">
+                <div class="read-articles row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">library_books</i>
+                  <%= bookmarked_category.articles.count %>
+                  Artikel
+                </div>
+                <div class="reading-time row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">access_time</i>
+                    <%= bookmarked_category.articles.count * 2.5 %>
+                    min/Lesen
+                </div>
+              </div>
             </div>
           </div>
         <% end %>
@@ -71,13 +123,38 @@
 </div>
 <!-- read tab -->
 <div role="tabpanel" class="tab-pane py-3 mh-100" id="read">
-  <div class="row">  
+  <div class="row">
     <% @read_categories.each do |read_category| %>
       <div class="col-lg-3 my-2">
-        <%= link_to read_category do  %>
-          <div class="card topic-card">
-            <div class="card-name">
+        <%= link_to read_category do %>
+          <div class="card topic-card justify-content-between">
+            <div class="card-name pt-1 pb-4">
               <%= read_category.title %>
+            </div>
+            <div class="card-bottom">
+              <div class="card-progress">
+                <div class="row col-12 justify-content-between">
+                  <div class="read-text">
+                    Gelesen
+                  </div>
+                  <div class="progress-percentage">
+                    <%= '%.2f' % (((read_category.articles & @read_articles).count * 100) / (read_category.articles.count)) %>%
+                  </div>
+                </div>
+                <progress class="w-100" value="<%= (read_category.articles & @read_articles).count %>" max="<%= (read_category.articles.count) %>"></progress>
+              </div>
+              <div class="card-stats row justify-content-between">
+                <div class="read-articles row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">library_books</i>
+                  <%= read_category.articles.count %>
+                  Artikel
+                </div>
+                <div class="reading-time row mx-0 align-items-center">
+                  <i class="material-icons-sharp stats-icon p-1">access_time</i>
+                    <%= read_category.articles.count * 2.5 %>
+                    min/Lesen
+                </div>
+              </div>
             </div>
           </div>
         <% end %>
