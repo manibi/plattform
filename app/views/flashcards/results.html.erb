@@ -1,29 +1,53 @@
-<div class="container">
-  <div class="row col-12 mt-3">
-    breadcrumbs
+<div class="container">  
+  <div class="row py-3 header">
+    <div class="">
+      <!-- breadcrumbs -->
+      <div class="row mt-3 col-12 breadcrumbs ml-3">
+        <%= link_to "Alle Lernfelder", topics_path %> &nbsp
+        <div class="breadcrumb-arrow"> > </div> &nbsp
+        <%= link_to @topic.name, @topic %> &nbsp
+        <div class="breadcrumb-arrow"> > </div> &nbsp
+        <%= link_to @category.title, @category %> &nbsp
+      <div class="breadcrumb-arrow"> > </div> &nbsp
+      <%= link_to @article.title, @article %>
+      </div>
+    </div>
+    <!-- article header -->
+    <div class="row col-12 justify-content-between">
+      <div class="ml-3 col-6 py-3">
+        <h3>Quiz</h3>
+      </div>
+    </div>
   </div>
-  <div class="row col-12 mt-3 justify-content-around">
-    <div class="card col-8 p-3">
-      <div class="container">
-        <div class="text-center">
-          Results
+      <div class="row col-12 mt-3 justify-content-around h-50">
+        <div class="card col-8 p-3">
+          <div class="container row mx-0 justify-content-between h-100">
+            <div class="results-header">
+              <div class="text-center">
+                Lies dir vor dem Quiz am besten immer gründlich den dazugehörigen Artikel durch!
+              </div>
+              <div class="card-title text-center mt-3">
+                <h4>Auswertung</h4>
+              </div>
+            </div>
+            <div class="card-body row align-items-bottom justify-content-between pb-0">
+              <div class="align-text-bottom"> 
+                Fragen in diesem Quiz: <b><%= @all_answered_flashcards.count %></b>
+              </div>
+              <div class="align-text-bottom">
+                Anzahl der Versuche: <b><%= @tries %></b>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="card-title text-center mt-3">
-          <h4>Flashcard message</h4>
-        </div>
-        <div class="card-body">
-          <p>Number of played flashcards: <b><%= @all_answered_flashcards.count %></b></p>
-          <p>Number of tries: <b><%= @tries %></b></p>
+      </div>
+      <div class="row col-12 mt-3 mx-0 justify-content-around">
+        <div class="col-8 p-3 d-flex justify-content-between">
+        <%= link_to "Zurück zu Artikel", @article, class: "width-btn btn btn-outline-primary" %>
+        <%= link_to "Quiz wiederholen", [@article, @article.flashcards.first], class: "width-btn btn btn-outline-success" %>
+        <%= link_to "Nächster Artikel", @next_article, class: "width-btn btn btn-outline-primary" %>
         </div>
       </div>
     </div>
   </div>
-  <div class="row col-12 mt-3 justify-content-around">
-    <div class="col-8 p-3 d-flex justify-content-between">
-    <%= link_to "Back to article", @article, class: "width-btn btn btn-outline-primary btn-lg" %>
-    <%= link_to "Repeat quiz", [@article, @article.flashcards.first], class: "width-btn btn btn-outline-success btn-lg ml-5" %>
-    <%= link_to "Next article", @next_article, class: "width-btn btn btn-outline-primary btn-lg ml-5" %>
-    </div>
-  </div>
 </div>
-

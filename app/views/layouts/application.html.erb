@@ -42,6 +42,7 @@
               </div>
             </div>
             <!-- content -->
+            <% if user_signed_in? || company_signed_in? %>
             <div class="row">
               <% if user_signed_in? && current_user.student? && current_user.exam_date.blank? %>
                 <%= link_to profile_path, style: "width: 100%" do %>

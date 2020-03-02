@@ -2,7 +2,11 @@
 	<!-- Welcome back message -->
 	<div class="row mt-3">
 		<div class="col-12">
-		<strong>Willkommen zurück, Mark!</strong>
+			<% if current_user.first_name != "" %>
+				<strong>Willkommen zurück, <%= current_user.first_name %>!</strong>
+			<% else %>
+				<strong>Willkommen zurück!</strong>
+			<% end %>
 		<p>Mach weiter so, du bist schon sehr weit gekommen.</p>
 		</div>
 	</div>
@@ -106,7 +110,8 @@
 						</strong>
 					</div>
 					<div class="card-body-articles pb-3 border-bottom">
-		              	<% @current_category.articles.each do |article| %>
+		              	<% @current_category.articles.each do |article| %> 
+		              	<%# raise %>
 		              		<div class="row article_row p-1">
 			                	<div class="card-body-topic-title col-11">
 			                		<%= link_to article do  %>
