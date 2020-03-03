@@ -33,7 +33,7 @@ body {
   .chart-center {
     position: absolute;
     border-radius: 50%;
-  
+
     span {
       display: block;
       text-align: center;
@@ -41,14 +41,14 @@ body {
   }
 }
 
-@mixin donut-chart($name, $perc, $size, $width, $base, $center, $color, $textColor: $color, $textSize: ($size / 4)) {
-  
+@mixin donut-chart($perc, $size, $width, $base, $center, $color, $textColor: $color, $textSize: ($size / 4)) {
+
   $color2: $color;
   $base2: $base;
 	$deg: ($perc/100*360)+deg;
 	$deg1: 90deg;
 	$deg2: $deg;
-	
+
 	// If percentage is less than 50%
 	@if $perc < 50 {
 		$base: $color;
@@ -57,13 +57,13 @@ body {
     $deg1: ($perc/100*360+90)+deg;
 		$deg2: 0deg;
 	}
-    
-  .donut-chart {
-    &#{$name} {
+
+  &.donut-chart {
+    // &#{$name} {
       width: $size;
       height: $size;
       background: $base;
-      
+
       .slice {
         &.one {
           clip: rect(0 $size $size/2 0);
@@ -71,7 +71,7 @@ body {
           transform: rotate($deg1);
           background: $color;
         }
-        
+
         &.two {
           clip: rect(0 $size/2 $size 0);
           -webkit-transform: rotate($deg2);
@@ -79,30 +79,36 @@ body {
           background: $color2;
         }
       }
-      
+
       .chart-center {
         top: $width;
         left: $width;
         width: $size - ($width * 2);
         height: $size - ($width * 2);
         background: $center;
-        
+
         span {
           font-size: $textSize;
           line-height: $size - ($width * 2);
           color: $textColor;
-        
+
           &:after {
           content: '#{$perc}%';
           }
         }
       }
-    }
+    // }
   }
 } // mixin
 
 // Charts
-@include donut-chart('.chart1', 75, 8vh, 0.5vh, $light, $white, $primary);
-@include donut-chart('.chart2', 66, 8vh, 0.5vh, $light, $white, $success);
-@include donut-chart('.chart3', 14, 8vh, 0.5vh, $light, $white, $warning);
-@include donut-chart('.chart4', 8, 8vh, 0.5vh, $light, $white, $danger);
+
+// @include donut-chart('.chart2', 66, 8vh, 0.5vh, $light, $white, $success);
+// @include donut-chart('.chart3', 14, 8vh, 0.5vh, $light, $white, $warning);
+// @include donut-chart('.chart4', 8, 8vh, 0.5vh, $light, $white, $danger);
+
+@for $i  from 0 to 100 {
+  .donut-chart-#{$i} {
+    @include donut-chart($i, 8vh, 0.5vh, $light, $white, $primary);
+  }
+}
