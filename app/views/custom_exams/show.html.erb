@@ -1,39 +1,39 @@
 <div class="container">
   <div class="row">
-    <h2 class="heading-1">Exam from <%= @exam.created_at.to_date %></h2>
+    <h2 class="heading-1">Prüfungssimulation vom <%= @exam.created_at.to_date %></h2>
   </div>
 
 <div class="container">
   <div class="row">
-    <h2>Results</h2>
+    <h2>Ergebnisse</h2>
   </div>
   <div class="row">
     <div class="col">
       Score: <%= @correct_answers %> / <%= @exam.questions.count %>
     </div>
     <div class="col">
-      Right answers: <%= @correct_answers %>
+      Richtig beantwortet: <%= @correct_answers %>
     </div>
     <div class="col">
-      Wrong answers: <%= @exam.questions.size - @correct_answers %>
+      Falsch beantwortet: <%= @exam.questions.size - @correct_answers %>
     </div>
         <div class="col">
-      Not answered: <%= @exam.unanswered_questions %>
+      Nicht beantwortet: <%= @exam.unanswered_questions %>
     </div>
   </div>
 
   <% @questions.each.with_index do |q, i| %>
     <div class="row">
      <div class="col">
-       <%= link_to "Question #{i + 1}", custom_exam_flashcard_path(@exam, @exam.questions[i]) %>
+       <%= link_to "Frage #{i + 1}", custom_exam_flashcard_path(@exam, @exam.questions[i]) %>
      </div>
      <div class="col">
       <% if @exam.answer_for(q)&.correct %>
-        <b class="bg-success">Correct</b>
+        <b class="bg-success">Richtig</b>
       <% elsif !@exam.answer_for(q)&.answered %>
-        <span class="bg-warning">Not answered</span>
+        <span class="bg-warning">Nicht beantwortet</span>
       <% else %>
-        <em class="bg-danger">Wrong</em>
+        <em class="bg-danger">Falsch</em>
       <% end %>
      </div>
     </div>
