@@ -14,21 +14,23 @@
     <div class="col">
       <h6>Themen(topics)</h6>
       <% current_user.profession.topics.each do |topic| %>
-        <label>
-          <%= check_box_tag "exam[topic_id]",
-                            topic.id,
-                            false,
-                            id: dom_id(topic),
-                            data: {
-                              remote: true,
-                              url: url_for(
-                                action: :add_exam_categories,
-                                id: dom_id(topic)),
-                              method: "GET"
-                            }
-                            %>
-          <%= topic.name %>
-        </label>
+        <% if topic.categories.map{|c| c.articles.count}.sum > 0 %>
+          <label>
+            <%= check_box_tag "exam[topic_id]",
+                              topic.id,
+                              false,
+                              id: dom_id(topic),
+                              data: {
+                                remote: true,
+                                url: url_for(
+                                  action: :add_exam_categories,
+                                  id: dom_id(topic)),
+                                method: "GET"
+                              }
+                              %>
+            <%= topic.name %>
+          </label>
+        <% end %>
       <% end %>
     </div>
     <div class="col" id="examCategories">
