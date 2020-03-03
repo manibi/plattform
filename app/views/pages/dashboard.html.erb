@@ -16,7 +16,8 @@
 			<div class="card col-12 h-100">
 				<div class="row">
 					<div class="col-4">
-						<div class="donut-chart chart1">
+					<!-- set number to the value of the chart -->
+						<div class="<%= "donut-chart-#{number}"%> donut-chart chart1">
 							<div class="slice one"></div>
 							<div class="slice two"></div>
 							<div class="chart-center">
@@ -24,7 +25,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-8">						
+					<div class="col-8">
 						<strong class="card-title">Tage</strong>
 						<p>Bis zu deinem Exam</p>
 					</div>
@@ -48,7 +49,7 @@
 					<div class="progress-percentage">
 					  <%= '%.2f' % (((current_user.articles - @not_read_articles).count * 100) / (@articles.count)) %>%
 					</div>
-					<div class="col-8">						
+					<div class="col-8">
 						<strong class="card-title">Artikel</strong>
 						<p>gelesen</p>
 					</div>
@@ -67,7 +68,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-8">						
+					<div class="col-8">
 						<strong class="card-title">Quiz</strong>
 						<p>Korrekt beantwortet</p>
 					</div>
@@ -86,7 +87,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-8">						
+					<div class="col-8">
 						<strong class="card-title">Prüfungen</strong>
 						<p>erfolgreich absolviert</p>
 					</div>
@@ -110,7 +111,7 @@
 						</strong>
 					</div>
 					<div class="card-body-articles pb-3 border-bottom">
-		              	<% @current_category.articles.each do |article| %> 
+		              	<% @current_category.articles.each do |article| %>
 		              	<%# raise %>
 		              		<div class="row article_row p-1">
 			                	<div class="card-body-topic-title col-11">
@@ -127,9 +128,9 @@
 		            <div class="row p-3 align-items-center">
 		            	<div class="col-10">
 		            		<div class="">
-		            			Verbleibende Lesezeit bei dieser Kategorie: 
+		            			Verbleibende Lesezeit bei dieser Kategorie:
 		            			<strong>
-		            				<%= @current_category.articles.count * 2.5 %> 
+		            				<%= @current_category.articles.count * 2.5 %>
 		            			Minuten</strong>
 		            		</div>
 		            	</div>
