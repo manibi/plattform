@@ -17,6 +17,17 @@ class PagesController < ApplicationController
   end
 
   def landing_page
+    if company_signed_in?
+      redirect_to company_dashboard_path
+    elsif user_signed_in?
+      if current_user.admin?
+        redirect_to admin_dashboard_path
+      elsif current_user.author?
+        redirect_to author_dashboard_path
+      else
+        redirect_to dashboard_path
+      end
+    end
   end
 
   def dashboard
