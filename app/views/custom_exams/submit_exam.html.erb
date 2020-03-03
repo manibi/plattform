@@ -1,26 +1,30 @@
 <div class="container">
-  <div class="row">
-    <div class="col">
-      <%= link_to "Submit your exam",
-                  custom_exam_results_path(@exam),
-                  class: "btn btn-primary",
-                  data: { confirm: 'Are you sure?' } if !@exam.submitted %>
+  <div class="d-flex justify-content-around">
+    <div class="card col-6 mt-5">  
+      <div class="row">
+        <div class="col d-flex justify-content-center">
+          <%= link_to "Prüfung beenden",
+                      custom_exam_results_path(@exam),
+                      class: "btn btn-primary",
+                      data: { confirm: 'Bist du sicher?' } if !@exam.submitted %>
+        </div>
+      </div>
+      <div class="row mt-3">
+      <% @questions.each.with_index do |q, i| %>
+        <div class="col-7 pl-5 d-flex justify-content-between align-items-center py-1">
+          <%= link_to "Frage #{i + 1}", custom_exam_flashcard_path(@exam, @exam.questions[i]) %>
+        
+          <% if @exam.answer_for(q)&.bookmarked %>
+            <span class="badge badge-pill badge-primary">Markiert</span>
+          <% end %>
+
+          <% if @exam.answer_for(q)&.answered %>
+            <span class="badge badge-pill badge-success">Beantwortet</span>
+          <% else %>
+            <span class="badge badge-pill badge-warning">Nicht beantwortet</span>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </div>
-  <div class="row">
-  <% @questions.each.with_index do |q, i| %>
-    <div class="col-12">
-      <%= link_to "Question #{i + 1}", custom_exam_flashcard_path(@exam, @exam.questions[i]) %>
-
-      <% if @exam.answer_for(q)&.bookmarked %>
-        <span class="badge badge-pill badge-primary">Marked</span>
-      <% end %>
-
-      <% if @exam.answer_for(q)&.answered %>
-        <span class="badge badge-pill badge-success">Answered</span>
-      <% else %>
-        <span class="badge badge-pill badge-warning">Not answered</span>
-      <% end %>
-    </div>
-  <% end %>
 </div>
