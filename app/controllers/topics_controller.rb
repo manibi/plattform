@@ -49,18 +49,24 @@ class TopicsController < ApplicationController
   end
 
   def tab_params_index
-    @upcoming_articles = policy_scope(Article)
-    @bookmarked_articles = current_user.bookmarked_articles
-    @read_articles = current_user.read_articles
     @topics = policy_scope(Topic)
     @categories = current_user.all_categories
+    @articles = current_user.all_articles
 
+    @read_articles = current_user.read_articles
+    @read_categories = @categories.find(@read_articles.map { |a| a.category_id } )
+    @read_topics = @topics.select { |t|  @read_categories.map { |c| c.topic_id }.include?(t.id) }
+    # @read_topics = @topics.find(@read_categories.map { |c| c.topic_id })
+    
+    @upcoming_articles = @articles - @read_articles
     @upcoming_categories = @categories.find(@upcoming_articles.map { |a| a.category_id })
-    @upcoming_topics = (@topics.find(@upcoming_categories.map { |c| c.topic_id })).sort
+    @upcoming_topics = @topics.select { |t| @upcoming_categories.map { |c| c.topic_id }.include?(t.id) }
+    # upcoming_topics = topics.select {|t| t.categories.each {|c| c.articles.each { |a| @read_topics.exclude?(a) } } }
+
+    @bookmarked_articles = current_user.bookmarked_articles
     @bookmarked_categories = @categories.find(@bookmarked_articles.map { |a| a.category_id })
-    @bookmarked_topics = @topics.find(@bookmarked_categories.map { |c| c.topic_id })
-    @read_categories = @categories.find(@read_articles.map { |a| a.category_id })
-    @read_topics = @topics.find(@read_categories.map { |c| c.topic_id })
+    @bookmarked_topics = @topics.select { |t| @bookmarked_categories.map { |c| c.topic_id }.include?(t.id) }
+    # @bookmarked_topics = @topics.select {|t| t.categories.each {|c| c.articles.each { |a| current_user.bookmarked_articles.include?(a) } } }
   end
 
   def tab_params_show
