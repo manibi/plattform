@@ -8,9 +8,9 @@
       <div class="breadcrumb-arrow"> > </div> &nbsp
       <%= @article.title %>
     </div>
-  <div class="row flex-row flex-nowrap mt-3">
+  <div class="row mt-3 d-flex justify-content-end">
     <!-- article -->
-    <div class="col-9">
+    <div class="col-6">
       <div class="card">
         <div class="row">
           <div class="col">
@@ -43,7 +43,7 @@
               </span> -->
             </h1>
           </div>
-          <div class="col-1 row mx-0 align-items-center">
+          <div class="col-2 row mx-0 align-items-center">
               <% if current_user.author? %>
                 <% if @article.draft? %>
                   <%= link_to 'Artikel veröffentlichen', publish_article_path(@article),
@@ -71,13 +71,6 @@
                                                 class: "" do %>
                   <i class="material-icons-sharp bookmark-icon">bookmark_border</i>
                 <% end %>
-              <% end %>
-              <% unless @article.read_for?(current_user) %>
-                  <%= link_to "Artikel als gelesen markieren",
-                              read_article_path(@article),
-                              method: :post,
-                              class: "btn btn-outline-primary mt-2"%>
-
               <% end %>
             </p>
           </div>
@@ -123,19 +116,26 @@
       <% end %>
     </div>
     <div class="col-3 position-sticky">
-      <div class="card position-sticky sticky-top">
+      <div class="card col-12 position-sticky sticky-top">
       <ul>
         <% @article.chapters.sort_by { |chap| chap.title }.each do |chap| %>
         <li><%= chap.title %></li>
         <% end %>
       </ul>
       </div>
-      <% if @flashcard %>
-      <div class="card mt-3 quizcard">
+      <% if @article.read_for?(current_user) %>
+        <div class="card col-12 mt-3 quizcard">
+          <%= link_to "Artikel als gelesen markieren",
+                  read_article_path(@article),
+                  method: :post,
+                  class: "btn btn-outline-primary mt-2"%>
+        </div>
+      <% elsif @flashcard %>
+        <div class="card col-12 mt-3 quizcard">
         Bereit zum Quiz über <%= @article.title %>?
-        <%= link_to "Quiz", article_flashcard_path(@article, @flashcard), class: "btn btn-primary", :"data-turbolinks" => false if @flashcard %>
-        <% end %>
-      </div>
+        <%= link_to "Quiz", article_flashcard_path(@article, @flashcard), class: "btn btn-primary" %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
