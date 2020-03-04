@@ -27,6 +27,9 @@ class ArticlesController < ApplicationController
 
   def new
     @article = Article.new
+    @article.chapters.build(title: "Erläuterung")
+    @article.chapters.build(title: "Praxisbeispiel")
+    @article.chapters.build(title: "Verwandte Themen")
     authorize @article
     @categories = current_user.all_categories
   end
