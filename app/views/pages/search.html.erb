@@ -1,17 +1,50 @@
-<div class="container">
-  <div class="row" id="searchItems">
-    <div class="col">
+<div class="container px-0 header">
+  <div class="row px-0 mx-0" id="searchItems">
+    <div class="row mx-0 col-12 mt-3">
+      <h2>Suchergebnisse:</h2>
         <!-- p renders if no search items are found, change text content in emptySearchPage.js -->
         <p class="lead" id="emptySearch"></p>
     </div>
-    <% @results.each do |result| %>
-      <% if result.searchable_type == "Topic" && result.searchable.profession == current_user.profession %>
-          <%= render "card_link_topic", result: result %>
-      <% elsif result.searchable_type == "Category" && result.searchable.topic.profession == current_user.profession %>
-        <%= render "card_link", result: result %>
-      <% elsif result.searchable_type == "Article" && result.searchable.category.topic.profession == current_user.profession %>
-        <%= render "card_link", result: result %>
-      <% end %>
-    <% end %>
+    <div class="row col-12">
+      <!-- Topics -->
+      <div class="col-4 px-0 grid">
+        <div class="row col-12 mx-0 py-3 header">
+          <h3>Lernfelder:</h3>
+        </div>
+        <div class="row col-12 mx-0">
+          <% @results.each do |result| %>
+            <% if result.searchable_type == "Topic" && result.searchable.profession == current_user.profession %>
+              <%= render "card_link_topic", result: result %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+      <!-- Category -->
+      <div class="col-4 px-0 grid">
+        <div class="row col-12 mx-0 py-3 header">
+          <h3>Kategorien:</h3>
+        </div>
+        <div class="row col-12 mx-0">
+          <% @results.each do |result| %>
+            <% if result.searchable_type == "Category" && result.searchable.topic.profession == current_user.profession %>
+              <%= render "card_link", result: result %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+      <!-- Article -->
+      <div class="col-4 px-0 grid">
+        <div class="row col-12 mx-0 py-3 header">
+          <h3>Artikel:</h3>
+        </div>
+        <div class="row col-12 mx-0">
+          <% @results.each do |result| %>
+            <% if result.searchable_type == "Article" && result.searchable.category.topic.profession == current_user.profession %>
+              <%= render "card_link", result: result %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

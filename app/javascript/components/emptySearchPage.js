@@ -3,7 +3,7 @@ const emptySearchPage = () => {
   const emptySearch = document.getElementById('emptySearch');
 
   if (searchItems && searchItems.childElementCount == 1) {
-    emptySearch.textContent = "Nothing here! Search again...";
+    emptySearch.textContent = "Nichts gefunden, versuche es nochmal.";
   }
 }
 export { emptySearchPage };
