@@ -17,7 +17,11 @@
 				<div class="row">
 					<div class="col-4">
 					<!-- set number to the value of the chart -->
+						<% if current_user.exam_date %>
 						<div class="<%= "donut-chart-#{ (current_user.exam_date.to_date - Date.new(2020, 3, 1)).to_i }"%> donut-chart chart1">
+						<% else %>
+						<div class="<%= "donut-chart-#{0}"%> donut-chart chart1">
+						<% end %>
 							<div class="slice one"></div>
 							<div class="slice two"></div>
 							<div class="chart-center non-perc">
@@ -107,7 +111,7 @@
 						</strong>
 					</div>
 					<div class="card-body-articles pb-3 border-bottom">
-		              	<% @current_category.articles.each do |article| %>
+		              	<% @current_category.articles.published.each do |article| %>
 		              	<%# raise %>
 		              		<div class="row article_row p-1">
 			                	<div class="card-body-topic-title col-11">
