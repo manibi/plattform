@@ -36,7 +36,7 @@ class FlashcardsController < ApplicationController
       @questions = @exam.all_questions
       @user_answers = @flashcard.user_answers_for(@exam)
     else
-      @article.read_for!(current_user) unless @article.read_for?(current_user)
+       @article.read_for!(current_user) unless @article.read_for?(current_user)
 
       # Reset flashcards for this article if re-taking the quiz
       if @article.flashcards.sort.first == @flashcard && current_user.correct_answered_flashcards_for(@article).count == @article.flashcards.count
@@ -205,7 +205,7 @@ class FlashcardsController < ApplicationController
     @article = Article.find(params[:article_id])
     authorize @article, :show?
 
-    @upcoming_articles = policy_scope(Article)
+    @upcoming_articles = policy_scope(Article).published
     @all_answered_flashcards = current_user.answered_flashcards_for(@article)
     @tries = current_user.user_flashcards_for(@article).pluck(:tries).sum
 
