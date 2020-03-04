@@ -533,7 +533,6 @@ data_bueromanagement.each do |row|
         content: quiz_question,
         flashcard_type: 'match_answers'
       )
-
       # Add answers to choose from
       flashcard.answers << Answer.create!(answers)
 
@@ -552,7 +551,9 @@ data_bueromanagement.each do |row|
       )
 
       # Add answers to choose from
-      add_flashcard_answers(flashcard, answers)
+      flashcard.answers << Answer.create!(answers)
+      # add_flashcard_answers(flashcard, answers)
+      # debugger
 
       # Matching correct answers
       flashcard.update(correct_answers: flashcard.answers.pluck(:id))
@@ -563,10 +564,10 @@ data_bueromanagement.each do |row|
 
       quiz_question = row[26]
       answers = mutiple_choice_answers_for(row, 25) # starts at index + 2
-      flashcard = db_article.flashcards.create!(
+      flashcard = db_article.flashcards.create!({
         content: quiz_question.strip,
         flashcard_type: 'multiple_choice'
-      )
+      })
 
       # Add answers to choose from
       add_flashcard_answers(flashcard, answers)
