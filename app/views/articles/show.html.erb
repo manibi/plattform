@@ -32,7 +32,7 @@
         </div>
         <!-- article headline -->
         <div class="row justify-content-between">
-          <div class="col-9">
+          <div class="col-11">
             <h1 class="heading-2">
               <%= @article.title %>
               <!-- <span class="badge badge-primary">
@@ -43,7 +43,7 @@
               </span> -->
             </h1>
           </div>
-          <div class="col-2 row mx-0 align-items-center">
+          <div class="col-1 row mx-0 px-0 align-items-center">
               <% if current_user.author? %>
                 <% if @article.draft? %>
                   <%= link_to 'Artikel veröffentlichen', publish_article_path(@article),
