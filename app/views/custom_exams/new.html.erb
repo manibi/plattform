@@ -24,6 +24,7 @@
         <h6>Lernfelder</h6>
        <!-- topic selection -->
         <% current_user.profession.topics.each do |topic| %>
+        <% if topic.categories.map{|c| c.articles.count}.sum > 0 %>
           <label>
             <%= check_box_tag "exam[topic_id]",
                               topic.id,
@@ -40,6 +41,7 @@
             <%= topic.name %>
           </label>
         <% end %>
+      <% end %>
       </div>
       <div class="col" id="examCategories">
         <h6>Kategorien</h6>
