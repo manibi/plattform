@@ -89,12 +89,16 @@
         <% end %>
       </ul>
       </div>
-      <% if @article.read_for?(current_user) %>
+      <% if !@article.read_for?(current_user) %>
         <div class="card col-12 mt-3 quizcard">
-          <%= link_to "Artikel als gelesen markieren",
-                  read_article_path(@article),
+          <%= link_to "Nächster Artikel", read_next_article_path , class: "width-btn btn btn-outline-primary" %>
+          <%#= link_to @next_article, class: "btn btn-outline-primary mt-2" do %>
+            <%#= link_to "Nächster Artikel",
+                  read_jump_next_article,
                   method: :post,
                   class: "btn btn-outline-primary mt-2"%>
+          <%# end %>
+          <%# raise %>
         </div>
       <% elsif @flashcard %>
         <div class="card col-12 mt-3 quizcard">

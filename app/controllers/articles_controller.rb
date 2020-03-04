@@ -98,6 +98,23 @@ class ArticlesController < ApplicationController
   def flashcards
   end
 
+  def read_next
+    @upcoming_articles = policy_scope(Article)
+
+    # Next article to read
+    if @upcoming_articles.empty?
+      @next_article = current_user.profession
+                                  .topics.first
+                                  .categories.first
+                                  .articles.first
+    else
+      @next_article = @upcoming_articles.first
+    end
+
+    @article.read_for!(current_user)
+    redirect_to @next_article
+  end
+
   private
 
   def set_article
