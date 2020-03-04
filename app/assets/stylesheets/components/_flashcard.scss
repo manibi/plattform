@@ -14,3 +14,26 @@
   background: none;
   border: none;
 }
+
+// .exam-question:nth-child(even) {
+// 	background-color: $light-white-gray !important;
+// }
+
+.exam-results:nth-child(even) {
+	color: red !important;
+	background-color: $light-white-gray !important;
+}
+
+.sticky-card {
+	// position: fixed;
+	// max-height: 80vh;
+	.sticky-questions {
+		position: fixed;
+		max-height: 70vh;
+	    // width: 150px;
+	    overflow-y: scroll;
+	    // top: 0;
+	    // bottom: 0;
+	}
+}
+
