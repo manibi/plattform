@@ -51,7 +51,6 @@ class PagesController < ApplicationController
     @category_index = @current_topic.categories.find(@current_article.category_id)
     @article_index = @category_index.article_ids.find_index(@current_article)
     # raise
-
   end
 
   def author_dashboard
