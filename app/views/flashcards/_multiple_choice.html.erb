@@ -27,16 +27,17 @@
     <% end %>
 
     <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
-    <%= f.submit "Check",
+    <%= f.submit "Prüfen",
               class: "flashcard-btn btn btn-primary", :"data-turbolinks" => false if action_name == "show" %>
   <% end %>
-  <%= link_to "Next",
+  <%= link_to "Nächste",
               next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
               class: "flashcard-btn btn btn-primary", :"data-turbolinks" => false if action_name == "answer_multiple_choice" %>
-  <% end %><!-- form -->
-  <hr>
-  <p>correct answers</p>
-  <% @flashcard.correct_answers.each do |correct_answer| %>
-    <p>- <%= Answer.find(correct_answer).content %></p>
   <% end %>
+  <!-- correct answer -->
+  <!-- <hr>
+  <p>correct answers</p>
+  <%# @flashcard.correct_answers.each do |correct_answer| %>
+    <p>- <%#= Answer.find(correct_answer).content %></p>
+  <%# end %> -->
 </div>

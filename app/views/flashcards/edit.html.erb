@@ -1,14 +1,20 @@
 
 <div class="container">
   <div class="row">
-    <h2>Edit Flashcard page</h2>
+    <h2>Quiz bearbeiten</h2>
   </div>
 
-  <div class="alert-info p-3 my-5">
+  <ul class="alert-info p-3 my-5">
     <li>
-      For matching answer flashcard, the answers match 1-2, 3-4,...
+      Bei Multiple Choice und Reihenfolge Aufgaben, füge die richtige Antwort auf der Aktualisieren Seite hinzu.
     </li>
-  </div>
+    <li>
+      Für Zuordnungsaufgaben, nutze die Soll/Haben Ansicht und ordne die Antworten nach dem Schema 1-2, 3-4, ... zu.
+    </li>
+    <li>
+      Für Tabellen Aufgaben, nutze die Tabellen Ansicht und füge in die erste Reihe die Titel der Spalten ein.
+    </li>
+  </ul>
 
   <div class="row">
     <div class="col-md-8">
@@ -17,7 +23,7 @@
   </div>
   <div class="row">
     <div class="col">
-      <%= link_to "New Flashcard", new_flashcard_path, class: "btn btn-success mt-3" %>
+      <%= link_to "Neue Frage", new_flashcard_path, class: "btn btn-success mt-3" %>
     </div>
   </div>
 </div>

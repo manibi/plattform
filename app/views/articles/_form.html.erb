@@ -2,7 +2,7 @@
 <%= form_with model: object, local: true, class: "mt-5" do |f| %>
 
   <div class="form-group">
-    <%= f.label "Module" %>
+    <%= f.label "Kategorie" %>
     <%= f.select "category_id",
           options_for_select(
             @categories.map { |category| [category.title, category.id] },
@@ -11,12 +11,12 @@
   </div>
 
   <div class="form-group">
-    <%= f.label      :title, class: "mr-2" %>
+    <%= f.label      "Titel", class: "mr-2" %>
     <%= f.text_field :title, class: "form-control" %>
   </div>
 
   <div class="form-group">
-    <%= f.label     :description %>
+    <%= f.label     "Definition" %>
     <%= f.text_area :description, class: "form-control" %>
   </div>
 
@@ -51,8 +51,8 @@
                                 data: {
                                   association_insertion_node: '#chapter', association_insertion_method: :append
                                 } if @article.persisted? %>
-   <%= f.submit class: "btn btn-primary" %>
-   <%= link_to "Article page", @article, class: "btn btn-warning" if @article.persisted? %>
+   <%= f.submit "Aktualisieren", class: "btn btn-primary" %>
+   <%= link_to "Artikel ansehen", @article, class: "btn btn-warning" if @article.persisted? %>
 
   </div>
 <% end %>
