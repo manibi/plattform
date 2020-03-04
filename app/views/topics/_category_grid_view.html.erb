@@ -3,40 +3,42 @@
 <div role="tabpanel" class="tab-pane active py-3" id="topic">
   <div class="row">
     <% @topic_categories.each do |category| %>
-      <div class="col-lg-3 my-2">
-        <%= link_to category do %>
-          <div class="card topic-card justify-content-between">
-            <div class="card-name pt-1 pb-4">
-              <%= category.title %>
-            </div>
-            <div class="card-bottom">
-              <div class="card-progress">
-                <div class="row mx-0 justify-content-between">
-                  <div class="read-text">
-                    Gelesen
-                  </div>
-                  <div class="progress-percentage">
-                    <%= '%.2f' % (((category.articles & @read_articles).count * 100) / (category.articles.count)) %>%
-                  </div>
-                </div>
-                <progress class="w-100" value="<%= (category.articles & @read_articles).count %>" max="<%= (category.articles.count) %>"></progress>
+      <% if category.articles.count > 0 %>
+        <div class="col-lg-3 my-2">
+          <%= link_to category do %>
+            <div class="card topic-card justify-content-between">
+              <div class="card-name pt-1 pb-4">
+                <%= category.title %>
               </div>
-              <div class="card-stats row justify-content-between">
-                <div class="read-articles row mx-0 align-items-center">
-                  <i class="material-icons-sharp stats-icon p-1">library_books</i>
-                  <%= category.articles.count %>
-                  Artikel
+              <div class="card-bottom">
+                <div class="card-progress">
+                  <div class="row mx-0 justify-content-between">
+                    <div class="read-text">
+                      Gelesen
+                    </div>
+                    <div class="progress-percentage">
+                      <%= '%.2f' % (((category.articles & @read_articles).count * 100) / (category.articles.count)) %>%
+                    </div>
+                  </div>
+                  <progress class="w-100" value="<%= (category.articles & @read_articles).count %>" max="<%= (category.articles.count) %>"></progress>
                 </div>
-                <div class="reading-time row mx-0 align-items-center">
-                  <i class="material-icons-sharp stats-icon p-1">access_time</i>
-                    <%= category.articles.count * 2.5 %>
-                    min/Lesen
+                <div class="card-stats row justify-content-between">
+                  <div class="read-articles row mx-0 align-items-center">
+                    <i class="material-icons-sharp stats-icon p-1">library_books</i>
+                    <%= category.articles.count %>
+                    Artikel
+                  </div>
+                  <div class="reading-time row mx-0 align-items-center">
+                    <i class="material-icons-sharp stats-icon p-1">access_time</i>
+                      <%= category.articles.count * 2.5 %>
+                      min/Lesen
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        <% end %>
-      </div>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>
