@@ -37,16 +37,18 @@
             <% end %>
           </div>
         </div>
+        <% if @exam && !@exam.submitted %>
         <div class="row d-flex justify-content-center">
           <%= link_to "Prüfung abgeben",
           custom_exam_submit_exam_path(@exam),
           class: "btn btn-primary" %>
         </div>
+        <% end %>
       </div>
     <% end %>
 
     <div class="card mt-3 col-5">
-      
+
       <!-- Question out of -->
       <div class="text-center">
         <p> Frage

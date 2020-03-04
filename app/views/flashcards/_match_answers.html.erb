@@ -11,7 +11,7 @@
                 <%= @is_answer_correct ? "correct-answer" : "false-answer"  %>
               <% end %>
             >
-              <%= answer.id %> - <%= answer.content %>
+              <%= answer.content %>
             </li>
         <% end %>
       </ul>
@@ -36,6 +36,19 @@
         </ul>
     </div>
   </div>
+
+  <% if @exam && @exam.submitted %>
+    <hr>
+    <ul>
+      <% @flashcard.correct_answers.each do |answer_id| %>
+            <% db_answer = Answer.find(answer_id) %>
+          <% if db_answer.explanation  %>
+            <li><strong><%= db_answer.explanation %></strong></li>
+          <% end %>
+
+      <% end %>
+    </ul>
+  <% end %>
 
   <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
     <%= f.submit "Prüfen",
