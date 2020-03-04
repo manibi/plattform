@@ -65,9 +65,8 @@
             <% end %>
               <%= render 'shared/flashes' %>
               <%= yield %>
-              <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
               <!-- debug: display params in develpment -->
-              <%#= debug(params) if Rails.env.development? %>
+              <%= debug(params) if Rails.env.development? %>
             </div>
           </div>
         </div>
