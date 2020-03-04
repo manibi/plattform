@@ -86,14 +86,26 @@ body {
         width: $size - ($width * 2);
         height: $size - ($width * 2);
         background: $center;
+        
+        &.perc {
+          span {
+            font-size: $textSize;
+            line-height: $size - ($width * 2);
+            color: $textColor;
+            &:after {
+              content: '#{$perc}%';
+            }
+          }
+        }
 
-        span {
-          font-size: $textSize;
-          line-height: $size - ($width * 2);
-          color: $textColor;
-
-          &:after {
-          content: '#{$perc}%';
+        &.non-perc {
+          span {
+            font-size: $textSize;
+            line-height: $size - ($width * 2);
+            color: $textColor;
+            &:after {
+              content: '#{$perc}';
+            }
           }
         }
       }

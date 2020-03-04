@@ -34,7 +34,7 @@
        <div class="col-3">
          <%= link_to "Frage #{i + 1}", custom_exam_flashcard_path(@exam, @exam.questions[i]) %>
        </div>
-       <div class="col-3">
+       <div class="col-4">
         <% if @exam.answer_for(q)&.correct %>
           <b class="bg-success">Richtig</b>
         <% elsif !@exam.answer_for(q)&.answered %>

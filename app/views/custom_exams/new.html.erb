@@ -85,7 +85,7 @@
       <% @exams.each.with_index do |exam, i| %>
         <div class="col-4">
         <%= link_to exam do %>
-          <p>Exam Nr.<%= i + 1 %> from <%= exam.created_at.to_date %></p>
+          <p>Exam Nr.<%= i + 1 %> - Datum: <%= exam.created_at.to_date %></p>
         <% end %>
         </div>
       <% end %>
