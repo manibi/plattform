@@ -1,19 +1,27 @@
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <h2 class="heading-4">Ready to pass the exam<%= ", #{current_user.first_name}" if current_user.first_name.present? %>?</h2>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <p>
-        TODO: add infos based on profession from db
-      </p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <%= link_to "Start the exam", custom_exam_flashcard_path(@exam, @first_flashcard) %>
+<div class="container header">  
+  <div class="my-3 h-100">
+    <div class="row mh-100">
+      <!-- exam header -->
+      <h2 class="row mx-0 col-12 heading-4">
+        <% if current_user.first_name != "" %>
+          <strong>Bereit für deine Prüfungssimulation, <%= current_user.first_name %>?</strong>
+        <% else %>
+          <strong>Bereit für deine Prüfungssimulation?</strong>
+        <% end %>
+      </h2>
+      <div class="row h-25">
+        <div class="col-12">
+          <p>
+            <!-- TODO: add infos based on profession from db -->
+          </p>
+        </div>
+      </div>
+      <div class="row mx-0 mt-5 w-100 justify-content-around">
+        <div class="col-3">
+          <%= link_to "Start the exam", custom_exam_flashcard_path(@exam, @first_flashcard), class:"btn btn-primary w-100" %>
+        </div>
+      </div>
+      </div>
     </div>
   </div>
 </div>
