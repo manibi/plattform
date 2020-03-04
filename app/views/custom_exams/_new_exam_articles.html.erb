@@ -1,5 +1,5 @@
 <% if @add_articles %>
-  <% @category.articles.each do |article| %>
+  <% @category.articles.published.each do |article| %>
       <div class="article">
         <label>
             <%= check_box_tag "exam[article_ids][]",
