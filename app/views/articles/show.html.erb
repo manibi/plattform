@@ -82,15 +82,17 @@
       <% end %>
     </div>
     <div class="col-3">
-      <div class="card col-12">
-      <ul>
-        <% @article.chapters.sort_by { |chap| chap.title }.each do |chap| %>
-        <li><%= chap.title %></li>
-        <% end %>
-      </ul>
-      </div>
+      <% if @article.chapters != [] %>
+        <div class="card col-12">
+          <ul>
+            <% @article.chapters.sort_by { |chap| chap.title }.each do |chap| %>
+            <li><%= chap.title %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
       <% if !@article.read_for?(current_user) %>
-        <div class="card col-12 mt-3 quizcard">
+        <div class="card col-12 mt-3 card">
           <%= link_to "Nächster Artikel", read_next_article_path , class: "width-btn btn btn-outline-primary" %>
           <%#= link_to @next_article, class: "btn btn-outline-primary mt-2" do %>
             <%#= link_to "Nächster Artikel",
@@ -100,16 +102,17 @@
           <%# end %>
           <%# raise %>
         </div>
-      <% elsif @flashcard %>
+      <% end %>
+      <% if @flashcard %>
         <div class="card col-12 mt-3 quizcard">
         Bereit zum Quiz über <%= @article.title %>?
         <%= link_to "Quiz", article_flashcard_path(@article, @flashcard), class: "btn btn-primary" %>
         </div>
       <% end %>
       <!-- author -->
-      <div class="card mt-3">
-        <% if current_user.author? %>
-        <h5 class="badge badge-success">
+      <% if current_user.author? %>
+        <div class="card mt-3">
+          <h5 class="badge badge-success">
             <%= @article.draft ? "Entwurf" : "Öffentlich" %>
           </h5>
           <h5 class="badge badge-primary">
@@ -121,7 +124,7 @@
             <%= editor.first_name %>
           </h5>
           <% end %>
-        <% end %>
+      <% end %>
         <% if current_user.author? %>
             <% if @article.draft? %>
               <%= link_to 'Artikel veröffentlichen', publish_article_path(@article),
