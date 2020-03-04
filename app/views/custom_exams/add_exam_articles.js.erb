@@ -9,6 +9,10 @@ if(<%= @add_articles %>) {
     'beforeend',
     articles
   );
+   document.getElementById("startExam").removeAttribute("disabled")
+
+
+
 } else {
   const category_article_ids = <%= @category.articles.pluck(:id) %>
   const customExamCategoriesEls = document.querySelectorAll(
@@ -20,8 +24,11 @@ if(<%= @add_articles %>) {
     if(category_article_ids.indexOf(Number(article_id)) != -1) {
       article.remove()
     }
+    // Disable start Exam if no articles are selected
+    if (document.querySelectorAll("[name='exam[article_ids][]']").length < 1) {
+      document.getElementById("startExam").setAttribute("disabled", true)
+    }
   });
-
 }
 
 

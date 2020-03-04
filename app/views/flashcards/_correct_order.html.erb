@@ -4,19 +4,32 @@
 
   <%= form_for answer_correct_order_article_flashcard_path(@article, @flashcard), url: {action: "answer_correct_order"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
     <ul class="answers" id="answers-drag">
-      <% @flashcard.answers.sort.each do |answer| %>
+      <% @flashcard.answers.shuffle.each do |answer| %>
           <li class=
             <% if action_name == "answer_correct_order"%>
               <%= @is_answer_correct ? "correct-answer" : "false-answer"  %>
             <% end %>
           >
-            <%= answer.id %> - <%= answer.content %>
+            <%= answer.content %>
             <%= hidden_field_tag "flashcard[answer][#{answer.id}]",
                                   answer.id
             %>
           </li>
       <% end %>
     </ul>
+
+    <% if @exam && @exam.submitted %>
+      <hr>
+      <ul>
+        <% @flashcard.correct_answers.each do |answer_id| %>
+              <% db_answer = Answer.find(answer_id) %>
+            <% if db_answer.explanation  %>
+              <li><strong><%= db_answer.explanation %></strong></li>
+            <% end %>
+
+        <% end %>
+      </ul>
+    <% end %>
 
     <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
       <%= f.submit "Prüfen",

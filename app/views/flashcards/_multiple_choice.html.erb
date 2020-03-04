@@ -8,7 +8,7 @@
                       method: :post,
                       html: { id: "flashcardAnswerForm",
                               "data-form-submitted": false } do |f| %>
-    <% @flashcard.answers.each do |answer| %>
+    <% @flashcard.answers.shuffle.each do |answer| %>
       <div class="flashcard-answer">
         <label
           class=
@@ -25,9 +25,20 @@
         </label>
       </div>
     <% end %>
+    <% if @exam && @exam.submitted %>
+      <hr>
+      <ul>
+        <% @flashcard.correct_answers.each do |answer_id| %>
+              <% db_answer = Answer.find(answer_id) %>
+            <% if db_answer.explanation  %>
+              <li><strong><%= db_answer.explanation %></strong></li>
+            <% end %>
 
+        <% end %>
+      </ul>
+    <% end %>
     <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
-    <%= f.submit "Prüfen",
+      <%= f.submit "Prüfen",
               class: "flashcard-btn btn btn-primary", :"data-turbolinks" => false if action_name == "show" %>
   <% end %>
   <%= link_to "Nächste",
