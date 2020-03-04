@@ -2,7 +2,7 @@
 <%= form_with model: object, local: true do |f| %>
 
   <div class="form-group">
-    <%= f.label "Topic" %>
+    <%= f.label "Kategorie:" %>
     <%= f.select "topic_id",
           options_for_select(
             @topics.map { |topic| [topic.name, topic.id] },
@@ -11,14 +11,14 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :title %>
+    <%= f.label "Titel" %>
     <%= f.text_field :title, class: "form-control" %>
   </div>
 
   <div class="form-group">
-  <%= f.label :description %>
+  <%= f.label "Definition" %>
   <%= f.text_area :description, class: "form-control" %>
   </div>
 
-  <%= f.submit class: "btn btn-primary" %>
+  <%= f.submit "Aktualisieren", class: "btn btn-primary" %>
 <% end %>

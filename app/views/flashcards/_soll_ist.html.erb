@@ -25,14 +25,11 @@
           <% end %>
         </ul>
     <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
-      <%= f.submit "Check",
+      <%= f.submit "Prüfen",
                     class: "flashcard-btn btn btn-primary" if action_name == "show" %>
     <% end %>
-    <%= link_to "Next",
+    <%= link_to "Nächste",
               next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
               class: "flashcard-btn btn btn-primary" if action_name == "soll_ist" %>
   <% end %>
-  <hr>
-    <p>correct answers</p>
-    <p><%= flashcard.correct_answers %></p>
 </div>

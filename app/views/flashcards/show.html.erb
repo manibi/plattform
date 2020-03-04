@@ -61,25 +61,18 @@
       <!-- Author -->
       <% if current_user.author? %>
         <div class="row mt-3 justify-content-around">
-          <div class="card p-3">
-            <div class="row">
-              <div class="col">
+          <div class="w-100 card p-3">
+            <div class="mx-0 col-12 row d-flex justify-content-between align-items-center">
+              <!-- <h5 class="badge badge-primary">
+              <%#= "#{current_user.first_name}" %>
+              </h5> -->
+              <h5>Editors:</h5>
+              <% @flashcard.editors.each do |editor| %>
                 <h5 class="badge badge-primary">
-                <%= "by #{current_user.first_name}" %>
-                  </h5>
-                  <h5>Editors:</h5>
-                  <% @flashcard.editors.each do |editor| %>
-                    <h5 class="badge badge-primary">
-                      <%= editor.first_name %>
-                    </h5>
-                  <% end %>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col">
-                <%= link_to 'Edit Question', edit_flashcard_path(@flashcard), class: "btn btn-warning" %>
-              </div>
+                  <%= editor.first_name %>
+                </h5>
+              <% end %>
+              <%= link_to 'Frage bearbeiten', edit_flashcard_path(@flashcard), class: "btn btn-warning" %>
             </div>
           </div>
         </div>

@@ -12,24 +12,6 @@
     <!-- article -->
     <div class="col-6">
       <div class="card">
-        <div class="row">
-          <div class="col">
-            <% if current_user.author? %>
-            <h5 class="badge badge-success">
-                <%= @article.draft ? "Draft" : "Public" %>
-              </h5>
-              <h5 class="badge badge-primary">
-                <%= "by #{current_user.first_name.present? ? @article.main_author.first_name : 'No name'}" %>
-              </h5>
-              <h5>Editors:</h5>
-              <% @article.editors.each do |editor| %>
-              <h5 class="badge badge-primary">
-                <%= editor.first_name %>
-              </h5>
-              <% end %>
-            <% end %>
-          </div>
-        </div>
         <!-- article headline -->
         <div class="row justify-content-between">
           <div class="col-11">
@@ -44,22 +26,6 @@
             </h1>
           </div>
           <div class="col-1 row mx-0 px-0 align-items-center">
-              <% if current_user.author? %>
-                <% if @article.draft? %>
-                  <%= link_to 'Artikel veröffentlichen', publish_article_path(@article),
-                                                  method: :post,
-                                                  class: "btn btn-success mb-2" %>
-                <% else %>
-                  <%= link_to 'Artikel nicht veröffentlichen', unpublish_article_path(@article),                                method: :patch,
-                                                   class: "btn btn-danger mb-2" %>
-                <% end %>
-                <%= link_to 'Artikel anpassen',
-                            edit_article_path(@article),
-                            class: "btn btn-warning mb-2" %>
-                <%= link_to 'Quiz anpassen',
-                            flashcards_article_path(@article),
-                            class: "btn btn-warning mb-2" %>
-              <% end %>
               <% if @article.bookmarked_for?(current_user) %>
                 <%= link_to unbookmark_article_path(@article),                                 method: :patch,
                                                   class: "" do %>
@@ -115,8 +81,8 @@
         </div>
       <% end %>
     </div>
-    <div class="col-3 position-sticky">
-      <div class="card col-12 position-sticky sticky-top">
+    <div class="col-3">
+      <div class="card col-12">
       <ul>
         <% @article.chapters.sort_by { |chap| chap.title }.each do |chap| %>
         <li><%= chap.title %></li>
@@ -136,6 +102,40 @@
         <%= link_to "Quiz", article_flashcard_path(@article, @flashcard), class: "btn btn-primary" %>
         </div>
       <% end %>
+      <!-- author -->
+      <div class="card mt-3">
+        <% if current_user.author? %>
+        <h5 class="badge badge-success">
+            <%= @article.draft ? "Entwurf" : "Öffentlich" %>
+          </h5>
+          <h5 class="badge badge-primary">
+            <%= "#{current_user.first_name.present? ? @article.main_author.first_name : 'Kein Author'}" %>
+          </h5>
+          <h5>Editors:</h5>
+          <% @article.editors.each do |editor| %>
+          <h5 class="badge badge-primary">
+            <%= editor.first_name %>
+          </h5>
+          <% end %>
+        <% end %>
+        <% if current_user.author? %>
+            <% if @article.draft? %>
+              <%= link_to 'Artikel veröffentlichen', publish_article_path(@article),
+                                              method: :post,
+                                              class: "btn btn-success mb-2" %>
+            <% else %>
+              <%= link_to 'Artikel nicht veröffentlichen', unpublish_article_path(@article),                                method: :patch,
+                                               class: "btn btn-danger mb-2" %>
+            <% end %>
+            <%= link_to 'Artikel anpassen',
+                        edit_article_path(@article),
+                        class: "btn btn-warning mb-2" %>
+            <%= link_to 'Quiz anpassen',
+                        flashcards_article_path(@article),
+                        class: "btn btn-warning mb-2" %>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

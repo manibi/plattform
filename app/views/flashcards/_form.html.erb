@@ -1,12 +1,12 @@
 <%= render "devise/shared/error_messages", resource: @flashcard %>
 <%= form_with model: @flashcard, local: true  do |flashcard_form| %>
   <div class="form-group">
-    <%= flashcard_form.label :content, "Question" %>
+    <%= flashcard_form.label :content, "Fragestellung" %>
     <%= flashcard_form.text_area :content, class: "form-control" %>
   </div>
 
   <div class="form-group">
-    <%= flashcard_form.label "Article" %>
+    <%= flashcard_form.label "Artikel" %>
     <%= flashcard_form.select "article",
           options_for_select(
             @articles.map { |article| [article.title, article.id] },
@@ -16,7 +16,7 @@
 
   <div class="form-group">
     <% flashcard_types = Flashcard::FLASHCARD_TYPES.map { |type| [type, type] } %>
-    <%= flashcard_form.label  :flashcard_type %>
+    <%= flashcard_form.label  "Fragetyp" %>
     <%= flashcard_form.select :flashcard_type,
       options_for_select(
         flashcard_types,
@@ -28,9 +28,9 @@
     <%= flashcard_form.file_field :image %>
   </div>
 
-  <h2>Answers</h2>
-  <button  id="sollHabenView" class="btn btn-info">Soll/Haben view</button>
-  <button  id="tableView" class="btn btn-info">Table view</button>
+  <h2>Antworten</h2>
+  <button  id="sollHabenView" class="btn btn-info">Soll/Haben Ansicht</button>
+  <button  id="tableView" class="btn btn-info">Tabellen Ansicht</button>
   <div class="answers" id="uniqAnswers">
     <%= flashcard_form.fields_for :answers do |builder| %>
       <%= render 'answer_fields', f: builder %>
@@ -41,7 +41,7 @@
   <% if @flashcard.persisted? %>
 
     <% if @flashcard.flashcard_type != "match_answers" %>
-      <h3>Correct answers</h3>
+      <h3>Richtige Antwort</h3>
     <% end %>
 
     <% @flashcard.answers.each do |answer| %>
@@ -55,14 +55,14 @@
   <% end %>
 
   <div class="form-actions mt-5">
-  <%= link_to_add_association 'Add answer',
+  <%= link_to_add_association 'Antwortmöglichkeit hinzufügen',
                                 flashcard_form, :answers,
                                 class: 'btn btn-success my-2',
                                 data: {
                                   association_insertion_node: '#uniqAnswers', association_insertion_method: :append
                                 } %>
-    <%= flashcard_form.submit class: "btn btn-primary", :"data-turbolinks" => false %>
+    <%= flashcard_form.submit "Aktualisieren", class: "btn btn-primary", :"data-turbolinks" => false %>
   </div>
 <% end %>
 
-<%= link_to 'View Flashcard', article_flashcard_path(@flashcard.article, @flashcard), class: "btn btn-warning mt-3" if @flashcard.persisted? %>
+<%= link_to 'Quiz ansehen', article_flashcard_path(@flashcard.article, @flashcard), class: "btn btn-warning mt-3" if @flashcard.persisted? %>

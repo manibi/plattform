@@ -1,10 +1,14 @@
-<div class="row justify-content-center">
-  <div class="col-5">
-      <% if @article.flashcards.any? %>
+<div class="w-100 mt-3 d-flex justify-content-center">
+  <div class="col-8 d-flex align-items-center justify-content-between">
+    <% if @article.flashcards.any? %>
         <%= render partial: "flashcards/author_flashcard_list_item", collection: @article.flashcards, as: :flashcard %>
-        <% else %>
-        <h2>The article has no flashcards.</h2>
-        <%= link_to "Create flashcards", new_flashcard_path, class: "btn btn-primary" %>
+    <% else %>
+    	<div class="col-6">
+        	<h2>The article has no flashcards.</h2>
+       	</div>
+       	<div class="col-3">
+        	<%= link_to "Quiz erstellen", new_flashcard_path, class: "btn btn-primary" %>
+      </div>
       <% end %>
   </div>
 </div>
