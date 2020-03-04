@@ -26,12 +26,4 @@ document.addEventListener("turbolinks:load", () => {
   playFlashcards();
   autocompleteSearch();
   emptySearchPage();
-
-  const examSubmitBtn = document.getElementById("startExam")
-  const examwrapper = document.getElementById("examWrapper")
-  const examArticlesNumber = document.getElementById("examArticles").children.length
-
-  // examwrapper.addEventListener('click', e => {
-  //   examSubmitBtn.setAttribute("disabled" = false)
-  // })
 });
