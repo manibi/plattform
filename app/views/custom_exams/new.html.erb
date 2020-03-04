@@ -1,4 +1,4 @@
-<div class="container header">  
+<div class="container header">
   <div class="my-3 h-100">
     <div class="row mh-100">
       <!-- breadcrumbs -->
@@ -18,7 +18,7 @@
 <div class="container">
   <div class="tab-content mh-100">
     <!-- exam form -->
-    <%= form_with model: @exam, local: true do |f| %>
+    <%= form_with model: @exam, local: true,id: "examWrapper" do |f| %>
     <div class="row my-4">
       <div class="col">
         <h6>Lernfelder</h6>
@@ -67,7 +67,7 @@
       </div>
       -->
     <div class="col-2">
-      <%= f.submit "Start", class:"btn btn-primary w-100", validates:"exam[topic_id]", :acceptance => true %>
+      <%= f.submit "Start", id: "startExam", disabled: true, class:"btn btn-primary w-100", validates:"exam[topic_id]", :acceptance => true %>
     </div>
     </div>
     <% end %>
