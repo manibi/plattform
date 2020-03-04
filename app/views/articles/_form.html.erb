@@ -21,47 +21,7 @@
     <%= f.text_area :description, class: "form-control" %>
   </div>
 
-  <!-- Erläuterung -->
-  <div class="chapters" id="chapter">
-    <div class="nested-fields m-1">
-      <div class="form-group">
-          <%= f.label "Erläuterung" %>
-          <%= f.text_field :title, readonly: true, value: "Erläuterung", class: "form-control"%>
-      </div>
-      <div class="form-group">
-        <%= f.label "Kapitel" %>
-        <%= f.text_area :content, placeholder: "Erläuterung eintragen...", class: "form-control"%>
-      </div>
-    </div>
-  </div>
 
-  <!-- Praxisbeispiel -->
-  <div class="chapters" id="chapter">
-    <div class="nested-fields m-1">
-      <div class="form-group">
-          <%= f.label "Praxisbeispiel" %>
-          <%= f.text_field :title, readonly: true, value: "Praxisbeispiel", class: "form-control"%>
-      </div>
-      <div class="form-group">
-        <%= f.label "Kapitel" %>
-        <%= f.text_area :content, placeholder: "Beispiel eintragen...", class: "form-control"%>
-      </div>
-    </div>
-  </div>
-
-  <!-- Verwandte Themen -->
-  <div class="chapters" id="chapter">
-    <div class="nested-fields m-1">
-      <div class="form-group">
-          <%= f.label "Verwandte Themen" %>
-          <%= f.text_field :title, readonly: true, value: "Verwandte Themen", class: "form-control"%>
-      </div>
-      <div class="form-group">
-        <%= f.label "Kapitel" %>
-        <%= f.text_area :content, placeholder: "Verwandte Artikel eintragen...", class: "form-control"%>
-      </div>
-    </div>
-  </div>
 
   <div class="form-group mt-5">
     <%= f.file_field :image %>
@@ -88,12 +48,14 @@
   </div>
 
   <div class="form-actions">
-  <%#= link_to_add_association 'Add chapter',
+  <%= link_to_add_association 'Add chapter',
                                 f, :chapters,
                                 class: 'btn btn-success my-2',
                                 data: {
                                   association_insertion_node: '#chapter', association_insertion_method: :append
                                 } if @article.persisted? %>
+
+
    <%= f.submit "Aktualisieren", class: "btn btn-primary" %>
    <%= link_to "Artikel ansehen", @article, class: "btn btn-warning" if @article.persisted? %>
 

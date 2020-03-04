@@ -27,9 +27,6 @@ class ArticlesController < ApplicationController
 
   def new
     @article = Article.new
-    # @article.chapters.build(title: "Erläuterung")
-    # @article.chapters.build(title: "Praxisbeispiel")
-    # @article.chapters.build(title: "Verwandte Themen")
     authorize @article
     @categories = current_user.all_categories
   end
@@ -41,8 +38,8 @@ class ArticlesController < ApplicationController
     chapter_params = article_params[:chapters_attributes]
     @article = Article.new(article_params)
     @article.build(chapter_params) if @article.persisted?
-
     if @article.save
+      # raise
       @article.sign_article!(current_user)
       redirect_to edit_article_path(@article), notice: "Article created!"
     else
