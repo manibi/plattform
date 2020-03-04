@@ -8,7 +8,7 @@
                       method: :post,
                       html: { id: "flashcardAnswerForm",
                               "data-form-submitted": false } do |f| %>
-    <% @flashcard.answers.each do |answer| %>
+    <% @flashcard.answers.shuffle.each do |answer| %>
       <div class="flashcard-answer">
         <label
           class=
