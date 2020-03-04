@@ -44,6 +44,8 @@ Rails.application.routes.draw do
   resources :articles,   except:  :destroy do
     member do
       post  "read"
+      get   "read_next"
+      post   "read_next"
       # TODO! remove unread - just for testing
       patch "unread"
       post  "bookmark"

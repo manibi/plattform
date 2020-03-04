@@ -47,6 +47,10 @@ class ArticlePolicy < ApplicationPolicy
     edit?
   end
 
+  def read_next?
+    show?
+  end
+
   class Scope < Scope
     def resolve
       if user.student?

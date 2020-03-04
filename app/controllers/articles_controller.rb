@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_article, except: [:index, :new, :create]
+  before_action :set_all, only: [:show, :read_next]
 
   def index
     @upcoming_articles = policy_scope(Article)
@@ -18,11 +19,6 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    @flashcard = @article.flashcards.first
-    @categories = current_user.all_categories
-    @category = @categories.find(@article.category_id)
-    @topics = current_user.profession.topics
-    @topic = @topics.find(@category.topic_id)
   end
 
   def new
@@ -95,7 +91,50 @@ class ArticlesController < ApplicationController
   def flashcards
   end
 
+  def read_next
+    if @upcoming_articles.empty?
+      @next_article = current_user.profession
+                                  .topics.first
+                                  .categories.first
+                                  .articles.first
+    elsif (@upcoming_articles & @category.articles).without(@article) != []
+      @next_article = (@upcoming_articles & @category.articles).select{|a| a.id > @article.id}.first
+    elsif @topic.categories.select { |c| c.id > @category.id }.select { |c| c.articles & @upcoming_articles } != []
+      @next_article = @topic.categories.select { |c| c.id > @category.id }.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) }.first
+    elsif @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } } != []
+      if @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles } != []
+        if @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles != []
+          if @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) } != []
+            @next_article = @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) }.first
+          end
+        end
+      end
+    elsif @topics.select { |t| t.id < @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } } != []
+      if @topics.select { |t| t.id < @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles } != []
+        if @topics.select { |t| t.id < @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles !=[]
+          if @topics.select { |t| t.id < @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) } != []
+            @next_article = @topics.select { |t| t.id < @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) }.first
+          end
+        end
+      end
+    else
+      @next_article = @upcoming_articles.first
+    end
+
+    @article.read_for!(current_user)
+    redirect_to @next_article
+  end
+
   private
+
+  def set_all
+    @flashcard = @article.flashcards.first
+    @categories = current_user.all_categories
+    @category = @categories.find(@article.category_id)
+    @topics = current_user.profession.topics
+    @topic = @topics.find(@category.topic_id)
+    @upcoming_articles = policy_scope(Article)
+  end
 
   def set_article
     @article = Article.find(params[:id])

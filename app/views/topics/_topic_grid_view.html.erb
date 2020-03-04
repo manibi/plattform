@@ -16,11 +16,12 @@
                     <div class="read-text">
                       Gelesen
                     </div>
+                    <%# raise %>
                     <div class="progress-percentage">
-                      <%= '%.2f' % ((@read_categories.select { |c| c.topic_id == topic.id }.count * 100) / @categories.select { |c| c.topic_id }.count) %>%
+                      <%= '%.2f' % ((@read_categories.select { |c| c.topic_id == topic.id }.count * 100) / topic.categories.select { |c| c.topic_id }.count) %>%
                     </div>
                   </div>
-                  <progress class="w-100" value="<%= (@read_categories.select { |c| c.topic_id == topic.id }.count) %>" max="<%= (@categories.select { |c| c.topic_id }.count) %>"></progress>
+                  <progress class="w-100" value="<%= (@read_categories.select { |c| c.topic_id == topic.id }.count) %>" max="<%= (topic.categories.select { |c| c.topic_id }.count) %>"></progress>
                 </div>
                 <div class="card-stats row justify-content-between">
                   <div class="read-articles row mx-0 align-items-center">

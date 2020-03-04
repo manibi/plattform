@@ -37,11 +37,12 @@ class PagesController < ApplicationController
     @not_read_articles = Article.where.not(id: read_article_ids)
     @not_read_category = policy_scope(Category).find(@not_read_articles.map{ |a| a.category_id}.sort.first)
 
+    @upcoming_articles = policy_scope(Article)
     # if the user didn't ready any article set current article to first one
     if @read_user_articles.empty? || @not_read_articles.empty?
       @current_article = current_user.profession.topics.first.categories.first.articles.first
     else
-      @current_article = @not_read_category.articles.first
+      @current_article = @not_read_articles.select { |na| na.category_id == @not_read_articles.map { |a| a.category_id }.sort.first }.first
     end
     @articles = policy_scope(Article)
     @current_topic = @current_article.category.topic
