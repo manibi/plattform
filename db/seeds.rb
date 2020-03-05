@@ -3,7 +3,7 @@
 require 'csv'
 require_relative './seed_helpers'
 
-puts 'Cleaning DB...'
+# puts 'Cleaning DB...'
 # Chapter.destroy_all
 # UserArticle.destroy_all
 # FlashcardAnswer.destroy_all
@@ -475,7 +475,9 @@ data_handel.each do |row|
   end
 
 end
+
 puts "Groß-und Außerhandel data...done"
+
 # puts 'Start Büromanagement data...'
 # data_bueromanagement = CSV.parse(File.read("#{Dir.pwd}/db/seed_files/data_bueromanagement.csv"), headers: true)
 
@@ -594,6 +596,7 @@ puts "Groß-und Außerhandel data...done"
 #       add_flashcard_answers(flashcard, answers)
 
 #       # One correct answer
+
 #       flashcard.update(correct_answers: [flashcard.answers]
 
 #     end

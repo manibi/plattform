@@ -205,7 +205,7 @@ class FlashcardsController < ApplicationController
     @article = Article.find(params[:article_id])
     authorize @article, :show?
 
-    @upcoming_articles = policy_scope(Article).published
+    @upcoming_articles = policy_scope(Article)
     @all_answered_flashcards = current_user.answered_flashcards_for(@article)
     @tries = current_user.user_flashcards_for(@article).pluck(:tries).sum
 
