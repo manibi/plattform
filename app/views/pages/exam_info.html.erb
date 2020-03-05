@@ -2,11 +2,11 @@
   <div class="my-3 h-100">
     <div class="row mh-100">
       <!-- exam header -->
-      <h2 class="row mx-0 col-12 heading-4">
+      <h2 class="row mx-0 col-12 heading-4 pl-4">
         <% if current_user.first_name != "" %>
-          <strong>Bereit für deine Prüfungssimulation, <%= current_user.first_name %>?</strong>
+          <strong>Bereit die Prüfung zu bestehen, <%= current_user.first_name %>?</strong>
         <% else %>
-          <strong>Bereit für deine Prüfungssimulation?</strong>
+          <strong>Bereit die Prüfung zu bestehen?</strong>
         <% end %>
       </h2>
       <div class="row h-25">
@@ -16,9 +16,25 @@
           </p>
         </div>
       </div>
+      <div class="row mx-0 col-12 my-3 d-flex justify-content-around">
+        <div class="row mx-0 col-10 h4">
+          Prüfungsstruktur
+        </div>
+        <div class="row mx-0 col-10 info-text">
+          Deine theoretische Abschlussprüfung für <%= current_user.profession.name %> ist untergliedert in drei verschiedene Teile: Geschäftsprozesse, kaufmännsiche Steuerung und Kontrolle und Wirtschafts- und Sozialkunde. Für den ersten Teil hast du eine Bearbeitungszeit von 180 Minuten und ergibt 40% deiner Endnote. Kaufmännische Steuerung und Kontrolle werden in 90 Minuten geprüft und ergeben 20% der Endnote. Für Wirtschaft -und Sozialkunde hast du 60 Minuten Zeit, was 10% deiner Endnote entspricht.
+        </div>
+      </div>
+      <div class="row mx-0 col-12 my-3 d-flex justify-content-around">
+        <div class="row mx-0 col-10 h4">
+          Tipps bevor du loslegst
+        </div>
+        <div class="row mx-0 col-10 info-text">
+          Teile dir die Zeit gut ein! Wenn du mal bei einer Frage auf Anhieb nicht weiter weißt, dann überlege noch eine Minute weiter. Falls du auf keine schlüssige Lösung kommst, gehe eine Aufgabe weiter und markiere, die unbeantwortete Frage. Am Ende kannst du, dann nochmal auf diese Aufgabe zurückgreifen und deine restliche Zeit dafür aufwenden. 
+        </div>
+      </div>
       <div class="row mx-0 mt-5 w-100 justify-content-around">
         <div class="col-3">
-          <%= link_to "Start the exam", custom_exam_flashcard_path(@exam, @first_flashcard), class:"btn btn-primary w-100" %>
+          <%= link_to "Prüfung starten", custom_exam_flashcard_path(@exam, @first_flashcard), class:"btn btn-primary w-100" %>
         </div>
       </div>
       </div>
