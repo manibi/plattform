@@ -37,17 +37,15 @@
 <% else %>
 <div class="row">
 	<!-- left navbar logo -->
-	<div class="col-10">
+	<div class="col-8">
 	  <%= image_tag "https://res.cloudinary.com/mozubi/image/upload/v1582744555/Mozubi/Logo_schwarz_e4slbq.png", style: 'width:20%' %>
 	</div>
-	<ul class="nav nav-pills nav-fill align-items-center justify-content-end">
-		<div>
-	        <li class="nav-item">
-	          <%= link_to "Azubi Login", new_user_session_path, class: "landing-nav" %>
+	<ul class="row col-4">
+	        <li class="col-6">
+	          <%= link_to "Azubi Login", new_user_session_path, class: "landing-nav btn btn-outline-primary" %>
 	        </li>
-	        <li class="nav-item">
-	          <%= link_to "Unternehmen Login", new_company_session_path, class: "landing-nav" %>
+	        <li class="col-6">
+	          <%= link_to "Unternehmen Login", new_company_session_path, class: "landing-nav btn btn-outline-primary" %>
 	        </li>
-		</div>
 <% end %>
 </ul>
