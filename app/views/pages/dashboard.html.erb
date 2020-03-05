@@ -18,13 +18,14 @@
 					<div class="col-4">
 					<!-- set number to the value of the chart -->
 						<% if current_user.exam_date %>
-						<div class="<%= "donut-chart-#{ (current_user.exam_date.to_date - Date.new(2020, 3, 1)).to_i }"%> donut-chart chart1">
+						<div class="<%= "donut-chart-#{ (current_user.exam_date.to_date - Date.today).to_i / (current_user.exam_date.to_date - current_user.created_at.to_date).to_i }"%> donut-chart chart1">
+						<%# raise %>
 						<% else %>
 						<div class="<%= "donut-chart-#{0}"%> donut-chart chart1">
 						<% end %>
 							<div class="slice one"></div>
 							<div class="slice two"></div>
-							<div class="chart-center non-perc">
+							<div class="chart-center countdown">
 						    	<span></span>
 							</div>
 						</div>
