@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container col-12">
   <% if @exam %>
     <div class="row mx-0 col-12 d-flex justify-content-between">
   <% else %>
@@ -14,23 +14,25 @@
                 <%= link_to "Ergebnisse", custom_exam_results_path(@exam), class: "btn btn-success" %>
               <% end %>
           </div>
-            <% if @exam && !@exam.submitted %>
-              <% if @flashcard.bookmarked_for?(@exam) %>
-                <%= link_to unbookmark_custom_exam_flashcard_path(@exam, @flashcard), method: :patch, class: "btn btn-outline-primary" do %>
-                  <div class="row d-flex align-items-center">
-                    <i class="material-icons-sharp bookmark-icon">bookmark</i>
-                    Markierung entfernen
-                  </div>
-                <% end %>
-              <% else %>
-                <%= link_to bookmark_custom_exam_flashcard_path(@exam, @flashcard), method: :post, class: "" do %>
-                  <div class="row d-flex align-items-center">
-                    <i class="material-icons-sharp bookmark-icon">bookmark_border</i>
-                    Frage markieren
-                  </div>
+            <div class="col-12 d-flex justify-content-center">
+              <% if @exam && !@exam.submitted %>
+                <% if @flashcard.bookmarked_for?(@exam) %>
+                  <%= link_to unbookmark_custom_exam_flashcard_path(@exam, @flashcard), method: :patch, class: "btn btn-outline-primary" do %>
+                    <div class="row d-flex align-items-center">
+                      <i class="material-icons-sharp bookmark-icon">bookmark</i>
+                      Markierung entfernen
+                    </div>
+                  <% end %>
+                <% else %>
+                  <%= link_to bookmark_custom_exam_flashcard_path(@exam, @flashcard), method: :post, class: "" do %>
+                    <div class="row d-flex align-items-center">
+                      <i class="material-icons-sharp bookmark-icon">bookmark_border</i>
+                      Frage markieren
+                    </div>
+                  <% end %>
                 <% end %>
               <% end %>
-            <% end %>
+            </div>
           </div>
         </div>
         <% if @exam && !@exam.submitted %>
@@ -43,7 +45,7 @@
       </div>
     <% end %>
 
-    <div class="card mt-3 col-5">
+    <div class="card mt-3 col-7">
 
       <!-- Question out of -->
       <div class="text-center">
@@ -92,7 +94,7 @@
       <!-- Flashcard content -->
       <div class="row d-flex justify-content-center">
         <% if @exam %>
-          <div class="col-8">
+          <div class="col-12">
         <% else %>
           <div class="col-12">
         <% end %>
@@ -123,7 +125,7 @@
       <% end %>
     </div>
     <% if @exam %>
-      <div class="card mt-3 col-3 sticky-card">
+      <div class="card mt-3 col-2 sticky-card">
             <div class="border-bottom pb-2">
               Frage Nummer:
             </div>
