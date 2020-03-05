@@ -1,5 +1,5 @@
 require("@rails/ujs").start();
-// require("turbolinks").start();
+require("turbolinks").start();
 require("@rails/activestorage").start();
 require("channels");
 // require("jquery");
@@ -15,7 +15,8 @@ import { playFlashcards } from "../components/playFlashcards";
 import { authorView } from "../components/authorView";
 import { emptySearchPage } from "../components/emptySearchPage";
 
-window.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("turbolinks:load", () => {
+  // gtag('config', 'UA-159154786-1');
   if (typeof gtag === 'function') {
     gtag('config', 'UA-159154786-1', {
       'page_location': event.data.url
