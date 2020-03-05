@@ -22,24 +22,24 @@ require_relative './seed_helpers'
 # Company.destroy_all
 
 # ! professions
-puts 'Add professions...'
-Profession.create!([
-                     {
-                       name: 'Industriekaufleute'
-                     },
-                     {
-                       name: 'Büromanagement'
-                     },
-                     {
-                       name: 'Industriemechanik'
-                     },
-                     {
-                       name: 'Groß-und Außerhandel'
-                     },
-                     {
-                       name: 'Controlling'
-                     }
-                   ])
+# puts 'Add professions...'
+# Profession.create!([
+#                      {
+#                        name: 'Industriekaufleute'
+#                      },
+#                      {
+#                        name: 'Büromanagement'
+#                      },
+#                      {
+#                        name: 'Industriemechanik'
+#                      },
+#                      {
+#                        name: 'Groß-und Außerhandel'
+#                      },
+#                      {
+#                        name: 'Controlling'
+#                      }
+#                    ])
 industriekauf     = Profession.first
 buero_management  = Profession.second
 industriemechanik = Profession.third
@@ -47,85 +47,85 @@ handel            = Profession.fourth
 controlling       = Profession.last
 
 # ! companies
-puts 'Generate companies'
-Company.create!([
-                  {
-                    username: 'mozubi',
-                    password: '123456',
-                    name: 'Mozubi',
-                    email: 'contact@mozubi.com',
-                    contact_person_name: 'Mark B.'
-                  },
-                  {
-                    username: 'siemens',
-                    password: '123456',
-                    name: 'Siemens',
-                    email: 'contact@siemens.com',
-                    contact_person_name: 'Mary B.'
-                  }
-                ])
+# puts 'Generate companies'
+# Company.create!([
+#                   {
+#                     username: 'mozubi',
+#                     password: '123456',
+#                     name: 'Mozubi',
+#                     email: 'contact@mozubi.com',
+#                     contact_person_name: 'Mark B.'
+#                   },
+#                   {
+#                     username: 'siemens',
+#                     password: '123456',
+#                     name: 'Siemens',
+#                     email: 'contact@siemens.com',
+#                     contact_person_name: 'Mary B.'
+#                   }
+#                 ])
 
-mozubi = Company.first
-siemens = Company.second
+# mozubi = Company.first
+# siemens = Company.second
 
-# ! users
-puts 'Generate admin'
-# Admin
-User.create!(
-  username: "#{mozubi.name.downcase}-admin-1",
-  password: '123456',
-  company_id: mozubi.id,
-  profession: controlling,
-  first_name: 'Admin 1',
-  last_name: 'Mozubi',
-  role: :admin
-)
+# # ! users
+# puts 'Generate admin'
+# # Admin
+# User.create!(
+#   username: "#{mozubi.name.downcase}-admin-1",
+#   password: '123456',
+#   company_id: mozubi.id,
+#   profession: controlling,
+#   first_name: 'Admin 1',
+#   last_name: 'Mozubi',
+#   role: :admin
+# )
 
-# Student
-User.create!([
-               {
-                 username: 'industriemechanik-student-1',
-                 password: '123456',
-                 company_id: siemens.id,
-                 profession: industriemechanik,
-                 role: :student
-               },
-               {
-                 username: 'industriekauf-student-1',
-                 password: '123456',
-                 company_id: siemens.id,
-                 profession: industriekauf,
-                 role: :student
-               },
-               {
-                 username: 'buero_management-student-1',
-                 password: '123456',
-                 company_id: siemens.id,
-                 profession: buero_management,
-                 role: :student
-               },
-               {
-                 username: "#{siemens.name.downcase}-student-4",
-                 password: '123456',
-                 company_id: siemens.id,
-                 profession: industriemechanik,
-                 role: :student
-               },
-               {
-                 username: "#{siemens.name.downcase}-student-5",
-                 password: '123456',
-                 company_id: siemens.id,
-                 profession: industriemechanik,
-                 role: :student
-               },
-               {
-                 username: 'handel-student-1',
-                 password: '123456',
-                 company_id: siemens.id,
-                 profession: handel,
-                 role: :student
-               }
-             ])
+# # Student
+# User.create!([
+#                {
+#                  username: 'industriemechanik-student-1',
+#                  password: '123456',
+#                  company_id: siemens.id,
+#                  profession: industriemechanik,
+#                  role: :student
+#                },
+#                {
+#                  username: 'industriekauf-student-1',
+#                  password: '123456',
+#                  company_id: siemens.id,
+#                  profession: industriekauf,
+#                  role: :student
+#                },
+#                {
+#                  username: 'buero_management-student-1',
+#                  password: '123456',
+#                  company_id: siemens.id,
+#                  profession: buero_management,
+#                  role: :student
+#                },
+#                {
+#                  username: "#{siemens.name.downcase}-student-4",
+#                  password: '123456',
+#                  company_id: siemens.id,
+#                  profession: industriemechanik,
+#                  role: :student
+#                },
+#                {
+#                  username: "#{siemens.name.downcase}-student-5",
+#                  password: '123456',
+#                  company_id: siemens.id,
+#                  profession: industriemechanik,
+#                  role: :student
+#                },
+#                {
+#                  username: 'handel-student-1',
+#                  password: '123456',
+#                  company_id: siemens.id,
+#                  profession: handel,
+#                  role: :student
+#                }
+#              ])
 
 # Authors
 # INDUSTRIEKAUF_AUTHORS = generate_author_licences(mozubi, 3)
@@ -220,6 +220,9 @@ data_industriekaufleute.each do |row|
 end
 
 puts "Industriekaufleute data...done"
+
+
+
 puts 'Start Industiemechaniker data...'
 data_industriemechanik = CSV.parse(File.read("#{Dir.pwd}/db/seed_files/data_industriemechaniker.csv"), headers: true)
 
@@ -472,7 +475,9 @@ data_handel.each do |row|
   end
 
 end
-# puts "Büromanagement data...done"
+
+puts "Groß-und Außerhandel data...done"
+
 # puts 'Start Büromanagement data...'
 # data_bueromanagement = CSV.parse(File.read("#{Dir.pwd}/db/seed_files/data_bueromanagement.csv"), headers: true)
 
@@ -591,7 +596,9 @@ end
 #       add_flashcard_answers(flashcard, answers)
 
 #       # One correct answer
-#       flashcard.update(correct_answers: [flashcard.answers.first.id])
+
+#       flashcard.update(correct_answers: [flashcard.answers]
+
 #     end
 
 #     # For multiple correct answers
