@@ -53,10 +53,10 @@
       <% end %>
     </ul>
   <% end %>
-  
-  <div class="col-12 d-flex justify-content-center mt-3">  
+
+  <div class="col-12 d-flex justify-content-center mt-3">
     <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
-      <%= f.submit "Prüfen", class: "flashcard-btn btn btn-primary col-5", :"data-turbolinks" => false if action_name == "show" %>
+      <%= f.submit "Prüfen", class: "flashcard-btn btn btn-primary col-5", :"data-turbolinks" false if action_name == "show" %>
     <% end %>
   </div>
   <%= link_to "Nächste",

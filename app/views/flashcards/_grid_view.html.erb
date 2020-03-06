@@ -10,13 +10,14 @@
           <div class="row justify-content-around">
             <% if article.read_for?(current_user) %>
               <div class="col-6 m-1 btn btn-primary">
-                <%= link_to [article, article.flashcards.first] do %>
+                <%= link_to [article, article.flashcards.first],
+                            "data-turbolinks": false do %>
                 Zum Quiz
                 <% end %>
               </div>
             <% else %>
               <div class="col-6 m-1 btn btn-outline-primary">
-                <%= link_to article, :"data-turbolinks" => false do %>
+                <%= link_to article do %>
                 Zum Artikel
                 <% end %>
               </div>
