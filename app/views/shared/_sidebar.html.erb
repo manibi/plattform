@@ -58,6 +58,18 @@
           </div>
         <% end %>
       </li>
+      <!-- Slack -->
+      <li class="nav-item my-2">
+        <div class="nav-link">
+          
+        <%#= link_to "https://mozubi.slack.com/", class: "nav-link" do %>
+          <a class="row" target="_blank" rel="noopener noreferrer" href="https://mozubi.slack.com/">
+            <i class="fab fa-slack sidebar-icon"></i>
+            <div class="sidebar-text">Forum</div>
+          </a>
+        </div>
+        <%# end %>
+      </li>
     <% end %>
     <% if current_user.admin? %>
       <li class="nav-item">
