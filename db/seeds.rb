@@ -3,7 +3,7 @@
 require 'csv'
 require_relative './seed_helpers'
 
-# puts 'Cleaning DB...'
+puts 'Cleaning DB...'
 # Chapter.destroy_all
 # UserArticle.destroy_all
 # FlashcardAnswer.destroy_all
@@ -22,7 +22,7 @@ require_relative './seed_helpers'
 # Company.destroy_all
 
 # ! professions
-# puts 'Add professions...'
+puts 'Add professions...'
 # Profession.create!([
 #                      {
 #                        name: 'Industriekaufleute'
@@ -36,15 +36,25 @@ require_relative './seed_helpers'
 #                      {
 #                        name: 'Groß-und Außerhandel'
 #                      },
-#                      {
-#                        name: 'Controlling'
-#                      }
-#                    ])
-industriekauf     = Profession.first
-buero_management  = Profession.second
-industriemechanik = Profession.third
-handel            = Profession.fourth
-controlling       = Profession.last
+                  #    {
+                  #      name: 'Controlling'
+                  #    }
+                  #  ])
+# industriekauf     = Profession.first
+# buero_management  = Profession.second
+# industriemechanik = Profession.third
+# handel            = Profession.fourth
+# controlling    = Profession.last
+
+industriekauf = Profession.find_or_create_by(name: 'Industriekaufleute')
+User.where(profession: industriekauf).destroy_all
+Topic.where(profession: industriekauf).destroy_all
+UserCredential.where(profession: industriekauf).destroy_all
+
+handel = Profession.find_or_create_by(name: 'Groß-und Außerhandel')
+User.where(profession: handel).destroy_all
+Topic.where(profession: handel).destroy_all
+UserCredential.where(profession: handel).destroy_all
 
 # ! companies
 # puts 'Generate companies'
@@ -160,28 +170,20 @@ data_industriekaufleute = CSV.parse(File.read("#{Dir.pwd}/db/seed_files/data_ind
 
 data_industriekaufleute.each do |row|
   # Topics
-  industriekauf.topics.create!({ name: row[1] }) unless Topic.find_by(name: row[1])
-end
-
-data_industriekaufleute.each do |row|
+  p topic = Topic.find_or_create_by(name: row[1], profession: industriekauf)
   # Categories
   category_title = find_category(row, 2, 13)
+  category = Category.find_or_create_by({
+    title: category_title,
+    topic: topic
+    })
 
-  topic = Topic.find_by(name: row[1])
-  topic.categories.create!({
-    title: category_title
-    }) unless Category.find_by(title: category_title)
-end
-
-data_industriekaufleute.each do |row|
   # Articles
-  category_title = find_category(row, 2, 13)
-  db_category = Category.find_by(title: category_title)
   article_name = row["Fachbegriff"].strip
-  if row["Inhalt"].include?("Artikel") && !Article.find_by(title: article_name)
+  if row["Inhalt"].include?("Artikel")
 
     article_description = row["Definition"]
-      db_category.articles.create!({
+      article = category.articles.create!({
         title: article_name,
         description: article_description,
         draft: false,
@@ -190,199 +192,187 @@ data_industriekaufleute.each do |row|
   end
 
  # Chapters
-  db_article = Article.find_by(title: article_name)
   article_chapter1 = row["Erläuterung"]
   article_chapter2 = row["Praxisbeispiel aus der Wirtschaft"]
   article_chapter3 = row["Verwandte Themen"]
 
-  if db_article && db_article.chapters.empty?
-    db_article.chapters.create!({
+    article.chapters.create!({
       title: "Verwandte Themen",
       content: article_chapter3
     }) if row[22]
 
-    db_article.chapters.create!({
+    article.chapters.create!({
       title: "Praxisbeispiel aus der Wirtschaft",
       content: article_chapter2
       }) if row[21]
 
-    db_article.chapters.create!({
+    article.chapters.create!({
       title: "Erläuterung",
       content: article_chapter1
     }) if row[20]
-  end
 end
 
 puts "Industriekaufleute data...done"
 
 
 
-puts 'Start Industiemechaniker data...'
-data_industriemechanik = CSV.parse(File.read("#{Dir.pwd}/db/seed_files/data_industriemechaniker.csv"), headers: true)
+# puts 'Start Industiemechaniker data...'
+# data_industriemechanik = CSV.parse(File.read("#{Dir.pwd}/db/seed_files/data_industriemechaniker.csv"), headers: true)
 
-data_industriemechanik.each do |row|
-  # Topics
-  topic_name = row[1].strip
-  unless Topic.find_by(name: row[1])
-    industriemechanik.topics.create!(name: topic_name)
-  end
-end
+# data_industriemechanik.each do |row|
+#   # Topics
+#   topic_name = row[1].strip
+#   unless Topic.find_by(name: row[1])
+#     industriemechanik.topics.create!(name: topic_name)
+#   end
+# end
 
-data_industriemechanik.each do |row|
-  # Categories
-  category = find_category(row, 2, 17)
-  topic = Topic.find_by(name: row[1])
-  unless Category.find_by(title: category)
-    topic.categories.create!(
-      title: category
-    )
-    end
-end
-data_industriemechanik.each do |row|
-  # Articles
-  category = find_category(row, 2, 17)
-  article_name = row['Fachbegriff'].strip
-  db_category = Category.find_by(title: category)
+# data_industriemechanik.each do |row|
+#   # Categories
+#   category = find_category(row, 2, 17)
+#   topic = Topic.find_by(name: row[1])
+#   unless Category.find_by(title: category)
+#     topic.categories.create!(
+#       title: category
+#     )
+#     end
+# end
+# data_industriemechanik.each do |row|
+#   # Articles
+#   category = find_category(row, 2, 17)
+#   article_name = row['Fachbegriff'].strip
+#   db_category = Category.find_by(title: category)
 
-  if row['Inhalt'].include?('Artikel') && db_category.articles.where(title: article_name).empty?
-    article_description = row['Definition'].strip
+#   if row['Inhalt'].include?('Artikel') && db_category.articles.where(title: article_name).empty?
+#     article_description = row['Definition'].strip
 
-    db_category.articles.create!(
-      title: article_name,
-      description: article_description,
-      draft: false,
-      published_at: Time.now
-    )
-  end
+#     db_category.articles.create!(
+#       title: article_name,
+#       description: article_description,
+#       draft: false,
+#       published_at: Time.now
+#     )
+#   end
 
-  # Chapters
-  db_article = Article.find_by(title: article_name)
-  article_chapter1 = row['Erläuterung']
-  article_chapter2 = row['Praxisbeispiel']
-  article_chapter3 = row['Verwandte Themen']
+#   # Chapters
+#   db_article = Article.find_by(title: article_name)
+#   article_chapter1 = row['Erläuterung']
+#   article_chapter2 = row['Praxisbeispiel']
+#   article_chapter3 = row['Verwandte Themen']
 
-  if db_article&.chapters&.empty?
-    if row[25]
-      db_article.chapters.create!(
-        title: 'Verwandte Themen',
-        content: article_chapter3
-      )
-    end
+#   if db_article&.chapters&.empty?
+#     if row[25]
+#       db_article.chapters.create!(
+#         title: 'Verwandte Themen',
+#         content: article_chapter3
+#       )
+#     end
 
-    if row[24]
-      db_article.chapters.create!(
-        title: 'Praxisbeispiel',
-        content: article_chapter2
-      )
-    end
+#     if row[24]
+#       db_article.chapters.create!(
+#         title: 'Praxisbeispiel',
+#         content: article_chapter2
+#       )
+#     end
 
-    if row[23]
-      db_article.chapters.create!(
-        title: 'Erläuterung',
-        content: article_chapter1
-      )
-    end
-  end
-end
+#     if row[23]
+#       db_article.chapters.create!(
+#         title: 'Erläuterung',
+#         content: article_chapter1
+#       )
+#     end
+#   end
+# end
 
-data_industriemechanik.each do |row|
-  article_names = row['Fachbegriff'].split("; ")
-  article_names.each do |article_name|
-  db_article = Article.find_by(title: article_name)
+# data_industriemechanik.each do |row|
+#   article_names = row['Fachbegriff'].split("; ")
+#   article_names.each do |article_name|
+#   db_article = Article.find_by(title: article_name)
 
-  if db_article && row['Inhalt'].include?('Mehrfachantworten')
-    quiz_question = row[63]
-    answers = mutiple_choice_answers_for(row, 63)
-    flashcard = db_article.flashcards.create!(
-      content: quiz_question.strip,
-      flashcard_type: 'multiple_choice'
-    )
+#   if db_article && row['Inhalt'].include?('Mehrfachantworten')
+#     quiz_question = row[63]
+#     answers = mutiple_choice_answers_for(row, 63)
+#     flashcard = db_article.flashcards.create!(
+#       content: quiz_question.strip,
+#       flashcard_type: 'multiple_choice'
+#     )
 
-    # Add answers to choose from
-    add_flashcard_answers(flashcard, answers)
+#     # Add answers to choose from
+#     add_flashcard_answers(flashcard, answers)
 
-    # For multiple correct answers
-    add_multiple_choice_answers_for(flashcard)
-  end
+#     # For multiple correct answers
+#     add_multiple_choice_answers_for(flashcard)
+#   end
 
-  # Multiple choice one correct answer
-  if db_article && row['Inhalt'].include?('Mehrfachwahlaufgabe')
-    quiz_question = row[28]
-    answers = mutiple_choice_answers_for(row, 28)
-    flashcard = db_article.flashcards.create!(
-      content: quiz_question.strip,
-      flashcard_type: 'multiple_choice'
-    )
+#   # Multiple choice one correct answer
+#   if db_article && row['Inhalt'].include?('Mehrfachwahlaufgabe')
+#     quiz_question = row[28]
+#     answers = mutiple_choice_answers_for(row, 28)
+#     flashcard = db_article.flashcards.create!(
+#       content: quiz_question.strip,
+#       flashcard_type: 'multiple_choice'
+#     )
 
-    # Add answers to choose from
-    add_flashcard_answers(flashcard, answers)
+#     # Add answers to choose from
+#     add_flashcard_answers(flashcard, answers)
 
-    # One correct answer
-    flashcard.update(correct_answers: [flashcard.answers.first.id])
-  end
+#     # One correct answer
+#     flashcard.update(correct_answers: [flashcard.answers.first.id])
+#   end
 
-  if db_article && row['Inhalt'].include?('Rechenaufgabe')
-    quiz_question = row[51]
-    answers = mutiple_choice_answers_for(row, 51)
-    flashcard = db_article.flashcards.create!(
-      content: quiz_question.strip,
-      flashcard_type: 'multiple_choice'
-    )
+#   if db_article && row['Inhalt'].include?('Rechenaufgabe')
+#     quiz_question = row[51]
+#     answers = mutiple_choice_answers_for(row, 51)
+#     flashcard = db_article.flashcards.create!(
+#       content: quiz_question.strip,
+#       flashcard_type: 'multiple_choice'
+#     )
 
-    # Add answers to choose from
-    add_flashcard_answers(flashcard, answers)
+#     # Add answers to choose from
+#     add_flashcard_answers(flashcard, answers)
 
-    # One correct answer
-    flashcard.update(correct_answers: [flashcard.answers.first.id])
-  end
+#     # One correct answer
+#     flashcard.update(correct_answers: [flashcard.answers.first.id])
+#   end
 
-  if db_article && row['Inhalt'].include?('Zuordnungsaufgabe')
-    quiz_question = 'Zuordnungsaufgabe'
-    answers = match_answers_flashcard_for(row, 76)
-    flashcard = db_article.flashcards.create!(
-      content: quiz_question,
-      flashcard_type: 'match_answers'
-    )
+#   if db_article && row['Inhalt'].include?('Zuordnungsaufgabe')
+#     quiz_question = 'Zuordnungsaufgabe'
+#     answers = match_answers_flashcard_for(row, 76)
+#     flashcard = db_article.flashcards.create!(
+#       content: quiz_question,
+#       flashcard_type: 'match_answers'
+#     )
 
-    # Add answers to choose from
-    flashcard.answers << Answer.create!(answers)
+#     # Add answers to choose from
+#     flashcard.answers << Answer.create!(answers)
 
-    # Matching correct answers
-    flashcard.update(correct_answers: flashcard.answers.pluck(:id).select.with_index { |_a, i| i.even? })
-    end
-  end
-end
-puts 'Industiemechaniker data...done'
+#     # Matching correct answers
+#     flashcard.update(correct_answers: flashcard.answers.pluck(:id).select.with_index { |_a, i| i.even? })
+#     end
+#   end
+# end
+# puts 'Industiemechaniker data...done'
 
 puts "Start Groß-und Außerhandel data..."
 data_handel = CSV.parse(File.read("#{Dir.pwd}/db/seed_files/data_handel.csv"), headers: true)
 
 data_handel.each do |row|
   # Topics
-  handel.topics.create!({ name: row[1] }) unless Topic.find_by(name: row[1])
+  topic = Topic.find_or_create_by({ name: row[1], profession: handel })
 
-end
-
-data_handel.each do |row|
   # Categories
-  category = find_category(row, 2, 24)
-
-  topic = Topic.find_by(name: row[1])
-  topic.categories.create!({
-    title: category
-    }) unless Category.find_by(title: category)
-end
-
-data_handel.each do |row|
-  category = find_category(row, 2, 24)
+  category_name = find_category(row, 2, 24)
+  category = Category.find_or_create_by({
+    title: category_name,
+    topic: topic
+    })
 
     # Articles
-    db_category = Category.find_by(title: category)
     article_name = row["Fachbegriff"].strip
-    if row["Inhalt"].include?("Artikel") && !Article.find_by(title: article_name)
+    if row["Inhalt"].include?("Artikel")
 
       article_description = row["Definition"]
-        db_category.articles.create!({
+        article = category.articles.create!({
           title: article_name,
           description: article_description,
           draft: false,
@@ -391,23 +381,22 @@ data_handel.each do |row|
     end
 
  # Chapters
-  db_article = Article.find_by(title: article_name)
   article_chapter1 = row["Erläuterung"]
   article_chapter2 = row["Praxisbeispiel aus der Wirtschaft"]
   article_chapter3 = row["Verwandte Themen"]
 
-  if db_article && db_article.chapters.empty?
-    db_article.chapters.create!({
+  if article
+    article.chapters.create!({
       title: "Verwandte Themen",
       content: article_chapter3
     }) if row[33]
 
-    db_article.chapters.create!({
+    article.chapters.create!({
       title: "Praxisbeispiel aus der Wirtschaft",
       content: article_chapter2
       }) if row[32]
 
-    db_article.chapters.create!({
+    article.chapters.create!({
       title: "Erläuterung",
       content: article_chapter1
     }) if row[31]
