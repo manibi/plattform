@@ -1,4 +1,4 @@
-<div class="container header">  
+<div class="container header">
   <div class="my-3 h-100">
     <div class="row mh-100">
       <!-- result header -->
@@ -18,16 +18,13 @@
         <div class="col">
           Falsch beantwortet: <%= @exam.questions.size - @correct_answers %>
         </div>
-            <div class="col">
-          Nicht beantwortet: <%= @exam.unanswered_questions %>
-        </div>
       </div>
     </div>
   </div>
 </div>
 <div class="container d-flex justify-content-around">
   <div class="card col-6 mt-3">
-    
+
   <div class="tab-content mh-100 exam-results">
     <% @questions.each.with_index do |q, i| %>
       <div class="row d-flex justify-content-between">
@@ -37,8 +34,6 @@
        <div class="col-4">
         <% if @exam.answer_for(q)&.correct %>
           <b class="bg-success">Richtig</b>
-        <% elsif !@exam.answer_for(q)&.answered %>
-          <span class="bg-warning">Nicht beantwortet</span>
         <% else %>
           <em class="bg-danger">Falsch</em>
         <% end %>
