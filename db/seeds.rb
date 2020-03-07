@@ -183,7 +183,7 @@ data_industriekaufleute.each do |row|
   if row["Inhalt"].include?("Artikel")
 
     article_description = row["Definition"]
-      article = category.articles.create!({
+      p article = category.articles.create!({
         title: article_name,
         description: article_description,
         draft: false,
@@ -358,7 +358,7 @@ data_handel = CSV.parse(File.read("#{Dir.pwd}/db/seed_files/data_handel.csv"), h
 
 data_handel.each do |row|
   # Topics
-  topic = Topic.find_or_create_by({ name: row[1], profession: handel })
+  p topic = Topic.find_or_create_by({ name: row[1], profession: handel })
 
   # Categories
   category_name = find_category(row, 2, 24)
@@ -372,7 +372,7 @@ data_handel.each do |row|
     if row["Inhalt"].include?("Artikel")
 
       article_description = row["Definition"]
-        article = category.articles.create!({
+        p article = category.articles.create!({
           title: article_name,
           description: article_description,
           draft: false,
