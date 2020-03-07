@@ -56,11 +56,11 @@
 
   <div class="col-12 d-flex justify-content-center mt-3">
     <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
-      <%= f.submit "Prüfen", class: "flashcard-btn btn btn-primary col-5", :"data-turbolinks" false if action_name == "show" %>
+      <%= f.submit "Prüfen", class: "flashcard-btn btn btn-primary col-5", "data-turbolinks": false if action_name == "show" %>
     <% end %>
   </div>
   <%= link_to "Nächste",
             next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
-            class: "flashcard-btn btn btn-primary col-5", :"data-turbolinks" => false if action_name == "answer_correct_order" %>
+            class: "flashcard-btn btn btn-primary col-5", "data-turbolinks": false if action_name == "answer_correct_order" %>
   <% end %>
 </div>
