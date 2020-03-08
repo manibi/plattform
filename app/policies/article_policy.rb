@@ -1,4 +1,8 @@
 class ArticlePolicy < ApplicationPolicy
+  def index?
+    user.author?
+  end
+
   def show?
     (has_profession_student? && article_published?) || has_profession_author? || user.admin?
   end

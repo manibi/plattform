@@ -4,6 +4,7 @@ class ArticlesController < ApplicationController
   before_action :set_all, only: [:show, :read_next]
 
   def index
+    authorize Article.new
     @upcoming_articles = policy_scope(Article)
     @bookmarked_articles = current_user.bookmarked_articles
     @read_articles = current_user.read_articles
