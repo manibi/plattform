@@ -61,10 +61,10 @@
                       Gelesen
                     </div>
                     <div class="progress-percentage">
-                      <%= '%.2f' % ((@read_categories.select { |c| c.topic_id == upcoming_topic.id }.count * 100) / @categories.select { |c| c.topic_id }.count) %>%
+                      <%= '%.2f' % ((@read_categories.select { |c| c.topic_id == upcoming_topic.id }.count * 100) / upcoming_topic.categories.select { |c| c.topic_id }.count) %>%
                     </div>
                   </div>
-                  <progress class="w-100" value="<%= (@read_categories.select { |c| c.topic_id == upcoming_topic.id }.count) %>" max="<%= (@categories.select { |c| c.topic_id }.count) %>"></progress>
+                  <progress class="w-100" value="<%= (@read_categories.select { |c| c.topic_id == upcoming_topic.id }.count) %>" max="<%= (upcoming_topic.categories.select { |c| c.topic_id }.count) %>"></progress>
                   <%# raise %>
                 </div>
                 <div class="card-stats row justify-content-between">
@@ -104,10 +104,10 @@
                     Gelesen
                   </div>
                   <div class="progress-percentage">
-                    <%= '%.2f' % ((@read_categories.select { |c| c.topic_id == bookmarked_topic.id }.count * 100) / @categories.select { |c| c.topic_id }.count) %>%
+                    <%= '%.2f' % ((@read_categories.select { |c| c.topic_id == bookmarked_topic.id }.count * 100) / bookmarked_topic.categories.select { |c| c.topic_id }.count) %>%
                   </div>
                 </div>
-                <progress class="w-100" value="<%= (@read_categories.select { |c| c.topic_id == bookmarked_topic.id }.count) %>" max="<%= (@categories.select { |c| c.topic_id }.count) %>"></progress>
+                <progress class="w-100" value="<%= (@read_categories.select { |c| c.topic_id == bookmarked_topic.id }.count) %>" max="<%= (bookmarked_topic.categories.select { |c| c.topic_id }.count) %>"></progress>
                 <%# raise %>
               </div>
               <div class="card-stats row justify-content-between">
@@ -146,10 +146,10 @@
                     Gelesen
                   </div>
                   <div class="progress-percentage">
-                    <%= '%.2f' % ((@read_categories.select { |c| c.topic_id == read_topic.id }.count * 100) / @categories.select { |c| c.topic_id }.count) %>%
+                    <%= '%.2f' % ((@read_categories.select { |c| c.topic_id == read_topic.id }.count * 100) / read_topic.categories.select { |c| c.topic_id }.count) %>%
                   </div>
                 </div>
-                <progress class="w-100" value="<%= (@read_categories.select { |c| c.topic_id == read_topic.id }.count) %>" max="<%= (@categories.select { |c| c.topic_id }.count) %>"></progress>
+                <progress class="w-100" value="<%= (@read_categories.select { |c| c.topic_id == read_topic.id }.count) %>" max="<%= (read_topic.categories.select { |c| c.topic_id }.count) %>"></progress>
                 <%# raise %>
               </div>
               <div class="card-stats row justify-content-between">
