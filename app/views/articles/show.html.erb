@@ -91,7 +91,7 @@
           </ul>
         </div>
       <% end %>
-      <% if !@article.read_for?(current_user) %>
+      <%# if !@article.read_for?(current_user) %>
         <div class="card col-12 mt-3 card">
           <%= link_to "Nächster Artikel", read_next_article_path , class: "width-btn btn btn-outline-primary" %>
           <%#= link_to @next_article, class: "btn btn-outline-primary mt-2" do %>
@@ -102,7 +102,7 @@
           <%# end %>
           <%# raise %>
         </div>
-      <% end %>
+      <%# end %>
       <% if @flashcard %>
         <div class="card col-12 mt-3 quizcard">
         Bereit zum Quiz über <%= @article.title %>?
