@@ -24,13 +24,19 @@
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active" id="authored_articles-tab" data-toggle="tab" href="#authored_articles" role="tab" aria-controls="authored_articles" aria-selected="true">Erstellte Artikel</a>
+          <a class="nav-link active" id="authored_drafts-tab" data-toggle="tab" href="#authored_drafts" role="tab" aria-controls="authored_drafts" aria-selected="true">Erstellte Artikel(Drafts)</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="authored_articles-tab" data-toggle="tab" href="#authored_articles" role="tab" aria-controls="authored_articles" aria-selected="true">Erstellte Artikel(Publizierte)</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" id="edited_articles-tab" data-toggle="tab" href="#edited_articles" role="tab" aria-controls="edited_articles" aria-selected="false">Bearbeitete Artikel</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="authored_flashcards-tab" data-toggle="tab" href="#authored_flashcards" role="tab" aria-controls="authored_flashcards" aria-selected="false">Erstellte Quizzes</a>
+          <a class="nav-link" id="authored_flashcards-tab" data-toggle="tab" href="#authored_flashcards" role="tab" aria-controls="authored_flashcards" aria-selected="false">Erstellte Quizzes(Drafts)</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="authored_flashcards-tab" data-toggle="tab" href="#authored_flashcards" role="tab" aria-controls="authored_flashcards" aria-selected="false">Erstellte Quizzes(Publizierte)</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" id="edited_flashcards-tab" data-toggle="tab" href="#edited_flashcards" role="tab" aria-controls="edited_flashcards" aria-selected="false">Bearbeitete Quizzes</a>
@@ -40,12 +46,17 @@
   </div>
 
   <div class="row">
-    <div class="col-8">
+    <div class="col-12">
       <!-- Tab panes -->
       <div class="tab-content">
+        <div class="tab-pane active" id="authored_drafts" role="tabpanel" aria-labelledby="authored_drafts-tab">
+          <ul class="list-group list-group-flush">
+              <%= render partial: "articles/author_article_list", collection: current_user.draft_articles, as: :article %>
+            </ul>
+        </div>
         <div class="tab-pane active" id="authored_articles" role="tabpanel" aria-labelledby="authored_articles-tab">
           <ul class="list-group list-group-flush">
-              <%= render partial: "articles/author_article_list", collection: current_user.authored_articles, as: :article %>
+              <%= render partial: "articles/author_article_list", collection: current_user.published_articles, as: :article %>
             </ul>
         </div>
         <div class="tab-pane" id="edited_articles" role="tabpanel" aria-labelledby="edited_articles-tab">

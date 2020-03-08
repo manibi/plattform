@@ -80,12 +80,12 @@ class ArticlesController < ApplicationController
 
   def publish
     @article.publish!
-    redirect_to @article
+    redirect_back(fallback_location: @article)
   end
 
   def unpublish
     @article.unpublish!
-    redirect_to @article
+    redirect_back(fallback_location: @article)
   end
 
   def flashcards

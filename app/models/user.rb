@@ -96,6 +96,22 @@ class User < ApplicationRecord
     })
   end
 
+  def published_articles
+    Article.joins(:user_articles).where(user_articles: {
+                                    user: self,
+                                    author: true
+                                  })
+                                  .where(draft: false)
+  end
+
+  def draft_articles
+    Article.joins(:user_articles).where(user_articles: {
+                                    user: self,
+                                    author: true
+                                  })
+                                  .where(draft: true)
+  end
+
   def edited_articles
     Article.joins(:user_articles).where(user_articles: {
       user: self,
