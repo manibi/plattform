@@ -98,9 +98,13 @@ class ArticlesController < ApplicationController
                                   .categories.first
                                   .articles.first
     elsif (@upcoming_articles & @category.articles).without(@article) != []
-      @next_article = (@upcoming_articles & @category.articles).select{|a| a.id > @article.id}.first
+      if @next_article = (@upcoming_articles & @category.articles).select{|a| a.id > @article.id} != []
+        @next_article = (@upcoming_articles & @category.articles).select{|a| a.id > @article.id}.first
+      end
     elsif @topic.categories.select { |c| c.id > @category.id }.select { |c| c.articles & @upcoming_articles } != []
-      @next_article = @topic.categories.select { |c| c.id > @category.id }.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) }.first
+      if @topic.categories.select { |c| c.id > @category.id }.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) } != []
+        @next_article = @topic.categories.select { |c| c.id > @category.id }.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) }.first
+      end
     elsif @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } } != []
       if @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles } != []
         if @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles != []
@@ -133,7 +137,10 @@ class ArticlesController < ApplicationController
     @category = @categories.find(@article.category_id)
     @topics = current_user.profession.topics
     @topic = @topics.find(@category.topic_id)
-    @upcoming_articles = policy_scope(Article)
+    @articles = current_user.all_articles.published
+    @read_articles = current_user.read_articles.published
+    @bookmarked_articles = current_user.bookmarked_articles.published
+    @upcoming_articles = @articles - @read_articles
   end
 
   def set_article
