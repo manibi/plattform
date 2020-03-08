@@ -1,4 +1,3 @@
-<%# raise %>
 <!-- topic tab -->
 <div role="tabpanel" class="tab-pane active py-3" id="topic">
   <div class="row">
@@ -17,10 +16,10 @@
                       Gelesen
                     </div>
                     <div class="progress-percentage">
-                      <%= '%.2f' % (((category.articles & @read_articles).count * 100) / (category.articles.count)) %>%
+                      <%= '%.2f' % (((category.articles.published & @read_articles).count * 100) / (category.articles.published.count)) %>%
                     </div>
                   </div>
-                  <progress class="w-100" value="<%= (category.articles & @read_articles).count %>" max="<%= (category.articles.count) %>"></progress>
+                  <progress class="w-100" value="<%= (category.articles.published & @read_articles).count %>" max="<%= (category.articles.published.count) %>"></progress>
                 </div>
                 <div class="card-stats row justify-content-between">
                   <div class="read-articles row mx-0 align-items-center">
@@ -59,10 +58,10 @@
                     Gelesen
                   </div>
                   <div class="progress-percentage">
-                    <%= '%.2f' % (((upcoming_category.articles & @read_articles).count * 100) / (upcoming_category.articles.count)) %>%
+                    <%= '%.2f' % (((upcoming_category.articles.published & @read_articles).count * 100) / (upcoming_category.articles.published.count)) %>%
                   </div>
                 </div>
-                <progress class="w-100" value="<%= (upcoming_category.articles & @read_articles).count %>" max="<%= (upcoming_category.articles.count) %>"></progress>
+                <progress class="w-100" value="<%= (upcoming_category.articles.published & @read_articles).count %>" max="<%= (upcoming_category.articles.published.count) %>"></progress>
               </div>
               <div class="card-stats row justify-content-between">
                 <div class="read-articles row mx-0 align-items-center">
@@ -100,10 +99,10 @@
                     Gelesen
                   </div>
                   <div class="progress-percentage">
-                    <%= '%.2f' % (((bookmarked_category.articles & @read_articles).count * 100) / (bookmarked_category.articles.count)) %>%
+                    <%= '%.2f' % (((bookmarked_category.articles.published & @read_articles).count * 100) / (bookmarked_category.articles.published.count)) %>%
                   </div>
                 </div>
-                <progress class="w-100" value="<%= (bookmarked_category.articles & @read_articles).count %>" max="<%= (bookmarked_category.articles.count) %>"></progress>
+                <progress class="w-100" value="<%= (bookmarked_category.articles.published & @read_articles).count %>" max="<%= (bookmarked_category.articles.published.count) %>"></progress>
               </div>
               <div class="card-stats row justify-content-between">
                 <div class="read-articles row mx-0 align-items-center">
@@ -141,10 +140,10 @@
                     Gelesen
                   </div>
                   <div class="progress-percentage">
-                    <%= '%.2f' % (((read_category.articles & @read_articles).count * 100) / (read_category.articles.count)) %>%
+                    <%= '%.2f' % (((read_category.articles.published & @read_articles).count * 100) / (read_category.articles.published.count)) %>%
                   </div>
                 </div>
-                <progress class="w-100" value="<%= (read_category.articles & @read_articles).count %>" max="<%= (read_category.articles.count) %>"></progress>
+                <progress class="w-100" value="<%= (read_category.articles.published & @read_articles).count %>" max="<%= (read_category.articles.published.count) %>"></progress>
               </div>
               <div class="card-stats row justify-content-between">
                 <div class="read-articles row mx-0 align-items-center">
