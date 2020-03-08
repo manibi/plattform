@@ -44,7 +44,7 @@ class PagesController < ApplicationController
     else
       @current_article = @not_read_articles.published.select { |a| a.category_id }.sort.first
     end
-    @articles = policy_scope(Article) 
+    @articles = policy_scope(Article)
     @current_topic = @current_article.category.topic
     @current_category = @current_article.category
     # @current_articles = @current_category.find(@articles.map{ |a| a.category_id })
