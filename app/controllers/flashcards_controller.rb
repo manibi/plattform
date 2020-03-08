@@ -1,9 +1,6 @@
 class FlashcardsController < ApplicationController
   before_action :authenticate_user!
 
-  # TODO: check for floats input not only integers - table quiz soll_ist
-
-  # Play article flashcards
   def index
     @articles = policy_scope(Flashcard)
   end
@@ -91,6 +88,20 @@ class FlashcardsController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def publish
+    @flashcard = Flashcard.find(params[:id])
+    authorize @flashcard
+    @flashcard.publish!
+    redirect_back(fallback_location: @flashcard)
+  end
+
+  def unpublish
+    @flashcard = Flashcard.find(params[:id])
+    authorize @flashcard
+    @flashcard.unpublish!
+    redirect_back(fallback_location: @flashcard)
   end
 
   # Bookmark exam flashcard

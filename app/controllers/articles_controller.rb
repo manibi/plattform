@@ -128,7 +128,7 @@ class ArticlesController < ApplicationController
   private
 
   def set_all
-    @flashcard = @article.flashcards.first
+    @flashcard = @article.flashcards.published.first
     @categories = current_user.all_categories
     @category = @categories.find(@article.category_id)
     @topics = current_user.profession.topics

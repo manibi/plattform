@@ -119,12 +119,19 @@ class User < ApplicationRecord
     })
   end
 
-  def authored_flashcards
+  def draft_flashcards
     Flashcard.joins(:user_flashcards).where(user_flashcards: {
-      user: self,
-      author: true
-    })
+                                      user: self,
+                                      author: true
+                                    }).where(draft: true)
   end
+
+  def published_flashcards
+    Flashcard.joins(:user_flashcards).where(user_flashcards: {
+                                      user: self,
+                                      author: true
+                                    }).where(draft: false)
+    end
 
   def edited_flashcards
     Flashcard.joins(:user_flashcards).where(user_flashcards: {

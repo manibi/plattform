@@ -33,7 +33,7 @@
           <a class="nav-link" id="edited_articles-tab" data-toggle="tab" href="#edited_articles" role="tab" aria-controls="edited_articles" aria-selected="false">Bearbeitete Artikel</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="authored_flashcards-tab" data-toggle="tab" href="#authored_flashcards" role="tab" aria-controls="authored_flashcards" aria-selected="false">Erstellte Quizzes(Drafts)</a>
+          <a class="nav-link" id="draft_flashcards-tab" data-toggle="tab" href="#draft_flashcards" role="tab" aria-controls="draft_flashcards" aria-selected="false">Erstellte Quizzes(Drafts)</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" id="authored_flashcards-tab" data-toggle="tab" href="#authored_flashcards" role="tab" aria-controls="authored_flashcards" aria-selected="false">Erstellte Quizzes(Publizierte)</a>
@@ -64,9 +64,14 @@
             <%= render partial: "articles/author_article_list", collection: current_user.edited_articles, as: :article %>
           </ul>
         </div>
+        <div class="tab-pane" id="draft_flashcards" role="tabpanel" aria-labelledby="draft_flashcards-tab">
+          <ul class="list-group list-group-flush">
+            <%= render partial: "flashcards/author_flashcard_list_item", collection: current_user.draft_flashcards, as: :flashcard %>
+          </ul>
+        </div>
         <div class="tab-pane" id="authored_flashcards" role="tabpanel" aria-labelledby="authored_flashcards-tab">
           <ul class="list-group list-group-flush">
-            <%= render partial: "flashcards/author_flashcard_list_item", collection: current_user.authored_flashcards, as: :flashcard %>
+            <%= render partial: "flashcards/author_flashcard_list_item", collection: current_user.published_flashcards, as: :flashcard %>
           </ul>
         </div>
         <div class="tab-pane" id="edited_flashcards" role="tabpanel" aria-labelledby="edited_flashcards-tab">

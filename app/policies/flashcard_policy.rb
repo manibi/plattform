@@ -19,6 +19,14 @@ class FlashcardPolicy < ApplicationPolicy
     update?
   end
 
+  def publish?
+    edit?
+  end
+
+  def unpublish?
+    edit?
+  end
+
   class Scope < Scope
     def resolve
       # scope.all

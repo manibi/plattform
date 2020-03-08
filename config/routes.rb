@@ -62,6 +62,8 @@ Rails.application.routes.draw do
         post "answer_match",           to: "flashcards#answer_match"
         post "soll_ist",               to: "flashcards#soll_ist"
         get  "next_flashcard",         to: "flashcards#next_flashcard"
+        post  "publish"
+        patch "unpublish"
       end
     end
     get "quiz_results", to: "flashcards#results"

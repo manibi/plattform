@@ -3,10 +3,20 @@
 		<%= link_to "#{flashcard_counter+1}. #{flashcard.content}",
               article_flashcard_path(flashcard.article, flashcard) %>
 	</div>
-	<div class="col-3">
-  		<%= link_to "Bearbeiten",
-			edit_flashcard_path(flashcard),
-			class: "btn btn-warning",
-			style: "margin-left: auto;" %>		
-	</div>
+	<%= link_to "Bearbeiten",
+							edit_flashcard_path(flashcard),
+							class: "btn btn-warning",
+							style: "margin-left: auto;" %>
+
+	<% if flashcard.draft? %>
+		<%= link_to 'Quiz veröffentlichen',
+								publish_article_flashcard_path(flashcard.article, flashcard),
+								method: :post,
+								class: "btn btn-success ml-2" %>
+  <% else %>
+		<%= link_to 'Quiz nicht veröffentlichen',
+								unpublish_article_flashcard_path(flashcard.article, flashcard),
+								method: :patch,
+                class: "btn btn-danger ml-2" %>
+  <% end %>
 </li>
