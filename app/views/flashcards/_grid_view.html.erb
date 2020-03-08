@@ -10,7 +10,7 @@
           <div class="row justify-content-around">
             <% if article.read_for?(current_user) %>
               <div class="col-6 m-1 btn btn-primary">
-                <%= link_to [article, article.flashcards.first],
+                <%= link_to [article, article.flashcards.published.first],
                             "data-turbolinks": false do %>
                 Zum Quiz
                 <% end %>
