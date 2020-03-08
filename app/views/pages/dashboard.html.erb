@@ -42,10 +42,10 @@
 			<div class="card col-12 h-100">
 				<div class="row">
 					<div class="col-4">
-						<div class="<%= "donut-chart-#{ (((current_user.articles.published - @not_read_articles.published).count * 100) / (@articles.count)) }"%> donut-chart chart2" style="#{$color: black!important}">
+						<div class="<%= "donut-chart-#{ (((current_user.articles.published - @not_read_articles.published).count)) }"%> donut-chart chart2" style="#{$color: black!important}">
 							<div class="slice one"></div>
 							<div class="slice two"></div>
-							<div class="chart-center perc">
+							<div class="chart-center non-perc">
 						    	<!-- <span></span> -->
 						    	<span class="w-100" value="<%= $perc =(current_user.articles.published - @not_read_articles.published).count %>" max="<%= @articles.count %>"></span>
 							</div>
