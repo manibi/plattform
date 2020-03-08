@@ -216,26 +216,14 @@ class FlashcardsController < ApplicationController
                                   .topics.first
                                   .categories.first
                                   .articles.first
-    elsif (@upcoming_articles & @category.articles).without(@article) != []
+    elsif (@upcoming_articles & @category.articles).without(@article) != [] && @next_article = (@upcoming_articles & @category.articles).select{|a| a.id > @article.id} != []
       @next_article = (@upcoming_articles & @category.articles).select{|a| a.id > @article.id}.first
-    elsif @topic.categories.select { |c| c.id > @category.id }.select { |c| c.articles & @upcoming_articles } != []
+    elsif @topic.categories.select { |c| c.id > @category.id }.select { |c| c.articles & @upcoming_articles } != [] && @topic.categories.select { |c| c.id > @category.id }.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) } != []
       @next_article = @topic.categories.select { |c| c.id > @category.id }.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) }.first
-    elsif @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } } != []
-      if @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles } != []
-        if @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles != []
-          if @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) } != []
-            @next_article = @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) }.first
-          end
-        end
-      end
-    elsif @topics.select { |t| t.id < @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } } != []
-      if @topics.select { |t| t.id < @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles } != []
-        if @topics.select { |t| t.id < @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles !=[]
-          if @topics.select { |t| t.id < @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) } != []
-            @next_article = @topics.select { |t| t.id < @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) }.first
-          end
-        end
-      end
+    elsif @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } } != [] && @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles } != [] && @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles != [] && @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) } != []
+      @next_article = @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) }.first
+    elsif @topics.select { |t| t.id < @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } } != [] && @topics.select { |t| t.id < @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles } != [] && @topics.select { |t| t.id < @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles !=[] && @topics.select { |t| t.id < @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) } != []
+      @next_article = @topics.select { |t| t.id < @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) }.first
     else
       @next_article = @upcoming_articles.first
     end
