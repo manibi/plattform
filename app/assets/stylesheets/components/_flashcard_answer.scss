@@ -34,7 +34,7 @@ ul.fixed-answers {
   li {
     border: 1px solid black;
     padding: 1rem;
-    height: 6rem;
+    min-height: 6rem;
     flex-direction: column;
     display: flex;
     justify-content: center;

@@ -45,8 +45,13 @@
       <% end %>
     </div>
   <% end %>
-
+  
+  <% if @exam %>
   <div class="card mt-3 col-7">
+  <% else %>
+  <div class="card mt-3 col-9">
+  <% end %>
+
 
       <!-- Question out of -->
       <div class="text-center">
@@ -128,7 +133,7 @@
     <% if @exam %>
       <div class="card mt-3 col-2 sticky-card">
             <div class="border-bottom pb-2">
-              Frage Nummer:
+              Frage:
             </div>
         <div class="mt-3">
           <ul class="sticky-questions">

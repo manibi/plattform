@@ -192,7 +192,7 @@ body {
 // @include donut-chart('.chart3', 14, 8vh, 0.5vh, $light, $white, $warning);
 // @include donut-chart('.chart4', 8, 8vh, 0.5vh, $light, $white, $danger);
 
-@for $i  from 0 to 100 {
+@for $i  from 0 to 300 {
   .donut-chart-#{$i} {
     @include donut-chart($i, 8vh, 0.5vh, $light, $white, $primary);
   }
