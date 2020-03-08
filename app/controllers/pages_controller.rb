@@ -42,9 +42,9 @@ class PagesController < ApplicationController
     if @read_user_articles.empty? || @not_read_articles.empty?
       @current_article = current_user.profession.topics.first.categories.first.articles.first
     else
-      @current_article = @not_read_articles.select { |na| na.category_id == @not_read_articles.map { |a| a.category_id }.sort.first }.first
+      @current_article = @not_read_articles.published.select { |a| a.category_id }.sort.first
     end
-    @articles = policy_scope(Article)
+    @articles = policy_scope(Article) 
     @current_topic = @current_article.category.topic
     @current_category = @current_article.category
     # @current_articles = @current_category.find(@articles.map{ |a| a.category_id })
