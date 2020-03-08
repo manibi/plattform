@@ -1,5 +1,6 @@
 class FlashcardsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_all, only: [:results]
 
   # TODO: check for floats input not only integers - table quiz soll_ist
 
@@ -215,6 +216,14 @@ class FlashcardsController < ApplicationController
                                   .topics.first
                                   .categories.first
                                   .articles.first
+    elsif (@upcoming_articles & @category.articles).without(@article) != [] && @next_article = (@upcoming_articles & @category.articles).select{|a| a.id > @article.id} != []
+      @next_article = (@upcoming_articles & @category.articles).select{|a| a.id > @article.id}.first
+    elsif @topic.categories.select { |c| c.id > @category.id }.select { |c| c.articles & @upcoming_articles } != [] && @topic.categories.select { |c| c.id > @category.id }.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) } != []
+      @next_article = @topic.categories.select { |c| c.id > @category.id }.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) }.first
+    elsif @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } } != [] && @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles } != [] && @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles != [] && @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) } != []
+      @next_article = @topics.select { |t| t.id > @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) }.first
+    elsif @topics.select { |t| t.id < @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } } != [] && @topics.select { |t| t.id < @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles } != [] && @topics.select { |t| t.id < @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles !=[] && @topics.select { |t| t.id < @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) } != []
+      @next_article = @topics.select { |t| t.id < @topic.id }.select { |t| t.categories.each { |c| c.articles & @upcoming_articles } }.first.categories.select { |c| c.articles & @upcoming_articles }.first.articles.select { |a| @upcoming_articles.include?(a) }.first
     else
       @next_article = @upcoming_articles.first
     end
@@ -252,6 +261,16 @@ class FlashcardsController < ApplicationController
   end
 
   private
+
+  def set_all
+    @article = Article.find(params[:article_id])
+    @flashcard = @article.flashcards.first
+    @categories = current_user.all_categories
+    @category = @categories.find(@article.category_id)
+    @topics = current_user.profession.topics
+    @topic = @topics.find(@category.topic_id)
+    @upcoming_articles = policy_scope(Article)
+  end
 
   def set_multiple_choice_answer
     params.require(:flashcard).permit(answer_ids: []) if params[:flashcard]
