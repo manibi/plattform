@@ -23,7 +23,7 @@ class FlashcardPolicy < ApplicationPolicy
     def resolve
       # scope.all
       # Return all articles to access the flashcards based on article
-      Article.joins(:category)
+      Article.published.joins(:category)
       .where(categories: { topic: [user.profession.topics] })
     end
   end
