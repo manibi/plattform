@@ -2,9 +2,6 @@ class FlashcardsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_all, only: [:results]
 
-  # TODO: check for floats input not only integers - table quiz soll_ist
-
-  # Play article flashcards
   def index
     @articles = policy_scope(Flashcard)
   end
@@ -40,7 +37,7 @@ class FlashcardsController < ApplicationController
        @article.read_for!(current_user) unless @article.read_for?(current_user)
 
       # Reset flashcards for this article if re-taking the quiz
-      if @article.flashcards.sort.first == @flashcard && current_user.correct_answered_flashcards_for(@article).count == @article.flashcards.count
+      if @article.flashcards.published.sort.first == @flashcard && current_user.correct_answered_flashcards_for(@article).count == @article.flashcards.published.count
         Flashcard.reset_for!(current_user, @article)
       end
     end
@@ -92,6 +89,20 @@ class FlashcardsController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def publish
+    @flashcard = Flashcard.find(params[:id])
+    authorize @flashcard
+    @flashcard.publish!
+    redirect_back(fallback_location: @flashcard)
+  end
+
+  def unpublish
+    @flashcard = Flashcard.find(params[:id])
+    authorize @flashcard
+    @flashcard.unpublish!
+    redirect_back(fallback_location: @flashcard)
   end
 
   # Bookmark exam flashcard
@@ -243,9 +254,9 @@ class FlashcardsController < ApplicationController
     authorize @flashcard, :show?
 
     @article = @flashcard.article
-    @wrong_answered_flashcards = current_user.wrong_answered_flashcards_for(@article)
-    @correct_answered_flashcards = current_user.correct_answered_flashcards_for(@article)
-    flashcards_to_do = @article.flashcards.sort
+    @wrong_answered_flashcards = current_user.wrong_answered_flashcards_for(@article).published
+    @correct_answered_flashcards = current_user.correct_answered_flashcards_for(@article).published
+    flashcards_to_do = @article.flashcards.published.sort
 
     if flashcards_to_do.last != @flashcard && !current_user.answered?(flashcards_to_do.last)
       @next_flashcard = flashcards_to_do[flashcards_to_do.index(@flashcard) + 1]
@@ -297,12 +308,12 @@ class FlashcardsController < ApplicationController
   end
 
   def next_exam_flashcard(exam)
-    @questions = exam.questions
-    current_question = Flashcard.find(params[:id]).id
-    flashcard_id = @questions.index(current_question) + 1
+    @questions = exam.all_questions
+    current_question = Flashcard.find(params[:id])
+    flashcard_idx = @questions.index(current_question) + 1
 
-    if flashcard_id < @questions.size
-      flashcard = Flashcard.find(@questions[flashcard_id])
+    if flashcard_idx < @questions.size
+      flashcard = @questions[flashcard_idx]
       redirect_to custom_exam_flashcard_path(exam, flashcard)
     else
       redirect_to custom_exam_submit_exam_path(exam)

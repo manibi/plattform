@@ -5,7 +5,7 @@ class CategoryPolicy < ApplicationPolicy
   end
 
   def new?
-    user.author? || user.admin?
+    user.admin?
   end
 
   def create?
@@ -13,7 +13,7 @@ class CategoryPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.author? || user.admin?
+    user.admin?
   end
 
   def update?

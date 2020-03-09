@@ -4,7 +4,7 @@ class TopicPolicy < ApplicationPolicy
   end
 
   def new?
-    user.author? || user.admin?
+    user.admin?
   end
 
   def create?

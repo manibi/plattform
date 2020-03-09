@@ -24,7 +24,7 @@ class CustomExam < ApplicationRecord
   end
 
   def all_questions
-    Flashcard.find(self.questions)
+    Flashcard.find(self.questions).select { |f| !f.draft? }
   end
 
   # Return question answer

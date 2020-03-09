@@ -15,7 +15,7 @@ class CustomExamsController < ApplicationController
     @questions = @exam.all_questions
     @answers = @exam.custom_exam_answers
     @correct_answers = @exam.correct_answered_questions
-    @wrong_answers   = @exam.questions.size - @correct_answers
+    @wrong_answers   = @exam.all_questions.size - @correct_answers
   end
 
   def create
@@ -27,7 +27,7 @@ class CustomExamsController < ApplicationController
     end
 
 
-    if @exam.questions.any? && @exam.save
+    if @exam.all_questions.any? && @exam.save
       redirect_to custom_exam_info_path(@exam)
     else
       render :new
@@ -48,7 +48,7 @@ class CustomExamsController < ApplicationController
 
     @answers = @exam.custom_exam_answers
     @correct_answers = @exam.correct_answered_questions
-    @wrong_answers   = @exam.questions.size - @correct_answers
+    @wrong_answers   = @exam.all_questions.size - @correct_answers
   end
 
   def add_exam_categories

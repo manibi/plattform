@@ -9,4 +9,13 @@
   <%= link_to "Quiz bearbeiten",
               flashcards_article_path(article),
               class: "btn btn-info ml-2" %>
+  <% if article.draft? %>
+    <%= link_to 'Artikel veröffentlichen', publish_article_path(article),
+                                    method: :post,
+                                    class: "btn btn-success ml-2" %>
+  <% else %>
+    <%= link_to 'Artikel nicht veröffentlichen', unpublish_article_path(article),                                            method: :patch,
+                                                 class: "btn btn-danger ml-2" %>
+  <% end %>
+
 </li>

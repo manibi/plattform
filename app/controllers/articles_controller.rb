@@ -4,6 +4,7 @@ class ArticlesController < ApplicationController
   before_action :set_all, only: [:show, :read_next]
 
   def index
+    authorize Article.new
     @upcoming_articles = policy_scope(Article)
     @bookmarked_articles = current_user.bookmarked_articles
     @read_articles = current_user.read_articles
@@ -33,7 +34,6 @@ class ArticlesController < ApplicationController
     @categories = current_user.all_categories
     chapter_params = article_params[:chapters_attributes]
     @article = Article.new(article_params)
-    @article.build(chapter_params) if @article.persisted?
     if @article.save
       # raise
       @article.sign_article!(current_user)
@@ -44,6 +44,11 @@ class ArticlesController < ApplicationController
   end
 
   def edit
+    @article.chapters.build([
+      {title: "Erläuterung", content: ""},
+      {title: "Praxisbeispiel aus der Wirtschaft", content: ""},
+      {title: "Verwandte Themen", content: ""},
+      ])
     @categories = current_user.all_categories
   end
 
@@ -80,12 +85,12 @@ class ArticlesController < ApplicationController
 
   def publish
     @article.publish!
-    redirect_to @article
+    redirect_back(fallback_location: @article)
   end
 
   def unpublish
     @article.unpublish!
-    redirect_to @article
+    redirect_back(fallback_location: @article)
   end
 
   def flashcards
@@ -116,7 +121,7 @@ class ArticlesController < ApplicationController
   private
 
   def set_all
-    @flashcard = @article.flashcards.first
+    @flashcard = @article.flashcards.published.first
     @categories = current_user.all_categories
     @category = @categories.find(@article.category_id)
     @topics = current_user.profession.topics

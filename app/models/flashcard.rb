@@ -28,6 +28,10 @@ class Flashcard < ApplicationRecord
                       message:   "should be less than 5MB"
                     }
 
+  # Scopes
+  scope :draft,     -> { where(draft: true) }
+  scope :published, -> { where(draft: false) }
+
   # Store flashcard answer, increment tries if answer is false
   def save_answer_for!(user, answer=false)
     user_flashcard = UserFlashcard.find_or_create_by(user: user, flashcard: self)
@@ -95,5 +99,20 @@ class Flashcard < ApplicationRecord
   def user_answers_for(exam)
     exam_answer = self.custom_exam_answers.find_by(custom_exam: exam)
     exam_answer.user_answers if exam_answer
+  end
+
+  def publish!
+    self.draft = false
+    self.save
+  end
+
+  def unpublish!
+    self.update(draft: true, published_at: nil)
+  end
+
+  protected
+
+  def ensure_published_at
+    self.published_at ||= Time.zone.now
   end
 end
