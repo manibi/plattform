@@ -34,8 +34,8 @@ class PagesController < ApplicationController
     authorize current_user, :show?
     @read_user_articles = UserArticle.where(user: current_user, read: true)
     read_article_ids = @read_user_articles.map { |user_article| user_article.article_id  }
-    @not_read_articles = Article.where.not(id: read_article_ids) 
-    @not_read_category = policy_scope(Category).find(@not_read_articles.map{ |a| a.category_id}.sort.first)
+    # @not_read_articles = Article.where.not(id: read_article_ids) 
+    # @not_read_category = policy_scope(Category).find(@not_read_articles.map{ |a| a.category_id}.sort.first)
 
     @articles = current_user.all_articles.published
     @read_articles = current_user.read_articles.published
