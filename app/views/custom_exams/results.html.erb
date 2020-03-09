@@ -10,13 +10,13 @@
       <!-- results -->
       <div class="row mt-3 col-12 breadcrumbs ml-3">
         <div class="col-2">
-          Punkte: <%= @correct_answers %> / <%= @exam.questions.count %>
+          Punkte: <%= @correct_answers %> / <%= @exam.all_questions.count %>
         </div>
         <div class="col">
           Richtig beantwortet: <%= @correct_answers %>
         </div>
         <div class="col">
-          Falsch beantwortet: <%= @exam.questions.size - @correct_answers %>
+          Falsch beantwortet: <%= @exam.all_questions.size - @correct_answers %>
         </div>
       </div>
     </div>
@@ -29,7 +29,7 @@
     <% @questions.each.with_index do |q, i| %>
       <div class="row d-flex justify-content-between">
        <div class="col-3">
-         <%= link_to "Frage #{i + 1}", custom_exam_flashcard_path(@exam, @exam.questions[i]) %>
+         <%= link_to "Frage #{i + 1}", custom_exam_flashcard_path(@exam, @exam.all_questions[i]) %>
        </div>
        <div class="col-4">
         <% if @exam.answer_for(q)&.correct %>

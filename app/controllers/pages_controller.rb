@@ -42,7 +42,7 @@ class PagesController < ApplicationController
     @bookmarked_articles = current_user.bookmarked_articles.published
     @upcoming_articles = @articles - @read_articles
     # if the user didn't ready any article set current article to first one
-    # if @current_article 
+    # if @current_article
     if @read_user_articles.empty? || @not_read_articles.empty?
       @current_article = current_user.profession.topics.first.categories.first.articles.first
     else
@@ -64,7 +64,7 @@ class PagesController < ApplicationController
 
   def exam_info
     @exam = CustomExam.find(params[:custom_exam_id])
-    @first_flashcard = Flashcard.find(@exam.questions.first)
+    @first_flashcard = @exam.all_questions.first
     authorize current_user, :show?
   end
 end

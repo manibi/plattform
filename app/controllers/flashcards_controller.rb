@@ -254,8 +254,8 @@ class FlashcardsController < ApplicationController
     authorize @flashcard, :show?
 
     @article = @flashcard.article
-    @wrong_answered_flashcards = current_user.wrong_answered_flashcards_for(@article)
-    @correct_answered_flashcards = current_user.correct_answered_flashcards_for(@article)
+    @wrong_answered_flashcards = current_user.wrong_answered_flashcards_for(@article).published
+    @correct_answered_flashcards = current_user.correct_answered_flashcards_for(@article).published
     flashcards_to_do = @article.flashcards.published.sort
 
     if flashcards_to_do.last != @flashcard && !current_user.answered?(flashcards_to_do.last)
@@ -308,12 +308,12 @@ class FlashcardsController < ApplicationController
   end
 
   def next_exam_flashcard(exam)
-    @questions = exam.questions
-    current_question = Flashcard.find(params[:id]).id
-    flashcard_id = @questions.index(current_question) + 1
+    @questions = exam.all_questions
+    current_question = Flashcard.find(params[:id])
+    flashcard_idx = @questions.index(current_question) + 1
 
-    if flashcard_id < @questions.size
-      flashcard = Flashcard.find(@questions[flashcard_id])
+    if flashcard_idx < @questions.size
+      flashcard = @questions[flashcard_idx]
       redirect_to custom_exam_flashcard_path(exam, flashcard)
     else
       redirect_to custom_exam_submit_exam_path(exam)

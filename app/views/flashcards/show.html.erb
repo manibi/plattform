@@ -141,7 +141,7 @@
                 <li class="exam-question p-1">
                   <div class="row mx-0">
                     <div class="col-4 mx-0">
-                      <%= link_to custom_exam_flashcard_path(@exam, @exam.questions[i]), "data-turbolinks": false do %>
+                      <%= link_to custom_exam_flashcard_path(@exam, @exam.all_questions[i]), "data-turbolinks": false do %>
                           <button class="btn btn-primary">
                             <%= i + 1 %>
                           </button>
