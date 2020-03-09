@@ -37,7 +37,7 @@ class FlashcardsController < ApplicationController
        @article.read_for!(current_user) unless @article.read_for?(current_user)
 
       # Reset flashcards for this article if re-taking the quiz
-      if @article.flashcards.sort.first == @flashcard && current_user.correct_answered_flashcards_for(@article).count == @article.flashcards.count
+      if @article.flashcards.published.sort.first == @flashcard && current_user.correct_answered_flashcards_for(@article).count == @article.flashcards.published.count
         Flashcard.reset_for!(current_user, @article)
       end
     end
@@ -256,7 +256,7 @@ class FlashcardsController < ApplicationController
     @article = @flashcard.article
     @wrong_answered_flashcards = current_user.wrong_answered_flashcards_for(@article)
     @correct_answered_flashcards = current_user.correct_answered_flashcards_for(@article)
-    flashcards_to_do = @article.flashcards.sort
+    flashcards_to_do = @article.flashcards.published.sort
 
     if flashcards_to_do.last != @flashcard && !current_user.answered?(flashcards_to_do.last)
       @next_flashcard = flashcards_to_do[flashcards_to_do.index(@flashcard) + 1]

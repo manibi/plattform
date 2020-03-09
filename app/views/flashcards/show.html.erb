@@ -45,25 +45,25 @@
       <% end %>
     </div>
   <% end %>
-  
+
   <% if @exam %>
   <div class="card mt-3 col-7">
   <% else %>
   <div class="card mt-3 col-9">
   <% end %>
 
-
+    <% if current_user.student? %>
       <!-- Question out of -->
       <div class="text-center">
         <p> Frage
           <% if @exam %>
             <%= flashcard_index_from(@questions, @flashcard) %>
           <% else %>
-            <%= flashcard_index_from(@article.flashcards, @flashcard) %>
+            <%= flashcard_index_from(@article.flashcards.published, @flashcard) %>
           <% end %>
         </p>
       </div>
-
+    <% end %>
       <!-- Author -->
       <% if current_user.author? %>
         <div class="row mt-3 justify-content-around">
