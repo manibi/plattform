@@ -34,8 +34,8 @@ class PagesController < ApplicationController
     authorize current_user, :show?
     @read_user_articles = UserArticle.where(user: current_user, read: true)
     read_article_ids = @read_user_articles.map { |user_article| user_article.article_id  }
-    @not_read_articles = Article.where.not(id: read_article_ids)
-    @not_read_category = policy_scope(Category).find(@not_read_articles.map{ |a| a.category_id}.sort.first)
+    # @not_read_articles = Article.where.not(id: read_article_ids)
+    # @not_read_category = policy_scope(Category).find(@not_read_articles.map{ |a| a.category_id}.sort.first)
 
     @articles = current_user.all_articles.published
     @read_articles = current_user.read_articles.published
@@ -43,10 +43,10 @@ class PagesController < ApplicationController
     @upcoming_articles = @articles - @read_articles
     # if the user didn't ready any article set current article to first one
     # if @current_article
-    if @read_user_articles.empty? || @not_read_articles.empty?
+    if @read_user_articles.empty? || @upcoming_articles.empty?
       @current_article = current_user.profession.topics.first.categories.first.articles.first
     else
-      @current_article = @not_read_articles.published.select { |a| a.category_id }.sort.first
+      @current_article = @upcoming_articles.select { |a| a.category_id }.sort.first
     end
     @articles = policy_scope(Article)
     @current_topic = @current_article.category.topic

@@ -5,24 +5,30 @@
         <div class="col d-flex justify-content-center">
           <%= link_to "Prüfung beenden",
                       custom_exam_results_path(@exam),
-                      class: "btn btn-primary",
+                      class: "btn btn-success",
                       data: { confirm: 'Bist du sicher?' } if !@exam.submitted %>
         </div>
       </div>
       <div class="row mt-3">
       <% @questions.each.with_index do |q, i| %>
-        <div class="col-7 pl-5 d-flex justify-content-between align-items-center py-1">
+
+        <div class="col-12 pl-5 d-flex justify-content-between align-items-center py-1">
+          <div class="col-3">
           <%= link_to "Frage #{i + 1}", custom_exam_flashcard_path(@exam, @exam.all_questions[i]) %>
+          </div>
+          <div class="col-3">
 
           <% if @exam.answer_for(q)&.bookmarked %>
             <span class="badge badge-pill badge-primary">Markiert</span>
           <% end %>
-
+          </div>
+          <div class="col-4">
           <% if @exam.answer_for(q)&.answered %>
             <span class="badge badge-pill badge-success">Beantwortet</span>
           <% else %>
             <span class="badge badge-pill badge-warning">Nicht beantwortet</span>
           <% end %>
+          </div>
         </div>
       <% end %>
     </div>
