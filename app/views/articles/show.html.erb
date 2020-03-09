@@ -118,7 +118,7 @@
             <%= @article.draft ? "Entwurf" : "Öffentlich" %>
           </h5>
           <h5 class="badge badge-primary">
-            <%= "#{current_user.first_name.present? ? @article.main_author.first_name : 'Kein Author'}" %>
+            <%= "#{(current_user.first_name.present? && @article.main_author) ? @article.main_author.first_name : 'Kein Author'}" %>
           </h5>
           <h5>Editors:</h5>
           <% @article.editors.each do |editor| %>

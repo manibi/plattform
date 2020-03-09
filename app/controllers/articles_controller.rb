@@ -34,7 +34,6 @@ class ArticlesController < ApplicationController
     @categories = current_user.all_categories
     chapter_params = article_params[:chapters_attributes]
     @article = Article.new(article_params)
-    @article.build(chapter_params) if @article.persisted?
     if @article.save
       # raise
       @article.sign_article!(current_user)
@@ -45,6 +44,11 @@ class ArticlesController < ApplicationController
   end
 
   def edit
+    @article.chapters.build([
+      {title: "Erläuterung", content: ""},
+      {title: "Praxisbeispiel aus der Wirtschaft", content: ""},
+      {title: "Verwandte Themen", content: ""},
+      ])
     @categories = current_user.all_categories
   end
 
