@@ -25,13 +25,19 @@
 
         <!-- The answers to drag, and actually check if correct -->
         <ul class="answers d-flex justify-content-around" id="answers-drag">
-          <% @dragabble_answers.shuffle.each do |answer| %>
+          <% @dragabble_answers.shuffle.each_with_index do |answer, index| %>
               <li class=
+              <%# raise %>
                 <% if action_name == "answer_correct_order"%>
                   <%= @is_answer_correct ? "correct-answer" : "false-answer"  %>
                 <% end %>
               >
                 <%= answer.content %>
+                <% if action_name == "answer_correct_order"%>
+                  <strong>
+                    - <%= @flashcard.correct_answers.find_index(answer.id) + 1 %>
+                  </strong>
+                <% end %>
                 <%= hidden_field_tag "flashcard[answer][#{answer.id}]",
                                       answer.id
                 %>
@@ -41,7 +47,7 @@
     </div>
   </div>
 
-  <% if @exam && @exam.submitted %>
+  <%# if @exam && @exam.submitted %>
     <hr>
     <ul>
       <% @flashcard.correct_answers.each do |answer_id| %>
@@ -52,7 +58,7 @@
 
       <% end %>
     </ul>
-  <% end %>
+  <%# end %>
 
   <div class="col-12 d-flex justify-content-center mt-3">
     <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
