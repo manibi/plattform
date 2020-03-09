@@ -42,12 +42,12 @@
 			<div class="card col-12 h-100">
 				<div class="row">
 					<div class="col-4">
-						<div class="<%= "donut-chart-#{ (((current_user.articles.published - @upcoming_articles.count)) }"%> donut-chart chart2" style="#{$color: black!important}">
+						<div class="<%= "donut-chart-#{ ((@read_articles.count)) }"%> donut-chart chart2" style="#{$color: black!important}">
 							<div class="slice one"></div>
 							<div class="slice two"></div>
 							<div class="chart-center non-perc">
 						    	<!-- <span></span> -->
-						    	<span class="w-100" value="<%= $perc =(current_user.articles.published - @not_read_articles.published).count %>" max="<%= @articles.count %>"></span>
+						    	<span class="w-100" value="<%= $perc =@read_articles.count %>" max="<%= @articles.count %>"></span>
 							</div>
 						</div>
 					</div>
@@ -122,7 +122,7 @@
 			                 		<% end %>
 			                	</div>
 			                	<div class="card-body-topic-status">
-			                 		<%= render inline: @not_read_articles.include?(article) ? '<i class="material-icons-sharp pending-icon">schedule</i>' : '<i class="material-icons-sharp success-icon">check_circle</i>' %>
+			                 		<%= render inline: @upcoming_articles.include?(article) ? '<i class="material-icons-sharp pending-icon">schedule</i>' : '<i class="material-icons-sharp success-icon">check_circle</i>' %>
 			              		</div>
 		                	</div>
 		             	<% end %>
