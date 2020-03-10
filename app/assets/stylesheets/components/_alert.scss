@@ -8,6 +8,10 @@ $alert-size: 100vh;
 	width: $alert-size;
 }
 
+.alert-info {
+	top: 5px;
+}
+
 .alert-warning {
 	// right: 0;
 	z-index: 1000;
