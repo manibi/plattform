@@ -96,6 +96,12 @@ Rails.application.routes.draw do
   get "author_dashboard",   to: "pages#author_dashboard"
   get "admin_dashboard",    to: "pages#admin_dashboard"
   get "search",             to: "pages#search"
+  get "mozubi",             to: "pages#mozubi"
+  get "azubis",             to: "pages#azubis"
+  get "unternehmen",        to: "pages#unternehmen"
+  get "datenschutz",        to: "pages#datenschutz"
+  get "agbs",               to: "pages#agbs"
+  get "impressum",          to: "pages#impressum"
 
   root to: "pages#landing_page"
 end

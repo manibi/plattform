@@ -46,7 +46,15 @@
 		</div>
 	</div>
 </div>
-<div class="row mx-0 landing-textbox">
+<div class="row mx-0 landing-banner">
+	<div class="col-12 my-3 text-center">
+		<div class="h2 py-3">Jetzt Beratungstermin vereinbaren</div>
+		<a href="mailto:info@mozubi.app" class="btn btn-outline-primary">
+			Termin vereinbaren
+		</a>
+	</div>
+</div>
+<!-- <div class="row mx-0 landing-textbox">
 	<div class="my-3 text-center">
 		<div class="h2 py-3">Mozubi - besser, digital ausbilden</div>
 		<div class="px-5 landing-text">
@@ -61,14 +69,49 @@
 			von Quizzes konkurrieren. 
 		</div>
 	</div>
-</div>
-<div class="row mx-0 landing-cta">
-	<div class="col-12 my-3 text-center">
-		<div class="h2 py-3">Jetzt Beratungstermin vereinbaren</div>
-		<a href="mailto:info@mozubi.app" class="btn btn-primary">
-			Termin vereinbaren
-		</a>
+</div> -->
+<div class="row mx-0 py-4 footer">
+	<div class="row col-12 justify-content-around">	
+	  <div class="col-1">
+	  	<div class="row"><strong>Mozubi</strong></div>
+	  	<div class="row">
+	  		<%= link_to "Über Uns", mozubi_path %>
+	  	</div>
+	  	<div class="row">
+	  		<%= link_to "Azubis", azubis_path %>
+	  	</div>
+	  	<div class="row">
+	  		<%= link_to "Unternehmen", unternehmen_path %>
+	  	</div>
+	  </div>
+	  <div class="col-1">
+	  	<div class="row"><strong>Rechtliches</strong></div>
+	  	<div class="row">
+	  		<%= link_to "Datenschutz", datenschutz_path %>
+	  	</div>
+	  	<div class="row">
+	  		<%= link_to "AGBs", agbs_path %>
+	  	</div>
+	  	<div class="row">
+	  		<%= link_to "Impressum", impressum_path %>
+	  	</div>
+	  </div>
+	  <div class="col-1">
+	  	<div class="row"><strong>Kontakt</strong></div>
+	  	<div class="row">email@mozubi.app</div>
+	  	<div class="row">Nummer</div>
+	  	<div class="row"></div>
+	  </div>
+	</div>
+	<div class="row col-12 mx-0 py-2 d-flex justify-content-center">
+		<div class="d-flex justify-content-center">
+			<%= image_tag "https://res.cloudinary.com/mozubi/image/upload/v1582744555/Mozubi/Logo_schwarz_e4slbq.png", style: 'width:40%' %>
+		</div>
+		<div>
+		© <%= Time.zone.now.year %> Privatwirtschaftliches Institut für digitale Bildung
+		</div>
 	</div>
 </div>
+
 
 </div>
