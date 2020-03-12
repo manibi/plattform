@@ -16,18 +16,18 @@ class CategoriesController < ApplicationController
 
   def new
     @category = Category.new
-    @topics = current_user.profession.topics
+    @topics = Topic.all
     authorize @category
   end
 
   def create
     @category = Category.new(category_params)
-    @topics = current_user.profession.topics
+    # @topics = Topic.all
     # raise
     authorize @category
 
     if @category.save
-      redirect_to articles_path, notice: "Module created!"
+      redirect_to admin_dashboard_path, notice: "Module created!"
     else
       render :new
     end

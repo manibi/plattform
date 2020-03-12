@@ -2,6 +2,14 @@
 <%= form_with model: object, local: true, class: "form-inline mt-5" do |f| %>
 
   <div class="form-group">
+    <div class="form-group">
+      <%= f.label "Profession:" %>
+      <%= f.select "profession_id",
+            options_for_select(
+              @professions.map { |profession| [profession.name, profession.id] },
+              current_user.profession ? current_user.profession.id : false # set profession for edit form
+            ) %>
+    </div>
     <%= f.label :name, class: "mr-2" %>
     <%= f.text_field :name,
                      class: "form-control" %>
