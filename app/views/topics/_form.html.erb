@@ -7,7 +7,7 @@
       <%= f.select "profession_id",
             options_for_select(
               @professions.map { |profession| [profession.name, profession.id] },
-              current_user.profession ? current_user.profession.id : false # set profession for edit form
+              @topic.profession ? @topic.profession.id : false # set profession for edit form
             ) %>
     </div>
     <%= f.label :name, class: "mr-2" %>

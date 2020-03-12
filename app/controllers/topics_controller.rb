@@ -29,11 +29,12 @@ class TopicsController < ApplicationController
   end
 
   def edit
+    @professions = Profession.all
   end
 
   def update
     if @topic.update(topic_params)
-      redirect_to articles_path, notice: "Topic updated!"
+      redirect_to admin_dashboard_path, notice: "Topic updated!"
     else
       render :edit
     end
