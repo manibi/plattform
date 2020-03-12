@@ -40,6 +40,13 @@ class TopicsController < ApplicationController
     end
   end
 
+  def destroy
+    @topic = Topic.find(params[:id])
+    authorize @topic
+    @topic.destroy
+    redirect_back(fallback_location: @article)
+  end
+
   private
 
   def topic_params

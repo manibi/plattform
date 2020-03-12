@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2 class="display-4">Control panel</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8">
+      <%= render "menu_create_records" %>
+    </div>
+  </div>
+
+  <div class="row">
+    <% Profession.all.each do |profession| %>
+      <%= link_to profession do %>
+        <div class="col">
+          <div class="card topic-card justify-content-between  mt-3">
+            <div class="card-name pt-1 pb-3">
+              <%= profession.name %>
+            </div>
+            <%= link_to "Edit", edit_profession_path(profession), class: "btn btn-warning" %>
+            <%= link_to "Delete", profession_path(profession), method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+</div>

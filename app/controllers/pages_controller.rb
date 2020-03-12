@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   before_action :authenticate_user!, except: [:landing_page, :company_dashboard]
+  before_action :authenticate_company!, only: :company_dashboard
 
   def search
     authorize current_user, :show?
@@ -59,6 +60,22 @@ class PagesController < ApplicationController
   end
 
   def author_dashboard
+    authorize current_user
+  end
+
+  def admin_dashboard
+    authorize current_user
+  end
+
+    def admin_topics
+    authorize current_user
+  end
+
+  def admin_categories
+    authorize current_user
+  end
+
+  def admin_professions
     authorize current_user
   end
 

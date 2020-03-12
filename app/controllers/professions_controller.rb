@@ -1,6 +1,11 @@
 class ProfessionsController < ApplicationController
   before_action :authenticate_user!
 
+  def show
+    @profession = Profession.find(params[:id])
+    authorize @profession
+  end
+
   def new
     @profession = Profession.new
     authorize @profession
@@ -32,6 +37,13 @@ class ProfessionsController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def destroy
+    @profession = Profession.find(params[:id])
+    authorize @profession
+    @profession.destroy
+    redirect_back(fallback_location: admin_dashboard_path)
   end
 
   private

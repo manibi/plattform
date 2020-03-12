@@ -26,9 +26,9 @@ Rails.application.routes.draw do
   get 'profile',              to: 'users#show'
   get 'profile/edit',         to: 'users#edit'
 
-  get 'new_author',      to: 'users#new_author'
+  get 'new_author',           to: 'users#new_author'
   post 'generate_author',     to: 'users#generate_author'
-  get 'new_student',     to: 'users#new_student'
+  get 'new_student',          to: 'users#new_student'
   post 'generate_student',    to: 'users#generate_student'
 
   resources :companies,       only: [:new, :create, :update]
@@ -37,17 +37,17 @@ Rails.application.routes.draw do
   get "company/:user_id",     to: "companies#user_details", as: :company_user
   get "company_dashboard",    to: "companies#company_dashboard"
 
-  resources :topics,     except:  :destroy
-  resources :categories, except:  :destroy
-  resources :professions, only: [:new, :create, :edit, :update]
+  resources :topics
+  resources :categories
+  resources :professions
 
-  resources :articles,   except:  :destroy do
+  resources :articles do
     member do
       post  "read"
       get   "read_next"
       post   "read_next"
       # TODO! remove unread - just for testing
-      patch "unread"
+      # patch "unread"
       post  "bookmark"
       patch "unbookmark"
       post  "publish"
@@ -95,6 +95,9 @@ Rails.application.routes.draw do
   get "dashboard",          to: "pages#dashboard"
   get "author_dashboard",   to: "pages#author_dashboard"
   get "admin_dashboard",    to: "pages#admin_dashboard"
+  get "admin_professions",  to: "pages#admin_professions"
+  get "admin_topics",       to: "pages#admin_topics"
+  get "admin_categories",   to: "pages#admin_categories"
   get "search",             to: "pages#search"
 
   root to: "pages#landing_page"

@@ -3,6 +3,10 @@ class ProfessionPolicy < ApplicationPolicy
     user.admin?
   end
 
+  def show?
+    user.admin?
+  end
+
   def create?
     new?
   end
@@ -13,6 +17,10 @@ class ProfessionPolicy < ApplicationPolicy
 
   def update?
     new?
+  end
+
+  def destroy?
+   new?
   end
 
   class Scope < Scope
