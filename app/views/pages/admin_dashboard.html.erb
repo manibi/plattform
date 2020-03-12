@@ -16,8 +16,6 @@
         <%= link_to "Student", new_student_path, class: "btn btn-primary ml-3" %>
         <%= link_to "Topic", new_topic_path, class: "btn btn-success ml-3" %>
         <%= link_to "Module", new_category_path, class: "btn btn-info ml-3" %>
-        <%= link_to "Article", new_article_path, class: "btn btn-secondary ml-3" %>
-        <%= link_to "Flashcard", new_flashcard_path, class: "btn btn-warning ml-3" %>
       </div>
     </div>
   </div>
@@ -28,23 +26,38 @@
       <ul class="nav nav-tabs" id="myTab" role="tablist">
 
         <li class="nav-item">
-          <a class="nav-link active" id="admins-tab" data-toggle="tab" href="#admins" role="tab" aria-controls="admins" aria-selected="true">Admins</a>
+          <a class="nav-link active" id="admins-tab" data-toggle="tab" href="#admins" role="tab" aria-controls="admins"
+            aria-selected="true">Admins</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" id="authors-tab" data-toggle="tab" href="#authors" role="tab" aria-controls="authors" aria-selected="true">Authors</a>
+          <a class="nav-link" id="authors-tab" data-toggle="tab" href="#authors" role="tab" aria-controls="authors"
+            aria-selected="true">Authors</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" id="students-tab" data-toggle="tab" href="#students" role="tab" aria-controls="students" aria-selected="true">Students</a>
+          <a class="nav-link" id="students-tab" data-toggle="tab" href="#students" role="tab" aria-controls="students"
+            aria-selected="true">Students</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" id="companies-tab" data-toggle="tab" href="#companies" role="tab" aria-controls="companies" aria-selected="false">Companies</a>
+          <a class="nav-link" id="companies-tab" data-toggle="tab" href="#companies" role="tab"
+            aria-controls="companies" aria-selected="false">Companies</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" id="professions-tab" data-toggle="tab" href="#professions" role="tab" aria-controls="professions" aria-selected="false">Professions</a>
+          <a class="nav-link" id="professions-tab" data-toggle="tab" href="#professions" role="tab"
+            aria-controls="professions" aria-selected="false">Professions</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" id="topics-tab" data-toggle="tab" href="#topics" role="tab" aria-controls="topics"
+            aria-selected="false">Topics</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" id="categories-tab" data-toggle="tab" href="#categories" role="tab"
+            aria-controls="categories" aria-selected="false">Categories</a>
         </li>
 
       </ul>
@@ -121,10 +134,10 @@
         <div class="tab-pane" id="professions" role="tabpanel" aria-labelledby="professions-tab">
           <table class="table table-striped">
             <thead>
-              <tr>
+              <!-- <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
-              </tr>
+              </tr> -->
             </thead>
             <tbody>
               <%= render partial: "professions/admin_profession", collection: Profession.all, as: :profession %>
@@ -132,6 +145,31 @@
           </table>
         </div>
 
+
+        <div class="tab-pane" id="topics" role="tabpanel" aria-labelledby="topics-tab">
+          <table class="table table-striped">
+            <thead>
+              <!--
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+              </tr> -->
+            </thead>
+            <tbody>
+              <%= render partial: "topics/author_topic", collection: Topic.all, as: :topic %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tab-pane" id="categories" role="tabpanel" aria-labelledby="categories-tab">
+          <table class="table table-striped">
+            <thead>
+            </thead>
+            <tbody>
+              <%= render partial: "categories/author_category", collection: Category.all, as: :category %>
+            </tbody>
+          </table>
+        </div>
 
       </div>
     </div>

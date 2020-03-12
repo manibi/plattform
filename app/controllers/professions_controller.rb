@@ -23,6 +23,17 @@ class ProfessionsController < ApplicationController
     authorize @profession
   end
 
+  def update
+    @profession = Profession.find(params[:id])
+    authorize @profession
+
+    if @profession.update(profession_params)
+      redirect_to admin_dashboard_path, notice: "Profession updated!"
+    else
+      render :edit
+    end
+  end
+
   private
 
   def profession_params

@@ -2,7 +2,7 @@
 <%= form_with model: object, local: true do |f| %>
 
   <div class="form-group">
-    <%= f.label "Kategorie:" %>
+    <%= f.label "Topic:" %>
     <%= f.select "topic_id",
           options_for_select(
             @topics.map { |topic| [topic.name, topic.id] },

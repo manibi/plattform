@@ -4,7 +4,7 @@ class FlashcardPolicy < ApplicationPolicy
   end
 
   def new?
-    user.author? || user.admin?
+    user.author?
   end
 
   def create?
@@ -12,7 +12,7 @@ class FlashcardPolicy < ApplicationPolicy
   end
 
   def update?
-    user.author? && record.article.category.topic.profession == user.profession || user.admin?
+    user.author? && record.article.category.topic.profession == user.profession
   end
 
   def edit?

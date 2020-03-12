@@ -1,6 +1,6 @@
 class ArticlePolicy < ApplicationPolicy
   def index?
-    user.author?
+    user.author? || user.admin?
   end
 
   def show?
@@ -8,7 +8,7 @@ class ArticlePolicy < ApplicationPolicy
   end
 
   def new?
-    user.author? || user.admin?
+    user.author?
   end
 
   def create?
@@ -16,7 +16,7 @@ class ArticlePolicy < ApplicationPolicy
   end
 
   def update?
-    user.author? || user.admin?
+    user.author?
   end
 
   def edit?
