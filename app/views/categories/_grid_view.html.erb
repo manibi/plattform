@@ -1,3 +1,4 @@
+<% if current_user.student? %>
 <!-- topic tab -->
 <div role="tabpanel" class="tab-pane active py-3" id="topic">
   <div class="row">
@@ -190,3 +191,21 @@
     <% end %>
   </div>
 </div>
+<% elsif current_user.admin? %>
+    <div class="row">
+    <% @category.articles.each do |article| %>
+      <div class="col-lg-3 my-2">
+        <%= link_to article do %>
+          <div class="card topic-card justify-content-between">
+            <div class="card-name pt-1 pb-4">
+              <%= article.title %>
+              <%= fa_icon(:camera_retro, class: 'my-class', style: "position: absolute; top: 26px; right: 10px; color: green") unless article.draft? %>
+            </div>
+             <%= link_to "Edit", edit_article_path(article), class: "btn btn-warning" %>
+              <%= link_to "Delete", article_path(article), method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

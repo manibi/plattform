@@ -1,3 +1,4 @@
+<% if current_user.student? %>
 <!-- topic tab -->
 <div role="tabpanel" class="tab-pane active py-3" id="topic">
   <div class="row">
@@ -164,3 +165,20 @@
     <% end %>
   </div>
 </div>
+<% elsif current_user.admin? %>
+  <div class="row">
+      <% @topic.categories.each do |category| %>
+        <%= link_to category do %>
+          <div class="col">
+            <div class="card topic-card justify-content-between  mt-3">
+              <div class="card-name pt-1 pb-3">
+                <%= category.title %>
+              </div>
+              <%= link_to "Edit", edit_category_path(category), class: "btn btn-warning" %>
+              <%= link_to "Delete", category_path(category), method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+  </div>
+<% end %>

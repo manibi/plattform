@@ -3,11 +3,19 @@
 
   <div class="form-group">
     <%= f.label "Kategorie" %>
-    <%= f.select "category_id",
+    <% if current_user.admin? %>
+      <%= f.select "category_id",
           options_for_select(
-            @categories.map { |category| [category.title, category.id] },
+            Category.all.map { |category| [category.title, category.id] },
             @article.category ? @article.category.id : false # set categroy for edit
           ) %>
+    <% else %>
+      <%= f.select "category_id",
+        options_for_select(
+          @categories.map { |category| [category.title, category.id] },
+          @article.category ? @article.category.id : false # set categroy for edit
+        ) %>
+    <% end %>
   </div>
 
   <!--  Titel -->

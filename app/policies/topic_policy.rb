@@ -19,6 +19,10 @@ class TopicPolicy < ApplicationPolicy
     edit?
   end
 
+  def destroy?
+    user.admin?
+  end
+
   class Scope < Scope
     def resolve
       if user.student?
