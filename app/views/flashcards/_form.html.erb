@@ -7,11 +7,19 @@
 
   <div class="form-group">
     <%= flashcard_form.label "Artikel" %>
-    <%= flashcard_form.select "article",
+      <% if current_user.admin? %>
+        <%= flashcard_form.select "article",
+          options_for_select(
+            Article.all.map { |article| [article.title, article.id] },
+            @flashcard.article ? @flashcard.article.id : false
+          ) %>
+      <% else %>
+        <%= flashcard_form.select "article",
           options_for_select(
             @articles.map { |article| [article.title, article.id] },
             @flashcard.article ? @flashcard.article.id : false
           ) %>
+    <% end %>
   </div>
 
   <div class="form-group">

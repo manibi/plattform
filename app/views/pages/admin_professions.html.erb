@@ -1,17 +1,23 @@
 <div class="container">
-  <div class="row">
+  <div class="row mt-5">
     <div class="col">
       <h2 class="display-4">Control panel</h2>
     </div>
   </div>
 
   <div class="row">
-    <div class="col-md-8">
-      <%= render "menu_create_records" %>
+    <%= render "menu_create_records" %>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col">
+      <h3>
+        Professions
+      </h3>
     </div>
   </div>
 
-  <div class="row">
+  <div class="row mt-2">
     <% Profession.all.each do |profession| %>
       <%= link_to profession do %>
         <div class="col">

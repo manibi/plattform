@@ -3,6 +3,7 @@ class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update]
 
   def show
+    if current_user.student?
     @topics = current_user.profession.topics
     @topic = @topics.find(@category.topic_id)
     @articles = policy_scope(Article)
@@ -12,6 +13,10 @@ class CategoriesController < ApplicationController
     @read_articles = @category.articles.select { |a| current_user.read_articles.include?(a) }
     @upcoming_articles = @category.articles.select { |a| @read_articles.exclude?(a) }
     @bookmarked_articles = @category.articles.select { |a| current_user.bookmarked_articles.include?(a) }
+    else
+      @category = Category.find(params[:id])
+      authorize @category
+    end
   end
 
   def new

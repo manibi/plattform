@@ -69,7 +69,7 @@ Rails.application.routes.draw do
     get "quiz_results", to: "flashcards#results"
   end
 
-  resources :flashcards, only: [:index, :new, :create, :edit, :update, :destroy]
+  resources :flashcards, except: :show
 
   get "add_exam_categories", to: "custom_exams#add_exam_categories"
   get "add_exam_articles",   to: "custom_exams#add_exam_articles"
