@@ -14,63 +14,86 @@
 	<!-- Stats -->
 	<div class="row mt-3">
 		<div class="col-3">
-			<div class="card col-12">
-				<div class="card-progress">
-				  <div class="row mx-0 justify-content-between align-items-center">
-				    <div class="">
-				      <strong><%= (current_user.exam_date.to_date - Date.today).to_i %> Tage</strong>
-				    </div>
-				    <div class="read-text">
-				      Bis zur Prüfung
-				    </div>
-				  </div>
-				  <progress class="w-100" value="<%= (current_user.exam_date.to_date - Date.today).to_i %>" max="<%= (current_user.exam_date.to_date - current_user.created_at.to_date).to_i %>"></progress>
-				</div>
+			<div class="card col-12 h-100">
+				<div class="row">
+					<div class="col-4">
+					<!-- set number to the value of the chart -->
+						<% if current_user.exam_date %>
+						<div class="<%= "donut-chart-#{ (current_user.exam_date.to_date - Date.today).to_i / (current_user.exam_date.to_date - current_user.created_at.to_date).to_i }"%> donut-chart chart1">
+						<%# raise %>
+						<% else %>
+						<div class="<%= "donut-chart-#{0}"%> donut-chart chart1">
+						<% end %>
+							<div class="slice one"></div>
+							<div class="slice two"></div>
+							<div class="chart-center countdown">
+						    	<span></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-8">
+						<strong class="card-title">Tage</strong>
+						<p>Lernerfolg</p>
+					</div>
+			    </div>
 			</div>
 		</div>
 		<div class="col-3">
-			<div class="card col-12">
-				<div class="card-progress">
-				  <div class="row mx-0 justify-content-between align-items-center">
-				    <div class="">
-				      <strong><%= @read_articles.count %> Artikel</strong>
-				    </div>
-				    <div class="read-text">
-				      Gelesen
-				    </div>
-				  </div>
-				  <progress class="w-100" value="<%= @read_articles.count %>" max="<%= @articles.count %>"></progress>
-				</div>
+			<div class="card col-12 h-100">
+				<div class="row">
+					<div class="col-4">
+						<div class="<%= "donut-chart-#{ ((@read_articles.count)) }"%> donut-chart chart2" style="#{$color: black!important}">
+							<div class="slice one"></div>
+							<div class="slice two"></div>
+							<div class="chart-center non-perc">
+						    	<!-- <span></span> -->
+						    	<span class="w-100" value="<%= $perc =@read_articles.count %>" max="<%= @articles.count %>"></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-8">
+						<strong class="card-title">Artikel</strong>
+						<p>gelesen</p>
+					</div>
+			    </div>
 			</div>
 		</div>
 		<div class="col-3">
-			<div class="card col-12">
-				<div class="card-progress">
-				  <div class="row mx-0 justify-content-between align-items-center">
-				    <div class="">
-				      <strong><%= (current_user.user_flashcards.select {|f| f.correct}.count) %> Quiz</strong>
-				    </div>
-				    <div class="read-text">
-				      Korrekt beantwortet
-				    </div>
-				  </div>
-				  <progress class="w-100" value="<%= (current_user.user_flashcards.select {|f| f.correct}.count) %>" max="<%= policy_scope(Flashcard).count %>"></progress>
-				</div>
+			<div class="card col-12 h-100">
+				<div class="row">
+					<div class="col-4">
+						<div class="<%= "donut-chart-#{ (current_user.user_flashcards.select {|f| f.correct}.count) * 100 / policy_scope(Flashcard).count }"%> donut-chart chart3">
+							<div class="slice one"></div>
+							<div class="slice two"></div>
+							<div class="chart-center perc">
+						    	<span></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-8">
+						<strong class="card-title">Quiz</strong>
+						<p>Korrekt beantwortet</p>
+					</div>
+			    </div>
 			</div>
 		</div>
 		<div class="col-3">
-			<div class="card col-12">
-				<div class="card-progress">
-				  <div class="row mx-0 justify-content-between align-items-center">
-				    <div class="">
-				      <strong><%= current_user.custom_exams.count %> Prüfungen</strong>
-				    </div>
-				    <div class="read-text">
-				      Simuliert
-				    </div>
-				  </div>
-				  <progress class="w-100" value="<%= current_user.custom_exams.count %>" max=100></progress>
-				</div>
+			<div class="card col-12 h-100">
+				<div class="row">
+					<div class="col-4">
+						<div class="<%= "donut-chart-#{ current_user.custom_exams.count }"%> donut-chart chart4">
+							<div class="slice one"></div>
+							<div class="slice two"></div>
+							<div class="chart-center non-perc">
+						    	<span></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-8">
+						<strong class="card-title">Prüfungen</strong>
+						<p>bereits simuliert</p>
+					</div>
+			    </div>
 			</div>
 		</div>
 	</div>
