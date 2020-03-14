@@ -61,6 +61,11 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def destroy
+    @article.destroy
+    redirect_back(fallback_location: admin_dashboard_path)
+  end
+
   def read
     @article.read_for!(current_user)
     redirect_to @article
@@ -121,6 +126,7 @@ class ArticlesController < ApplicationController
   private
 
   def set_all
+    if current_user.student? || current_user.author?
     @flashcard = @article.flashcards.published.first
     @categories = current_user.all_categories
     @category = @categories.find(@article.category_id)
@@ -130,6 +136,7 @@ class ArticlesController < ApplicationController
     @read_articles = current_user.read_articles.published
     @bookmarked_articles = current_user.bookmarked_articles.published
     @upcoming_articles = @articles - @read_articles
+    end
   end
 
   def set_article

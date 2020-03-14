@@ -1,10 +1,10 @@
 class ArticlePolicy < ApplicationPolicy
   def index?
-    user.author?
+    user.author? || user.admin?
   end
 
   def show?
-    (has_profession_student? && article_published?) || has_profession_author? || user.admin?
+    ((has_profession_student? && article_published?) || has_profession_author?) || user.admin?
   end
 
   def new?
@@ -16,11 +16,15 @@ class ArticlePolicy < ApplicationPolicy
   end
 
   def update?
-    user.author? || user.admin?
+    new?
   end
 
   def edit?
-    update?
+    new?
+  end
+
+  def destroy?
+    user.admin?
   end
 
   def read?
@@ -62,7 +66,7 @@ class ArticlePolicy < ApplicationPolicy
              .where(categories: { topic: [user.profession.topics] }).order(:published_at) -
         scope.published.joins(:user_articles)
               .where(user_articles: { user: user, read: true }).order(:published_at)
-      elsif user.author?
+      elsif user.author? || user.admin?
         scope.joins(:category)
              .where(categories: { topic: [user.profession.topics] })
       end

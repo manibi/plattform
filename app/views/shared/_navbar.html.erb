@@ -1,6 +1,6 @@
 <% if user_signed_in? && !company_signed_in? %>
 	<ul class="nav nav-pills nav-fill">
-		<li class="nav-item col-8">
+		<li class="nav-item col-8 search-form-control">
 			<%= form_with url: search_path,
 			                    local: true,
 			                    method: :get,
@@ -9,15 +9,16 @@
 	        <%= f.text_field :query,
 	          class: "form-control",
 	          placeholder: "Suche nach einem Lernfeld, einer Kategorie oder einem Artikel...",
-	          style: "width: 100%;",
+	          style: "width: 100%",
 	          id: "autocompleteSearch"
 	        %>
-	        <button name="button" type="submit" class="btn btn-flat">
-	            <i class="fas fa-search"></i> Search
-	        </button>
+		    <button name="button" type="submit" class="btn btn-flat d-flex align-items-center justify-content-center">
+		      <i class="fas fa-search"></i> &nbsp
+		      <div>Search</div>
+		    </button>
 	        <%= submit_tag "Search", class: "btn btn-primary d-none" %>
 	      <% end %>
-		</li> 
+		</li>
 		<li class="nav-item">
 			<!-- notifications -->
 		</li>

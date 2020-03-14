@@ -13,6 +13,7 @@ class TopicsController < ApplicationController
   def new
     @topic = Topic.new
     authorize @topic
+    @professions = Profession.all
   end
 
   def create
@@ -20,21 +21,30 @@ class TopicsController < ApplicationController
     authorize @topic
 
     if @topic.save
-      redirect_to articles_path, notice: "Topic created!"
+      flash[:notice] = "Topic created!"
+      redirect_to admin_dashboard_path, notice: "Topic created!"
     else
       render :new
     end
   end
 
   def edit
+    @professions = Profession.all
   end
 
   def update
     if @topic.update(topic_params)
-      redirect_to articles_path, notice: "Topic updated!"
+      redirect_to admin_dashboard_path, notice: "Topic updated!"
     else
       render :edit
     end
+  end
+
+  def destroy
+    @topic = Topic.find(params[:id])
+    authorize @topic
+    @topic.destroy
+    redirect_back(fallback_location: @article)
   end
 
   private
@@ -57,7 +67,7 @@ class TopicsController < ApplicationController
     @read_categories = @categories.find(@read_articles.map { |a| a.category_id } )
     @read_topics = @topics.select { |t|  @read_categories.map { |c| c.topic_id }.include?(t.id) }
     # @read_topics = @topics.find(@read_categories.map { |c| c.topic_id })
-    
+
     @upcoming_articles = @articles - @read_articles
     @upcoming_categories = @categories.find(@upcoming_articles.map { |a| a.category_id })
     @upcoming_topics = @topics.select { |t| @upcoming_categories.map { |c| c.topic_id }.include?(t.id) }

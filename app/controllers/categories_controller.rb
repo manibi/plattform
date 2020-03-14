@@ -3,6 +3,7 @@ class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update]
 
   def show
+    if current_user.student?
     @topics = current_user.profession.topics
     @topic = @topics.find(@category.topic_id)
     @articles = policy_scope(Article)
@@ -12,22 +13,26 @@ class CategoriesController < ApplicationController
     @read_articles = @category.articles.select { |a| current_user.read_articles.include?(a) }
     @upcoming_articles = @category.articles.select { |a| @read_articles.exclude?(a) }
     @bookmarked_articles = @category.articles.select { |a| current_user.bookmarked_articles.include?(a) }
+    else
+      @category = Category.find(params[:id])
+      authorize @category
+    end
   end
 
   def new
     @category = Category.new
-    @topics = current_user.profession.topics
+    @topics = Topic.all
     authorize @category
   end
 
   def create
     @category = Category.new(category_params)
-    @topics = current_user.profession.topics
+    # @topics = Topic.all
     # raise
     authorize @category
 
     if @category.save
-      redirect_to articles_path, notice: "Module created!"
+      redirect_to admin_dashboard_path, notice: "Module created!"
     else
       render :new
     end
@@ -35,17 +40,24 @@ class CategoriesController < ApplicationController
   end
 
   def edit
-    @topics = current_user.profession.topics
+    @topics = Topic.all
   end
 
   def update
     @topics = current_user.profession.topics
 
     if @category.update(category_params)
-      redirect_to articles_path, notice: "Module updated!"
+      redirect_to admin_dashboard_path, notice: "Module updated!"
     else
       render :edit
     end
+  end
+
+  def destroy
+    @category = Category.find(params[:id])
+    authorize @category
+    @category.destroy
+    redirect_back(fallback_location: @article)
   end
 
   private

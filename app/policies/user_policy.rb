@@ -24,6 +24,18 @@ class UserPolicy < ApplicationPolicy
     user.admin?
   end
 
+  def admin_professions?
+    user.admin?
+  end
+
+  def admin_topics?
+    user.admin?
+  end
+
+  def admin_categories?
+    user.admin?
+  end
+
   def search?
     current_user?
   end
