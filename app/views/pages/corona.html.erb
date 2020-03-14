@@ -1,0 +1,60 @@
+<div class="col-12">
+	<div class="row mx-0 landing-banner">
+		<div class="col-12 justify-content-center align-items-center row">
+			<div class="my-3 mx-3">
+				Wir unterstützen <strong>ALLE AZUBIS</strong> kostenlos bei ihrer Prüfungsvorbereitung, solange die Berufsschulen geschlossen sind!
+			</div>
+			<!-- <div class="btn btn-outline-primary">
+				<%#= link_to "Corona Lizenz", corona_path %>
+			</div> -->
+			<%# mail_to "Termin vereinbaren", "info@mozubi.app", class="btn btn-primary" %>
+			<!-- <div class="btn btn-primary">
+				Termin vereinbaren
+			</div> -->
+		</div>
+	</div>
+  <div class="row py-5 justify-content-center">
+    <div class="col-md-6">
+      <h2>Corona Lizenz anfordern</h2>
+      <%= form_with(model: @user, local: true) do |f| %>
+        <%#= render "devise/shared/error_messages", resource: @user %>
+        <div class='form-group'>
+          <%= f.label "Vorname" %>
+          <%= f.text_field :first_name, class: 'form-control' %>
+        </div>
+        <div class='form-group'>
+          <%= f.label "Nachname" %>
+          <%= f.text_field :last_name, class: 'form-control' %>
+        </div>
+        <div class='form-group'>
+        	<%= f.label :birth_date, 'Geburtsdatum' %>
+        	<%= f.date_field :birth_date, class: 'form-control' %>
+        </div>
+        <div class='form-group'>
+          <%= f.label "Ausbildungsberuf" %>
+          <%= f.text_field :last_name, class: 'form-control' %>
+        </div>
+        <div class='form-group'>
+          <%= f.label "Ausbildungsbetrieb" %>
+          <%= f.text_field :last_name, class: 'form-control' %>
+        </div>
+        <div class='form-group'>
+          <%= f.label "Berufsschule" %>
+          <%= f.text_field :last_name, class: 'form-control' %>
+        </div>
+        <div class='form-group'>
+			<%= f.label "Abschlussprüfungsdatum" %>
+			<%= f.date_field :exam_date, required: true, class: 'form-control' %>
+			<small id="emailHelp" class="form-text text-muted">*notwendig</small>
+		</div>
+        <div class='form-group'>
+          <%= f.label :email %>
+          <%= f.email_field :email, class: 'form-control' %>
+        </div>
+        <%= f.submit 'Absenden', class: "btn btn-primary w-100" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/landing_footer' %>
