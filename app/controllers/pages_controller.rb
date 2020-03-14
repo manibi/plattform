@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!, except: [:landing_page,:mozubi, :azubis, :unternehmen, :datenschutz, :agbs, :impressum, :company_dashboard]
+  before_action :authenticate_user!, except: [:landing_page,:mozubi, :azubis, :unternehmen, :datenschutz, :agbs, :impressum, :corona, :company_dashboard]
   before_action :authenticate_company!, only: :company_dashboard
 
   def search
@@ -47,6 +47,9 @@ class PagesController < ApplicationController
   end
 
   def impressum
+  end
+
+  def corona
   end
 
   def dashboard
