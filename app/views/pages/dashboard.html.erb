@@ -13,7 +13,7 @@
 	</div>
 	<!-- Stats -->
 	<div class="row mt-3">
-		<div class="col-3">
+		<div class="col-12 col-sm-6 col-md-6 col-lg-3 my-1">
 			<div class="card col-12">
 				<div class="card-progress">
 				  <div class="row mx-0 justify-content-between align-items-center">
@@ -28,7 +28,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-3">
+		<div class="col-12 col-sm-6 col-md-6 col-lg-3 my-1">
 			<div class="card col-12">
 				<div class="card-progress">
 				  <div class="row mx-0 justify-content-between align-items-center">
@@ -43,7 +43,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-3">
+		<div class="col-12 col-sm-6 col-md-6 col-lg-3 my-1">
 			<div class="card col-12">
 				<div class="card-progress">
 				  <div class="row mx-0 justify-content-between align-items-center">
@@ -58,7 +58,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-3">
+		<div class="col-12 col-sm-6 col-md-6 col-lg-3 my-1">
 			<div class="card col-12">
 				<div class="card-progress">
 				  <div class="row mx-0 justify-content-between align-items-center">
@@ -93,7 +93,7 @@
 		              	<% @current_category.articles.published.each do |article| %>
 		              	<%# raise %>
 		              		<div class="row article_row p-1">
-			                	<div class="card-body-topic-title col-11">
+			                	<div class="card-body-topic-title col-9 col-lg-11">
 			                		<%= link_to article do  %>
 			                 			<%= article.title %>
 			                 		<% end %>
@@ -104,16 +104,19 @@
 		                	</div>
 		             	<% end %>
 		            </div>
-		            <div class="row p-3 align-items-center">
-		            	<div class="col-10">
+		            <div class="row py-3 align-items-center">
+		            	<div class="col-8 col-lg-10">
 		            		<div class="">
-		            			Verbleibende Lesezeit bei dieser Kategorie:
+		            			Verbleibende Lesezeit
+		            			<div class="d-none d-lg-block">
+		            				bei dieser Kategorie
+		            			</div>:
 		            			<strong>
 		            				<%= @current_category.articles.published.count * 2.5 %>
 		            			Minuten</strong>
 		            		</div>
 		            	</div>
-		            	<div class="col-1">
+		            	<div class="col-4 col-lg-1">
 		            		<%= link_to @current_article do %>
 		    				<div class="btn btn-primary">Weiterlesen</div>
 		    				<% end %>
