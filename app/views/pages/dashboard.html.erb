@@ -105,18 +105,18 @@
 		             	<% end %>
 		            </div>
 		            <div class="row py-3 align-items-center">
-		            	<div class="col-8 col-lg-10">
+		            	<div class="col-12 col-lg-10">
 		            		<div class="">
 		            			Verbleibende Lesezeit
 		            			<div class="d-none d-lg-block">
 		            				bei dieser Kategorie
-		            			</div>:
+		            			</div>
 		            			<strong>
 		            				<%= @current_category.articles.published.count * 2.5 %>
 		            			Minuten</strong>
 		            		</div>
 		            	</div>
-		            	<div class="col-4 col-lg-1">
+		            	<div class="my-2 col-4 col-lg-1">
 		            		<%= link_to @current_article do %>
 		    				<div class="btn btn-primary">Weiterlesen</div>
 		    				<% end %>
