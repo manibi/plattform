@@ -1,0 +1,2 @@
+module TemporaryUserCredentialsHelper
+end

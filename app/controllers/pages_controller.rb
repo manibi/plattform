@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!, except: [:landing_page, :company_dashboard]
+  before_action :authenticate_user!, except: [
+                                              :landing_page, :company_dashboard, :temporary_user_info ]
   before_action :authenticate_company!, only: :company_dashboard
 
   def search
@@ -83,5 +84,8 @@ class PagesController < ApplicationController
     @exam = CustomExam.find(params[:custom_exam_id])
     @first_flashcard = @exam.all_questions.first
     authorize current_user, :show?
+  end
+
+  def temporay_user_info
   end
 end

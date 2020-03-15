@@ -30,6 +30,11 @@
         </li>
 
         <li class="nav-item">
+          <a class="nav-link" id="corona-students-tab" data-toggle="tab" href="#corona-students" role="tab" aria-controls="corona-students"
+            aria-selected="true">Corona Students</a>
+        </li>
+
+        <li class="nav-item">
           <a class="nav-link" id="companies-tab" data-toggle="tab" href="#companies" role="tab"
             aria-controls="companies" aria-selected="false">Companies</a>
         </li>
@@ -86,6 +91,23 @@
             </thead>
             <tbody>
               <%= render partial: "users/generated_user", collection: UserCredential.student, as: :user %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tab-pane" id="corona-students" role="tabpanel" aria-labelledby="corona-students-tab">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Password</th>
+                <th scope="col">Profession</th>
+                <th scope="col">Company</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render partial: "users/generated_user", collection: TemporaryUserCredential.student, as: :user %>
             </tbody>
           </table>
         </div>

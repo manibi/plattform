@@ -12,6 +12,7 @@ class Company < ApplicationRecord
 
   has_many :users
   has_many :user_credentials
+  has_many :temporary_user_credentials
   has_many :professions, through: :users
 
   def users_for(profession)
