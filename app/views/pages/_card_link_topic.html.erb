@@ -1,6 +1,11 @@
 <div class="col-12 my-2">
   <%= link_to result.searchable do %>
-    <div class="card search-card d-flex justify-content-center">
+    <div class="card search-card d-none d-lg-flex justify-content-center">
+      <div class="">
+        <%= result.searchable.name %> <!-- - <span class="badge badge-primary text-uppercase font-weight-bold"><%#= result.searchable_type %></span> -->
+      </div>
+    </div>
+    <div class="card w-100 d-lg-none d-flex justify-content-center">
       <div class="">
         <%= result.searchable.name %> <!-- - <span class="badge badge-primary text-uppercase font-weight-bold"><%#= result.searchable_type %></span> -->
       </div>
