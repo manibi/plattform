@@ -1,5 +1,6 @@
 <div class="card-body">
-  <h4><%= flashcard.content %></h4>
+  <h4 class="d-none d-lg-block"><%= flashcard.content %></h4>
+  <h5 class="d-lg-none d-block"><%= flashcard.content %></h5>
 
   <%= form_for soll_ist_article_flashcard_path(@article, @flashcard), url: {action: "soll_ist"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
 
