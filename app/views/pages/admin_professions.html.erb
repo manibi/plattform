@@ -24,9 +24,22 @@
           <div class="card topic-card justify-content-between  mt-3">
             <div class="card-name pt-1 pb-3">
               <%= profession.name %>
+              <span class="badge badge-primary"  style="position: absolute;
+                                                        top: 26px;
+                                                        right: 20px; ">
+                <%= profession.users.count %> <%= far_icon('users', type: :solid) %>
+              </span>
             </div>
-            <%= link_to "Edit", edit_profession_path(profession), class: "btn btn-warning" %>
-            <%= link_to "Delete", profession_path(profession), method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
+            <%= link_to "Edit",
+                        edit_profession_path(profession),
+                        class: "btn btn-warning" %>
+            <% if profession.users.empty? %>
+              <%= link_to "Delete",
+                          profession_path(profession),
+                          method: :delete,
+                          class: "btn btn-danger",
+                          data: { confirm: "Are you sure?" } %>
+            <% end %>
           </div>
         </div>
       <% end %>
