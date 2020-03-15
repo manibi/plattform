@@ -44,7 +44,7 @@
   </div>
 
   <div class="row">
-    <div class="col-8">
+    <div class="col-10">
       <!-- Tab panes -->
       <div class="tab-content">
         <div class="tab-pane active" id="admins" role="tabpanel" aria-labelledby="admins-tab">
@@ -103,11 +103,11 @@
                 <th scope="col">Username</th>
                 <th scope="col">Password</th>
                 <th scope="col">Profession</th>
-                <th scope="col">Company</th>
+                <th scope="col">Email</th>
               </tr>
             </thead>
             <tbody>
-              <%= render partial: "users/generated_user", collection: TemporaryUserCredential.student, as: :user %>
+              <%= render partial: "users/generated_temp_user", collection: TemporaryUserCredential.student, as: :user %>
             </tbody>
           </table>
         </div>
