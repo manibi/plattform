@@ -46,7 +46,11 @@
 	  		<%= image_tag "https://res.cloudinary.com/mozubi/image/upload/v1582744555/Mozubi/Logo_schwarz_e4slbq.png", class: "logo" %>
 	  	<% end %>
 	</div>
-	
+	<ul class="nav nav-pills nav-fill">
+		<li class="nav-item">
+			<%= link_to "Request access", new_temporary_user_credential_path, class: "btn btn-primary" %>
+		</li>
+	</ul>
 	<!-- <div class="col-2 collapse navbar-collapse" id="navbarSupportedContent"> -->
 	<div class="col-4 col-sm-3 col-md-2 align-self-center d-flex justify-content-end">
 	    <ul class="navbar-nav mr-auto">
@@ -58,9 +62,9 @@
 	      </li> -->
 	      <li class="nav-item dropdown">
 			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="navbarDropdown" aria-haspopup="true" aria-expanded="false">
-			 
+
 				Einloggen <span class="caret"></span>
-			 
+
 			</button>
 	        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 		        <%= link_to "Azubi", new_user_session_path, class: "landing-nav dropdown-item" %>

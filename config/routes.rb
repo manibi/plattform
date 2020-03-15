@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   resources :topics
   resources :categories
   resources :professions
+  resources :temporary_user_credentials, only: [:new, :create]
 
   resources :articles do
     member do
@@ -99,6 +100,8 @@ Rails.application.routes.draw do
   get "admin_topics",       to: "pages#admin_topics"
   get "admin_categories",   to: "pages#admin_categories"
   get "search",             to: "pages#search"
+  get "temp_user_success",  to: "pages#temporary_user_info"
+
   get "mozubi",             to: "pages#mozubi"
   get "azubis",             to: "pages#azubis"
   get "unternehmen",        to: "pages#unternehmen"
@@ -106,6 +109,7 @@ Rails.application.routes.draw do
   get "agbs",               to: "pages#agbs"
   get "impressum",          to: "pages#impressum"
   get "corona",             to: "pages#corona"
+
 
   root to: "pages#landing_page"
 end

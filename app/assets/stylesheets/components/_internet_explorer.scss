@@ -1,0 +1,7 @@
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  /* IE10+ specific styles go here */
+  // Fix article width on IE
+  .card {
+    width: 100%;
+  }
+}

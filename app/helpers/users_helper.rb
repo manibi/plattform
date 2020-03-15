@@ -65,4 +65,14 @@ module UsersHelper
         })
     end
   end
+
+  def save_temporary_student_credentials(student)
+    TemporaryUserCredential.create!({
+      username: student[:username],
+      password: student[:password],
+      company: student[:company],
+      profession: student[:profession],
+      role: student[:role]
+    })
+  end
 end

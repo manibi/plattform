@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   include UsersHelper
-  before_action :authenticate_user!
+
+  before_action :authenticate_user!, except: :new_temp_user
   before_action :set_user, only: [:show, :edit, :update, :new_author, :generate_author]
 
   def new

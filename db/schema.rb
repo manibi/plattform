@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_08_125515) do
+ActiveRecord::Schema.define(version: 2020_03_15_112708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -164,6 +164,25 @@ ActiveRecord::Schema.define(version: 2020_03_08_125515) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "temporary_user_credentials", force: :cascade do |t|
+    t.string "username"
+    t.string "password"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "company_name"
+    t.string "school_name"
+    t.string "email"
+    t.date "birth_date"
+    t.date "exam_date"
+    t.integer "role"
+    t.bigint "company_id"
+    t.bigint "profession_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["company_id"], name: "index_temporary_user_credentials_on_company_id"
+    t.index ["profession_id"], name: "index_temporary_user_credentials_on_profession_id"
+  end
+
   create_table "topics", force: :cascade do |t|
     t.string "name"
     t.bigint "profession_id"
@@ -247,6 +266,8 @@ ActiveRecord::Schema.define(version: 2020_03_08_125515) do
   add_foreign_key "flashcard_answers", "answers"
   add_foreign_key "flashcard_answers", "flashcards"
   add_foreign_key "flashcards", "articles"
+  add_foreign_key "temporary_user_credentials", "companies"
+  add_foreign_key "temporary_user_credentials", "professions"
   add_foreign_key "topics", "professions"
   add_foreign_key "user_articles", "articles"
   add_foreign_key "user_articles", "users"
