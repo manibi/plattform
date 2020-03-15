@@ -1,4 +1,4 @@
-<div class="container">  
+<div class="container h-100">  
   <div class="row py-3 header">
     <div class="">
       <!-- breadcrumbs -->
@@ -20,7 +20,7 @@
     </div>
   </div>
       <div class="row mt-3 justify-content-around h-50">
-        <div class="card col-8 p-3">
+        <div class="card col-12 col-lg-8 p-3">
           <div class="container row mx-0 justify-content-between h-100">
             <div class="results-header">
               <div class="text-center">
@@ -41,12 +41,19 @@
           </div>
         </div>
       </div>
-      <div class="row mt-3 justify-content-around">
+        <!-- lg version -->
+      <div class="d-none d-lg-flex row mt-3 justify-content-around">
         <div class="col-8 p-3 d-flex justify-content-between">
         <%= link_to "Zurück zu Artikel", @article, class: "width-btn btn btn-outline-primary" %>
         <%= link_to "Quiz wiederholen", [@article, @article.flashcards.first], class: "width-btn btn btn-outline-success" %>
         <%= link_to "Nächster Artikel", @next_article, class: "width-btn btn btn-outline-primary" %>
         </div>
+      </div>
+        <!-- mobile version -->
+      <div class="d-lg-none d-block mt-3 col-12">
+          <%= link_to "Zurück zu Artikel", @article, class: "width-btn btn btn-outline-primary" %>
+          <%= link_to "Quiz wiederholen", [@article, @article.flashcards.first], class: "width-btn btn btn-outline-success" %>
+          <%= link_to "Nächster Artikel", @next_article, class: "width-btn btn btn-outline-primary" %>
       </div>
     </div>
   </div>
