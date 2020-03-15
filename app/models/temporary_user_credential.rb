@@ -8,7 +8,7 @@ class TemporaryUserCredential < ApplicationRecord
 
   validates :exam_date, presence: true
   validate  :validate_dated_around_now
-  validates_format_of :email,:with => Devise::email_regexp
+  validates_format_of :email, presence: true, uniqueness: true, with: Devise::email_regexp
   validates :first_name, presence: true, allow_blank: false
   validates :last_name, presence: true, allow_blank: false
   validates :company_name, presence: true, allow_blank: false
