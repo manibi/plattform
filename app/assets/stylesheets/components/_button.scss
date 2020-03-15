@@ -1,8 +1,18 @@
-.btn {
+.btn-primary {
 	a {
 		color: white !important;
 	}
 }
+
+a.btn-primary {
+	color: white !important;
+}
+
+// .btn-outline {
+// 	a {
+// 		color: black !important;
+// 	}
+// }
 
 .btn-light-blue {
 	background-color: $light-blue !important;

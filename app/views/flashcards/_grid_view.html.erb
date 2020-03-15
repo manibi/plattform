@@ -9,7 +9,8 @@
         </div>
         <div class="card-bottom">
           <div class="row justify-content-around">
-            <% if article.read_for?(current_user) %>
+            <%# raise %>
+            <% if article.read_for?(current_user) && article.flashcards.published !=[] %>
               <div class="col-6 m-1 btn btn-primary">
                 <%= link_to [article, article.flashcards.published.first],
                             "data-turbolinks": false do %>

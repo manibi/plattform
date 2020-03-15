@@ -1,5 +1,6 @@
 <li>
-  <h5><%= chapter.title %></h5>
+  <h5 class="d-none d-lg-block"><%= chapter.title %></h5>
+  <h6 class="d-lg-none d-block"><%= chapter.title %></h6>
   <% if chapter.title == "Verwandte Themen" %>
       <% links_names = chapter.content.split(", ") %>
       <% links_names.each do |link_name| %>

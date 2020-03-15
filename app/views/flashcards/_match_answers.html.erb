@@ -1,13 +1,15 @@
 <div class="col-12">
-  <h4>Ordne die Antworten zu</h4>
+  <h4 class="d-none d-lg-block">Ordne die Antworten zu</h4>
+  <h5 class="d-lg-none d-block">Ordne die Antworten zu</h5>
 </div>
-<div class="card-body">
+<div class="card-body px-0">
   <div class="col-12">
-    <h5><%= flashcard.content %></h5>
+    <h5 class="d-none d-lg-block"><%= flashcard.content %></h5>
+    <h6 class="d-lg-none d-block"><%= flashcard.content %></h6>
   </div>
   <div class="row">
     <!-- The fixed answers -->
-    <div class="col-6">
+    <div class="col-6 px-1">
       <ul class="fixed-answers d-flex justify-content-between h-100" id="fixed-answers">
         <% @static_answers.each do |answer| %>
             <li class=
@@ -20,7 +22,7 @@
         <% end %>
       </ul>
     </div>
-    <div class="col-6">
+    <div class="col-6 px-1">
       <%= form_for answer_correct_order_article_flashcard_path(@article, @flashcard), url: {action: "answer_correct_order"}, method: :post, html: { id: "flashcardAnswerForm", class: "h-100", "data-form-submitted": false } do |f| %>
 
         <!-- The answers to drag, and actually check if correct -->
@@ -62,11 +64,11 @@
 
   <div class="col-12 d-flex justify-content-center mt-3">
     <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
-      <%= f.submit "Prüfen", class: "flashcard-btn btn btn-primary col-5", "data-turbolinks": false if action_name == "show" %>
+      <%= f.submit "Prüfen", class: "flashcard-btn btn btn-primary col-12 col-lg-5", "data-turbolinks": false if action_name == "show" %>
     <% end %>
-  </div>
   <%= link_to "Nächste",
             next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
-            class: "flashcard-btn btn btn-primary col-5", "data-turbolinks": false if action_name == "answer_correct_order" %>
+            class: "flashcard-btn btn btn-primary col-12 col-lg-5", "data-turbolinks": false if action_name == "answer_correct_order" %>
+  </div>
   <% end %>
 </div>

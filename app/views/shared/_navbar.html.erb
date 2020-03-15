@@ -1,6 +1,6 @@
 <% if user_signed_in? && !company_signed_in? %>
-	<ul class="col-12 nav-pills nav-fill row mx-0 justify-content-between mb-0">
-		<li class="nav-item col-12 col-md-8 search-form-control">
+	<ul class="nav-pills nav-fill row mx-0 justify-content-between mb-0">
+		<li class="nav-item col-10 col-md-8 search-form-control">
 			<%= form_with url: search_path,
 			                    local: true,
 			                    method: :get,
@@ -14,14 +14,17 @@
 	        %>
 		    <button name="button" type="submit" class="btn btn-flat align-items-center justify-content-center d-none d-lg-flex">
 		      <i class="fas fa-search"></i> &nbsp
-		      <div>Search</div>
+		      <div>Suchen</div>
 		    </button>
 	        <%= submit_tag "Search", class: "btn btn-primary d-none" %>
 	      <% end %>
 		</li>
-      	<li class="nav-item dropdown col-4 col-md-2 d-flex justify-content-center">
-			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="navbarDropdown" aria-haspopup="true" aria-expanded="false">
+      	<li class="nav-item dropdown col-1 col-md-2 d-flex justify-content-center">
+			<button type="button" class="btn btn-primary dropdown-toggle d-none d-lg-block" data-toggle="dropdown" id="navbarDropdown" aria-haspopup="true" aria-expanded="false">
 		 		Profil <span class="caret"></span>
+		 	</button>
+		 	<button type="button" class="btn btn-primary dropdown-toggle d-lg-none d-block" data-toggle="dropdown" id="navbarDropdown" aria-haspopup="true" aria-expanded="false">
+		 		<span class="caret"></span>
 		 	</button>
 	        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 		        <%= link_to "Einstellungen", profile_path, class: "landing-nav dropdown-item" %>
@@ -46,11 +49,11 @@
 	  		<%= image_tag "https://res.cloudinary.com/mozubi/image/upload/v1582744555/Mozubi/Logo_schwarz_e4slbq.png", class: "logo" %>
 	  	<% end %>
 	</div>
-	<ul class="nav nav-pills nav-fill">
+	<!-- <ul class="nav nav-pills nav-fill">
 		<li class="nav-item">
-			<%= link_to "Request access", new_temporary_user_credential_path, class: "btn btn-primary" %>
+			<%#= link_to "Request access", new_temporary_user_credential_path, class: "btn btn-primary" %>
 		</li>
-	</ul>
+	</ul> -->
 	<!-- <div class="col-2 collapse navbar-collapse" id="navbarSupportedContent"> -->
 	<div class="col-4 col-sm-3 col-md-2 align-self-center d-flex justify-content-end">
 	    <ul class="navbar-nav mr-auto">
