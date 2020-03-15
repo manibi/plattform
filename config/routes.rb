@@ -102,5 +102,14 @@ Rails.application.routes.draw do
   get "search",             to: "pages#search"
   get "temp_user_success",  to: "pages#temporary_user_info"
 
+  get "mozubi",             to: "pages#mozubi"
+  get "azubis",             to: "pages#azubis"
+  get "unternehmen",        to: "pages#unternehmen"
+  get "datenschutz",        to: "pages#datenschutz"
+  get "agbs",               to: "pages#agbs"
+  get "impressum",          to: "pages#impressum"
+  get "corona",             to: "pages#corona"
+
+
   root to: "pages#landing_page"
 end

@@ -1,0 +1,160 @@
+<%# raise %>
+<div class="container">
+	<!-- Welcome back message -->
+	<div class="row mt-3">
+		<div class="col-12">
+			<% if current_user.first_name != "" %>
+				<strong>Willkommen zurück <%= current_user.first_name %>!</strong>
+			<% else %>
+				<strong>Willkommen zurück!</strong>
+			<% end %>
+		<p>Mach weiter so, du bist schon sehr weit gekommen.</p>
+		</div>
+	</div>
+	<!-- Stats -->
+	<div class="row mt-3">
+		<div class="col-3">
+			<div class="card col-12 h-100">
+				<div class="row">
+					<div class="col-4">
+					<!-- set number to the value of the chart -->
+						<% if current_user.exam_date %>
+						<div class="<%= "donut-chart-#{ (current_user.exam_date.to_date - Date.today).to_i / (current_user.exam_date.to_date - current_user.created_at.to_date).to_i }"%> donut-chart chart1">
+						<%# raise %>
+						<% else %>
+						<div class="<%= "donut-chart-#{0}"%> donut-chart chart1">
+						<% end %>
+							<div class="slice one"></div>
+							<div class="slice two"></div>
+							<div class="chart-center countdown">
+						    	<span></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-8">
+						<strong class="card-title">Tage</strong>
+						<p>Lernerfolg</p>
+					</div>
+			    </div>
+			</div>
+		</div>
+		<div class="col-3">
+			<div class="card col-12 h-100">
+				<div class="row">
+					<div class="col-4">
+						<div class="<%= "donut-chart-#{ ((@read_articles.count)) }"%> donut-chart chart2" style="#{$color: black!important}">
+							<div class="slice one"></div>
+							<div class="slice two"></div>
+							<div class="chart-center non-perc">
+						    	<!-- <span></span> -->
+						    	<span class="w-100" value="<%= $perc =@read_articles.count %>" max="<%= @articles.count %>"></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-8">
+						<strong class="card-title">Artikel</strong>
+						<p>gelesen</p>
+					</div>
+			    </div>
+			</div>
+		</div>
+		<div class="col-3">
+			<div class="card col-12 h-100">
+				<div class="row">
+					<div class="col-4">
+						<div class="<%= "donut-chart-#{ (current_user.user_flashcards.select {|f| f.correct}.count) * 100 / policy_scope(Flashcard).count }"%> donut-chart chart3">
+							<div class="slice one"></div>
+							<div class="slice two"></div>
+							<div class="chart-center perc">
+						    	<span></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-8">
+						<strong class="card-title">Quiz</strong>
+						<p>Korrekt beantwortet</p>
+					</div>
+			    </div>
+			</div>
+		</div>
+		<div class="col-3">
+			<div class="card col-12 h-100">
+				<div class="row">
+					<div class="col-4">
+						<div class="<%= "donut-chart-#{ current_user.custom_exams.count }"%> donut-chart chart4">
+							<div class="slice one"></div>
+							<div class="slice two"></div>
+							<div class="chart-center non-perc">
+						    	<span></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-8">
+						<strong class="card-title">Prüfungen</strong>
+						<p>bereits simuliert</p>
+					</div>
+			    </div>
+			</div>
+		</div>
+	</div>
+	<!-- Current Topic -->
+	<div class="row my-3">
+		<div class="col-12">
+			<div class="card col-12">
+				<div class="card-body">
+					<div class="card-body-topic pb-3">
+						<strong>
+						<%= @current_topic.name.upcase %>
+						</strong>
+					</div>
+					<div class="card-body-category pb-3">
+						<strong>
+						<%= @current_category.title %>
+						</strong>
+					</div>
+					<div class="card-body-articles pb-3 border-bottom">
+		              	<% @current_category.articles.published.each do |article| %>
+		              	<%# raise %>
+		              		<div class="row article_row p-1">
+			                	<div class="card-body-topic-title col-11">
+			                		<%= link_to article do  %>
+			                 			<%= article.title %>
+			                 		<% end %>
+			                	</div>
+			                	<div class="card-body-topic-status">
+			                 		<%= render inline: @upcoming_articles.include?(article) ? '<i class="material-icons-sharp pending-icon">schedule</i>' : '<i class="material-icons-sharp success-icon">check_circle</i>' %>
+			              		</div>
+		                	</div>
+		             	<% end %>
+		            </div>
+		            <div class="row p-3 align-items-center">
+		            	<div class="col-10">
+		            		<div class="">
+		            			Verbleibende Lesezeit bei dieser Kategorie:
+		            			<strong>
+		            				<%= @current_category.articles.published.count * 2.5 %>
+		            			Minuten</strong>
+		            		</div>
+		            	</div>
+		            	<div class="col-1">
+		            		<%= link_to @current_article do %>
+		    				<div class="btn btn-primary">Weiterlesen</div>
+		    				<% end %>
+		            	</div>
+		            </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<%# raise %>
+	<!-- Tips of the month -->
+	<!-- <div class="row mt-3">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Tip of the month</h5>
+				</div>
+			</div>
+		</div>
+	</div> -->
+</div>

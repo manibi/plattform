@@ -39,17 +39,19 @@
               <%= image_tag "https://res.cloudinary.com/mozubi/image/upload/v1582744555/Mozubi/Logo_schwarz_e4slbq.png", style: 'width:100%' %>
             </div>
             <!-- sidebar -->
-            <div class="row p-4 border-right sidebar">
+            <div class="row p-4 border-right sidebar justify-content-center">
               <%= render 'shared/sidebar' %>
             </div>
           </div>
           <!-- right column -->
           <div class="col-10 main-content">
-        <% else %>
-          <div class="col-12 main-content">
-        <% end %>
             <!-- right navbar -->
             <div class="row navbar border-bottom sticky sticky-top px-0">
+        <% else %>
+          <div class="col-12 px-0 main-content">
+            <!-- right navbar -->
+            <div class="row mx-0 navbar sticky sticky-top px-0">
+        <% end %>
               <div class="col-12">
                 <%= render 'shared/navbar' %>
               </div>

@@ -1,6 +1,5 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!, except: [
-                                              :landing_page, :company_dashboard, :temporary_user_info ]
+  before_action :authenticate_user!, except: [:landing_page,:mozubi, :azubis, :unternehmen, :datenschutz, :agbs, :impressum, :corona, :company_dashboard, :temporary_user_info]
   before_action :authenticate_company!, only: :company_dashboard
 
   def search
@@ -30,6 +29,27 @@ class PagesController < ApplicationController
         redirect_to dashboard_path
       end
     end
+  end
+
+  def mozubi
+  end
+
+  def azubis
+  end
+
+  def unternehmen
+  end
+
+  def datenschutz
+  end
+
+  def agbs
+  end
+
+  def impressum
+  end
+
+  def corona
   end
 
   def dashboard
