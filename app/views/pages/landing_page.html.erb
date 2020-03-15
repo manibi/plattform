@@ -1,13 +1,17 @@
 <div class="">
 	
 <div class="row mx-0 landing-banner">
-	<div class="col-12 justify-content-center align-items-center row">
-		<div class="my-3 mx-3">
-			Lernen leicht gemacht - Jetzt einen Beratungstermin ausmachen!
+	<div class="col-12 justify-content-center align-items-center row p-2">
+		<div class="col-sm-12 col-md-6 my-3 mx-3">
+			<!-- Lernen leicht gemacht - Jetzt einen Beratungstermin ausmachen! -->
+			Berufsschule wegen Corona geschlossen? Wir helfen allen Azubis kostenlos aus!
 		</div>
-		<a href="mailto:info@mozubi.app" class="btn btn-outline-primary">
+		<!-- <a href="mailto:info@mozubi.app" class="btn btn-outline-primary">
 			Termin vereinbaren
-		</a>
+		</a> -->
+		<div class="btn btn-primary">
+			<%= link_to "Corona Lizenz", corona_path %>
+		</div>
 		<%# mail_to "Termin vereinbaren", "info@mozubi.app", class="btn btn-primary" %>
 		<!-- <div class="btn btn-primary">
 			Termin vereinbaren
@@ -22,8 +26,8 @@
   </div>
 </div>
 
-<div class="row mx-0 py-3 landing-box">
-	<div class="col-4 text-center my-3 border-right px-5">
+<div class="row mx-0 py-5 landing-box">
+	<div class="col-lg-4 col-md-12 text-center my-3 border-right px-5">
 			<i class="material-icons-sharp landing-page-icon">devices</i>
 			<div class="landing-text">
 					<div class="text-primary">Mobil</div>
@@ -31,14 +35,14 @@
 					egal ob an deinem Handy in der Bahn oder bequem von zuhause an deinem Laptop!
 			</div>
 	</div>
-	<div class="col-4 text-center my-3 border-right px-5">
+	<div class="col-lg-4 col-md-12 text-center my-3 border-right px-5">
 		<i class="material-icons-sharp landing-page-icon">ondemand_video</i>
 		<div class="landing-text">
 			<div class="text-primary">Spielerisch</div>
 			Bleibe motiviert durch spielerisch leichte Gestaltung des Lernprozesses und miss dich mit deinen Freunden in eurem Ausbildungsfach!
 		</div>
 	</div>
-	<div class="col-4 text-center my-3 px-5">
+	<div class="col-lg-4 col-md-12 text-center my-3 px-5">
 		<i class="material-icons-sharp landing-page-icon">dvr</i>
 		<div class="landing-text">
 			<div class="text-primary">Strukturiert</div>
@@ -46,29 +50,22 @@
 		</div>
 	</div>
 </div>
-<div class="row mx-0 landing-textbox">
-	<div class="my-3 text-center">
-		<div class="h2 py-3">Mozubi - besser, digital ausbilden</div>
-		<div class="px-5 landing-text">
-			Mit den neusten Lerntechniken und strukturierten Lernplänen grantieren wir 
-			einen nachhaltigen Lernerfolg. Durch unsere Lernplattform und qualifizierten 
-			Lerninhalten auf DQR-Niveau (Deutscher Qualitätsrahmen für lebenslanges 
-			Lernen)  erhalten Azubis die Möglichkeit sich auf Zwischen- und
-			Abschlussprüfungen vorzubereiten. Mozubi ist eine mobile Plattform, die von 
-			jeglichen Endgeräten genutzt werden kann und somit auch ineffiziente 
-			Wartezeiten nutzbar macht. Neben einer professionellen Struktur der  Inhalte, 
-			können die Azubis auf spielerischem Weg sich miteinander messen und anhand 
-			von Quizzes konkurrieren. 
+<div class="row mx-0 landing-banner">
+	<div class="col-12 my-3 text-center">
+		<div class="h2 py-3">
+			<!-- Jetzt Beratungstermin vereinbaren -->
+			Wir helfen bei geschlossenen Schulen!
+		</div>
+		<!-- <a href="mailto:info@mozubi.app" class="btn btn-outline-primary">
+			Termin vereinbaren
+		</a> -->
+		<div class="btn btn-primary">
+			<%= link_to "Corona Lizenz", corona_path %>
 		</div>
 	</div>
 </div>
-<div class="row mx-0 landing-cta">
-	<div class="col-12 my-3 text-center">
-		<div class="h2 py-3">Jetzt Beratungstermin vereinbaren</div>
-		<a href="mailto:info@mozubi.app" class="btn btn-primary">
-			Termin vereinbaren
-		</a>
-	</div>
-</div>
+
+<%= render 'shared/landing_footer' %>
+
 
 </div>

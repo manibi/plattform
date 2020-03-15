@@ -99,6 +99,13 @@ Rails.application.routes.draw do
   get "admin_topics",       to: "pages#admin_topics"
   get "admin_categories",   to: "pages#admin_categories"
   get "search",             to: "pages#search"
+  get "mozubi",             to: "pages#mozubi"
+  get "azubis",             to: "pages#azubis"
+  get "unternehmen",        to: "pages#unternehmen"
+  get "datenschutz",        to: "pages#datenschutz"
+  get "agbs",               to: "pages#agbs"
+  get "impressum",          to: "pages#impressum"
+  get "corona",             to: "pages#corona"
 
   root to: "pages#landing_page"
 end
