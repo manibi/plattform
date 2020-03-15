@@ -1,6 +1,6 @@
 <% if user_signed_in? && !company_signed_in? %>
-	<ul class="col-12 nav-pills nav-fill row mx-0 justify-content-between mb-0">
-		<li class="nav-item col-12 col-md-8 search-form-control">
+	<ul class="nav-pills nav-fill row mx-0 justify-content-between mb-0">
+		<li class="nav-item col-10 col-md-8 search-form-control">
 			<%= form_with url: search_path,
 			                    local: true,
 			                    method: :get,
@@ -19,9 +19,12 @@
 	        <%= submit_tag "Search", class: "btn btn-primary d-none" %>
 	      <% end %>
 		</li>
-      	<li class="nav-item dropdown col-4 col-md-2 d-flex justify-content-center">
-			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="navbarDropdown" aria-haspopup="true" aria-expanded="false">
+      	<li class="nav-item dropdown col-1 col-md-2 d-flex justify-content-center">
+			<button type="button" class="btn btn-primary dropdown-toggle d-none d-lg-block" data-toggle="dropdown" id="navbarDropdown" aria-haspopup="true" aria-expanded="false">
 		 		Profil <span class="caret"></span>
+		 	</button>
+		 	<button type="button" class="btn btn-primary dropdown-toggle d-lg-none d-block" data-toggle="dropdown" id="navbarDropdown" aria-haspopup="true" aria-expanded="false">
+		 		<span class="caret"></span>
 		 	</button>
 	        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 		        <%= link_to "Einstellungen", profile_path, class: "landing-nav dropdown-item" %>
