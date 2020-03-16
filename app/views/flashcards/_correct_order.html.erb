@@ -38,6 +38,6 @@
     <% end %>
     <%= link_to "Nächste",
                 next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
-                class: "flashcard-btn btn btn-primary", :"data-turbolinks" => false if action_name == "answer_correct_order" %>
+                class: "flashcard-btn btn btn-primary", "data-turbolinks": false if action_name == "answer_correct_order" %>
   <% end %>
 </div>
