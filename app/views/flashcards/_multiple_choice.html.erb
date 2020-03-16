@@ -46,12 +46,12 @@
       Prüfen
     </button>
     <% end %>
-    <%# if current_user.student? %>
+    <% if current_user.student? %>
       <%= f.submit "Nächste",
               class: "flashcard-btn btn btn-primary d-none",
               id: "mutipleChoiceSubmitBtn",
               "data-turbolinks": false %>
-    <%# end %>
+    <% end %>
   <% end %>
   <!-- correct answer -->
   <!-- <hr>
