@@ -66,9 +66,11 @@
     <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
       <%= f.submit "Prüfen", class: "flashcard-btn btn btn-primary col-12 col-lg-5", "data-turbolinks": false if action_name == "show" %>
     <% end %>
-  <%= link_to "Nächste",
-            next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
-            class: "flashcard-btn btn btn-primary col-12 col-lg-5", "data-turbolinks": false if action_name == "answer_correct_order" %>
+    <% if current_user.student? %>
+      <%= link_to "Nächste",
+                  next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
+                  class: "flashcard-btn btn btn-primary col-12 col-lg-5", "data-turbolinks": false if action_name == "answer_correct_order" %>
+      <% end %>
   </div>
   <% end %>
 </div>

@@ -42,9 +42,11 @@
       <%= f.submit "Prüfen",
               class: "flashcard-btn btn btn-primary", :"data-turbolinks" => false if action_name == "show" %>
   <% end %>
-  <%= link_to "Nächste",
-              next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
-              class: "flashcard-btn btn btn-primary", :"data-turbolinks" => false if action_name == "answer_multiple_choice" %>
+  <% if current_user.student? %>
+    <%= link_to "Nächste",
+                next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
+                class: "flashcard-btn btn btn-primary", :"data-turbolinks" => false if action_name == "answer_multiple_choice" %>
+  <% end %>
   <% end %>
   <!-- correct answer -->
   <!-- <hr>

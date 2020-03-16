@@ -29,8 +29,10 @@
       <%= f.submit "Prüfen",
                     class: "flashcard-btn btn btn-primary" if action_name == "show" %>
     <% end %>
-    <%= link_to "Nächste",
-              next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
-              class: "flashcard-btn btn btn-primary" if action_name == "soll_ist" %>
+    <% if current_user.student? %>
+      <%= link_to "Nächste",
+                next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
+                class: "flashcard-btn btn btn-primary" if action_name == "soll_ist" %>
+    <% end %>
   <% end %>
 </div>
