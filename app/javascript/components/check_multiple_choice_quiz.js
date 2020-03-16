@@ -1,4 +1,4 @@
-const check_mutiple_choice_quiz = () => {
+const check_multiple_choice_quiz = () => {
   const form = document.getElementById("flashcardAnswerForm");
   const submitBtn = document.getElementById("mutipleChoiceSubmitBtn");
   const showResultBtn = document.getElementById("checkMutipleChoiceBtn");
@@ -23,4 +23,4 @@ const check_mutiple_choice_quiz = () => {
   }
 };
 
-export { check_mutiple_choice_quiz };
+export { check_multiple_choice_quiz };
