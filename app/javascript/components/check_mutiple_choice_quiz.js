@@ -1,11 +1,12 @@
-const check_flashcard_answer = () => {
+const check_mutiple_choice_quiz = () => {
   const form = document.getElementById("flashcardAnswerForm");
-  const submitBtn = document.querySelector("input[type='submit']");
-  const showResultBtn = document.getElementById("showResultBtn");
+  const submitBtn = document.getElementById("mutipleChoiceSubmitBtn");
+  const showResultBtn = document.getElementById("checkMutipleChoiceBtn");
   const flashcardAnswerEl = document.getElementsByClassName("flashcard-answer");
   const removePointerEvents = collection => {
     for (const el of collection) {
-      el.classList.add("remove-pointer");
+      el.classList.add("d-none");
+      el.setAttribute("readonly", true);
     }
   };
 
@@ -14,12 +15,12 @@ const check_flashcard_answer = () => {
       e.preventDefault();
       e.currentTarget.classList.add("d-none");
       removePointerEvents(flashcardAnswerEl);
-      form
-        .querySelector("input[value='true']")
-        .nextElementSibling.classList.add("correct-answer");
+      form.querySelectorAll("input[data-check='true']").forEach(elem => {
+        elem.parentElement.classList.add("correct-answer");
+      });
       submitBtn.classList.remove("d-none");
     });
   }
 };
 
-export { check_flashcard_answer };
+export { check_mutiple_choice_quiz };

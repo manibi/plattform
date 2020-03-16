@@ -10,20 +10,20 @@
                       html: { id: "flashcardAnswerForm",
                               "data-form-submitted": false } do |f| %>
     <% @flashcard.answers.shuffle.each do |answer| %>
-      <div class="flashcard-answer">
-        <label
-          class=
-          <%= "correct-answer" if action_name == "answer_multiple_choice" &&  @correct_answers.include?(answer.id)  %>
-          <%= "false-answer" if action_name == "answer_multiple_choice" &&
-          @answers &.include?(answer.id) %>
-        >
+      <div>
+        <label>
           <%= check_box_tag "flashcard[answer_ids][]",
                             answer.id, false,
                             id: dom_id(answer),
                             checked: @user_answers&.include?(answer.id),
-                            disabled: action_name == "answer_multiple_choice" ||@exam&.submitted %>
+                            disabled: action_name == "answer_multiple_choice" ||@exam&.submitted,
+                            class: "flashcard-answer",
+                            data: {
+                              check: @correct_answers.include?(answer.id)
+                            } %>
             <%= answer.content %>
         </label>
+        <%#= raise %>
       </div>
     <% end %>
     <% if @exam && @exam.submitted %>
@@ -38,15 +38,20 @@
         <% end %>
       </ul>
     <% end %>
+
     <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
-      <%= f.submit "Prüfen",
-              class: "flashcard-btn btn btn-primary", :"data-turbolinks" => false if action_name == "show" %>
-  <% end %>
-  <% if current_user.student? %>
-    <%= link_to "Nächste",
-                next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
-                class: "flashcard-btn btn btn-primary", :"data-turbolinks" => false if action_name == "answer_multiple_choice" %>
-  <% end %>
+      <button class="flashcard-btn btn btn-primary"
+              id="checkMutipleChoiceBtn"
+      >
+      Prüfen
+    </button>
+    <% end %>
+    <%# if current_user.student? %>
+      <%= f.submit "Nächste",
+              class: "flashcard-btn btn btn-primary d-none",
+              id: "mutipleChoiceSubmitBtn",
+              "data-turbolinks": false %>
+    <%# end %>
   <% end %>
   <!-- correct answer -->
   <!-- <hr>

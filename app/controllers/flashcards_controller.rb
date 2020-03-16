@@ -18,6 +18,7 @@ class FlashcardsController < ApplicationController
     authorize @flashcard
     @article = @flashcard.article
     @exam_flashcard = request.path.include? "exams"
+    @correct_answers = @flashcard.correct_answers.sort.map(&:to_i)
 
     if @flashcard.flashcard_type == "match_answers"
       @dragabble_answers  = Answer.find(@flashcard.correct_answers)
@@ -91,6 +92,13 @@ class FlashcardsController < ApplicationController
     end
   end
 
+  def destroy
+    @flashcard = Flashcard.find(params[:id])
+    authorize @flashcard
+    @flashcard.destroy
+    redirect_back(fallback_location: admin_dashboard_path)
+  end
+
   def publish
     @flashcard = Flashcard.find(params[:id])
     authorize @flashcard
@@ -141,6 +149,7 @@ class FlashcardsController < ApplicationController
     @article = @flashcard.article
     @correct_answers = @flashcard.correct_answers.sort.map(&:to_i)
 
+    # Check the answers only if at least one is marked
     if set_multiple_choice_answer
       @answers = set_multiple_choice_answer[:answer_ids].map(&:to_i)
       @is_answer_correct = @answers.sort ==  @correct_answers
@@ -157,7 +166,8 @@ class FlashcardsController < ApplicationController
       next_exam_flashcard(@exam)
     else
       @flashcard.save_answer_for!(current_user, @is_answer_correct)
-      render "flashcards/show"
+      # render "flashcards/show"
+      redirect_to next_flashcard_article_flashcard_path(@article, @flashcard)
     end
   end
 
@@ -207,7 +217,6 @@ class FlashcardsController < ApplicationController
       next_exam_flashcard(@exam)
     else
       @flashcard.save_answer_for!(current_user, @is_answer_correct)
-    # raise
 
       render "flashcards/show"
     end
