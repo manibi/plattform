@@ -1,12 +1,30 @@
 $alert-size: 100vh;
 
-.alert {
-	position: absolute !important;
-	left: 50%;
-	right: 0;
-	margin-left: (- $alert-size / 2) !important;
-	width: $alert-size;
+@media only screen and (max-width: 1030px){
+ 
+	.alert {
+		position: absolute !important;
+		left: 50%;
+		right: 0;
+		margin-left: (- $alert-size * 27 / 100) !important;
+
+		width: ($alert-size * 46/ 100);
+	}
+ 
 }
+
+@media only screen and (min-width: 1030px){
+ 
+	.alert {
+		position: absolute !important;
+		left: 50%;
+		right: 0;
+		margin-left: (- $alert-size / 2) !important;
+		width: $alert-size;
+	}
+ 
+}
+
 
 .alert-info {
 	top: 5px;
