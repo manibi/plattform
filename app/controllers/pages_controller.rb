@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!, except: [:landing_page,:mozubi, :azubis, :unternehmen, :datenschutz, :agbs, :impressum, :corona, :company_dashboard, :temporary_user_info]
+  before_action :authenticate_user!, except: [:landing_page,:mozubi, :azubis, :unternehmen, :datenschutz, :agbs, :impressum, :hilfspaket, :company_dashboard, :temporary_user_info]
   before_action :authenticate_company!, only: :company_dashboard
 
   def search
@@ -49,7 +49,7 @@ class PagesController < ApplicationController
   def impressum
   end
 
-  def corona
+  def hilfspaket
   end
 
   def dashboard
