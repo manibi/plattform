@@ -20,6 +20,7 @@ class FlashcardsController < ApplicationController
     @exam_flashcard = request.path.include? "exams"
     @correct_answers = @flashcard.correct_answers.sort.map(&:to_i)
 
+
     if @flashcard.flashcard_type == "match_answers"
       @dragabble_answers  = Answer.find(@flashcard.correct_answers)
       @static_answers     = Answer.find(@flashcard.answers.pluck(:id) - @flashcard.correct_answers)

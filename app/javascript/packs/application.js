@@ -28,3 +28,5 @@ document.addEventListener("turbolinks:load", () => {
   emptySearchPage();
   check_multiple_choice_quiz();
 });
+
+document.addEventListener("load", () => {});

@@ -39,8 +39,9 @@
       </ul>
     <% end %>
 
-    <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
-      <button class="flashcard-btn btn btn-primary"
+    <% if !@exam_flashcard %>
+      <button type="button"
+              class="flashcard-btn btn btn-primary"
               id="checkMutipleChoiceBtn"
       >
       Prüfen
@@ -48,7 +49,7 @@
     <% end %>
     <% if current_user.student? %>
       <%= f.submit "Nächste",
-              class: "flashcard-btn btn btn-primary d-none",
+              class: "flashcard-btn btn btn-primary #{'d-none' unless @exam_flashcard && !@exam&.submitted}",
               id: "mutipleChoiceSubmitBtn",
               "data-turbolinks": false %>
     <% end %>
