@@ -108,7 +108,7 @@ Rails.application.routes.draw do
   get "datenschutz",        to: "pages#datenschutz"
   get "agbs",               to: "pages#agbs"
   get "impressum",          to: "pages#impressum"
-  get "corona",             to: "pages#corona"
+  get "hilfspaket",         to: "pages#hilfspaket"
 
 
   root to: "pages#landing_page"
