@@ -17,12 +17,12 @@ class TopicsController < ApplicationController
   end
 
   def create
-    @topic = current_user.profession.topics.new(topic_params)
+    @topic = Topic.new(topic_params)
     authorize @topic
 
     if @topic.save
       flash[:notice] = "Topic created!"
-      redirect_to admin_dashboard_path, notice: "Topic created!"
+      redirect_to @topic, notice: "Topic created!"
     else
       render :new
     end
@@ -50,7 +50,7 @@ class TopicsController < ApplicationController
   private
 
   def topic_params
-    params.require(:topic).permit(:name)
+    params.require(:topic).permit(:name, :profession_id)
   end
 
   def set_and_authorize_topic
