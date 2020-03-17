@@ -30,34 +30,31 @@
     <%#= f.text_area :description, class: "form-control" %>
   </div>
 
-
-
   <div class="form-group mt-5">
     <%= f.file_field :image %>
   </div>
 
   <div class="row">
-  <% if @article.image.attached? %>
-      <div class="col-md-5">
-        <div class="article-photo">
-          <!-- Button trigger modal -->
-          <button type="button" class="article-image__thumb" data-toggle="modal" data-target="#ArticleImage">
-            <%= cl_image_tag @article.image.key %>
-          </button>
+    <% if @article.image.attached? %>
+        <div class="col-md-5">
+          <div class="article-photo">
+            <!-- Button trigger modal -->
+            <button type="button" class="article-image__thumb" data-toggle="modal" data-target="#ArticleImage">
+              <%= cl_image_tag @article.image.key %>
+            </button>
+        </div>
       </div>
-    </div>
-  <% end %>
-</div>
-
+    <% end %>
+  </div>
 
   <div class="chapters" id="chapter">
-    <%= f.fields_for :chapters, f.object.chapters.all.order(:title) do |builder| %>
+    <%= f.fields_for :chapters do |builder| %>
       <%= render 'chapter_fields', f: builder %>
 
     <% end %>
   </div>
 
-  <div class="form-actions">
+  <div class="form-actions mb-5">
   <%#= link_to_add_association 'Add chapter',
                                 f, :chapters,
                                 class: 'btn btn-success my-2',
@@ -66,9 +63,8 @@
                                 } if @article.persisted? %>
 
 
-   <%= f.submit "Aktualisieren", class: "btn btn-primary" %>
-   <%= link_to "Artikel ansehen", @article, class: "btn btn-warning" if @article.persisted? %>
-
+    <%= f.submit "Aktualisieren", class: "btn btn-primary" %>
+    <%= link_to "Artikel ansehen", @article, class: "btn btn-warning" if @article.persisted? %>
   </div>
 <% end %>
 

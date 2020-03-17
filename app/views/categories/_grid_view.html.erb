@@ -191,7 +191,12 @@
     <% end %>
   </div>
 </div>
-<% elsif current_user.admin? %>
+<% elsif current_user.admin? || current_user.author? %>
+    <div class="row mt-5">
+      <div class="col">
+        <h1 class="display-4">Artikel</h1>
+      </div>
+    </div>
     <div class="row">
     <% @category.articles.each do |article| %>
       <div class="col-lg-3 my-2">
@@ -201,8 +206,10 @@
               <%= article.title %>
               <%= fa_icon(:camera_retro, class: 'my-class', style: "position: absolute; top: 26px; right: 10px; color: green") unless article.draft? %>
             </div>
-             <%= link_to "Edit", edit_article_path(article), class: "btn btn-warning" %>
+            <% if current_user.admin? %>
+              <%= link_to "Edit", edit_article_path(article), class: "btn btn-warning" %>
               <%= link_to "Delete", article_path(article), method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
+            <% end %>
           </div>
         <% end %>
       </div>

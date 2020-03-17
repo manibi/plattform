@@ -45,9 +45,9 @@ class ArticlesController < ApplicationController
 
   def edit
     @article.chapters.build([
-      {title: "Erläuterung"},
-      {title: "Praxisbeispiel aus der Wirtschaft"},
-      {title: "Verwandte Themen"},
+      { title: "Erläuterung" },
+      { title: "Praxisbeispiel aus der Wirtschaft" },
+      { title: "Verwandte Themen" },
       ]) if @article.chapters.empty?
     @categories = current_user.all_categories
   end
