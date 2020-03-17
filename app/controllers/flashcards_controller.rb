@@ -18,6 +18,8 @@ class FlashcardsController < ApplicationController
     authorize @flashcard
     @article = @flashcard.article
     @exam_flashcard = request.path.include? "exams"
+    @correct_answers = @flashcard.correct_answers.sort.map(&:to_i)
+
 
     if @flashcard.flashcard_type == "match_answers"
       @dragabble_answers  = Answer.find(@flashcard.correct_answers)
@@ -91,6 +93,13 @@ class FlashcardsController < ApplicationController
     end
   end
 
+  def destroy
+    @flashcard = Flashcard.find(params[:id])
+    authorize @flashcard
+    @flashcard.destroy
+    redirect_back(fallback_location: admin_dashboard_path)
+  end
+
   def publish
     @flashcard = Flashcard.find(params[:id])
     authorize @flashcard
@@ -128,12 +137,6 @@ class FlashcardsController < ApplicationController
     end
   end
 
-  # user selects answer
-  # send form
-  # check answser
-  # render form again with disabled fields and no submit button
-  # show right answers - feedback on how he did
-  # render btn to next_flashcard
   def answer_multiple_choice
     @flashcard = Flashcard.find(params[:id])
     authorize @flashcard, :show?
@@ -141,6 +144,7 @@ class FlashcardsController < ApplicationController
     @article = @flashcard.article
     @correct_answers = @flashcard.correct_answers.sort.map(&:to_i)
 
+    # Check the answers only if at least one is marked
     if set_multiple_choice_answer
       @answers = set_multiple_choice_answer[:answer_ids].map(&:to_i)
       @is_answer_correct = @answers.sort ==  @correct_answers
@@ -151,13 +155,15 @@ class FlashcardsController < ApplicationController
     if request.path.include? "exams"
       @exam = CustomExam.find(params[:custom_exam_id])
       question_answered = !!set_multiple_choice_answer
+
       # save exam answer
       @flashcard.save_exam_answer_for!(@exam, question_answered, @answers, @is_answer_correct)
       # redirect to next flashcard
       next_exam_flashcard(@exam)
     else
       @flashcard.save_answer_for!(current_user, @is_answer_correct)
-      render "flashcards/show"
+      # render "flashcards/show"
+      redirect_to next_flashcard_article_flashcard_path(@article, @flashcard)
     end
   end
 
@@ -179,11 +185,13 @@ class FlashcardsController < ApplicationController
       @exam = CustomExam.find(params[:custom_exam_id])
       # save exam answer, question will always count as answered
       @flashcard.save_exam_answer_for!(@exam, true, @answers, @is_answer_correct)
+
       # redirect to next flashcard
       next_exam_flashcard(@exam)
     else
       @flashcard.save_answer_for!(current_user, @is_answer_correct)
-      render "flashcards/show"
+      # render "flashcards/show"
+      redirect_to next_flashcard_article_flashcard_path(@article, @flashcard)
     end
   end
 
@@ -207,7 +215,6 @@ class FlashcardsController < ApplicationController
       next_exam_flashcard(@exam)
     else
       @flashcard.save_answer_for!(current_user, @is_answer_correct)
-    # raise
 
       render "flashcards/show"
     end

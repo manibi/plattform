@@ -6,6 +6,7 @@ class Flashcard < ApplicationRecord
   has_many          :answers, through: :flashcard_answers
   has_one_attached  :image
 
+  before_save :ensure_published_at, :unless => :draft
   accepts_nested_attributes_for :answers,
                                 allow_destroy: true,
                                 reject_if: proc { |att| att['content'].blank? }

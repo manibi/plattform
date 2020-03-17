@@ -23,11 +23,19 @@
   </div>
 
   <div class="form-group">
-    <% flashcard_types = Flashcard::FLASHCARD_TYPES.map { |type| [type, type] } %>
+    <% flashcard_types = {
+      "Multiple Choice" => "multiple_choice",
+      "Richtige Reihenfolge" => "correct_order",
+      "Zuordnung" => "match_answers",
+      "Soll/Ist" => "soll_ist",
+      "Tabelle" => "table_quiz"
+    } %>
     <%= flashcard_form.label  "Fragetyp" %>
+    <!-- Edit view options_for_select second argument sets the quiz type  -->
     <%= flashcard_form.select :flashcard_type,
-      options_for_select([["Multiple Choice", "multiple_choice"], ["Richtige Reihenfolge", "correct_order"], ["Zuordnung", "match_answers"], ["Soll/Ist", "soll_ist"], ["Tabelle", "table_quiz"]])
-      %>
+      options_for_select(flashcard_types.to_a,
+        @flashcard.flashcard_type ? [flashcard_types.key(@flashcard.flashcard_type), @flashcard.flashcard_type] : false)
+    %>
   </div>
 
   <div class="form-group mt-5">

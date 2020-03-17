@@ -10,41 +10,47 @@
                       html: { id: "flashcardAnswerForm",
                               "data-form-submitted": false } do |f| %>
     <% @flashcard.answers.shuffle.each do |answer| %>
-      <div class="flashcard-answer">
-        <label
-          class=
-          <%= "correct-answer" if action_name == "answer_multiple_choice" &&  @correct_answers.include?(answer.id)  %>
-          <%= "false-answer" if action_name == "answer_multiple_choice" &&
-          @answers &.include?(answer.id) %>
-        >
+      <div>
+        <label>
           <%= check_box_tag "flashcard[answer_ids][]",
                             answer.id, false,
                             id: dom_id(answer),
                             checked: @user_answers&.include?(answer.id),
-                            disabled: action_name == "answer_multiple_choice" ||@exam&.submitted %>
+                            disabled: action_name == "answer_multiple_choice" ||@exam&.submitted,
+                            class: "flashcard-answer",
+                            data: {
+                              check: @correct_answers.include?(answer.id)
+                            } %>
             <%= answer.content %>
         </label>
       </div>
     <% end %>
-    <% if @exam && @exam.submitted %>
-      <hr>
-      <ul>
-        <% @flashcard.correct_answers.each do |answer_id| %>
-              <% db_answer = Answer.find(answer_id) %>
-            <% if db_answer.explanation  %>
-              <li><strong><%= db_answer.explanation %></strong></li>
-            <% end %>
 
-        <% end %>
-      </ul>
+    <ul id="showCorrectAnswers" class="<%= 'd-none' unless @exam && @exam.submitted %>">
+      <hr>
+      <% @flashcard.correct_answers.each do |answer_id| %>
+            <% db_answer = Answer.find(answer_id) %>
+          <% if db_answer.explanation  %>
+            <li><strong><%= db_answer.explanation %></strong></li>
+          <% end %>
+
+      <% end %>
+    </ul>
+
+    <% if !@exam_flashcard %>
+      <button type="button"
+              class="flashcard-btn btn btn-primary"
+              id="checkMutipleChoiceBtn"
+      >
+        Prüfen
+      </button>
     <% end %>
-    <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
-      <%= f.submit "Prüfen",
-              class: "flashcard-btn btn btn-primary", :"data-turbolinks" => false if action_name == "show" %>
-  <% end %>
-  <%= link_to "Nächste",
-              next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
-              class: "flashcard-btn btn btn-primary", :"data-turbolinks" => false if action_name == "answer_multiple_choice" %>
+    <% if current_user.student? %>
+      <%= f.submit "Nächste",
+              class: "flashcard-btn btn btn-primary #{'d-none' unless @exam_flashcard && !@exam&.submitted}",
+              id: "mutipleChoiceSubmitBtn",
+              "data-turbolinks": false %>
+    <% end %>
   <% end %>
   <!-- correct answer -->
   <!-- <hr>

@@ -1,4 +1,4 @@
-<div class="container h-100">  
+<div class="container h-100">
   <div class="row py-3 header">
     <div class="">
       <!-- breadcrumbs -->
@@ -31,7 +31,7 @@
               </div>
             </div>
             <div class="card-body row align-items-bottom justify-content-between pb-0">
-              <div class="align-text-bottom"> 
+              <div class="align-text-bottom">
                 Fragen in diesem Quiz: <b><%= @all_answered_flashcards.count %></b>
               </div>
               <div class="align-text-bottom">
@@ -45,14 +45,20 @@
       <div class="d-none d-lg-flex row mt-3 justify-content-around">
         <div class="col-8 p-3 d-flex justify-content-between">
         <%= link_to "Zurück zu Artikel", @article, class: "width-btn btn btn-outline-primary" %>
-        <%= link_to "Quiz wiederholen", [@article, @article.flashcards.first], class: "width-btn btn btn-outline-success" %>
+        <%= link_to "Quiz wiederholen",
+                    [@article, @article.flashcards.first],
+                    "data-turbolinks": false,
+                    class: "width-btn btn btn-outline-success" %>
         <%= link_to "Nächster Artikel", @next_article, class: "width-btn btn btn-outline-primary" %>
         </div>
       </div>
         <!-- mobile version -->
       <div class="d-lg-none d-block mt-3 col-12">
           <%= link_to "Zurück zu Artikel", @article, class: "width-btn btn btn-outline-primary" %>
-          <%= link_to "Quiz wiederholen", [@article, @article.flashcards.first], class: "width-btn btn btn-outline-success" %>
+          <%= link_to "Quiz wiederholen",
+                      [@article, @article.flashcards.first],
+                      "data-turbolinks": false,
+                      class: "width-btn btn btn-outline-success" %>
           <%= link_to "Nächster Artikel", @next_article, class: "width-btn btn btn-outline-primary" %>
       </div>
     </div>
