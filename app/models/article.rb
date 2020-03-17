@@ -11,13 +11,14 @@ class Article < ApplicationRecord
   has_many          :users, through: :user_articles
   has_many          :flashcards, dependent: :destroy
   has_one_attached  :image
+  has_rich_text     :description
+  has_rich_text     :content
 
   accepts_nested_attributes_for :chapters,
                                 allow_destroy: true,
-                                reject_if: proc { |att| att['title'].blank? || att['content'].blank? }
+                                reject_if: proc { |att| att['title'].blank? }
 
   validates :title, presence: true, allow_blank: false
-  validates :description, presence: true, allow_blank: true
   validates :category_id, presence: true
   validates :image, content_type: {
                       in: %w[image/jpeg image/gif image/png],

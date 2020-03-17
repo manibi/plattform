@@ -26,7 +26,8 @@
 
   <div class="form-group">
     <%= f.label     "Definition" %>
-    <%= f.text_area :description, class: "form-control" %>
+    <%= f.rich_text_area :description %>
+    <%#= f.text_area :description, class: "form-control" %>
   </div>
 
 
@@ -50,8 +51,9 @@
 
 
   <div class="chapters" id="chapter">
-    <%= f.fields_for :chapters do |builder| %>
+    <%= f.fields_for :chapters, f.object.chapters.all.order(:title) do |builder| %>
       <%= render 'chapter_fields', f: builder %>
+
     <% end %>
   </div>
 

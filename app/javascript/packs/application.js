@@ -2,6 +2,8 @@ require("@rails/ujs").start();
 require("turbolinks").start();
 require("@rails/activestorage").start();
 require("channels");
+require("trix");
+require("@rails/actiontext");
 // require("jquery");
 
 // libraries
@@ -33,3 +35,6 @@ document.addEventListener("turbolinks:load", () => {
   check_match_answers_quiz();
   check_correct_order_quiz();
 });
+
+require("trix");
+require("@rails/actiontext");

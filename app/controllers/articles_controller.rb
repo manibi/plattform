@@ -32,7 +32,7 @@ class ArticlesController < ApplicationController
     @new_article = Article.new
     authorize @new_article
     @categories = current_user.all_categories
-    chapter_params = article_params[:chapters_attributes]
+    # chapter_params = article_params[:chapters_attributes]
     @article = Article.new(article_params)
     if @article.save
       # raise
@@ -45,10 +45,10 @@ class ArticlesController < ApplicationController
 
   def edit
     @article.chapters.build([
-      {title: "Erläuterung", content: ""},
-      {title: "Praxisbeispiel aus der Wirtschaft", content: ""},
-      {title: "Verwandte Themen", content: ""},
-      ])
+      {title: "Erläuterung"},
+      {title: "Praxisbeispiel aus der Wirtschaft"},
+      {title: "Verwandte Themen"},
+      ]) if @article.chapters.empty?
     @categories = current_user.all_categories
   end
 
@@ -149,6 +149,6 @@ class ArticlesController < ApplicationController
                                     :image,
                                     :title,
                                     :description,
-                                    chapters_attributes: Chapter.attribute_names.map(&:to_sym).push(:_destroy))
+                                    chapters_attributes: [:id, :_destroy, :title, :content])
   end
 end
