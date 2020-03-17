@@ -23,21 +23,19 @@
                             } %>
             <%= answer.content %>
         </label>
-        <%#= raise %>
       </div>
     <% end %>
-    <%# if @exam && @exam.submitted %>
-      <ul id="showCorrectAnswers" class="<%= 'd-none' unless @exam && @exam.submitted %>">
-        <hr>
-        <% @flashcard.correct_answers.each do |answer_id| %>
-              <% db_answer = Answer.find(answer_id) %>
-            <% if db_answer.explanation  %>
-              <li><strong><%= db_answer.explanation %></strong></li>
-            <% end %>
 
-        <% end %>
-      </ul>
-    <%# end %>
+    <ul id="showCorrectAnswers" class="<%= 'd-none' unless @exam && @exam.submitted %>">
+      <hr>
+      <% @flashcard.correct_answers.each do |answer_id| %>
+            <% db_answer = Answer.find(answer_id) %>
+          <% if db_answer.explanation  %>
+            <li><strong><%= db_answer.explanation %></strong></li>
+          <% end %>
+
+      <% end %>
+    </ul>
 
     <% if !@exam_flashcard %>
       <button type="button"

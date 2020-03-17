@@ -39,17 +39,15 @@
     </div>
   </div>
 
-  <%# if @exam && @exam.submitted %>
+  <ul id="showCorrectAnswers" class="<%= 'd-none' unless @exam && @exam.submitted %>">
     <hr>
-    <ul id="showCorrectAnswers" class="<%= 'd-none' unless @exam && @exam.submitted %>">
-      <% @flashcard.correct_answers.each do |answer_id| %>
-        <% db_answer = Answer.find(answer_id) %>
-        <% if db_answer.explanation  %>
-          <li><strong><%= db_answer.explanation %></strong></li>
-        <% end %>
+    <% @flashcard.correct_answers.each do |answer_id| %>
+      <% db_answer = Answer.find(answer_id) %>
+      <% if db_answer.explanation  %>
+        <li><strong><%= db_answer.explanation %></strong></li>
       <% end %>
-    </ul>
-  <%# end %>
+    <% end %>
+  </ul>
 
   <div class="col-12 d-flex justify-content-center mt-3">
     <% if !@exam_flashcard %>
