@@ -137,12 +137,6 @@ class FlashcardsController < ApplicationController
     end
   end
 
-  # user selects answer
-  # send form
-  # check answser
-  # render form again with disabled fields and no submit button
-  # show right answers - feedback on how he did
-  # render btn to next_flashcard
   def answer_multiple_choice
     @flashcard = Flashcard.find(params[:id])
     authorize @flashcard, :show?
@@ -161,6 +155,7 @@ class FlashcardsController < ApplicationController
     if request.path.include? "exams"
       @exam = CustomExam.find(params[:custom_exam_id])
       question_answered = !!set_multiple_choice_answer
+
       # save exam answer
       @flashcard.save_exam_answer_for!(@exam, question_answered, @answers, @is_answer_correct)
       # redirect to next flashcard
@@ -190,11 +185,13 @@ class FlashcardsController < ApplicationController
       @exam = CustomExam.find(params[:custom_exam_id])
       # save exam answer, question will always count as answered
       @flashcard.save_exam_answer_for!(@exam, true, @answers, @is_answer_correct)
+
       # redirect to next flashcard
       next_exam_flashcard(@exam)
     else
       @flashcard.save_answer_for!(current_user, @is_answer_correct)
-      render "flashcards/show"
+      # render "flashcards/show"
+      redirect_to next_flashcard_article_flashcard_path(@article, @flashcard)
     end
   end
 

@@ -5,15 +5,12 @@
 
   <%= form_for answer_correct_order_article_flashcard_path(@article, @flashcard), url: {action: "answer_correct_order"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
     <ul class="answers" id="answers-drag">
-      <% @flashcard.answers.shuffle.each do |answer| %>
-          <li class=
-            <% if action_name == "answer_correct_order"%>
-              <%= @is_answer_correct ? "correct-answer" : "false-answer"  %>
-            <% end %>
-          >
+      <% @flashcard.answers.shuffle.each_with_index do |answer, idx| %>
+          <li data-check=<%= @flashcard.correct_answers.index(answer.id) %>>
             <%= answer.content %>
+            <!-- The hidden tag is used to determine the correct answer in the controller -->
             <%= hidden_field_tag "flashcard[answer][#{answer.id}]",
-                                  answer.id
+                                      answer.id
             %>
           </li>
       <% end %>
@@ -32,12 +29,19 @@
       </ul>
     <% end %>
 
-    <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
-      <%= f.submit "Prüfen",
-                  class: "flashcard-btn btn btn-primary", :"data-turbolinks" => false if action_name == "show" %>
+    <% if !@exam_flashcard %>
+      <button type="button"
+              class="flashcard-btn btn btn-primary"
+              id="checkCorrectOrderBtn"
+      >
+        Prüfen
+      </button>
     <% end %>
-    <%= link_to "Nächste",
-                next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
-                class: "flashcard-btn btn btn-primary", "data-turbolinks": false if action_name == "answer_correct_order" %>
+    <% if current_user.student? %>
+      <%= f.submit "Nächste",
+              class: "flashcard-btn btn btn-primary #{'d-none' unless @exam_flashcard && !@exam&.submitted}",
+              id: "correctOrderSubmitBtn",
+              "data-turbolinks": false %>
+    <% end %>
   <% end %>
 </div>

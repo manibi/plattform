@@ -15,6 +15,9 @@ import { playFlashcards } from "../components/playFlashcards";
 import { authorView } from "../components/authorView";
 import { emptySearchPage } from "../components/emptySearchPage";
 import { check_multiple_choice_quiz } from "../components/check_multiple_choice_quiz";
+import { check_match_answers_quiz } from "../components/check_match_answers_quiz";
+import { check_correct_order_quiz } from "../components/check_correct_order_quiz";
+
 document.addEventListener("turbolinks:load", () => {
   // gtag('config', 'UA-159154786-1');
   if (typeof gtag === "function") {
@@ -27,6 +30,6 @@ document.addEventListener("turbolinks:load", () => {
   autocompleteSearch();
   emptySearchPage();
   check_multiple_choice_quiz();
+  check_match_answers_quiz();
+  check_correct_order_quiz();
 });
-
-document.addEventListener("load", () => {});

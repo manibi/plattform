@@ -11,11 +11,8 @@
     <!-- The fixed answers -->
     <div class="col-6 px-1">
       <ul class="fixed-answers d-flex justify-content-between h-100" id="fixed-answers">
-        <% @static_answers.each do |answer| %>
-            <li class=
-              <% if action_name == "answer_correct_order"%>
-                <%= @is_answer_correct ? "correct-answer" : "false-answer"  %>
-              <% end %>
+        <% @static_answers.each_with_index do |answer, index| %>
+            <li data-check=<%= @flashcard.correct_answers[index] %>
             >
               <%= answer.content %>
             </li>
@@ -28,18 +25,11 @@
         <!-- The answers to drag, and actually check if correct -->
         <ul class="answers d-flex justify-content-between h-100" id="answers-drag">
           <% @dragabble_answers.shuffle.each_with_index do |answer, index| %>
-              <li class=
-              <%# raise %>
-                <% if action_name == "answer_correct_order"%>
-                  <%= @is_answer_correct ? "correct-answer" : "false-answer"  %>
-                <% end %>
+              <% idx = @flashcard.correct_answers.find_index(answer.id) %>
+              <li data-check=<%= @flashcard.correct_answers[idx] %>
               >
                 <%= answer.content %>
-                <% if action_name == "answer_correct_order"%>
-                  <strong>
-                    - <%= @flashcard.correct_answers.find_index(answer.id) + 1 %>
-                  </strong>
-                <% end %>
+                    <%#= @flashcard.correct_answers.find_index(answer.id) + 1 %>
                 <%= hidden_field_tag "flashcard[answer][#{answer.id}]",
                                       answer.id
                 %>
@@ -63,14 +53,20 @@
   <%# end %>
 
   <div class="col-12 d-flex justify-content-center mt-3">
-    <% if !@exam_flashcard || (@exam && !@exam.submitted) %>
-      <%= f.submit "Prüfen", class: "flashcard-btn btn btn-primary col-12 col-lg-5", "data-turbolinks": false if action_name == "show" %>
+    <% if !@exam_flashcard %>
+      <button type="button"
+              class="flashcard-btn btn btn-primary"
+              id="checkMatchAnswersBtn"
+      >
+        Prüfen
+      </button>
     <% end %>
     <% if current_user.student? %>
-      <%= link_to "Nächste",
-                  next_flashcard_article_flashcard_path(@article, @flashcard), id: "nextFlashcard",
-                  class: "flashcard-btn btn btn-primary col-12 col-lg-5", "data-turbolinks": false if action_name == "answer_correct_order" %>
-      <% end %>
+      <%= f.submit "Nächste",
+              class: "flashcard-btn btn btn-primary #{'d-none' unless @exam_flashcard && !@exam&.submitted}",
+              id: "matchAnswersSubmitBtn",
+              "data-turbolinks": false %>
+    <% end %>
   </div>
   <% end %>
 </div>
