@@ -44,7 +44,7 @@ class CategoriesController < ApplicationController
   end
 
   def update
-    @topics = current_user.profession.topics
+    @topics = Topics.all
 
     if @category.update(category_params)
       redirect_to admin_dashboard_path, notice: "Module updated!"
