@@ -3,6 +3,7 @@ const check_multiple_choice_quiz = () => {
   const submitBtn = document.getElementById("mutipleChoiceSubmitBtn");
   const showResultBtn = document.getElementById("checkMutipleChoiceBtn");
   const flashcardAnswerEl = document.getElementsByClassName("flashcard-answer");
+  const showExplanations = document.getElementById("showCorrectAnswers");
   const removePointerEvents = collection => {
     for (const el of collection) {
       el.classList.add("d-none");
@@ -18,6 +19,7 @@ const check_multiple_choice_quiz = () => {
       form.querySelectorAll("input[data-check='true']").forEach(elem => {
         elem.parentElement.classList.add("correct-answer");
       });
+      showExplanations.classList.remove("d-none");
       submitBtn.classList.remove("d-none");
     });
   }

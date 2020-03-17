@@ -2,6 +2,7 @@ const check_match_answers_quiz = () => {
   const form = document.getElementById("flashcardAnswerForm");
   const submitBtn = document.getElementById("matchAnswersSubmitBtn");
   const showResultBtn = document.getElementById("checkMatchAnswersBtn");
+  const showExplanations = document.getElementById("showCorrectAnswers");
   const removePointerEvents = collection => {
     for (const el of collection) {
       el.classList.add("remove-pointer");
@@ -51,7 +52,7 @@ const check_match_answers_quiz = () => {
           elem.classList.add("false-answer");
         });
       }
-
+      showExplanations.classList.remove("d-none");
       submitBtn.classList.remove("d-none");
     });
   }

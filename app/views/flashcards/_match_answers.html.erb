@@ -41,13 +41,12 @@
 
   <%# if @exam && @exam.submitted %>
     <hr>
-    <ul>
+    <ul id="showCorrectAnswers" class="<%= 'd-none' unless @exam && @exam.submitted %>">
       <% @flashcard.correct_answers.each do |answer_id| %>
-            <% db_answer = Answer.find(answer_id) %>
-          <% if db_answer.explanation  %>
-            <li><strong><%= db_answer.explanation %></strong></li>
-          <% end %>
-
+        <% db_answer = Answer.find(answer_id) %>
+        <% if db_answer.explanation  %>
+          <li><strong><%= db_answer.explanation %></strong></li>
+        <% end %>
       <% end %>
     </ul>
   <%# end %>
