@@ -17,13 +17,6 @@ const check_correct_order_quiz = () => {
     return true;
   };
 
-  // document.querySelectorAll('[data-check]') select all li
-  // get data-check attributtes
-  // split array in 2 static and user answers(odd and even)
-  // check if the 2 arrays are equal
-  // add classes if equal or not
-  // disable re-send
-
   if (showResultBtn) {
     showResultBtn.addEventListener("click", e => {
       e.preventDefault();
@@ -32,17 +25,24 @@ const check_correct_order_quiz = () => {
         Number(el.getAttribute("data-check"))
       );
       const userAnswersOrder = [...flashcardAnswerOrder];
+      const correctAnswerOrder = flashcardAnswerOrder.sort();
 
       e.currentTarget.classList.add("d-none");
       removePointerEvents(flashcardAnswerEls);
 
-      if (compareArrays(userAnswersOrder, flashcardAnswerOrder.sort())) {
+      if (compareArrays(userAnswersOrder, correctAnswerOrder)) {
         flashcardAnswerEls.forEach(elem => {
           elem.classList.add("correct-answer");
         });
       } else {
         flashcardAnswerEls.forEach(elem => {
           elem.classList.add("false-answer");
+          const correctPlace =
+            correctAnswerOrder.indexOf(
+              Number(elem.getAttribute("data-check"))
+            ) + 1;
+
+          elem.textContent = `${correctPlace} - ${elem.textContent}`;
         });
       }
       showExplanations.classList.remove("d-none");
