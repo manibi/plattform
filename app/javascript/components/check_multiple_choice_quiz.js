@@ -16,8 +16,12 @@ const check_multiple_choice_quiz = () => {
       e.preventDefault();
       e.currentTarget.classList.add("d-none");
       removePointerEvents(flashcardAnswerEl);
-      form.querySelectorAll("input[data-check='true']").forEach(elem => {
-        elem.parentElement.classList.add("correct-answer");
+      form.querySelectorAll("[data-check]").forEach(elem => {
+        if (elem.getAttribute("data-check") === "true") {
+          elem.parentElement.classList.add("correct-answer");
+        } else if (elem.getAttribute("data-check") !== "true" && elem.checked) {
+          elem.parentElement.classList.add("false-answer");
+        }
       });
       showExplanations.classList.remove("d-none");
       submitBtn.classList.remove("d-none");
