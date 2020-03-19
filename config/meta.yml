@@ -1,0 +1,5 @@
+meta_product_name: "Mozubi"
+meta_title: "Mozubi Lernplattform - Online Vorbereitung auf die Abschlussprüfung"
+meta_description: "Mit der Mozubi Lernplattform können sich Auszubildende online auf Ihre IHK-Abschlussprüfungen vorbereiten. Hunderte Erklärungen zu Fachbegriffen, Übungsaufgaben und Prüfungssimulationen bereiten auf höchster Qualität auf die Prüfung vor!"
+meta_image: "cover.png" # should exist in `app/assets/images/`
+twitter_account: "@product_twitter_account" # required for Twitter Cards

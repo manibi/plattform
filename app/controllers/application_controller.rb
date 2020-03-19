@@ -38,6 +38,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # Rails image_url helper requires you setup your host to generate the absolute urlneeded to load your images from the external world
+  # Override Rails.application.default_url_options
+  def default_url_options
+    { host: ENV["DOMAIN"] || "localhost:3000" }
+  end
+
   # Register new user without email, use just a uniq string
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:username])
