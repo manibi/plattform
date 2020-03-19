@@ -4,6 +4,10 @@ require("@rails/activestorage").start();
 require("channels");
 require("trix");
 require("@rails/actiontext");
+
+// Support for IE
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 // require("jquery");
 
 // libraries
