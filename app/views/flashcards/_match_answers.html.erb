@@ -27,7 +27,13 @@
           <% @dragabble_answers.shuffle.each_with_index do |answer, index| %>
               <% idx = @flashcard.correct_answers.find_index(answer.id) %>
               <li data-check=<%= @flashcard.correct_answers[idx] %>
-                  class=<%= (@exam&.submitted && @exam.answer_for(@flashcard).correct) ? 'correct-answer' : 'false-answer' %>
+                 class=<%=
+                  if (@exam&.submitted && @exam.answer_for(@flashcard).correct)
+                    'correct-answer'
+                  elsif (@exam&.submitted && !@exam.answer_for(@flashcard).correct)
+                    'false-answer'
+                  end
+                %>
               >
                 <%= @flashcard.correct_answers.find_index(answer.id) + 1 %> -
                 <%= answer.content %>

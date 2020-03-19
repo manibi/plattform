@@ -8,7 +8,13 @@
       <% @flashcard.answers.shuffle.each_with_index do |answer, idx| %>
       <%#=raise %>
           <li data-check=<%= @flashcard.correct_answers.index(answer.id) %>
-              class=<%= (@exam&.submitted && @exam.answer_for(@flashcard).correct) ? 'correct-answer' : 'false-answer' %>
+              class=<%=
+                if (@exam&.submitted && @exam.answer_for(@flashcard).correct)
+                  'correct-answer'
+                elsif (@exam&.submitted && !@exam.answer_for(@flashcard).correct)
+                  'false-answer'
+                end
+               %>
           >
             <%= answer.content %>
             <!-- The hidden tag is used to determine the correct answer in the controller -->
