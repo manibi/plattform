@@ -2,6 +2,10 @@ require("@rails/ujs").start();
 require("turbolinks").start();
 require("@rails/activestorage").start();
 require("channels");
+
+// Support for IE
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 // require("jquery");
 
 // libraries
