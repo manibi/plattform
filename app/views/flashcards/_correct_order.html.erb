@@ -16,6 +16,9 @@
                 end
                %>
           >
+            <% if (@exam&.submitted && !@exam.answer_for(@flashcard).correct) %>
+              <%= @flashcard.correct_answers.find_index(answer.id) + 1 %> -
+            <% end %>
             <%= answer.content %>
             <!-- The hidden tag is used to determine the correct answer in the controller -->
             <%= hidden_field_tag "flashcard[answer][#{answer.id}]",
