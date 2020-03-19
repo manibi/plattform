@@ -48,19 +48,20 @@ const check_match_answers_quiz = () => {
       } else {
         flashcardAnswerEls.forEach(elem => {
           elem.classList.add("false-answer");
+          Array.from(flashcardAnswerEls)
+            .slice(answersMid, flashcardAnswerEls.length)
+            .forEach(dragAnswer => {
+              if (dragAnswer.classList.contains("false-answer")) {
+                const correctPlace =
+                  staticAnswers.indexOf(dragAnswer.getAttribute("data-check")) +
+                  1;
+
+                dragAnswer.textContent = `${correctPlace} - ${dragAnswer.textContent}`;
+              }
+            });
         });
       }
 
-      Array.from(flashcardAnswerEls)
-        .slice(answersMid, flashcardAnswerEls.length)
-        .forEach(dragAnswer => {
-          if (dragAnswer.classList.contains("false-answer")) {
-            const correctPlace =
-              staticAnswers.indexOf(dragAnswer.getAttribute("data-check")) + 1;
-
-            dragAnswer.textContent = `${correctPlace} - ${dragAnswer.textContent}`;
-          }
-        });
       showExplanations.classList.remove("d-none");
       submitBtn.classList.remove("d-none");
     });
