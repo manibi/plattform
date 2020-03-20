@@ -50,13 +50,23 @@ const check_match_answers_quiz = () => {
           elem.classList.add("false-answer");
           Array.from(flashcardAnswerEls)
             .slice(answersMid, flashcardAnswerEls.length)
+            // .forEach(dragAnswer => {
+            //   if (dragAnswer.classList.contains("false-answer")) {
+            //     const correctPlace =
+            //       staticAnswers.indexOf(dragAnswer.getAttribute("data-check")) +
+            //       1;
+
+            //     dragAnswer.textContent = `${correctPlace} - ${dragAnswer.textContent}`;
+            //   }
+            // });
             .forEach(dragAnswer => {
-              if (dragAnswer.classList.contains("false-answer")) {
+              if (dragAnswer.classList.contains("false-answer") && !dragAnswer.classList.contains("count")) {
                 const correctPlace =
                   staticAnswers.indexOf(dragAnswer.getAttribute("data-check")) +
                   1;
 
                 dragAnswer.textContent = `${correctPlace} - ${dragAnswer.textContent}`;
+                dragAnswer.classList.add("count")
               }
             });
         });
