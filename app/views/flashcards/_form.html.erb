@@ -7,7 +7,8 @@
         <div class="card-body">
           <div class="form-group">
             <%= flashcard_form.label :content, "Fragestellung" %>
-            <%= flashcard_form.text_area :content, class: "form-control" %>
+            <%= flashcard_form.rich_text_area :content %>
+
           </div>
 
           <div class="form-group mt-5">
@@ -97,33 +98,32 @@
   </div>
 
   <!-- Display posibility to choose the correct answers on edit page if needed -->
-    <div class="row flashcard-correct-answers mt-5">
-      <div class="col">
-        <div class="card">
-          <div class="card-body">
-            <% if @flashcard.persisted? %>
-              <% if @flashcard.flashcard_type != "match_answers" %>
-                <h2>Richtige Antwort</h2>
-              <% end %>
-
-              <% @flashcard.answers.each do |answer| %>
-                <% case @flashcard.flashcard_type %>
-                  <% when 'multiple_choice' %>
-                    <%= render 'correct_answers_multiple_choice', answer: answer %>
-                  <% when 'correct_order' %>
-                    <%= render 'correct_answers_order', answer: answer, flashcard: flashcard %>
-                <% end %>
-              <% end %>
+  <div class="row flashcard-correct-answers mt-5">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <% if @flashcard.persisted? %>
+            <% if @flashcard.flashcard_type != "match_answers" %>
+              <h2>Richtige Antwort</h2>
             <% end %>
 
-            <%= flashcard_form.submit "Aktualisieren",
-                                class: "btn btn-primary",
-                                "data-turbolinks": false %>
-          </div>
+            <% @flashcard.answers.each do |answer| %>
+              <% case @flashcard.flashcard_type %>
+                <% when 'multiple_choice' %>
+                  <%= render 'correct_answers_multiple_choice', answer: answer %>
+                <% when 'correct_order' %>
+                  <%= render 'correct_answers_order', answer: answer, flashcard: flashcard %>
+              <% end %>
+            <% end %>
+          <% end %>
+
+          <%= flashcard_form.submit "Aktualisieren",
+                              class: "btn btn-primary",
+                              "data-turbolinks": false %>
         </div>
       </div>
     </div>
-
+  </div>
 
   <div class="row my-5">
     <div class="col col-xl-10 d-flex flex-column">

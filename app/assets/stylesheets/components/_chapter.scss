@@ -1,0 +1,13 @@
+.chapter-title-disabled {
+  background-color: inherit !important;
+  border: 0 !important;
+  font-size: 1.6rem !important;
+  font-weight: 600 !important;
+  cursor: auto !important;
+
+  &:focus {
+    border: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}

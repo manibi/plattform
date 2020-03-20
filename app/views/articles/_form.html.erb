@@ -1,50 +1,57 @@
 <%= render "devise/shared/error_messages", resource: object %>
-<%= form_with model: object, local: true, class: "mt-5" do |f| %>
+<%= form_with model: object, local: true, class: "new-article-form" do |f| %>
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
 
-  <div class="form-group">
-    <%= f.label "Kategorie" %>
-    <% if current_user.admin? %>
-      <%= f.select "category_id",
-          options_for_select(
-            Category.all.map { |category| [category.title, category.id] },
-            @article.category ? @article.category.id : false # set categroy for edit
-          ), {}, { class: 'select2' } %>
-    <% else %>
-      <%= f.select "category_id",
-        options_for_select(
-          @categories.map { |category| [category.title, category.id] },
-          @article.category ? @article.category.id : false # set categroy for edit
-        ), {}, { class: 'select2' } %>
-    <% end %>
-  </div>
+          <div class="form-group mb-5">
+            <%= f.label "Kategorie" %>
+            <% if current_user.admin? %>
+              <%= f.select "category_id",
+                  options_for_select(
+                    Category.all.map { |category| [category.title, category.id] },
+                    @article.category ? @article.category.id : false # set categroy for edit
+                  ), {}, { class: 'select2' } %>
+            <% else %>
+              <%= f.select "category_id",
+                options_for_select(
+                  @categories.map { |category| [category.title, category.id] },
+                  @article.category ? @article.category.id : false # set categroy for edit
+                ), {}, { class: 'select2' } %>
+            <% end %>
+          </div>
 
-  <!--  Titel -->
-  <div class="form-group">
-    <%= f.label      "Titel", class: "mr-2" %>
-    <%= f.text_field :title, class: "form-control" %>
-  </div>
+          <!--  Titel -->
+          <div class="form-group mb-5">
+            <%= f.label      "Titel", class: "mr-2" %>
+            <%= f.text_field :title, class: "form-control" %>
+          </div>
 
-  <div class="form-group">
-    <%= f.label     "Definition" %>
-    <%= f.rich_text_area :description %>
-    <%#= f.text_area :description, class: "form-control" %>
-  </div>
+          <div class="form-group mb-5">
+            <%= f.label     "Definition" %>
+            <%= f.rich_text_area :description %>
+            <%#= f.text_area :description, class: "form-control" %>
+          </div>
 
 
-  <div class="input-group mt-5" style="max-width: 400px;">
-    <div class="input-group-prepend">
-      <span class="input-group-text">Upload Foto</span>
+          <div class="input-group mb-5" style="max-width: 400px;">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Upload Foto</span>
+            </div>
+            <div class="custom-file">
+              <%= f.file_field :image,
+                                            class: "custom-file-input",
+                                            lang: "de" %>
+              <%= f.label :image,
+                  "Wählen Sie die Datei aus",
+                  class: "custom-file-label" %>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="custom-file">
-      <%= f.file_field :image,
-                                    class: "custom-file-input",
-                                    lang: "de" %>
-      <%= f.label :image,
-          "Wählen Sie die Datei aus",
-          class: "custom-file-label" %>
-    </div>
   </div>
-
 
   <div class="row">
     <% if @article.image.attached? %>
@@ -59,15 +66,21 @@
     <% end %>
   </div>
 
-  <div class="chapters" id="chapter">
-    <%= f.fields_for :chapters do |builder| %>
-      <%= render 'chapter_fields', f: builder %>
+  <div class="row">
+    <div class="col">
+      <div class="chapters" id="chapter">
+        <%= f.fields_for :chapters do |builder| %>
+          <%= render 'chapter_fields', f: builder %>
 
-    <% end %>
+        <% end %>
+      </div>
+    </div>
   </div>
 
-  <div class="form-actions mb-5">
-  <%#= link_to_add_association 'Add chapter',
+  <div class="row my-5" style="max-width: 720px;
+    justify-content: center;" >
+    <div class="col col-md-6 d-flex flex-column align-content-center">
+        <%#= link_to_add_association 'Add chapter',
                                 f, :chapters,
                                 class: 'btn btn-success my-2',
                                 data: {
@@ -75,8 +88,21 @@
                                 } if @article.persisted? %>
 
 
-    <%= f.submit "Aktualisieren", class: "btn btn-primary mt-5" %>
-    <%= link_to "Artikel ansehen", @article, class: "btn btn-warning" if @article.persisted? %>
+      <%= f.submit "Aktualisieren", class: "btn btn-primary" %>
+      <%= link_to "Artikel ansehen", @article, class: "btn btn-warning mt-3" if @article.persisted? %>
+    </div>
+  </div>
+<% end %>
+
+<%  if @article.persisted?  %>
+  <div class="row">
+    <div class="col">
+      <ul class="list-group">
+      <li class="list-group-item list-group-item-success">
+        Artikel im Dashboard veröffentlichen
+      </li>
+    </ul>
+    </div>
   </div>
 <% end %>
 
