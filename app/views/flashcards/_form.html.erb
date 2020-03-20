@@ -12,13 +12,13 @@
           options_for_select(
             Article.all.map { |article| [article.title, article.id] },
             @flashcard.article ? @flashcard.article.id : false
-          ) %>
+          ), {}, { class: 'select2' } %>
       <% else %>
         <%= flashcard_form.select "article",
           options_for_select(
             @articles.map { |article| [article.title, article.id] },
             @flashcard.article ? @flashcard.article.id : false
-          ) %>
+          ), {}, { class: 'select2' } %>
     <% end %>
   </div>
 

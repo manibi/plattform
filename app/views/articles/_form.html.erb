@@ -8,13 +8,13 @@
           options_for_select(
             Category.all.map { |category| [category.title, category.id] },
             @article.category ? @article.category.id : false # set categroy for edit
-          ) %>
+          ), {}, { class: 'select2' } %>
     <% else %>
       <%= f.select "category_id",
         options_for_select(
           @categories.map { |category| [category.title, category.id] },
           @article.category ? @article.category.id : false # set categroy for edit
-        ) %>
+        ), {}, { class: 'select2' } %>
     <% end %>
   </div>
 
