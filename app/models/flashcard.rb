@@ -42,6 +42,7 @@ class Flashcard < ApplicationRecord
     tries = user_flashcard.tries
     tries += 1
     user_flashcard.update(correct: answer, tries: tries)
+    raise
     if answer && flashcard_queue
       flashcard_queue.destroy
     else

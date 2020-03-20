@@ -261,20 +261,26 @@ class FlashcardsController < ApplicationController
     authorize @flashcard, :show?
 
     @article = @flashcard.article
-    @wrong_answered_flashcards = current_user.wrong_answered_flashcards_for(@article).published
-    @correct_answered_flashcards = current_user.correct_answered_flashcards_for(@article).published
-    flashcards_to_do = @article.flashcards.published.sort
+    # @wrong_answered_flashcards = current_user.wrong_answered_flashcards_for(@article).published
+    # @correct_answered_flashcards = current_user.correct_answered_flashcards_for(@article).published
+    # flashcards_to_do = @article.flashcards.published.sort
 
-    if flashcards_to_do.last != @flashcard && !current_user.answered?(flashcards_to_do.last)
-      @next_flashcard = flashcards_to_do[flashcards_to_do.index(@flashcard) + 1]
+    # if flashcards_to_do.last != @flashcard && !current_user.answered?(flashcards_to_do.last)
+    #   @next_flashcard = flashcards_to_do[flashcards_to_do.index(@flashcard) + 1]
+    # else
+    #   @next_flashcard = @wrong_answered_flashcards.sample
+    # end
+
+    # if @correct_answered_flashcards.count == flashcards_to_do.count
+    #   redirect_to article_quiz_results_path(@article)
+    # else
+    #   redirect_to article_flashcard_path(@article, @next_flashcard)
+    # end
+
+    if FlashcardQueue.all_for(current_user, @article).any?
+      redirect_to article_flashcard_path( @article, FlashcardQueue.next_for(current_user, @article))
     else
-      @next_flashcard = @wrong_answered_flashcards.sample
-    end
-
-    if @correct_answered_flashcards.count == flashcards_to_do.count
       redirect_to article_quiz_results_path(@article)
-    else
-      redirect_to article_flashcard_path(@article, @next_flashcard)
     end
   end
 
