@@ -6,7 +6,6 @@
   <%= form_for answer_correct_order_article_flashcard_path(@article, @flashcard), url: {action: "answer_correct_order"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
     <ul class="answers" id="answers-drag">
       <% @flashcard.answers.shuffle.each_with_index do |answer, idx| %>
-      <%#=raise %>
           <li data-check=<%= @flashcard.correct_answers.index(answer.id) %>
               class=<%=
                 if (@exam&.submitted && @exam.answer_for(@flashcard).correct)

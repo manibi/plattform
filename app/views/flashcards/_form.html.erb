@@ -1,75 +1,133 @@
 <%= render "devise/shared/error_messages", resource: @flashcard %>
-<%= form_with model: @flashcard, local: true  do |flashcard_form| %>
-  <div class="form-group">
-    <%= flashcard_form.label :content, "Fragestellung" %>
-    <%= flashcard_form.text_area :content, class: "form-control" %>
+<%= form_with model: @flashcard, local: true, class: "new-flashcard-form"  do |flashcard_form| %>
+
+  <div class="row">
+    <div class="col">
+      <div class="card mb-5">
+        <div class="card-body">
+          <div class="form-group">
+            <%= flashcard_form.label :content, "Fragestellung" %>
+            <%= flashcard_form.text_area :content, class: "form-control" %>
+          </div>
+
+          <div class="form-group mt-5">
+            <%= flashcard_form.label "Artikel" %>
+              <% if current_user.admin? %>
+                <%= flashcard_form.select "article",
+                  options_for_select(
+                    Article.all.map { |article| [article.title, article.id] },
+                    @flashcard.article ? @flashcard.article.id : false
+                  ), {}, { class: 'select2' } %>
+              <% else %>
+                <%= flashcard_form.select "article",
+                  options_for_select(
+                    @articles.map { |article| [article.title, article.id] },
+                    @flashcard.article ? @flashcard.article.id : false
+                  ), {}, { class: 'select2' } %>
+            <% end %>
+          </div>
+
+          <div class="form-group mt-5">
+            <% flashcard_types = {
+              "Multiple Choice" => "multiple_choice",
+              "Richtige Reihenfolge" => "correct_order",
+              "Zuordnung" => "match_answers",
+              "Soll/Ist" => "soll_ist",
+              "Tabelle" => "table_quiz"
+            } %>
+            <%= flashcard_form.label  "Fragetyp" %>
+            <!-- Edit view options_for_select second argument sets the quiz type  -->
+            <%= flashcard_form.select :flashcard_type,
+              options_for_select(flashcard_types.to_a,
+                @flashcard.flashcard_type ? [flashcard_types.key(@flashcard.flashcard_type), @flashcard.flashcard_type] : false),
+                {}, { class: 'select2' }
+            %>
+          </div>
+
+          <div class="input-group mt-5">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Upload Foto</span>
+            </div>
+            <div class="custom-file">
+              <%= flashcard_form.file_field :image,
+                                            class: "custom-file-input",
+                                            lang: "de" %>
+              <%= flashcard_form.label :image,
+                  "Wählen Sie die Datei aus",
+                  class: "custom-file-label" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="form-group">
-    <%= flashcard_form.label "Artikel" %>
-      <% if current_user.admin? %>
-        <%= flashcard_form.select "article",
-          options_for_select(
-            Article.all.map { |article| [article.title, article.id] },
-            @flashcard.article ? @flashcard.article.id : false
-          ), {}, { class: 'select2' } %>
-      <% else %>
-        <%= flashcard_form.select "article",
-          options_for_select(
-            @articles.map { |article| [article.title, article.id] },
-            @flashcard.article ? @flashcard.article.id : false
-          ), {}, { class: 'select2' } %>
-    <% end %>
+
+  <div class="row">
+    <div class="col">
+      <%= render "flashcards/flashcard_hints" %>
+    </div>
   </div>
 
-  <div class="form-group">
-    <% flashcard_types = {
-      "Multiple Choice" => "multiple_choice",
-      "Richtige Reihenfolge" => "correct_order",
-      "Zuordnung" => "match_answers",
-      "Soll/Ist" => "soll_ist",
-      "Tabelle" => "table_quiz"
-    } %>
-    <%= flashcard_form.label  "Fragetyp" %>
-    <!-- Edit view options_for_select second argument sets the quiz type  -->
-    <%= flashcard_form.select :flashcard_type,
-      options_for_select(flashcard_types.to_a,
-        @flashcard.flashcard_type ? [flashcard_types.key(@flashcard.flashcard_type), @flashcard.flashcard_type] : false)
-    %>
+  <div class="row my-5">
+    <div class="col">
+      <h2>Antworten</h2>
+    </div>
   </div>
 
-  <div class="form-group mt-5">
-    <%= flashcard_form.file_field :image %>
+  <div class="row mb-5">
+    <div class="col">
+      <button  id="sollHabenView" class="btn btn-info">Soll/Haben Ansicht</button>
+      <button  id="tableView" class="btn btn-info">Tabellen Ansicht</button>
+    </div>
   </div>
 
-  <h2>Antworten</h2>
-  <button  id="sollHabenView" class="btn btn-info">Soll/Haben Ansicht</button>
-  <button  id="tableView" class="btn btn-info">Tabellen Ansicht</button>
-  <div class="answers" id="uniqAnswers">
-    <%= flashcard_form.fields_for :answers do |builder| %>
-      <%= render 'answer_fields', f: builder %>
-    <% end %>
+  <div class="row">
+    <div class="col col-xl-10">
+      <div class="card" style="width: 100%;">
+        <div class="card-body">
+          <div class="answers" id="uniqAnswers">
+            <%= flashcard_form.fields_for :answers do |builder| %>
+              <%= render 'answer_fields', f: builder %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-<!-- Display posibility to choose the correct answers on edit page if needed -->
-  <% if @flashcard.persisted? %>
+  <!-- Display posibility to choose the correct answers on edit page if needed -->
+    <div class="row flashcard-correct-answers mt-5">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <% if @flashcard.persisted? %>
+              <% if @flashcard.flashcard_type != "match_answers" %>
+                <h2>Richtige Antwort</h2>
+              <% end %>
 
-    <% if @flashcard.flashcard_type != "match_answers" %>
-      <h3>Richtige Antwort</h3>
-    <% end %>
+              <% @flashcard.answers.each do |answer| %>
+                <% case @flashcard.flashcard_type %>
+                  <% when 'multiple_choice' %>
+                    <%= render 'correct_answers_multiple_choice', answer: answer %>
+                  <% when 'correct_order' %>
+                    <%= render 'correct_answers_order', answer: answer, flashcard: flashcard %>
+                <% end %>
+              <% end %>
+            <% end %>
 
-    <% @flashcard.answers.each do |answer| %>
-      <% case @flashcard.flashcard_type %>
-        <% when 'multiple_choice' %>
-          <%= render 'correct_answers_multiple_choice', answer: answer %>
-        <% when 'correct_order' %>
-          <%= render 'correct_answers_order', answer: answer, flashcard: flashcard %>
-      <% end %>
-    <% end %>
-  <% end %>
+            <%= flashcard_form.submit "Aktualisieren",
+                                class: "btn btn-primary",
+                                "data-turbolinks": false %>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <div class="form-actions mt-5">
-  <%= link_to_add_association 'Antwortmöglichkeit hinzufügen',
+
+  <div class="row my-5">
+    <div class="col col-xl-10 d-flex flex-column">
+    <%= link_to_add_association 'Antwortmöglichkeit hinzufügen',
                                 flashcard_form, :answers,
                                 class: 'btn btn-success my-2',
                                 data: {
@@ -78,7 +136,11 @@
     <%= flashcard_form.submit "Aktualisieren",
                               class: "btn btn-primary",
                               "data-turbolinks": false %>
+    <%= link_to 'Quiz ansehen',
+                article_flashcard_path(@flashcard.article, @flashcard),
+                class: "btn btn-warning mt-3",
+                "data-turbolinks": false if @flashcard.persisted? %>
+    </div>
   </div>
 <% end %>
 
-<%= link_to 'Quiz ansehen', article_flashcard_path(@flashcard.article, @flashcard), class: "btn btn-warning mt-3" if @flashcard.persisted? %>

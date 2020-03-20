@@ -1,29 +1,14 @@
 
-<div class="container">
+<div class="col ml-5">
   <div class="row">
-    <h2>Quiz bearbeiten</h2>
-  </div>
-
-  <ul class="alert-info p-3 my-5">
-    <li>
-      Bei Multiple Choice und Reihenfolge Aufgaben, füge die richtige Antwort auf der Aktualisieren Seite hinzu.
-    </li>
-    <li>
-      Für Zuordnungsaufgaben, nutze die Soll/Haben Ansicht und ordne die Antworten nach dem Schema 1-2, 3-4, ... zu.
-    </li>
-    <li>
-      Für Tabellen Aufgaben, nutze die Tabellen Ansicht und füge in die erste Reihe die Titel der Spalten ein.
-    </li>
-  </ul>
-
-  <div class="row">
-    <div class="col-md-8">
-      <%= render "form", flashcard: @flashcard %>
+    <div class="col my-5">
+      <h2>Quiz bearbeiten</h2>
     </div>
   </div>
+
   <div class="row">
-    <div class="col">
-      <%= link_to "Neue Frage", new_flashcard_path, class: "btn btn-success mt-3" %>
+    <div class="col col-md-8">
+      <%= render "form", flashcard: @flashcard %>
     </div>
   </div>
 </div>
