@@ -6,7 +6,7 @@
 							class: "btn btn-warning",
 							style: "margin-left: auto;" %>
 	<% if flashcard.article.draft? %>
-		<p class="text-monospace text-wrap badge badge-secondary ml-2 mt-3">Artikel noch nicht veröffentlicht!</p>
+		<p class="text-monospace text-wrap badge badge-secondary ml-2 mt-3" style="max-width: 170px;">Artikel noch nicht veröffentlicht!</p>
 	<% else %>
 		<% if flashcard.draft? %>
 			<%= link_to 'Quiz veröffentlichen',
