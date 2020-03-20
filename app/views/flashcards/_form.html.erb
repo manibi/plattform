@@ -71,7 +71,6 @@
 
   <div class="row my-5">
     <div class="col">
-      <h2>Antworten</h2>
     </div>
   </div>
 
@@ -86,6 +85,7 @@
     <div class="col col-xl-10">
       <div class="card" style="width: 100%;">
         <div class="card-body">
+          <p style="font-weight: 600;">Antworten</p>
           <div class="answers" id="uniqAnswers">
             <%= flashcard_form.fields_for :answers do |builder| %>
               <%= render 'answer_fields', f: builder %>
