@@ -10,6 +10,8 @@ class User < ApplicationRecord
   has_many    :articles, through: :user_articles
   has_many    :user_flashcards, dependent: :destroy
   has_many    :custom_exams, dependent: :destroy
+  has_many    :flashcard_queues
+
   enum role: [:student, :author, :company, :admin]
   after_initialize :set_default_role, if: :new_record?
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_20_131043) do
+ActiveRecord::Schema.define(version: 2020_03_20_162643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -145,6 +145,17 @@ ActiveRecord::Schema.define(version: 2020_03_20_131043) do
     t.index ["flashcard_id"], name: "index_flashcard_answers_on_flashcard_id"
   end
 
+  create_table "flashcard_queues", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "article_id"
+    t.bigint "flashcard_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["article_id"], name: "index_flashcard_queues_on_article_id"
+    t.index ["flashcard_id"], name: "index_flashcard_queues_on_flashcard_id"
+    t.index ["user_id"], name: "index_flashcard_queues_on_user_id"
+  end
+
   create_table "flashcards", force: :cascade do |t|
     t.string "flashcard_type"
     t.text "correct_answers"
@@ -272,6 +283,9 @@ ActiveRecord::Schema.define(version: 2020_03_20_131043) do
   add_foreign_key "custom_exams", "users"
   add_foreign_key "flashcard_answers", "answers"
   add_foreign_key "flashcard_answers", "flashcards"
+  add_foreign_key "flashcard_queues", "articles"
+  add_foreign_key "flashcard_queues", "flashcards"
+  add_foreign_key "flashcard_queues", "users"
   add_foreign_key "flashcards", "articles"
   add_foreign_key "temporary_user_credentials", "companies"
   add_foreign_key "temporary_user_credentials", "professions"

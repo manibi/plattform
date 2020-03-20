@@ -4,6 +4,8 @@ class Flashcard < ApplicationRecord
   has_many          :flashcard_answers, dependent: :destroy
   has_many          :custom_exam_answers
   has_many          :answers, through: :flashcard_answers
+  has_many          :flashcard_queues
+
   has_one_attached  :image
   has_rich_text     :content
 
@@ -36,9 +38,15 @@ class Flashcard < ApplicationRecord
   # Store flashcard answer, increment tries if answer is false
   def save_answer_for!(user, answer=false)
     user_flashcard = UserFlashcard.find_or_create_by(user: user, flashcard: self)
+    flashcard_queue = FlashcardQueue.find_by(user: user, article: self.article, flashcard: self)
     tries = user_flashcard.tries
     tries += 1
     user_flashcard.update(correct: answer, tries: tries)
+    if answer && flashcard_queue
+      flashcard_queue.destroy
+    else
+      FlashcardQueue.find_or_create_by(user: user, article: self.article, flashcard: self)
+    end
   end
 
   # Store exam flashcard answer
