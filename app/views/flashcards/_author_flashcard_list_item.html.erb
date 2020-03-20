@@ -1,5 +1,5 @@
 <li class="list-group-item w-100 d-flex align-items-center justify-content-between m-3">
-	<%= link_to "#{flashcard_counter+1}. #{flashcard.content}",
+	<%= link_to "#{flashcard_counter+1}. #{flashcard.content.to_plain_text}",
               article_flashcard_path(flashcard.article, flashcard) %>
 	<%= link_to "Bearbeiten",
 							edit_flashcard_path(flashcard),
