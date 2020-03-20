@@ -20,21 +20,28 @@
 // }
 
 .exam-results:nth-child(even) {
-	color: red !important;
-	background-color: $light-white-gray !important;
+  color: red !important;
+  background-color: $light-white-gray !important;
 }
 
 .sticky-card {
-	min-height: 85vh;
-	// position: fixed;
-	// max-height: 80vh;
-	.sticky-questions {
-		position: fixed;
-		max-height: 70vh;
-	    // width: 150px;
-	    overflow-y: scroll;
-	    // top: 0;
-	    // bottom: 0;
-	}
+  min-height: 85vh;
+  // position: fixed;
+  // max-height: 80vh;
+  .sticky-questions {
+    position: fixed;
+    max-height: 70vh;
+    // width: 150px;
+    overflow-y: scroll;
+    // top: 0;
+    // bottom: 0;
+  }
 }
 
+.flashcard-correct-answers {
+  @media screen and (min-width: 1200px) {
+    position: fixed;
+    right: 100px;
+    top: 160px;
+  }
+}

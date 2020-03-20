@@ -1,4 +1,4 @@
-<% if current_user.student? || current_user.author? %>
+<% if current_user.student? %>
 <div class="container">
     <div class="row my-3 pt-3 col-12 breadcrumbs ml-3">
       <%= link_to "Alle Lernfelder", topics_path %> &nbsp

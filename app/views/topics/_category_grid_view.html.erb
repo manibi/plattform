@@ -165,7 +165,12 @@
     <% end %>
   </div>
 </div>
-<% elsif current_user.admin? %>
+<% elsif current_user.admin? || current_user.author? %>
+  <div class="row mt-5">
+    <div class="col">
+      <h1 class="display-4">Categories</h1>
+    </div>
+  </div>
   <div class="row">
       <% @topic.categories.each do |category| %>
         <%= link_to category do %>
@@ -174,8 +179,10 @@
               <div class="card-name pt-1 pb-3">
                 <%= category.title %>
               </div>
-              <%= link_to "Edit", edit_category_path(category), class: "btn btn-warning" %>
-              <%= link_to "Delete", category_path(category), method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
+              <% if current_user.admin? %>
+                <%= link_to "Edit", edit_category_path(category), class: "btn btn-warning" %>
+                <%= link_to "Delete", category_path(category), method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
+              <% end %>
             </div>
           </div>
         <% end %>

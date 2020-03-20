@@ -2,6 +2,8 @@ require("@rails/ujs").start();
 require("turbolinks").start();
 require("@rails/activestorage").start();
 require("channels");
+require("trix");
+require("@rails/actiontext");
 
 // Support for IE
 import "core-js/stable";
@@ -14,6 +16,8 @@ import "../stylesheets/application";
 import "./bootstrap_custom.js";
 import "@fortawesome/fontawesome-free/js/all";
 import "cocoon";
+import "select2";
+
 import { autocompleteSearch } from "../components/autocompleteSearch";
 import { playFlashcards } from "../components/playFlashcards";
 import { authorView } from "../components/authorView";
@@ -36,4 +40,8 @@ document.addEventListener("turbolinks:load", () => {
   check_multiple_choice_quiz();
   check_match_answers_quiz();
   check_correct_order_quiz();
+  $(".select2").select2();
 });
+
+require("trix");
+require("@rails/actiontext");

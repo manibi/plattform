@@ -6,7 +6,18 @@
   <%= form_for answer_correct_order_article_flashcard_path(@article, @flashcard), url: {action: "answer_correct_order"}, method: :post, html: { id: "flashcardAnswerForm", "data-form-submitted": false } do |f| %>
     <ul class="answers" id="answers-drag">
       <% @flashcard.answers.shuffle.each_with_index do |answer, idx| %>
-          <li data-check=<%= @flashcard.correct_answers.index(answer.id) %>>
+          <li data-check=<%= @flashcard.correct_answers.index(answer.id) %>
+              class=<%=
+                if (@exam&.submitted && @exam.answer_for(@flashcard).correct)
+                  'correct-answer'
+                elsif (@exam&.submitted && !@exam.answer_for(@flashcard).correct)
+                  'false-answer'
+                end
+               %>
+          >
+            <% if (@exam&.submitted && !@exam.answer_for(@flashcard).correct) %>
+              <%= @flashcard.correct_answers.find_index(answer.id) + 1 %> -
+            <% end %>
             <%= answer.content %>
             <!-- The hidden tag is used to determine the correct answer in the controller -->
             <%= hidden_field_tag "flashcard[answer][#{answer.id}]",

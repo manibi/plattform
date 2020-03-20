@@ -2,7 +2,7 @@
   <h5 class="d-none d-lg-block"><%= chapter.title %></h5>
   <h6 class="d-lg-none d-block"><%= chapter.title %></h6>
   <% if chapter.title == "Verwandte Themen" %>
-      <% links_names = chapter.content.split(", ") %>
+      <% links_names = chapter.content.to_plain_text.split(", ") %>
       <% links_names.each do |link_name| %>
         <% if article = Article.find_by(title: link_name) %>
           <%= link_to link_name, article_path(article), class: "btn btn-outline-success" %>

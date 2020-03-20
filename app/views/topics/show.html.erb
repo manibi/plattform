@@ -46,13 +46,9 @@
 <% elsif current_user.admin? %>
   <div class="container mt-5">
     <%= render "pages/menu_create_records" %>
-    <div class="row mt-5">
-      <div class="col">
-        <h1 class="display-4">Categories</h1>
-      </div>
-    </div>
   </div>
 <% end %>
+
 <div class="container">
   <div class="tab-content mh-100">
     <%#= render 'list_view' %>

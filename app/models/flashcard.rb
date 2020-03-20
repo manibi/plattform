@@ -5,6 +5,7 @@ class Flashcard < ApplicationRecord
   has_many          :custom_exam_answers
   has_many          :answers, through: :flashcard_answers
   has_one_attached  :image
+  has_rich_text     :content
 
   before_save :ensure_published_at, :unless => :draft
   accepts_nested_attributes_for :answers,
@@ -15,7 +16,6 @@ class Flashcard < ApplicationRecord
 
   FLASHCARD_TYPES = ["multiple_choice", "correct_order", "match_answers", "soll_ist", "table_quiz"]
 
-  validates :content, presence: true, allow_blank: false
   validates :article_id, presence: true
   validates :flashcard_type, presence: true, inclusion: {
     in: FLASHCARD_TYPES

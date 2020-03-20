@@ -1,23 +1,23 @@
-<div class="container">
+<div class="container mx-5">
   <div class="row">
     <div class="col">
-      <ul class="alert-info p-3 my-5">
-      <li>
-        Artikel im Dashboard veröffentlichen
-      </li>
-    </ul>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <h1 class="display-4">
+      <h2 class="my-5 display-4">
         Artikel bearbeiten
-      </h1>
+      </h2>
     </div>
   </div>
 
-  <div class="row">
+  <div class="row my-5">
+    <div class="col col-md-9">
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-success">
+          Um Verlinkungen hinzuzufügen, trenne die Verlinkten Artikel bei "Verwandte Themen" mit einem Komma und achte auf die exakt gleiche Schreibweise, wie der Titel des verlinkten Artikels.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row mb-5">
     <div class="col">
       <%= render "form", object: @article %>
     </div>

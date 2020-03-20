@@ -56,11 +56,12 @@
     <% if current_user.student? %>
       <!-- Question out of -->
       <div class="text-center">
+      <%#= %>
         <p> Frage
           <% if @exam %>
             <%= flashcard_index_from(@questions, @flashcard) %>
           <% else %>
-            <%= flashcard_index_from(@article.flashcards.published, @flashcard) %>
+            <%= flashcard_index_from(@article.flashcards.published.sort, @flashcard) %>
           <% end %>
         </p>
       </div>

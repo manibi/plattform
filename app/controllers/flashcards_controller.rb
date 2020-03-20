@@ -87,7 +87,7 @@ class FlashcardsController < ApplicationController
       @flashcard.sign_edit_flashcard!(current_user)
       set_correct_answers if %w[match_answers soll_ist table_quiz].include? @flashcard.flashcard_type
 
-      redirect_to article_flashcard_path(@flashcard.article, @flashcard), notice: "Flashcard updated!"
+      redirect_to edit_flashcard_path(@flashcard), notice: "Flashcard updated!"
     else
       render :edit
     end
