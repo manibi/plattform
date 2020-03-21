@@ -18,13 +18,14 @@
 				<div class="card-progress">
 				  <div class="row mx-0 justify-content-between align-items-center">
 				    <div class="">
+				    	<%# raise %>
 				      <strong><%= (current_user.exam_date.to_date - Date.today).to_i %> Tage</strong>
 				    </div>
 				    <div class="read-text">
 				      Bis zur Prüfung
 				    </div>
 				  </div>
-				  <progress class="w-100" value="<%= (current_user.exam_date.to_date - Date.today).to_i %>" max="<%= (current_user.exam_date.to_date - current_user.created_at.to_date).to_i %>"></progress>
+				  <progress class="w-100" value="<%= (current_user.exam_date.to_date - current_user.created_at.to_date).to_i - (current_user.exam_date.to_date - Date.today).to_i %>" max="<%= (current_user.exam_date.to_date - current_user.created_at.to_date).to_i %>"></progress>
 				</div>
 			</div>
 		</div>
