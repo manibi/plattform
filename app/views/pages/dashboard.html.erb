@@ -115,7 +115,7 @@
 		            		<div class="">
 		            			Verbleibende Lesezeit:
 		            			<strong>
-		            				<%= @current_category.articles.published.count * 2.5 %>
+		            				<%= (@current_category.articles.published - @upcoming_articles).count * 2.5 %>
 		            			Minuten</strong>
 		            		</div>
 		            	</div>
