@@ -6,6 +6,7 @@
 	color: $dark-light-gray;
 }
 
+
 .sticky-sidebar {
 	position: -webkit-sticky !important;
 	position: sticky !important;
@@ -17,4 +18,34 @@
 
 .sidebar {
 	height: $sidebar-height;
+	.side-link.active {
+    	font-weight: 600;
+  		color: $primary !important;
+  		.sidebar-icon {
+  			color: $primary;
+  		}
+	}
 }
+
+.side-link {
+	display: block;
+    padding: 0.5rem 1rem;
+}
+
+.side-link:hover {
+    color: $primary !important;
+    font-weight: 600;
+    // border-bottom: 2px solid $primary !important;
+	a {
+		color: $primary !important;
+	}
+
+    .sidebar-icon {
+    	color: $primary;
+    }
+}
+
+@media (min-width: 992px) {
+.w-lg-100 {
+    width: 100% !important;
+}}
