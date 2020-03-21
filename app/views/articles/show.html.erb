@@ -110,7 +110,7 @@
         <% if @flashcard %>
           <div class="card col-12 mt-3 quizcard">
           Bereit zum Quiz über <%= @article.title %>?
-          <%= link_to "Quiz", article_flashcard_path(@article, @flashcard),
+          <%= link_to "Quiz", article_flashcard_path(@article, @next_flashcard),
                               "data-turbolinks": false,
                               class: "btn btn-primary my-2" %>
           </div>

@@ -20,6 +20,8 @@ class ArticlesController < ApplicationController
   end
 
   def show
+    @flashcards_queue = FlashcardQueue.init_flashcards_queue(current_user, @article)
+    @next_flashcard = @flashcards_queue.dequeue!
   end
 
   def new

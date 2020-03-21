@@ -19,7 +19,7 @@ class FlashcardsController < ApplicationController
     @article = @flashcard.article
     @exam_flashcard = request.path.include? "exams"
     @correct_answers = @flashcard.correct_answers.sort.map(&:to_i)
-
+    @flashcards_queue = FlashcardQueue.find_by(user: current_user, article: @article)
 
     if @flashcard.flashcard_type == "match_answers"
       @dragabble_answers  = Answer.find(@flashcard.correct_answers)
@@ -39,9 +39,9 @@ class FlashcardsController < ApplicationController
        @article.read_for!(current_user) unless @article.read_for?(current_user)
 
       # Reset flashcards for this article if re-taking the quiz
-      if @article.flashcards.published.sort.first == @flashcard && current_user.correct_answered_flashcards_for(@article).count == @article.flashcards.published.count
-        Flashcard.reset_for!(current_user, @article)
-      end
+      # if @article.flashcards.published.sort.first == @flashcard && current_user.correct_answered_flashcards_for(@article).count == @article.flashcards.published.count
+      #   Flashcard.reset_for!(current_user, @article)
+      # end
     end
   end
 
@@ -227,7 +227,8 @@ class FlashcardsController < ApplicationController
     @upcoming_articles = policy_scope(Article)
     @all_answered_flashcards = current_user.answered_flashcards_for(@article)
     @tries = current_user.user_flashcards_for(@article).pluck(:tries).sum
-
+    @flashcards_queue = FlashcardQueue.init_flashcards_queue(current_user, @article)
+    # raise
     # Next article to read
     if @upcoming_articles.empty?
       @next_article = current_user.profession
@@ -261,6 +262,7 @@ class FlashcardsController < ApplicationController
     authorize @flashcard, :show?
 
     @article = @flashcard.article
+    flashcards_queue = FlashcardQueue.find_by(user: current_user, article: @flashcard.article)
     # @wrong_answered_flashcards = current_user.wrong_answered_flashcards_for(@article).published
     # @correct_answered_flashcards = current_user.correct_answered_flashcards_for(@article).published
     # flashcards_to_do = @article.flashcards.published.sort
@@ -276,9 +278,9 @@ class FlashcardsController < ApplicationController
     # else
     #   redirect_to article_flashcard_path(@article, @next_flashcard)
     # end
-
-    if FlashcardQueue.all_for(current_user, @article).any?
-      redirect_to article_flashcard_path( @article, FlashcardQueue.next_for(current_user, @article))
+# raise
+    if flashcards_queue.any?
+      redirect_to article_flashcard_path(@article, flashcards_queue.dequeue!)
     else
       redirect_to article_quiz_results_path(@article)
     end

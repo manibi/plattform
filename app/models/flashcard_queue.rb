@@ -1,13 +1,14 @@
 class FlashcardQueue < ApplicationRecord
-  belongs_to :flashcard
   belongs_to :article
   belongs_to :user
 
-  # one uniq queue for an user, article
-  # once created will remain empty
-  # if it is empty fill it on article show and on repeat quiz
-  # always go to the next flashcard, if current correct take it out from the queue
-  # next should go to the start if current is the last one
+  serialize :flashcards_queue, Array
+
+  # crate of find queue when you open the article
+  # if the queue is empty add all public flashcards for the article
+  # go to first one, dequeue
+  # if answered wrong enqueue again
+  # until the queue is empty
 
   # define a queue - serialized array
   # init
@@ -15,11 +16,42 @@ class FlashcardQueue < ApplicationRecord
   # remove
   # next
 
-  def self.all_for(user, article)
-    Flashcard.joins(:flashcard_queues).where(flashcard_queues: {user: User.last, article: article})
+  def self.init_flashcards_queue(user, article)
+    new_queue = FlashcardQueue.find_or_create_by(user: user, article: article)
+    if new_queue.flashcards_queue.empty?
+      new_queue.update(flashcards_queue: article.flashcards.published.order(:id).to_a)
+    end
+
+    new_queue
   end
 
-  def self.next_for(user, article)
-    self.all_for(user, article).sample
+  def enqueue!(flashcard)
+    self.update(flashcards_queue: flashcards_queue.push(flashcard))
+  end
+
+  def dequeue!
+    flashcard = self.flashcards_queue.shift
+    self.save
+    flashcard
+  end
+
+  def front
+    self.flashcards_queue.first
+  end
+
+  def back
+    self.flashcards_queue.last
+  end
+
+  def size
+    self.flashcards_queue.size
+  end
+
+  def any?
+    self.flashcards_queue.any?
+  end
+
+  def empty?
+    self.flashcards_queue.empty?
   end
 end

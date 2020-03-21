@@ -148,11 +148,10 @@ ActiveRecord::Schema.define(version: 2020_03_20_162643) do
   create_table "flashcard_queues", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "article_id"
-    t.bigint "flashcard_id"
+    t.text "flashcards_queue"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["article_id"], name: "index_flashcard_queues_on_article_id"
-    t.index ["flashcard_id"], name: "index_flashcard_queues_on_flashcard_id"
     t.index ["user_id"], name: "index_flashcard_queues_on_user_id"
   end
 
@@ -284,7 +283,6 @@ ActiveRecord::Schema.define(version: 2020_03_20_162643) do
   add_foreign_key "flashcard_answers", "answers"
   add_foreign_key "flashcard_answers", "flashcards"
   add_foreign_key "flashcard_queues", "articles"
-  add_foreign_key "flashcard_queues", "flashcards"
   add_foreign_key "flashcard_queues", "users"
   add_foreign_key "flashcards", "articles"
   add_foreign_key "temporary_user_credentials", "companies"
