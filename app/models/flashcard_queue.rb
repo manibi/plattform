@@ -18,9 +18,10 @@ class FlashcardQueue < ApplicationRecord
 
   def self.init_flashcards_queue(user, article)
     new_queue = FlashcardQueue.find_or_create_by(user: user, article: article)
-    # if new_queue.empty?
-      new_queue.update(flashcards_queue: article.flashcards.published.order(:id).to_a)
-    # end
+    new_queue.update(
+      flashcards_queue: article.flashcards.published.order(:id).to_a,
+      tries: 0
+    )
 
     new_queue
   end
@@ -31,6 +32,7 @@ class FlashcardQueue < ApplicationRecord
 
   def dequeue!
     flashcard = self.flashcards_queue.shift
+    self.tries += 1
     self.save
     flashcard
   end

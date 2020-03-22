@@ -220,11 +220,12 @@ class FlashcardsController < ApplicationController
     @article = Article.find(params[:article_id])
     authorize @article, :show?
 
+    @tries = FlashcardQueue.find_by(user: current_user, article: @article).tries
     @flashcards_queue = FlashcardQueue.init_flashcards_queue(current_user, @article)
 
     @upcoming_articles = policy_scope(Article)
-    @all_answered_flashcards = current_user.answered_flashcards_for(@article)
-    @tries = current_user.user_flashcards_for(@article).pluck(:tries).sum
+    #@all_answered_flashcards = current_user.answered_flashcards_for(@article)
+
     # Next article to read
     if @upcoming_articles.empty?
       @next_article = current_user.profession

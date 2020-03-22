@@ -36,11 +36,10 @@ class Flashcard < ApplicationRecord
 
   # Store flashcard answer, increment tries if answer is false
   def save_answer_for!(user, answer=false)
-    user_flashcard = UserFlashcard.find_or_create_by(user: user, flashcard: self)
-    tries = user_flashcard.tries
-    tries += 1
-    user_flashcard.update(correct: answer, tries: tries)
+    user_flashcard = UserFlashcard.create(user: user, flashcard: self)
+    user_flashcard.update(correct: answer)
 
+    # add againg to queue if the answer was wrong
     FlashcardQueue.find_by(user: user, article: self.article).enqueue!(self) unless answer
 
   end

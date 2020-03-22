@@ -163,9 +163,10 @@ class User < ApplicationRecord
   end
 
   # Return all user_flashcards for user, article
-  def user_flashcards_for(article)
-    UserFlashcard.where(user: self, flashcard: [article.flashcards])
+  def all_user_flashcards_for(article)
+    UserFlashcard.where(user: self, flashcard: [article.flashcards.published])
   end
+
 
   # Return all right answered flashcards
   def right_answered_flashcards
