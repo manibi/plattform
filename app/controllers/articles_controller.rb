@@ -21,7 +21,6 @@ class ArticlesController < ApplicationController
 
   def show
     @flashcards_queue = FlashcardQueue.init_flashcards_queue(current_user, @article)
-    @next_flashcard = @flashcards_queue.dequeue!
   end
 
   def new
@@ -129,7 +128,7 @@ class ArticlesController < ApplicationController
 
   def set_all
     if current_user.student? || current_user.author?
-    @flashcard = @article.flashcards.published.first
+    # @flashcard = @article.flashcards.published.first
     @categories = current_user.all_categories
     @category = @categories.find(@article.category_id)
     @topics = current_user.profession.topics

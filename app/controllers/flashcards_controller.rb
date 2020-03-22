@@ -19,7 +19,6 @@ class FlashcardsController < ApplicationController
     @article = @flashcard.article
     @exam_flashcard = request.path.include? "exams"
     @correct_answers = @flashcard.correct_answers.sort.map(&:to_i)
-    @flashcards_queue = FlashcardQueue.find_by(user: current_user, article: @article)
 
     if @flashcard.flashcard_type == "match_answers"
       @dragabble_answers  = Answer.find(@flashcard.correct_answers)
@@ -37,12 +36,9 @@ class FlashcardsController < ApplicationController
       @user_answers = @flashcard.user_answers_for(@exam)
     else
        @article.read_for!(current_user) unless @article.read_for?(current_user)
-
-      # Reset flashcards for this article if re-taking the quiz
-      # if @article.flashcards.published.sort.first == @flashcard && current_user.correct_answered_flashcards_for(@article).count == @article.flashcards.published.count
-      #   Flashcard.reset_for!(current_user, @article)
-      # end
     end
+
+    @quiz_collection = @exam ? @questions : @article.flashcards.published.order(:id)
   end
 
   def create
@@ -224,11 +220,11 @@ class FlashcardsController < ApplicationController
     @article = Article.find(params[:article_id])
     authorize @article, :show?
 
+    @flashcards_queue = FlashcardQueue.init_flashcards_queue(current_user, @article)
+
     @upcoming_articles = policy_scope(Article)
     @all_answered_flashcards = current_user.answered_flashcards_for(@article)
     @tries = current_user.user_flashcards_for(@article).pluck(:tries).sum
-    @flashcards_queue = FlashcardQueue.init_flashcards_queue(current_user, @article)
-    # raise
     # Next article to read
     if @upcoming_articles.empty?
       @next_article = current_user.profession
@@ -263,22 +259,6 @@ class FlashcardsController < ApplicationController
 
     @article = @flashcard.article
     flashcards_queue = FlashcardQueue.find_by(user: current_user, article: @flashcard.article)
-    # @wrong_answered_flashcards = current_user.wrong_answered_flashcards_for(@article).published
-    # @correct_answered_flashcards = current_user.correct_answered_flashcards_for(@article).published
-    # flashcards_to_do = @article.flashcards.published.sort
-
-    # if flashcards_to_do.last != @flashcard && !current_user.answered?(flashcards_to_do.last)
-    #   @next_flashcard = flashcards_to_do[flashcards_to_do.index(@flashcard) + 1]
-    # else
-    #   @next_flashcard = @wrong_answered_flashcards.sample
-    # end
-
-    # if @correct_answered_flashcards.count == flashcards_to_do.count
-    #   redirect_to article_quiz_results_path(@article)
-    # else
-    #   redirect_to article_flashcard_path(@article, @next_flashcard)
-    # end
-# raise
     if flashcards_queue.any?
       redirect_to article_flashcard_path(@article, flashcards_queue.dequeue!)
     else

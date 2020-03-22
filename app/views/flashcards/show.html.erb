@@ -58,11 +58,7 @@
       <div class="text-center">
       <%#= %>
         <p> Frage
-          <% if @exam %>
-            <%= exam_flashcard_index(@questions, @flashcard) %>
-          <% else %>
-            <%= flashcard_index(@article.flashcards.published.order(:id),  @flashcard) %>
-          <% end %>
+          <%= flashcard_index(@quiz_collection, @flashcard) %>
         </p>
       </div>
     <% end %>

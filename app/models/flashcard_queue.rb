@@ -18,9 +18,9 @@ class FlashcardQueue < ApplicationRecord
 
   def self.init_flashcards_queue(user, article)
     new_queue = FlashcardQueue.find_or_create_by(user: user, article: article)
-    if new_queue.flashcards_queue.empty?
+    # if new_queue.empty?
       new_queue.update(flashcards_queue: article.flashcards.published.order(:id).to_a)
-    end
+    # end
 
     new_queue
   end
