@@ -10,9 +10,9 @@
         <div class="card-bottom">
           <div class="row justify-content-around">
             <%# raise %>
-            <% if article.read_for?(current_user) && article.flashcards.published !=[] %>
+            <% if article.read_for?(current_user) && article.flashcards.published.any? %>
               <div class="col-6 m-1 btn btn-primary">
-                <%= link_to [article, article.flashcards.published.first],
+                <%= link_to [article, FlashcardQueue.init_flashcards_queue(current_user, article).dequeue!],
                             "data-turbolinks": false do %>
                 Zum Quiz
                 <% end %>

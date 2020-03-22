@@ -10,6 +10,8 @@ class Article < ApplicationRecord
   has_many          :user_articles, dependent: :destroy
   has_many          :users, through: :user_articles
   has_many          :flashcards, dependent: :destroy
+  has_many          :flashcard_queues
+
   has_one_attached  :image
   has_rich_text     :description
   has_rich_text     :content
