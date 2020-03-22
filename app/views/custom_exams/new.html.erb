@@ -12,84 +12,100 @@
         </div>
         <!-- <div class="col-2">Grid/List View</div> -->
       </div>
+      <div class="col-12 mh-100">
+        <!-- tabs -->
+        <ul class="nav nav-tabs justify-content-center" role="tablist">
+          <li role="presentation" class="nav-item">
+            <a href="#new_exam" aria-controls="new_exam" role="tab" data-toggle="tab" class="nav-link active">
+              Erstelle
+            </a>
+          </li>
+          <li role="presentation" class="nav-item">
+            <a href="#old_exam" aria-controls="old_exam" role="tab" data-toggle="tab" class="nav-link">
+              Absolvierte
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
 <div class="container">
-  <div class="tab-content mh-100">
-    <!-- exam form -->
-    <%= form_with model: @exam, local: true,id: "examWrapper" do |f| %>
-    <div class="row my-4">
-      <div class="col">
-        <h6>Lernfelder</h6>
-       <!-- topic selection -->
-        <% current_user.profession.topics.each do |topic| %>
-        <% if topic.categories.map{|c| c.articles.count}.sum > 0 %>
-          <label>
-            <%= check_box_tag "exam[topic_id]",
-                              topic.id,
-                              false,
-                              id: dom_id(topic),
-                              data: {
-                                remote: true,
-                                url: url_for(
-                                  action: :add_exam_categories,
-                                  id: dom_id(topic)),
-                                method: "GET"
-                              }
-                              %>
-            <%= topic.name %>
-          </label>
-        <% end %>
+  <div class="tab-content mh-100"> 
+    <div role="tabpanel" class="tab-pane active py-3 mh-100" id="new_exam">
+      <!-- exam form -->
+      <%= form_with model: @exam, local: true,id: "examWrapper" do |f| %>
+        <div class="row my-4">
+          <div class="col">
+            <h6>Lernfelder</h6>
+            <!-- topic selection -->
+            <% current_user.profession.topics.each do |topic| %>
+              <% if topic.categories.map{|c| c.articles.count}.sum > 0 %>
+                <label>
+                  <%= check_box_tag "exam[topic_id]",
+                                  topic.id,
+                                  false,
+                                  id: dom_id(topic),
+                                  data: {
+                                    remote: true,
+                                    url: url_for(
+                                      action: :add_exam_categories,
+                                      id: dom_id(topic)),
+                                    method: "GET"
+                                  }
+                                  %>
+                  <%= topic.name %>
+                </label>
+              <% end %>
+            <% end %>
+          </div>
+          <div class="col" id="examCategories">
+            <h6>Kategorien</h6>
+          </div>
+          <div class="col" id="examArticles">
+            <h6>Artikel</h6>
+          </div>
+          <!--
+          <div class="col" id="examPastFlashcards">
+            <h6>Previously answered</h6>
+              <label>
+                <%#= radio_button_tag "exam[answered]", "all", true %>
+                All
+              </label>
+              <label>
+                <%#= radio_button_tag "exam[answered]", "correct" %>
+                Correct
+              </label>
+              <label>
+                <%#= radio_button_tag "exam[answered]", "wrong" %>
+                Wrong
+              </label>
+          </div>
+          -->
+          <div class="col-12 col-lg-2">
+            <%= f.submit "Start", id: "startExam", disabled: true, class:"btn btn-primary w-100", validates:"exam[topic_id]", acceptance: true %>
+          </div>
+        </div>
       <% end %>
-      </div>
-      <div class="col" id="examCategories">
-        <h6>Kategorien</h6>
-      </div>
-      <div class="col" id="examArticles">
-        <h6>Artikel</h6>
-      </div>
-      <!--
-      <div class="col" id="examPastFlashcards">
-        <h6>Previously answered</h6>
-          <label>
-            <%#= radio_button_tag "exam[answered]", "all", true %>
-            All
-          </label>
-          <label>
-            <%#= radio_button_tag "exam[answered]", "correct" %>
-            Correct
-          </label>
-          <label>
-            <%#= radio_button_tag "exam[answered]", "wrong" %>
-            Wrong
-          </label>
-      </div>
-      -->
-    <div class="col-12 col-lg-2">
-      <%= f.submit "Start", id: "startExam", disabled: true, class:"btn btn-primary w-100", validates:"exam[topic_id]", acceptance: true %>
     </div>
-    </div>
-    <% end %>
-</div>
 
 
-
+  <div role="tabpanel" class="tab-pane py-3 mh-100" id="old_exam">
   <!-- Finished and unfinished exams -->
-  <div class="row mt-5">
+  <!-- <div class="row mt-5">
     <div class="col">
       <h3 class="heading-3 d-none d-lg-block">Absolvierte Prüfungssimulationen</h3>
       <h3 class="heading-3 d-lg-none d-block">Absolvierte Prüfungen</h3>
     </div>
-  </div>
+  </div> -->
   <div class="row">
-      <% @exams.each.with_index do |exam, i| %>
-        <div class="col-12 col-lg-4">
+    <% @exams.each.with_index do |exam, i| %>
+      <div class="col-12 col-lg-4">
         <%= link_to exam do %>
           <p>Prüfung Nr.<%= i + 1 %> - Datum: <%= exam.created_at.to_date %></p>
         <% end %>
-        </div>
-      <% end %>
+      </div>
+    <% end %>
   </div>
 </div>
 

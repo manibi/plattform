@@ -11,7 +11,15 @@
                               "data-form-submitted": false } do |f| %>
     <% @flashcard.answers.shuffle.each do |answer| %>
       <div>
-        <label>
+        <label
+          class=<%=
+            if (@exam&.submitted && @correct_answers.include?(answer.id))
+              'correct-answer'
+            elsif (@exam&.submitted && !@correct_answers.include?(answer.id))
+              'false-answer'
+            end
+          %>
+        >
           <%= check_box_tag "flashcard[answer_ids][]",
                             answer.id, false,
                             id: dom_id(answer),

@@ -8,7 +8,7 @@
             options_for_select(
               @professions.map { |profession| [profession.name, profession.id] },
               @topic.profession ? @topic.profession.id : false # set profession for edit form
-            ) %>
+            ), {}, { class: 'select2' } %>
     </div>
     <%= f.label :name, class: "mr-2" %>
     <%= f.text_field :name,

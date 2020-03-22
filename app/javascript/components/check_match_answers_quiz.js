@@ -31,12 +31,10 @@ const check_match_answers_quiz = () => {
       const flashcardAnswerIds = Array.from(flashcardAnswerEls).map(el =>
         el.getAttribute("data-check")
       );
-      const staticAnswers = flashcardAnswerIds.slice(
-        0,
-        flashcardAnswerIds.length / 2
-      );
+      const answersMid = flashcardAnswerIds.length / 2;
+      const staticAnswers = flashcardAnswerIds.slice(0, answersMid);
       const draggableAnswers = flashcardAnswerIds.slice(
-        flashcardAnswerIds.length / 2,
+        answersMid,
         flashcardAnswerIds.length
       );
 
@@ -50,8 +48,30 @@ const check_match_answers_quiz = () => {
       } else {
         flashcardAnswerEls.forEach(elem => {
           elem.classList.add("false-answer");
+          Array.from(flashcardAnswerEls)
+            .slice(answersMid, flashcardAnswerEls.length)
+            // .forEach(dragAnswer => {
+            //   if (dragAnswer.classList.contains("false-answer")) {
+            //     const correctPlace =
+            //       staticAnswers.indexOf(dragAnswer.getAttribute("data-check")) +
+            //       1;
+
+            //     dragAnswer.textContent = `${correctPlace} - ${dragAnswer.textContent}`;
+            //   }
+            // });
+            .forEach(dragAnswer => {
+              if (dragAnswer.classList.contains("false-answer") && !dragAnswer.classList.contains("count")) {
+                const correctPlace =
+                  staticAnswers.indexOf(dragAnswer.getAttribute("data-check")) +
+                  1;
+
+                dragAnswer.textContent = `${correctPlace} - ${dragAnswer.textContent}`;
+                dragAnswer.classList.add("count")
+              }
+            });
         });
       }
+
       showExplanations.classList.remove("d-none");
       submitBtn.classList.remove("d-none");
     });

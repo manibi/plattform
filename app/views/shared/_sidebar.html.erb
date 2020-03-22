@@ -1,28 +1,47 @@
 <% if user_signed_in? && !company_signed_in? %>
-  <ul class="nav flex-column text-center">
+  <ul class="nav flex-column text-center w-lg-100 pl-lg-3">
+  <!-- <ul class="nav flex-column text-center w-100 pl-3"> -->
     <!-- Dashboard -->
     <% if current_user.author? %>
       <li class="nav-item my-2">
-        <%= link_to author_dashboard_path, class: "nav-link" do %>
+        <%= link_to author_dashboard_path, class: "side-link #{current_class?(dashboard_path)}" do %>
           <div class="row">
             <i class="material-icons-sharp sidebar-icon">home</i>
-            <div class="sidebar-text">Dashboard</div>
+            <div class="sidebar-text d-none d-lg-block">Dashboard</div>
           </div>
         <% end %>
       </li>
       <!-- Author library -->
       <li class="nav-item my-2">
-        <%= link_to articles_path, class: "nav-link" do %>
+        <%= link_to articles_path, class: "side-link #{current_class?(articles_path)}" do %>
           <div class="row">
             <i class="material-icons-sharp sidebar-icon">menu_book</i>
-            <div class="sidebar-text">Bibilothek</div>
+            <div class="sidebar-text d-none d-lg-block">Bibilothek</div>
+          </div>
+        <% end %>
+      </li>
+
+       <li class="nav-item my-2">
+        <%= link_to new_article_path, class: "side-link #{current_class?(new_article_path)}" do %>
+          <div class="row">
+            <i class="material-icons-sharp sidebar-icon">description</i>
+            <div class="sidebar-text d-none d-lg-block">Neuer Artikel</div>
+          </div>
+        <% end %>
+      </li>
+
+       <li class="nav-item my-2">
+        <%= link_to new_flashcard_path, class: "side-link #{current_class?(new_flashcard_path)}" do %>
+          <div class="row">
+            <i class="material-icons-sharp sidebar-icon">dynamic_feed</i>
+            <div class="sidebar-text d-none d-lg-block">Neues Quiz</div>
           </div>
         <% end %>
       </li>
     <% end %>
     <% if current_user.student? %>
       <li class="nav-item my-2">
-        <%= link_to dashboard_path, class: "nav-link" do %>
+        <%= link_to dashboard_path, class: "side-link #{current_class?(dashboard_path)}" do %>
           <div class="row">
             <i class="material-icons-sharp sidebar-icon">home</i>
             <div class="sidebar-text d-none d-lg-block">Dashboard</div>
@@ -32,7 +51,7 @@
 
       <!-- Article -->
       <li class="nav-item my-2">
-        <%= link_to topics_path, class: "nav-link" do %>
+        <%= link_to topics_path, class: "side-link #{current_class?(topics_path)} #{current_class?(categories_path)} #{current_class?(articles_path)}" do %>
           <div class="row">
             <i class="material-icons-sharp sidebar-icon">menu_book</i>
             <div class="sidebar-text d-none d-lg-block">Artikel</div>
@@ -42,16 +61,25 @@
 
       <!-- Quiz -->
       <li class="nav-item my-2">
-        <%= link_to flashcards_path, class: "nav-link" do %>
-          <div class="row">
-            <i class="material-icons-sharp sidebar-icon">dynamic_feed</i>
-            <div class="sidebar-text d-none d-lg-block">Quiz</div>
-          </div>
+        <% if current_class?(custom_exams_path)=="active" || current_class?(articles_path)=="active" %>
+          <%= link_to flashcards_path, class: "side-link" do %>
+            <div class="row">
+              <i class="material-icons-sharp sidebar-icon">dynamic_feed</i>
+              <div class="sidebar-text d-none d-lg-block">Quiz</div>
+            </div>
+          <% end %>
+        <% else %>
+          <%= link_to flashcards_path, class: "side-link #{current_class?(flashcards_path)}" do %>
+            <div class="row">
+              <i class="material-icons-sharp sidebar-icon">dynamic_feed</i>
+              <div class="sidebar-text d-none d-lg-block">Quiz</div>
+            </div>
+          <% end %>
         <% end %>
       </li>
       <!-- Exams -->
       <li class="nav-item my-2 d-none d-lg-block">
-        <%= link_to new_custom_exam_path, class: "nav-link" do %>
+        <%= link_to new_custom_exam_path, class: "side-link #{current_class?(custom_exams_path)}" do %>
           <div class="row">
             <i class="material-icons-sharp sidebar-icon">description</i>
             <div class="sidebar-text d-none d-lg-block">Prüfungen</div>
@@ -60,9 +88,9 @@
       </li>
       <!-- Slack -->
       <li class="nav-item my-2">
-        <div class="nav-link">
+        <div class="side-link"> 
 
-        <%#= link_to "https://mozubi.slack.com/", class: "nav-link" do %>
+        <%#= link_to "https://mozubi.slack.com/", class: "side-link" do %>
           <a class="row" target="_blank" rel="noopener noreferrer" href="https://mozubi.slack.com/">
             <i class="fab fa-slack sidebar-icon"></i>
             <div class="sidebar-text d-none d-lg-block">Forum</div>
@@ -73,17 +101,17 @@
     <% end %>
     <% if current_user.admin? %>
       <li class="nav-item">
-        <%= link_to "Users", admin_dashboard_path, class: "nav-link" %>
+        <%= link_to "Users", admin_dashboard_path, class: "side-link #{current_class?(admin_dashboard_path)}" %>
       </li>
       <li class="nav-item">
-        <%= link_to "Professisons", admin_professions_path, class: "nav-link" %>
+        <%= link_to "Professisons", admin_professions_path, class: "side-link #{current_class?(admin_profession_path)}" %>
       </li>
     <% end %>
 
   <!-- Company Dashboard -->
   <% elsif company_signed_in? %>
     <li class="nav-item">
-      <%= link_to "Dashboard", company_dashboard_path, class: "nav-link" %>
+      <%= link_to "Dashboard", company_dashboard_path, class: "side-link" %>
     </li>
   </ul>
 <% end %>

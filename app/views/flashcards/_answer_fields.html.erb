@@ -1,11 +1,11 @@
-<div class="nested-fields m-1">
+<div class="nested-fields mt-5">
   <div class="form-group">
     <%= f.label "Antwortmöglichkeit" %>
-    <%= f.text_area :content, placeholder: "Antworttext...", class: "form-control"%>
+    <%= f.text_area :content, placeholder: "Antworttext...", style: "width: 100%;" %>
   </div>
   <div class="form-group">
     <%= f.label "Erklärung (Richtig, weil/Falsch, weil)" %>
-    <%= f.text_area :explanation, placeholder: "Falsch, weil...", class: "form-control"%>
+    <%= f.text_area :explanation, placeholder: "Falsch, weil...", style: "width: 100%;" %>
   </div>
   <%= link_to_remove_association "Antwortmöglichkeit löschen", f, class: 'btn btn-primary btn-xs mt-1' %>
 </div>

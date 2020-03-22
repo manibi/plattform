@@ -11,4 +11,9 @@ module ApplicationHelper
     return 0 if percentage_from_num2.zero?
     (num1 / percentage_from_num2) * 100
   end
+  
+  def current_class?(test_path)
+    return 'active' if request.path =~ /#{test_path}/
+    ''
+  end
 end

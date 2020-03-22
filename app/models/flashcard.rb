@@ -4,7 +4,9 @@ class Flashcard < ApplicationRecord
   has_many          :flashcard_answers, dependent: :destroy
   has_many          :custom_exam_answers
   has_many          :answers, through: :flashcard_answers
+
   has_one_attached  :image
+  has_rich_text     :content
 
   before_save :ensure_published_at, :unless => :draft
   accepts_nested_attributes_for :answers,
@@ -15,7 +17,6 @@ class Flashcard < ApplicationRecord
 
   FLASHCARD_TYPES = ["multiple_choice", "correct_order", "match_answers", "soll_ist", "table_quiz"]
 
-  validates :content, presence: true, allow_blank: false
   validates :article_id, presence: true
   validates :flashcard_type, presence: true, inclusion: {
     in: FLASHCARD_TYPES
@@ -35,10 +36,12 @@ class Flashcard < ApplicationRecord
 
   # Store flashcard answer, increment tries if answer is false
   def save_answer_for!(user, answer=false)
-    user_flashcard = UserFlashcard.find_or_create_by(user: user, flashcard: self)
-    tries = user_flashcard.tries
-    tries += 1
-    user_flashcard.update(correct: answer, tries: tries)
+    user_flashcard = UserFlashcard.create(user: user, flashcard: self)
+    user_flashcard.update(correct: answer)
+
+    # add againg to queue if the answer was wrong
+    FlashcardQueue.find_by(user: user, article: self.article).enqueue!(self) unless answer
+
   end
 
   # Store exam flashcard answer

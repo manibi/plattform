@@ -8,36 +8,24 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-8">
-      <h4>Erstelle ein neues...</h4>
-      <div class="row">
-        <%#= link_to "Lernfeld", new_topic_path, class: "btn btn-success ml-3" %>
-        <%#= link_to "Kategorie", new_category_path, class: "btn btn-info ml-3" %>
-        <%= link_to "Artikel", new_article_path, class: "btn btn-outline-primary ml-3" %>
-        <%= link_to "Quiz", new_flashcard_path, class: "btn btn-outline-warning ml-3" %>
-      </div>
-    </div>
-  </div>
-
   <div class="row mt-5">
     <div class="col">
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active" id="authored_drafts-tab" data-toggle="tab" href="#authored_drafts" role="tab" aria-controls="authored_drafts" aria-selected="true">Erstellte Artikel(Entwurf)</a>
+          <a class="nav-link active" id="authored_drafts-tab" data-toggle="tab" href="#authored_drafts" role="tab" aria-controls="authored_drafts" aria-selected="true">Artikel(Entwurf)</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="authored_articles-tab" data-toggle="tab" href="#authored_articles" role="tab" aria-controls="authored_articles" aria-selected="true">Erstellte Artikel(Publizierte)</a>
+          <a class="nav-link" id="authored_articles-tab" data-toggle="tab" href="#authored_articles" role="tab" aria-controls="authored_articles" aria-selected="true">Artikel(Publizierte)</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" id="edited_articles-tab" data-toggle="tab" href="#edited_articles" role="tab" aria-controls="edited_articles" aria-selected="false">Bearbeitete Artikel</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="draft_flashcards-tab" data-toggle="tab" href="#draft_flashcards" role="tab" aria-controls="draft_flashcards" aria-selected="false">Erstellte Quizzes(Entwurf)</a>
+          <a class="nav-link" id="draft_flashcards-tab" data-toggle="tab" href="#draft_flashcards" role="tab" aria-controls="draft_flashcards" aria-selected="false">Quizzes(Entwurf)</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="authored_flashcards-tab" data-toggle="tab" href="#authored_flashcards" role="tab" aria-controls="authored_flashcards" aria-selected="false">Erstellte Quizzes(Publizierte)</a>
+          <a class="nav-link" id="authored_flashcards-tab" data-toggle="tab" href="#authored_flashcards" role="tab" aria-controls="authored_flashcards" aria-selected="false">Quizzes(Publizierte)</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" id="edited_flashcards-tab" data-toggle="tab" href="#edited_flashcards" role="tab" aria-controls="edited_flashcards" aria-selected="false">Bearbeitete Quizzes</a>
