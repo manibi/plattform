@@ -38,6 +38,7 @@
                 <% if (@exam&.submitted && !@exam.answer_for(@flashcard).correct) %>
                   <%= @flashcard.correct_answers.find_index(answer.id) + 1 %> -
                 <% end %>
+                <%# raise %>
                 <%= answer.content %>
                 <%= hidden_field_tag "flashcard[answer][#{answer.id}]",
                                       answer.id

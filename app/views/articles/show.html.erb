@@ -13,7 +13,7 @@
   <div class="row mt-3 d-flex justify-content-end">
     <!-- article -->
     <div class="col-12 col-lg-8">
-      <div class="card">
+      <div class="card w-100">
         <!-- article headline -->
         <div class="row justify-content-between">
           <div class="col-10 col-lg-11">
@@ -112,7 +112,7 @@
           Bereit zum Quiz über <%= @article.title %>?
           <%= link_to "Quiz", article_flashcard_path(@article,  @flashcards_queue.dequeue!),
                               "data-turbolinks": false,
-                              class: "btn btn-primary my-2" %>
+                              class: "btn btn-light my-2" %>
           </div>
         <% end %>
       <% end %>
