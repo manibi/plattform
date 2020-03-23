@@ -4,15 +4,26 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default :charset => "utf-8"
   config.action_mailer.perform_deliveries = true
+  config.action_mailer.perform_caching = false
+  # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
-    authentication: "plain",
-    enable_starttls_auto: true,
-    domain: ENV["GMAIL_DOMAIN"],
-    user_name: ENV["GMAIL_USERNAME"],
-    password: ENV["GMAIL_PASSWORD"]
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :user_name            => 'cristian.cristea@mozubi.app', # Change this to the email you're sending from
+    :password             => 'poxnMIVviRjlysZy6T7G', # Change this to your password
+    :authentication       => "plain",
+    :enable_starttls_auto => true
   }
+
+  # config.action_mailer.smtp_settings = {
+  #   address: "smtp.gmail.com",
+  #   port: 587,
+  #   authentication: "plain",
+  #   enable_starttls_auto: true,
+  #   domain: ENV["GMAIL_DOMAIN"],
+  #   user_name: ENV["GMAIL_USERNAME"],
+  #   password: ENV["GMAIL_PASSWORD"]
+  # }
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
