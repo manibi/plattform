@@ -17,3 +17,17 @@ a.btn-primary {
 .btn-light-blue {
 	background-color: $light-blue !important;
 }
+
+@media only screen and (max-width: 1030px){
+ 
+	.width-btn {
+		// width: 100%;
+	} 
+}
+
+@media only screen and (min-width: 1030px){
+ 
+	.width-btn {
+		
+	}
+}
