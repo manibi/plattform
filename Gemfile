@@ -32,6 +32,7 @@ group :development, :test do
   gem 'bundle-audit', '0.1.0'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'dotenv-rails'
+  gem 'letter_opener'
 end
 
 group :development do
