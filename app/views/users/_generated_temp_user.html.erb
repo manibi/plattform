@@ -4,4 +4,6 @@
   <td><%= user.password %></td>
   <td><%= user.profession.name %></td>
   <td><%= user.email %></td>
+  <td><%= link_to "Send Email", temporary_user_credential_send_temp_user_credentials_path(user.id),
+  class: "btn #{user.sent_email ? 'btn-danger' : 'btn-success'}" %></td>
 </tr>

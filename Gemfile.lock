@@ -141,6 +141,7 @@ GEM
       ruby-vips (>= 2.0.13, < 3)
     jbuilder (2.9.1)
       activesupport (>= 4.2.0)
+    json (2.3.0)
     launchy (2.5.0)
       addressable (~> 2.7)
     letter_opener (1.7.0)
@@ -186,6 +187,11 @@ GEM
       activerecord (>= 5.2)
       activesupport (>= 5.2)
     popper_js (1.14.5)
+    postmark (1.20.0)
+      json
+    postmark-rails (0.20.0)
+      actionmailer (>= 3.0.0)
+      postmark (~> 1.15)
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -336,6 +342,7 @@ DEPENDENCIES
   minitest-reporters (= 1.4.2)
   pg (>= 0.18, < 2.0)
   pg_search (~> 2.3.2)
+  postmark-rails
   puma (~> 4.1)
   pundit
   rails (~> 6.0.2, >= 6.0.2.1)

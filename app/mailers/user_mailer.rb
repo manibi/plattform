@@ -7,7 +7,18 @@ class UserMailer < ApplicationMailer
   def welcome(user)
     @user = user
 
-    mail(to: user.email, subject: "Welcome to Mozubi!")
+    mail(
+      subject: 'Welcome',
+      to: @user.email,
+      from: 'support@mozubi.app',
+      track_opens: 'true'
+    )
 
+    # mail(
+      # :subject => 'Hello from Postmark',
+      # :to  => 'cristian.cristea@mozubi.app',
+      # :from => 'support@mozubi.app',
+      # :html_body => '<strong>Welcome to Mozubi</strong>.',
+      # :track_opens => 'true')
   end
 end

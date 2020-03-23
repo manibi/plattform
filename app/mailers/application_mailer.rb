@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'cristiangreen920@gmail.com'
+  default from: 'support@mozubi.app'
   layout 'mailer'
 end

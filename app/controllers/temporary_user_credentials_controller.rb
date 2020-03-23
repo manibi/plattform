@@ -26,6 +26,14 @@ class TemporaryUserCredentialsController < ApplicationController
     end
   end
 
+  def send_temp_user_credentials
+    authorize current_user
+    @user = TemporaryUserCredential.find(params[:temporary_user_credential_id])
+    UserMailer.welcome(@user).deliver_now
+    @user.update(sent_email: true)
+    redirect_to admin_dashboard_path
+  end
+
   private
 
   def temporary_user_params

@@ -40,7 +40,9 @@ Rails.application.routes.draw do
   resources :topics
   resources :categories
   resources :professions
-  resources :temporary_user_credentials, only: [:new, :create]
+  resources :temporary_user_credentials, only: [:new, :create, :show] do
+    get "send_temp_user_credentials"
+  end
 
   resources :articles do
     member do
