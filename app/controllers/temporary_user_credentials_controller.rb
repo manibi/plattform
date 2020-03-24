@@ -23,7 +23,7 @@ class TemporaryUserCredentialsController < ApplicationController
 
     if @new_temporary_user = User.create(new_temporary_user_params)
       TemporaryUserCredential.create!(temporary_user_params.merge(new_temporary_user_params))
-      @new_temporary_user.update(temporary_user_params.except(:company_name, :school_name))
+      @new_temporary_user.update(temporary_user_params.except(:company_name, :school_name, :feedback))
 
       redirect_to temp_user_success_path
     else
