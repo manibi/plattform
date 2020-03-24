@@ -6,7 +6,7 @@ class TemporaryUserCredentialsController < ApplicationController
   def new
     @temporary_user = TemporaryUserCredential.new
     authorize @temporary_user
-    @professions = Profession.where(name: ["Büromanagement"])
+    @professions = Profession.where(name: ["Büromanagement", "Industriemechanik"])
   end
 
   def create
