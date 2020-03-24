@@ -9,14 +9,15 @@
 
   <div class="row justify-content-center mt-5">
     <div class="col col-md-4">
-      <h1 class="display-4">Corona Lizenz anfordern</h1>
+      <h1 class="display-4">Hilfspacket anfordern</h1>
     </div>
   </div>
 
   <div class="row mx-0 py-5 justify-content-center">
     <div class="col col-md-4">
       <%= form_with(model: @temporary_user,
-                    local: true) do |f| %>
+                    local: true,
+                    class: "new_temp_user") do |f| %>
         <%= render "devise/shared/error_messages", resource: @temporary_user %>
 
         <div class='form-group'>
@@ -59,14 +60,18 @@
 
         <!-- Restrict only to our finished professions  -->
         <div class="form-group">
-          <%= f.label "Ausbildungsberuf", class: "mr-2" %>
+          <%= f.label "Ausbildungsfach", class: "mr-2" %>
           <%= f.select "profession_id",
                 options_for_select(
                   @professions.map { |profession| [profession.name, profession.id] }.select { |p| p[0] != "Controlling" }
                 ), {}, { class: 'select2' } %>
         </div>
+        <%# <div class="form-group"> %>
+          <%#= f.label "Falls dein Ausbildungsfach nicht dabei ist, gib es gerne hier an." %>
+          <%#= f.text_field :another_profession, class: 'form-control' %>
+        <%# </div> %>
 
-        <%= f.submit 'Absenden', class: "btn btn-primary w-100" %>
+        <%= f.submit 'Absenden', class: "btn btn-primary w-100 mt-5" %>
       <% end %>
     </div>
   </div>
