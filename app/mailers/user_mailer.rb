@@ -13,12 +13,16 @@ class UserMailer < ApplicationMailer
       from: 'support@mozubi.app',
       track_opens: 'true'
     )
+  end
 
-    # mail(
-      # :subject => 'Hello from Postmark',
-      # :to  => 'cristian.cristea@mozubi.app',
-      # :from => 'support@mozubi.app',
-      # :html_body => '<strong>Welcome to Mozubi</strong>.',
-      # :track_opens => 'true')
+  def welcome_another_profession(user)
+    @user = user
+
+    mail(
+      subject: 'Welcome',
+      to: @user.email,
+      from: 'support@mozubi.app',
+      track_opens: 'true'
+    )
   end
 end

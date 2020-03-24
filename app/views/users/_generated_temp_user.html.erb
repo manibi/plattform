@@ -2,12 +2,14 @@
   <th scope="row"><%= user_counter + 1 %></th>
   <td><%= user.username %></td>
   <td><%= user.password %></td>
-  <td><%= user.profession.name %></td>
+  <td><%= user.another_profession.blank? ? user.profession.name : user.another_profession  %></td>
   <td><%= user.email %></td>
-  <td style="min-width: 130px;">
-    <%= link_to "Send Email",     temporary_user_credential_send_temp_user_credentials_path(user.id),
-    class: "btn #{user.sent_email ? 'btn-danger' : 'btn-success'}" %>
-  </td>
+    <td style="min-width: 130px;">
+      <% if user.another_profession.blank? %>
+        <%= link_to "Send Email",     temporary_user_credential_send_temp_user_credentials_path(user.id),
+        class: "btn #{user.sent_email ? 'btn-danger' : 'btn-success'}" %>
+      <% end %>
+    </td>
   <% if user.feedback %>
 <!-- Button trigger modal -->
     <td>

@@ -69,10 +69,12 @@
                   @professions.map { |profession| [profession.name, profession.id] }.select { |p| p[0] != "Controlling" }
                 ), {}, { class: 'select2' } %>
         </div>
-        <%# <div class="form-group"> %>
-          <%#= f.label "Falls dein Ausbildungsfach nicht dabei ist, gib es gerne hier an." %>
-          <%#= f.text_field :another_profession, class: 'form-control' %>
-        <%# </div> %>
+
+        <div class="form-group">
+          <%= f.label "Falls dein Ausbildungsfach nicht dabei ist, gib es gerne hier an." %>
+          <%= f.text_field :another_profession, class: 'form-control' %>
+        </div>
+
         <div class='form-group'>
           <%= f.label "Feedback" %>
           <%= f.text_area :feedback, class: 'form-control' %>
