@@ -1,6 +1,10 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  config.action_mailer.default_url_options = { host: "https://www.mozubi.app" }
+  # config.action_mailer.default_url_options = { host: "mozubi.app" }
+  # config.action_mailer.raise_delivery_errors = true
+  # config.action_mailer.default :charset => "utf-8"
+  # config.action_mailer.perform_deliveries = true
+  # config.action_mailer.perform_caching = false
 
   # Code is not reloaded between requests.
   config.cache_classes = true

@@ -6,24 +6,49 @@ class TemporaryUserCredentialsController < ApplicationController
   def new
     @temporary_user = TemporaryUserCredential.new
     authorize @temporary_user
-    @professions = Profession.where(name: ["Büromanagement"])
+    @professions = Profession.where(name: [
+      "Büromanagement",
+      "Industriemechanik",
+      "Industriekaufleute",
+      "Groß-und Außerhandel"
+    ])
   end
 
   def create
     @temporary_user = TemporaryUserCredential.new
     authorize @temporary_user
-    company = Company.find_by(name: "Mozubi")
+    company = Company.find(6) # hilfspaket-e9cb6818816
     profession = Profession.find(temporary_user_params[:profession_id])
     new_temporary_user_params = generate_students(company, profession, 1).first
+    another_profession =  params[:temporary_user_credential][:another_profession]
 
-    if @new_temporary_user = User.create(new_temporary_user_params)
-      TemporaryUserCredential.create!(temporary_user_params.merge(new_temporary_user_params))
-      @new_temporary_user.update(temporary_user_params.except(:company_name, :school_name))
+    TemporaryUserCredential.create!(temporary_user_params.merge(new_temporary_user_params))
+
+    if another_profession.blank?
+      @new_temporary_user = User.create(new_temporary_user_params.merge(temporary_user_params.except(
+        :company_name, :school_name, :feedback, :another_profession
+      )))
 
       redirect_to temp_user_success_path
+    elsif !another_profession.blank?
+        redirect_to temp_user_success_path
     else
       render :new
     end
+  end
+
+  def send_temp_user_credentials
+    authorize current_user
+    @user = TemporaryUserCredential.find(params[:temporary_user_credential_id])
+
+    if @user.another_profession.present? || ["Industriekaufleute", "Groß-und Außerhandel"].include?(@user.profession.name)
+      UserMailer.welcome_another_profession(@user).deliver_now
+    elsif @user.another_profession.blank? && ["Büromanagement", "Industriemechanik"].include?(@user.profession.name)
+      UserMailer.welcome(@user).deliver_now
+    end
+
+    @user.update(sent_credentials: true)
+    redirect_to admin_dashboard_path
   end
 
   private

@@ -40,6 +40,10 @@ class UserPolicy < ApplicationPolicy
     current_user?
   end
 
+  def send_temp_user_credentials?
+    user.admin?
+  end
+
   class Scope < Scope
     def resolve
       if user.admin?

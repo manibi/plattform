@@ -26,12 +26,14 @@ gem 'cocoon'
 gem 'cloudinary', '~> 1.13.0'
 gem 'pundit'
 gem 'pg_search', '~> 2.3.2'
+gem 'postmark-rails'
 
 group :development, :test do
   gem 'brakeman',     '4.7.2'
   gem 'bundle-audit', '0.1.0'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'dotenv-rails'
+  gem 'letter_opener'
 end
 
 group :development do

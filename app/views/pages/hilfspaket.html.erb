@@ -29,7 +29,15 @@
   </div>
   <div class="row mx-0 py-4 justify-content-center">
     <div class="col-md-6">
-      <%= render 'shared/hilfspaket_form' %>
+      <%#= render 'shared/hilfspaket_form' %>
+      <%= link_to "Hilfspaket anfordern",
+                  new_temporary_user_credential_path,
+                  class: "btn btn-success w-100",
+                  style: "background-color: #3DD598;
+                          color: #fff !important;
+                          font-weight: 600;
+                          font-size: 0.9rem;
+                          text-transform: uppercase;" %>
     </div>
   </div>
 </div>
