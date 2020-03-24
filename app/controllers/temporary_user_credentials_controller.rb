@@ -28,7 +28,7 @@ class TemporaryUserCredentialsController < ApplicationController
       @new_temporary_user = User.create(new_temporary_user_params.merge(temporary_user_params.except(
         :company_name, :school_name, :feedback, :another_profession
       )))
-      # @new_temporary_user.update(temporary_user_params.except(:company_name, :school_name, :feedback, :another_profession))
+
       redirect_to temp_user_success_path
     elsif !another_profession.blank?
         redirect_to temp_user_success_path
