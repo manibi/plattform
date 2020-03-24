@@ -197,7 +197,7 @@ ActiveRecord::Schema.define(version: 2020_03_24_120559) do
     t.bigint "profession_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "sent_email", default: false
+    t.boolean "sent_credentials", default: false
     t.text "feedback"
     t.text "another_profession"
     t.index ["company_id"], name: "index_temporary_user_credentials_on_company_id"

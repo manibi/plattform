@@ -5,13 +5,11 @@
   <td><%= user.another_profession.blank? ? user.profession.name : user.another_profession  %></td>
   <td><%= user.email %></td>
     <td style="min-width: 130px;">
-      <% if user.another_profession.blank? %>
-        <%= link_to "Send Email",     temporary_user_credential_send_temp_user_credentials_path(user.id),
-        class: "btn #{user.sent_email ? 'btn-danger' : 'btn-success'}" %>
-      <% end %>
+      <%= link_to "Send Email",     temporary_user_credential_send_temp_user_credentials_path(user.id),
+      class: "btn #{user.sent_credentials ? 'btn-danger' : 'btn-success'}" %>
     </td>
   <% if user.feedback %>
-<!-- Button trigger modal -->
+    <!-- Button trigger modal -->
     <td>
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newTempUserFeedback">
         Feedback

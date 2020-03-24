@@ -1,14 +1,7 @@
-<!-- Email style only here, it will not work if you put the styles in the scss folders -->
-<style>
-  .container {
-    max-width: 600px;
-    margin: 50px auto;
-    font-family: sans-serif;
-  }
-</style>
-
-  <div class="container">
-    <h1>Hallo <%= "#{@user.first_name} #{@user.last_name}"%>,</h1>
+<div style="max-width: 600px;
+            margin: 50px auto;
+            font-family: sans-serif;">
+  <h1>Hallo <%= "#{@user.first_name} #{@user.last_name}"%>,</h1>
   <p style="text-indent: 1rem;">
     Willkommen bei Mozubi! Wir freuen uns, dass du dich auf unserer Online-Lernplattform angemeldet hast. In dieser E-Mail erhältst du deine Zugangsdaten für Mozubi, sowie einen Leitfaden wie du dich auf der Plattform am besten zurecht findest. Um dich anzumelden gehe einfach auf www.mozubi.app.
   </p>
@@ -50,5 +43,4 @@
   <p style="margin: 0;">
     <a href="https://www.mozubi.app">www.mozubi.app</a>
   </p>
-
 </div>

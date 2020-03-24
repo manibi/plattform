@@ -17,7 +17,7 @@ class TemporaryUserCredentialsController < ApplicationController
   def create
     @temporary_user = TemporaryUserCredential.new
     authorize @temporary_user
-    company = Company.find_by(name: "Mozubi")
+    company = Company.find(6) # hilfspaket-e9cb6818816
     profession = Profession.find(temporary_user_params[:profession_id])
     new_temporary_user_params = generate_students(company, profession, 1).first
     another_profession =  params[:temporary_user_credential][:another_profession]
@@ -41,13 +41,13 @@ class TemporaryUserCredentialsController < ApplicationController
     authorize current_user
     @user = TemporaryUserCredential.find(params[:temporary_user_credential_id])
 
-    if @user.another_profession.present? && ["Industriekaufleute", "Groß-und Außerhandel"].include?(@user.profession.name)
+    if @user.another_profession.present? || ["Industriekaufleute", "Groß-und Außerhandel"].include?(@user.profession.name)
       UserMailer.welcome_another_profession(@user).deliver_now
     elsif @user.another_profession.blank? && ["Büromanagement", "Industriemechanik"].include?(@user.profession.name)
       UserMailer.welcome(@user).deliver_now
-      @user.update(sent_email: true)
     end
 
+    @user.update(sent_credentials: true)
     redirect_to admin_dashboard_path
   end
 

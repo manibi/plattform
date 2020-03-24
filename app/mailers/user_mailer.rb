@@ -8,7 +8,7 @@ class UserMailer < ApplicationMailer
     @user = user
 
     mail(
-      subject: 'Welcome',
+      subject: 'Willkommen bei Mozubi!',
       to: @user.email,
       from: 'support@mozubi.app',
       track_opens: 'true'
@@ -19,7 +19,7 @@ class UserMailer < ApplicationMailer
     @user = user
 
     mail(
-      subject: 'Welcome',
+      subject: 'Willkommen bei Mozubi!',
       to: @user.email,
       from: 'support@mozubi.app',
       track_opens: 'true'
