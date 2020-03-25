@@ -42,6 +42,15 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'bullet'
+  gem 'rack-mini-profiler', require: false
+
+  # For memory profiling
+  gem 'memory_profiler'
+
+  # For call-stack profiling flamegraphs
+  gem 'flamegraph'
+  gem 'stackprof'
 end
 
 group :test do
