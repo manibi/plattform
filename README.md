@@ -58,6 +58,12 @@ $ bundle exec bundle-audit
 rails g pundit:policy model
 ```
 
+### rack-mini-profiler
+
+```shell
+bundle exec rails g rack_profiler:install
+```
+
 ### Flamegraphs
 
 To generate flamegraphs visit a page in your app with ?pp=flamegraph

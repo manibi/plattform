@@ -2,7 +2,7 @@
 <!-- topic tab -->
 <div role="tabpanel" class="tab-pane active py-3" id="topic">
   <div class="row">
-    <% @topics.each do |topic| %>
+    <% @topics.includes([:categories]).each do |topic| %>
       <% if topic.categories.map{|c| c.articles.count}.sum > 0 %>
         <div class="col-lg-3 my-2">
           <%= link_to topic do %>

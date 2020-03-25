@@ -17,9 +17,9 @@ class PagesController < ApplicationController
     authorize current_user, :show?
     if params[:query]
       @results = PgSearch.multisearch(params[:query])
-      @topics = @results.where(searchable_type: "Topic")
-      @categories = @results.where(searchable_type: "Category")
-      @articles = @results.where(searchable_type: "Article")
+      @topics = @results.where(searchable_type: "Topic").includes([:searchable])
+      @categories = @results.where(searchable_type: "Category").includes([:searchable])
+      @articles = @results.where(searchable_type: "Article").includes([:searchable])
 
       respond_to do |format|
         format.html {}

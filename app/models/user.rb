@@ -86,9 +86,9 @@ class User < ApplicationRecord
 
   def upcoming_articles
     Article.published.joins(:category)
-            .where(categories: { topic: [user.profession.topics] }) -
+            .where(categories: { topic: [self.profession.topics] }) -
     Article.published.joins(:user_articles)
-            .where(user_articles: { user: user, read: true })
+            .where(user_articles: { user: self, read: true })
   end
 
   def authored_articles
