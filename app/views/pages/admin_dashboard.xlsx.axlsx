@@ -15,7 +15,7 @@ wb.styles do |style|
     sheet.add_row sheet_headers, style: heading
 
     # Create entries for each item
-    @students.each do |student|
+    @temp_students.each do |student|
       student_data = student_attributes.map {|student_attribute| student.send(student_attribute)}
       student_data[12] = Profession.find(student_data[12]).name
       sheet.add_row student_data

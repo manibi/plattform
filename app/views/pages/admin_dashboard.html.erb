@@ -57,7 +57,7 @@
               </tr>
             </thead>
             <tbody>
-              <%= render partial: "users/generated_user", collection: UserCredential.admin, as: :user %>
+              <%= render partial: "users/generated_user", collection: @admins, as: :user %>
             </tbody>
           </table>
         </div>
@@ -73,7 +73,7 @@
               </tr>
             </thead>
             <tbody>
-              <%= render partial: "users/generated_user", collection: UserCredential.author, as: :user %>
+              <%= render partial: "users/generated_user", collection: @authors, as: :user %>
             </tbody>
           </table>
         </div>
@@ -90,7 +90,7 @@
               </tr>
             </thead>
             <tbody>
-              <%= render partial: "users/generated_user", collection: UserCredential.student, as: :user %>
+              <%= render partial: "users/generated_user", collection: @students, as: :user %>
             </tbody>
           </table>
         </div>
@@ -113,7 +113,7 @@
               </tr>
             </thead>
             <tbody>
-              <%= render partial: "users/generated_temp_user", collection: TemporaryUserCredential.student, as: :user %>
+              <%= render partial: "users/generated_temp_user", collection: @temp_students, as: :user %>
             </tbody>
           </table>
         </div>

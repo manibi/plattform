@@ -216,6 +216,7 @@ class FlashcardsController < ApplicationController
     end
   end
 
+  # TODO! REFACTOR
   def results
     @article = Article.find(params[:article_id])
     authorize @article, :show?

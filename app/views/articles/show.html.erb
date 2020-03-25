@@ -67,7 +67,7 @@
         <div class="row">
           <div class="col-12">
             <ul>
-              <%= render @article.chapters.sort_by { |chap| chap.title } %>
+              <%= render @article.chapters.includes([:rich_text_content]).sort_by { |chap| chap.title } %>
             </ul>
           </div>
         </div>

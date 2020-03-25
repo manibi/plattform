@@ -126,6 +126,7 @@ class ArticlesController < ApplicationController
 
   private
 
+  # TODO! REFACTOR
   def set_all
     if current_user.student? || current_user.author?
     # @flashcard = @article.flashcards.published.first

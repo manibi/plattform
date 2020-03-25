@@ -1,5 +1,16 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!, except: [:landing_page,:mozubi, :azubis, :unternehmen, :datenschutz, :agbs, :impressum, :hilfspaket, :company_dashboard, :temporary_user_info]
+  before_action :authenticate_user!, except: [
+    :landing_page,
+    :mozubi,
+    :azubis,
+    :unternehmen,
+    :datenschutz,
+    :agbs,
+    :impressum,
+    :hilfspaket,
+    :company_dashboard,
+    :temporary_user_info
+  ]
   before_action :authenticate_company!, only: :company_dashboard
 
   def search
@@ -52,6 +63,7 @@ class PagesController < ApplicationController
   def hilfspaket
   end
 
+  # TODO! REFACTOR
   def dashboard
     authorize current_user, :show?
     @read_user_articles = UserArticle.where(user: current_user, read: true)
@@ -59,7 +71,7 @@ class PagesController < ApplicationController
     # @not_read_articles = Article.where.not(id: read_article_ids)
     # @not_read_category = policy_scope(Category).find(@not_read_articles.map{ |a| a.category_id}.sort.first)
 
-    @articles = current_user.all_articles.published
+    @articles = current_user.all_articles.published.includes([:category])
     @read_articles = current_user.read_articles.published
     @bookmarked_articles = current_user.bookmarked_articles.published
     @upcoming_articles = @articles - @read_articles
@@ -86,7 +98,10 @@ class PagesController < ApplicationController
 
   def admin_dashboard
     authorize current_user
-    @students = TemporaryUserCredential.all
+    @admins = UserCredential.admin.includes([:profession])
+    @temp_students = TemporaryUserCredential.all.includes([:profession])
+    @students = UserCredential.student.includes([:profession, :company])
+    @authors = UserCredential.author.includes([:profession])
 
     respond_to do |format|
       format.xlsx {
