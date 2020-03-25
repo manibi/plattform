@@ -1,0 +1,24 @@
+wb = xlsx_package.workbook
+wb.styles do |style|
+  project_heading = style.add_style(b: true, sz: 14)
+  heading = style.add_style(b: true)
+
+  wb.add_worksheet(name: "Corona Students") do |sheet|
+    student_attributes = TemporaryUserCredential.attribute_names
+
+    # Add a title row
+    sheet.add_row ["Corona Students"], style: project_heading
+
+    # Create the header row
+    sheet_headers = student_attributes.map{ |student_attribute| student_attribute.capitalize}
+    sheet_headers[12] = "Profession"
+    sheet.add_row sheet_headers, style: heading
+
+    # Create entries for each item
+    @students.each do |student|
+      student_data = student_attributes.map {|student_attribute| student.send(student_attribute)}
+      student_data[12] = Profession.find(student_data[12]).name
+      sheet.add_row student_data
+    end
+  end
+end

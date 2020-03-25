@@ -86,6 +86,18 @@ class PagesController < ApplicationController
 
   def admin_dashboard
     authorize current_user
+    @students = TemporaryUserCredential.all
+
+    respond_to do |format|
+      format.xlsx {
+        response.headers[
+          'Content-Disposition'
+        ] = "attachment; filename='corona-students.xlsx'"
+
+        render xlsx: 'admin_dashboard',filename: "corona-students.xlsx"
+      }
+      format.html { render :admin_dashboard }
+    end
   end
 
     def admin_topics
