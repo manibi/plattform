@@ -27,6 +27,7 @@ gem 'cloudinary', '~> 1.13.0'
 gem 'pundit'
 gem 'pg_search', '~> 2.3.2'
 gem 'postmark-rails'
+gem 'caxlsx_rails'
 
 group :development, :test do
   gem 'brakeman',     '4.7.2'
